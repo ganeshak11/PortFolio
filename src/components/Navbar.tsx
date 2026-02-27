@@ -5,13 +5,13 @@ import { useTheme } from "./ThemeProvider";
 import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-    { href: "#modules", label: "Modules" },
-    { href: "#projects", label: "Projects" },
-    { href: "#failures", label: "Failure Log" },
-    { href: "#status", label: "Status" },
+    { href: "#about", label: "About" },
+    { href: "#project", label: "Project" },
+    { href: "#stack", label: "Stack" },
+    { href: "#contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => void }) {
     const { theme, toggle } = useTheme();
     const [scrolled, setScrolled] = useState(false);
 
@@ -61,11 +61,12 @@ export default function Navbar() {
                 </Link>
 
                 {/* Nav links */}
-                <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                     {NAV_LINKS.map((l) => (
                         <a
                             key={l.href}
                             href={l.href}
+                            className="nav-link"
                             style={{
                                 fontSize: 13,
                                 fontWeight: 500,
@@ -82,6 +83,34 @@ export default function Navbar() {
                             {l.label}
                         </a>
                     ))}
+
+                    {/* Terminal Mode Toggle */}
+                    {onTerminalToggle && (
+                        <button
+                            onClick={onTerminalToggle}
+                            aria-label="Toggle terminal mode"
+                            style={{
+                                background: "none",
+                                border: "1px solid var(--border)",
+                                borderRadius: 4,
+                                padding: "4px 10px",
+                                cursor: "pointer",
+                                fontSize: 12,
+                                fontFamily: "monospace",
+                                color: "var(--accent-2)",
+                                letterSpacing: "0.05em",
+                                transition: "border-color 0.2s, color 0.2s",
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = "var(--accent-2)";
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = "var(--border)";
+                            }}
+                        >
+                            [terminal]
+                        </button>
+                    )}
 
                     {/* Theme toggle */}
                     <button

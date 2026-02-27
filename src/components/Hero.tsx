@@ -45,8 +45,8 @@ export default function Hero() {
 
     /* ── Cursor-tracked radial mask ─────────────── */
     const onMouseMove = useCallback((e: React.MouseEvent) => {
-        if (!heroRef.current) return;
-        const rect = heroRef.current.getBoundingClientRect();
+        if (!textRef.current) return;
+        const rect = textRef.current.getBoundingClientRect();
         maskRef.current = {
             x: e.clientX - rect.left,
             y: e.clientY - rect.top,
@@ -154,7 +154,7 @@ export default function Hero() {
                         width: "100%",
                     }}
                 >
-                    $ whoami — DevOps Engineer
+                    $ whoami — DevOps Engineer | System Thinker
                 </motion.p>
 
                 {/* ── Dual-layer headline ─── */}
@@ -202,9 +202,9 @@ export default function Hero() {
                             inset: 0,
                             pointerEvents: "none",
                             WebkitMaskImage:
-                                "radial-gradient(circle 160px at var(--mx) var(--my), black 100%, transparent 100%)",
+                                "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
                             maskImage:
-                                "radial-gradient(circle 160px at var(--mx) var(--my), black 100%, transparent 100%)",
+                                "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
                             background: "var(--accent)",
                         }}
                     >
