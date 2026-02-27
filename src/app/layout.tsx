@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ParticleField from "@/components/ParticleField";
+import CyberneticGridShader from "@/components/ui/cybernetic-grid-shader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
           <div style={{ position: "relative", minHeight: "100vh" }}>
-            <ParticleField />
+            <CyberneticGridShader />
             <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
           </div>
         </ThemeProvider>

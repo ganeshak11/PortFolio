@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const MODULES = [
     {
@@ -120,13 +121,15 @@ export default function CoreModules() {
                             position: "relative",
                             transition: "border-color 0.2s",
                         }}
-                        onMouseEnter={(e) =>
-                            (e.currentTarget.style.borderColor = "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                            (e.currentTarget.style.borderColor = "var(--border)")
-                        }
                     >
+                        <GlowingEffect
+                            spread={40}
+                            glow={false}
+                            disabled={false}
+                            proximity={60}
+                            inactiveZone={0.01}
+                            borderWidth={2}
+                        />
                         {/* Tag */}
                         <span
                             style={{

@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
 const PRINCIPLES = [
     {
@@ -154,8 +155,17 @@ export default function SystemThinking() {
                             style={{
                                 padding: "32px",
                                 borderRadius: 8,
+                                position: "relative",
                             }}
                         >
+                            <GlowingEffect
+                                spread={35}
+                                glow={false}
+                                disabled={false}
+                                proximity={60}
+                                inactiveZone={0.01}
+                                borderWidth={2}
+                            />
                             <h3
                                 style={{
                                     fontSize: 17,
