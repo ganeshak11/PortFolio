@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ParticleField from "@/components/ParticleField";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
-          <main>{children}</main>
+          <div style={{ position: "relative", minHeight: "100vh" }}>
+            <ParticleField />
+            <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -3,6 +3,61 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
+const PROGRESS_ITEMS = [
+    { label: "Architecture Design", pct: 65 },
+    { label: "Core Pipeline Engine", pct: 40 },
+    { label: "Observability Layer", pct: 30 },
+    { label: "Dashboard UI", pct: 15 },
+];
+
+function ProgressBar({ label, pct, active, delay }: { label: string; pct: number; active: boolean; delay: number }) {
+    return (
+        <div style={{ marginBottom: 20 }}>
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontFamily: "monospace",
+                fontSize: 12,
+                color: "var(--muted)",
+                marginBottom: 8,
+            }}>
+                <span>{label}</span>
+                <span style={{ color: "var(--accent)" }}>{pct}%</span>
+            </div>
+            <div style={{
+                height: 6,
+                background: "var(--border)",
+                borderRadius: 3,
+                overflow: "hidden",
+            }}>
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={active ? { width: `${pct}%` } : { width: 0 }}
+                    transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                        height: "100%",
+                        background: "linear-gradient(90deg, var(--accent), var(--accent-2, var(--accent)))",
+                        borderRadius: 3,
+                        boxShadow: "0 0 8px var(--accent)",
+                    }}
+                />
+            </div>
+            <div style={{
+                fontFamily: "monospace",
+                fontSize: 10,
+                color: "var(--accent)",
+                marginTop: 4,
+                opacity: 0.6,
+            }}>
+                {"["}
+                {"█".repeat(Math.floor(pct / 10))}
+                {"░".repeat(10 - Math.floor(pct / 10))}
+                {"]"}
+            </div>
+        </div>
+    );
+}
+
 export default function CurrentlyBuilding() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -46,7 +101,9 @@ export default function CurrentlyBuilding() {
                         }}
                     >
                         CI/CD Sentinel
-                        <span
+                        <motion.span
+                            animate={{ opacity: [1, 0.4, 1] }}
+                            transition={{ repeat: Infinity, duration: 2 }}
                             style={{
                                 fontSize: "clamp(16px, 2vw, 24px)",
                                 color: "var(--status-warn)",
@@ -54,7 +111,7 @@ export default function CurrentlyBuilding() {
                             }}
                         >
                             [IN PROGRESS]
-                        </span>
+                        </motion.span>
                         <a
                             href="https://github.com/yourusername/cicd-sentinel"
                             target="_blank"
@@ -105,6 +162,28 @@ export default function CurrentlyBuilding() {
                         building observability around CI/CD instead of blindly trusting green
                         checkmarks.
                     </p>
+
+                    {/* ── Build progress bars ── */}
+                    <div style={{ marginBottom: 40 }}>
+                        <p style={{
+                            fontFamily: "monospace",
+                            fontSize: 11,
+                            letterSpacing: "0.15em",
+                            color: "var(--accent)",
+                            marginBottom: 20,
+                        }}>
+                            [BUILD_PROGRESS]
+                        </p>
+                        {PROGRESS_ITEMS.map((item, i) => (
+                            <ProgressBar
+                                key={item.label}
+                                label={item.label}
+                                pct={item.pct}
+                                active={inView}
+                                delay={0.3 + i * 0.15}
+                            />
+                        ))}
+                    </div>
 
                     <div
                         style={{

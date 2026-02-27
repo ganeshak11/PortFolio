@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const PRINCIPLES = [
@@ -25,6 +25,43 @@ const PRINCIPLES = [
         desc: "Chaos engineering isn't optional. It's how you learn.",
     },
 ];
+
+const STATS: { label: string; target: number; suffix: string }[] = [
+    { label: "Years building", target: 3, suffix: "+" },
+    { label: "Outages learned from", target: 4, suffix: "" },
+    { label: "Uptime after fixes", target: 99, suffix: "%" },
+    { label: "Git commits understood", target: 1000, suffix: "+" },
+];
+
+function Counter({ target, suffix, active }: { target: number; suffix: string; active: boolean }) {
+    const [count, setCount] = useState(0);
+    const startedRef = useRef(false);
+
+    useEffect(() => {
+        if (!active || startedRef.current) return;
+        startedRef.current = true;
+        const duration = 1200;
+        const steps = 50;
+        const increment = target / steps;
+        let current = 0;
+        const interval = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                setCount(target);
+                clearInterval(interval);
+            } else {
+                setCount(Math.floor(current));
+            }
+        }, duration / steps);
+        return () => clearInterval(interval);
+    }, [active, target]);
+
+    return (
+        <span style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "var(--accent)", fontFamily: "monospace" }}>
+            {count}{suffix}
+        </span>
+    );
+}
 
 export default function SystemThinking() {
     const ref = useRef<HTMLElement>(null);
@@ -62,11 +99,44 @@ export default function SystemThinking() {
                             color: "var(--fg)",
                         }}
                     >
-                        I don't just build features.
+                        I don&apos;t just build features.
                         <br />I design systems.
                     </h2>
                 </motion.div>
 
+                {/* ── Stat counters ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.15, duration: 0.5 }}
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                        gap: 24,
+                        marginBottom: 56,
+                        padding: "32px",
+                        background: "var(--card-bg)",
+                        border: "1px solid var(--border)",
+                        borderRadius: 8,
+                    }}
+                >
+                    {STATS.map((s) => (
+                        <div key={s.label} style={{ textAlign: "center" }}>
+                            <Counter target={s.target} suffix={s.suffix} active={inView} />
+                            <p style={{
+                                fontFamily: "monospace",
+                                fontSize: 11,
+                                letterSpacing: "0.1em",
+                                color: "var(--muted)",
+                                marginTop: 6,
+                            }}>
+                                {s.label}
+                            </p>
+                        </div>
+                    ))}
+                </motion.div>
+
+                {/* ── Principles grid ── */}
                 <div
                     style={{
                         display: "grid",

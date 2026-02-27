@@ -1,11 +1,33 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
+
+const FULL_TEXT = "$ connect --with ganesh";
 
 export default function Contact() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
+    const [typed, setTyped] = useState("");
+    const [typingDone, setTypingDone] = useState(false);
+    const startedRef = useRef(false);
+
+    useEffect(() => {
+        if (!inView || startedRef.current) return;
+        startedRef.current = true;
+
+        let i = 0;
+        const speed = 45; // ms per char
+        const interval = setInterval(() => {
+            i++;
+            setTyped(FULL_TEXT.slice(0, i));
+            if (i >= FULL_TEXT.length) {
+                clearInterval(interval);
+                setTypingDone(true);
+            }
+        }, speed);
+        return () => clearInterval(interval);
+    }, [inView]);
 
     return (
         <section
@@ -31,15 +53,27 @@ export default function Contact() {
                     >
                         06 / CONTACT
                     </p>
+                    {/* Typewriter heading */}
                     <h2
                         style={{
                             fontSize: "clamp(28px, 4vw, 48px)",
                             fontWeight: 800,
                             letterSpacing: "-0.02em",
                             color: "var(--fg)",
+                            fontFamily: "monospace",
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                            gap: 4,
                         }}
                     >
-                        $ connect --with ganesh
+                        {typed}
+                        {!typingDone && (
+                            <span className="cursor-blink" style={{ marginLeft: 2 }} />
+                        )}
+                        {typingDone && (
+                            <span className="cursor-blink" style={{ marginLeft: 2 }} />
+                        )}
                     </h2>
                 </motion.div>
 

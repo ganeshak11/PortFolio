@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
 const FAILURES = [
@@ -47,6 +47,35 @@ const SEVERITY_COLOR: Record<string, string> = {
     P2: "var(--status-warn)",
     P3: "var(--muted)",
 };
+
+function SeverityBadge({ severity }: { severity: string }) {
+    const [glitching, setGlitching] = useState(false);
+
+    const trigger = () => {
+        if (glitching) return;
+        setGlitching(true);
+        setTimeout(() => setGlitching(false), 500);
+    };
+
+    return (
+        <span
+            className={glitching ? "glitch-active" : ""}
+            onMouseEnter={trigger}
+            style={{
+                fontFamily: "monospace",
+                fontSize: 11,
+                fontWeight: 700,
+                color: SEVERITY_COLOR[severity] ?? "var(--muted)",
+                letterSpacing: "0.1em",
+                cursor: "default",
+                display: "inline-block",
+                userSelect: "none",
+            }}
+        >
+            {severity}
+        </span>
+    );
+}
 
 export default function FailureLog() {
     const ref = useRef<HTMLElement>(null);
@@ -111,27 +140,26 @@ export default function FailureLog() {
                         initial={{ opacity: 0, x: -16 }}
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
+                        className="scan-parent"
                         style={{
                             borderBottom: "1px solid var(--border)",
                             padding: "32px 0",
                             display: "grid",
                             gridTemplateColumns: "80px 1fr",
                             gap: 24,
+                            transition: "background 0.2s",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background =
+                                "linear-gradient(90deg, rgba(var(--accent-rgb, 6 182 212) / 0.04) 0%, transparent 100%)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
                         }}
                     >
                         {/* Left: severity + date */}
                         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                            <span
-                                style={{
-                                    fontFamily: "monospace",
-                                    fontSize: 11,
-                                    fontWeight: 700,
-                                    color: SEVERITY_COLOR[f.severity] ?? "var(--muted)",
-                                    letterSpacing: "0.1em",
-                                }}
-                            >
-                                {f.severity}
-                            </span>
+                            <SeverityBadge severity={f.severity} />
                             <span
                                 style={{
                                     fontFamily: "monospace",

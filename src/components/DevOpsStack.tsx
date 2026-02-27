@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 
 const STACK = [
@@ -20,6 +20,31 @@ const STACK = [
 export default function DevOpsStack() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
+
+    const handleMouseMove = useCallback(
+        (e: React.MouseEvent<HTMLDivElement>) => {
+            const el = e.currentTarget;
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) / (rect.width / 2);
+            const dy = (e.clientY - cy) / (rect.height / 2);
+            const rotX = -dy * 12;
+            const rotY = dx * 12;
+            el.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04)`;
+            el.style.boxShadow = `0 8px 30px rgba(var(--accent-rgb, 6 182 212) / 0.25), 0 0 0 1px var(--accent)`;
+        },
+        []
+    );
+
+    const handleMouseLeave = useCallback(
+        (e: React.MouseEvent<HTMLDivElement>) => {
+            const el = e.currentTarget;
+            el.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)";
+            el.style.boxShadow = "";
+        },
+        []
+    );
 
     return (
         <section
@@ -55,7 +80,7 @@ export default function DevOpsStack() {
                             color: "var(--fg)",
                         }}
                     >
-                        Tools & Technologies
+                        Tools &amp; Technologies
                     </h2>
                 </motion.div>
 
@@ -75,7 +100,9 @@ export default function DevOpsStack() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={inView ? { opacity: 1, scale: 1 } : {}}
                             transition={{ delay: 0.3 + i * 0.05 }}
-                            className="glass-card"
+                            className="glass-card tilt-card"
+                            onMouseMove={handleMouseMove}
+                            onMouseLeave={handleMouseLeave}
                             style={{
                                 fontFamily: "monospace",
                                 fontSize: 13,
@@ -85,6 +112,7 @@ export default function DevOpsStack() {
                                 flexDirection: "column",
                                 gap: 4,
                                 cursor: "default",
+                                transition: "transform 0.15s ease, box-shadow 0.15s ease",
                             }}
                         >
                             <span style={{ color: "var(--fg)", fontWeight: 600 }}>
