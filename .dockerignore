@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Dependencies (installed fresh inside Docker)
+node_modules
+
+# Next.js build output (rebuilt inside Docker)
+.next
+out
+build
+
+# Environment files — never bake secrets into the image
+.env
+.env.*
+!.env.example
+
+# OS / editor noise
+.DS_Store
+*.pem
+*.log
+
+# CI / deployment artifacts
+.github
+deploy.sh
+
+# Docker files themselves (no need to copy into build context)
+Dockerfile
+docker-compose.yml
+.dockerignore
