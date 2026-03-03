@@ -219,3 +219,10 @@ body {
   will-change: transform;
 }
 
+
+/* ─── Mobile Nav ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .nav-link {
+    display: none;
+  }
+}
