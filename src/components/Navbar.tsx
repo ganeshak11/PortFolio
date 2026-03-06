@@ -9,7 +9,10 @@ const NAV_LINKS = [
     { href: "#project", label: "Project" },
     { href: "#stack", label: "Stack" },
     { href: "#contact", label: "Contact" },
+    { href: "/resume.html", label: "Resume", external: true },
 ];
+
+const RESUME_PDF_PATH = "/Resume/Ganesh Angadi — Resume.pdf";
 
 export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => void }) {
     const { theme, toggle } = useTheme();
@@ -67,6 +70,7 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                             key={l.href}
                             href={l.href}
                             className="nav-link"
+                            {...((l as any).external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                             style={{
                                 fontSize: 13,
                                 fontWeight: 500,
@@ -83,6 +87,37 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                             {l.label}
                         </a>
                     ))}
+
+                    {/* Download Resume Button */}
+                    <a
+                        href={RESUME_PDF_PATH}
+                        download
+                        style={{
+                            fontSize: 11.5,
+                            fontWeight: 500,
+                            fontFamily: "monospace",
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase" as const,
+                            padding: "5px 14px",
+                            border: "1.5px solid var(--accent)",
+                            color: "var(--accent)",
+                            background: "transparent",
+                            borderRadius: 4,
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            transition: "all 0.2s",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "var(--accent)";
+                            e.currentTarget.style.color = "var(--bg)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "var(--accent)";
+                        }}
+                    >
+                        ↓ CV
+                    </a>
 
                     {/* Terminal Mode Toggle */}
                     {onTerminalToggle && (

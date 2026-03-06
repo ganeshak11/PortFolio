@@ -248,6 +248,81 @@ export default function Hero() {
                     I make those decisions explicit.
                 </motion.p>
 
+                {/* ── Resume CTA Buttons ─── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    style={{
+                        maxWidth: 1100,
+                        margin: "32px auto 0",
+                        width: "100%",
+                        display: "flex",
+                        gap: 16,
+                        flexWrap: "wrap",
+                    }}
+                >
+                    <a
+                        href="/resume.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                            fontFamily: "monospace",
+                            fontSize: 13,
+                            fontWeight: 600,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            padding: "10px 28px",
+                            border: "1.5px solid var(--accent)",
+                            color: "var(--bg)",
+                            background: "var(--accent)",
+                            borderRadius: 4,
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            transition: "all 0.25s",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "var(--accent)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "var(--accent)";
+                            e.currentTarget.style.color = "var(--bg)";
+                        }}
+                    >
+                        View Resume →
+                    </a>
+                    <a
+                        href="/Resume/Ganesh Angadi — Resume.pdf"
+                        download
+                        style={{
+                            fontFamily: "monospace",
+                            fontSize: 13,
+                            fontWeight: 600,
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            padding: "10px 28px",
+                            border: "1.5px solid var(--accent)",
+                            color: "var(--accent)",
+                            background: "transparent",
+                            borderRadius: 4,
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            transition: "all 0.25s",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "var(--accent)";
+                            e.currentTarget.style.color = "var(--bg)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "var(--accent)";
+                        }}
+                    >
+                        ↓ Download Resume
+                    </a>
+                </motion.div>
+
                 {/* ── Scroll indicator ─── */}
                 <motion.div
                     initial={{ opacity: 0 }}
