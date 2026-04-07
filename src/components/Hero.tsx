@@ -23,11 +23,20 @@ export default function Hero() {
     const [bootDone, setBootDone] = useState(false);
     const [lineIdx, setLineIdx] = useState(0);
     const [typedLines, setTyped] = useState<string[]>([]);
+    const [isMobile, setIsMobile] = useState(false);
 
     const heroRef = useRef<HTMLDivElement>(null);
     const maskRef = useRef<{ x: number; y: number }>({ x: -999, y: -999 });
     const rafRef = useRef<number | null>(null);
     const textRef = useRef<HTMLDivElement>(null);
+
+    /* ── Detect mobile ─────────────────────────── */
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     /* ── Boot animation ─────────────────────────── */
     useEffect(() => {
@@ -122,8 +131,8 @@ export default function Hero() {
         <AnimatePresence>
             <motion.section
                 ref={heroRef}
-                onMouseMove={onMouseMove}
-                onMouseLeave={onMouseLeave}
+                onMouseMove={!isMobile ? onMouseMove : undefined}
+                onMouseLeave={!isMobile ? onMouseLeave : undefined}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
@@ -135,7 +144,7 @@ export default function Hero() {
                     padding: "80px 24px 40px",
                     position: "relative",
                     overflow: "hidden",
-                    cursor: "crosshair",
+                    cursor: isMobile ? "default" : "crosshair",
                 }}
             >
                 {/* ── Eyebrow ─── */}
@@ -195,36 +204,38 @@ export default function Hero() {
                     </div>
 
                     {/* Layer B — revealed text via circular mask */}
-                    <div
-                        aria-label={HERO_REVEAL.join(" ")}
-                        style={{
-                            position: "absolute",
-                            inset: 0,
-                            pointerEvents: "none",
-                            WebkitMaskImage:
-                                "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
-                            maskImage:
-                                "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
-                            background: "var(--accent)",
-                        }}
-                    >
-                        {HERO_REVEAL.map((line, i) => (
-                            <div
-                                key={`b-${i}`}
-                                style={{
-                                    fontSize: "clamp(52px, 10vw, 140px)",
-                                    fontWeight: 900,
-                                    lineHeight: 1.0,
-                                    letterSpacing: "-0.03em",
-                                    color: "var(--bg)",
-                                    userSelect: "none",
-                                    whiteSpace: "nowrap",
-                                }}
-                            >
-                                {line}
-                            </div>
-                        ))}
-                    </div>
+                    {!isMobile && (
+                        <div
+                            aria-label={HERO_REVEAL.join(" ")}
+                            style={{
+                                position: "absolute",
+                                inset: 0,
+                                pointerEvents: "none",
+                                WebkitMaskImage:
+                                    "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
+                                maskImage:
+                                    "radial-gradient(circle 160px at calc(var(--mx)) calc(var(--my)), black 100%, transparent 100%)",
+                                background: "var(--accent)",
+                            }}
+                        >
+                            {HERO_REVEAL.map((line, i) => (
+                                <div
+                                    key={`b-${i}`}
+                                    style={{
+                                        fontSize: "clamp(52px, 10vw, 140px)",
+                                        fontWeight: 900,
+                                        lineHeight: 1.0,
+                                        letterSpacing: "-0.03em",
+                                        color: "var(--bg)",
+                                        userSelect: "none",
+                                        whiteSpace: "nowrap",
+                                    }}
+                                >
+                                    {line}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* ── Subline ─── */}

@@ -226,3 +226,20 @@ body {
     display: none;
   }
 }
+
+/* ─── Mobile Responsive Navbar ───────────────────────────────── */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  
+  .mobile-hamburger {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-hamburger {
+    display: none !important;
+  }
+}
