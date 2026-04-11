@@ -1,0 +1,9 @@
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ganeshangadi.online/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1

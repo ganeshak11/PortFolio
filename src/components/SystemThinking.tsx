@@ -27,11 +27,17 @@ const PRINCIPLES = [
     },
 ];
 
-const STATS: { label: string; target: number; suffix: string }[] = [
-    { label: "Years building", target: 3, suffix: "+" },
-    { label: "Outages learned from", target: 4, suffix: "" },
-    { label: "Uptime after fixes", target: 99, suffix: "%" },
-    { label: "Git commits understood", target: 1000, suffix: "+" },
+const STATS: { label: string; target: number; suffix: string; isImage?: boolean; imageUrl?: string }[] = [
+    { label: "Years learning systems", target: 2, suffix: "+" },
+    { label: "Failure simulations tested", target: 8, suffix: "+" },
+    { label: "Focus on reliability", target: 100, suffix: "%" },
+    { 
+        label: "Live GitHub Stats", 
+        target: 0, 
+        suffix: "",
+        isImage: true,
+        imageUrl: "https://github-readme-stats-rho-six-90.vercel.app/api?username=ganeshak11&show_icons=true&count_private=true&hide_border=true&bg_color=0d0d0d&title_color=39ff14&icon_color=06b6d4&text_color=f0f0f0&border_radius=8"
+    },
 ];
 
 function Counter({ target, suffix, active }: { target: number; suffix: string; active: boolean }) {
@@ -90,7 +96,7 @@ export default function SystemThinking() {
                             marginBottom: 12,
                         }}
                     >
-                        04 / SYSTEM_THINKING
+                        06 / SYSTEM_THINKING
                     </p>
                     <h2
                         style={{
@@ -112,17 +118,21 @@ export default function SystemThinking() {
                     transition={{ delay: 0.15, duration: 0.5 }}
                     style={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                        gridTemplateColumns: "repeat(3, 1fr)",
                         gap: 24,
-                        marginBottom: 56,
-                        padding: "32px",
-                        background: "var(--card-bg)",
-                        border: "1px solid var(--border)",
-                        borderRadius: 8,
+                        marginBottom: 32,
                     }}
                 >
-                    {STATS.map((s) => (
-                        <div key={s.label} style={{ textAlign: "center" }}>
+                    {STATS.filter(s => !s.isImage).map((s) => (
+                        <div 
+                            key={s.label} 
+                            className="glass-card"
+                            style={{ 
+                                textAlign: "center",
+                                padding: "32px 24px",
+                                borderRadius: 8,
+                            }}
+                        >
                             <Counter target={s.target} suffix={s.suffix} active={inView} />
                             <p style={{
                                 fontFamily: "monospace",
@@ -135,6 +145,43 @@ export default function SystemThinking() {
                             </p>
                         </div>
                     ))}
+                </motion.div>
+
+                {/* ── GitHub Stats Card ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="glass-card"
+                    style={{
+                        padding: "clamp(24px, 5vw, 48px)",
+                        borderRadius: 8,
+                        marginBottom: 56,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: 16,
+                    }}
+                >
+                    <p style={{
+                        fontFamily: "monospace",
+                        fontSize: 12,
+                        letterSpacing: "0.15em",
+                        color: "var(--accent)",
+                        textAlign: "center",
+                    }}>
+                        [LIVE GITHUB ACTIVITY]
+                    </p>
+                    <img 
+                        src={STATS.find(s => s.isImage)?.imageUrl} 
+                        alt="GitHub Stats"
+                        style={{
+                            width: "100%",
+                            maxWidth: "600px",
+                            height: "auto",
+                            borderRadius: 8,
+                        }}
+                    />
                 </motion.div>
 
                 {/* ── Principles grid ── */}

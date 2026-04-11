@@ -77,7 +77,7 @@ export default function About() {
                         >
                             <img
                                 src="/profile.jpg"
-                                alt="Ganesh Angadi"
+                                alt="Ganesh Angadi - DevOps Engineer specializing in Docker, Kubernetes, and Linux system administration"
                                 style={{
                                     width: "100%",
                                     height: "100%",
@@ -104,7 +104,8 @@ export default function About() {
                                             marginBottom: 24,
                                         }}
                                     >
-                                        Student since 2023. Focused on DevOps & System Architecture.
+                                        DevOps Engineer since 2023.
+                                        Focused on Docker, Kubernetes, Linux fundamentals, and System Architecture with strong system design expertise.
                                     </p>
                                     <p
                                         style={{
@@ -114,7 +115,17 @@ export default function About() {
                                         }}
                                     >
                                         I don't just build features. I design systems. I think in control
-                                        flow, model failure states, and design for observability.
+                                        flow, model failure states, and design for observability. Read about my{" "}
+                                        <a
+                                            href="#project"
+                                            style={{
+                                                color: "var(--accent)",
+                                                textDecoration: "underline",
+                                            }}
+                                        >
+                                            MY(suru) BUS system design project
+                                        </a>
+                                        {" "}or explore my DevOps learning journey.
                                     </p>
                                 </div>
 
@@ -132,10 +143,11 @@ export default function About() {
                                     </p>
                                     <ul style={{ listStyle: "none", padding: 0 }}>
                                         {[
-                                            "Linux internals (filesystem, permissions, processes, services)",
-                                            "Git beyond push (commit graph mental model)",
-                                            "Question architecture decisions instead of blindly using tools",
-                                            "Backend + DevOps oriented, not pure frontend",
+                                            "Docker (complete) - containerization, multi-stage builds, orchestration",
+                                            "Linux fundamentals - filesystem, permissions, systemd, process management, logs",
+                                            "Git beyond push - commit graph mental model, branching strategies",
+                                            "CI/CD pipelines - Jenkins, GitLab CI, automated testing and deployment",
+                                            "System architecture - questioning decisions instead of blindly using tools",
                                         ].map((item, i) => (
                                             <li
                                                 key={i}

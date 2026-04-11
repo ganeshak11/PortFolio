@@ -348,11 +348,11 @@
             <div class="contact-row">
                 <a href="https://github.com/ganeshak11" target="_blank">github.com/ganeshak11</a>
                 <span class="sep">|</span>
-                <a href="https://ganesh-angadi-portfolio.vercel.app"
-                    target="_blank">ganesh-angadi-portfolio.vercel.app</a>
+                <a href="https://ganeshangadi.online"
+                    target="_blank">ganeshangadi.online</a>
                 <span class="sep">|</span>
                 <a href="https://www.linkedin.com/in/ganeshangadi1301/"
-                    target="_blank">linkedin.com/in/ganeshangadi1301</a>
+                    target="_blank">linkedin.com/ganeshangadi1301</a>
             </div>
         </header>
 
@@ -360,44 +360,12 @@
         <section class="section">
             <h2 class="section-title">Professional Summary</h2>
             <p class="summary-text">
-                DevOps-focused engineering student with strong Linux fundamentals and hands-on experience building
-                real-time distributed systems. Skilled in backend architecture, CI/CD pipelines, and infrastructure
-                automation. Built production-style platforms including a GPS-based smart bus tracking system and
-                currently developing a mobile-first CI/CD observability platform for monitoring distributed deployment
-                pipelines.
+                DevOps-focused engineering student with strong Linux internals knowledge and experience designing
+                real-time distributed systems. 1st place hackathon winner for MCP-based architecture integrating AI
+                tools via standardized protocol interfaces. Interested in reliability engineering, observability, and
+                infrastructure automation. Focused on building systems that fail gracefully and expose their internal
+                state for debugging.
             </p>
-        </section>
-
-        <!-- Projects -->
-        <section class="section">
-            <h2 class="section-title">Projects</h2>
-
-            <div class="project">
-                <div class="project-name">MY(suru) BUS — Real-Time Smart Bus Tracking System</div>
-                <div class="project-tech">Technologies: Node.js, PostgreSQL, React Native (Expo), Next.js, Socket.io
-                </div>
-                <ul>
-                    <li>Built a real-time GPS bus tracking platform enabling live bus location and ETA visibility for
-                        passengers.</li>
-                    <li>Implemented geofence-based stop detection to automatically identify bus arrival at stops.</li>
-                    <li>Designed backend services using Node.js and PostgreSQL for route and trip management.</li>
-                    <li>Developed offline-first driver location syncing to maintain reliability during network outages.
-                    </li>
-                </ul>
-            </div>
-
-            <div class="project">
-                <div class="project-name">CI/CD Sentinel — Mobile-First CI/CD Observability Platform</div>
-                <div class="project-tech">Technologies: React Native (Expo), Node.js, GitHub Actions APIs</div>
-                <ul>
-                    <li>Designing a CI/CD observability platform that aggregates pipeline execution events across GitHub
-                        Actions, Vercel, and Render.</li>
-                    <li>Aggregating pipeline execution events and deployment states into a centralized monitoring
-                        system.</li>
-                    <li>Implementing real-time alerts for build failures and deployment issues.</li>
-                    <li>Building a mobile-first monitoring interface using React Native.</li>
-                </ul>
-            </div>
         </section>
 
         <!-- Technical Skills -->
@@ -406,27 +374,76 @@
             <table class="skills-table">
                 <tr>
                     <td class="cat">Operating Systems</td>
-                    <td class="val">Linux</td>
+                    <td class="val">Linux (filesystem, permissions, systemd, process management, logs)</td>
                 </tr>
                 <tr>
                     <td class="cat">DevOps & Tools</td>
-                    <td class="val">Docker, Git, GitHub, CI/CD Pipelines, Bash</td>
+                    <td class="val">Docker (production usage), Git, GitHub, CI/CD Pipelines, Bash, Kubernetes (Learning)</td>
                 </tr>
                 <tr>
                     <td class="cat">Backend Development</td>
-                    <td class="val">Node.js, PostgreSQL</td>
+                    <td class="val">Node.js, PostgreSQL, MCP (Model Context Protocol)</td>
                 </tr>
                 <tr>
                     <td class="cat">Frontend / Mobile</td>
                     <td class="val">Next.js, React Native (Expo)</td>
                 </tr>
+                <tr>
+                    <td class="cat">Version Control Concepts</td>
+                    <td class="val">Branching strategies, commit hygiene, partial staging, rebase workflows</td>
+                </tr>
             </table>
         </section>
 
-        <!-- Programming Languages -->
+        <!-- Languages -->
         <section class="section">
-            <h2 class="section-title">Programming Languages</h2>
-            <p class="lang-text">JavaScript, Python, C, C++, Java, Shell, HTML, CSS</p>
+            <h2 class="section-title">Languages</h2>
+            <p class="lang-text">JavaScript, Python, C, C++, Java, Bash / Shell scripting, HTML, CSS</p>
+        </section>
+
+        <!-- Achievements -->
+        <section class="section">
+            <h2 class="section-title">Achievements</h2>
+            <div class="project">
+                <div class="project-name">🏆 1st Place — MCP-Based Systems Engineering Intelligent System Hackathon</div>
+                <div class="project-tech">Model Context Protocol (MCP) Wrapper Development</div>
+                <ul>
+                    <li>Won 1st place for building an MCP wrapper around an Indian Sign Language (ISL) to text and speech translation tool.</li>
+                    <li>Developed a working MCP server that integrates ISL translation capabilities into AI systems using the Model Context Protocol.</li>
+                    <li>Wrapped existing ISL-to-text translator tool with MCP interface, enabling seamless integration with AI assistants and development environments.</li>
+                    <li>Demonstrated system architecture thinking by bridging accessibility tools with modern AI infrastructure.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="section">
+            <h2 class="section-title">Projects</h2>
+
+            <div class="project">
+                <div class="project-name">MY(suru) BUS — Real-Time Smart Bus Tracking System</div>
+                <div class="project-tech">Technologies: Node.js, PostgreSQL, React Native (Expo), Next.js, Supabase</div>
+                <ul>
+                    <li>Built a real-time GPS bus tracking platform with <1–2 sec update latency enabling live bus location and ETA visibility for passengers.</li>
+                    <li>Designed schema with circular FK handling between trips and buses to preserve relational integrity while maintaining referential consistency.</li>
+                    <li>Implemented geofence-based stop detection to automatically identify bus arrival at stops.</li>
+                    <li>Designed backend services using Node.js and PostgreSQL with Row-Level Security policies enforced at database level.</li>
+                    <li>Developed offline-first driver location syncing with queue-based sync to maintain reliability during unreliable network conditions.</li>
+                    <li>Built event-driven realtime architecture using WebSocket-based live updates for passenger apps.</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-name">CI/CD Sentinel — Mobile-First CI/CD Observability Platform</div>
+                <div class="project-tech">Technologies: React Native (Expo), Node.js, GitHub Actions APIs, Vercel API, Render API</div>
+                <ul>
+                    <li>Designing a CI/CD observability platform that aggregates pipeline execution events from GitHub Actions, Vercel, and Render APIs.</li>
+                    <li>Building event normalization layer for multi-provider observability to unify deployment states across different platforms.</li>
+                    <li>Implementing real-time alerts for build failures and deployment issues with failure pattern detection.</li>
+                    <li>Developing mobile-first monitoring interface using React Native for on-the-go pipeline visibility.</li>
+                    <li>Focused on Git commit-to-deploy traceability and deployment audit tracking.</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Education -->

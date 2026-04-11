@@ -51,7 +51,7 @@ export default function Contact() {
                             marginBottom: 12,
                         }}
                     >
-                        06 / CONTACT
+                        07 / CONTACT
                     </p>
                     {/* Typewriter heading */}
                     <h2
@@ -137,6 +137,39 @@ export default function Contact() {
                             </motion.a>
                         ))}
                     </div>
+
+                    <p
+                        style={{
+                            marginTop: 32,
+                            fontSize: 14,
+                            color: "var(--muted)",
+                            textAlign: "center",
+                        }}
+                    >
+                        View all{" "}
+                        <a
+                            href="#project"
+                            style={{
+                                color: "var(--accent)",
+                                textDecoration: "underline",
+                            }}
+                        >
+                            DevOps projects
+                        </a>
+                        {" "}or connect on{" "}
+                        <a
+                            href="https://github.com/ganeshak11"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                                color: "var(--accent)",
+                                textDecoration: "underline",
+                            }}
+                        >
+                            GitHub
+                        </a>
+                        .
+                    </p>
                 </motion.div>
             </div>
         </section>

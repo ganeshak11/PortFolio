@@ -32,7 +32,7 @@ export default function FeaturedProject() {
                             marginBottom: 12,
                         }}
                     >
-                        02 / FEATURED PROJECT
+                        03 / FEATURED PROJECT
                     </p>
                     <h2
                         style={{
@@ -103,8 +103,17 @@ export default function FeaturedProject() {
                             marginBottom: 48,
                         }}
                     >
-                        A city-scale real-time bus tracking and management platform built
-                        with system reliability as the priority.
+                        A city-scale real-time bus tracking and management platform built by{" "}
+                        <a
+                            href="#about"
+                            style={{
+                                color: "var(--accent)",
+                                textDecoration: "underline",
+                            }}
+                        >
+                            Ganesh Angadi
+                        </a>
+                        , a DevOps engineer focused on system reliability and Linux-based infrastructure design.
                     </p>
 
                     <div

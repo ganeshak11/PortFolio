@@ -9,7 +9,8 @@ const STACK = [
     { name: "Systemd", level: "Core" },
     { name: "Bash", level: "Core" },
     { name: "Networking", level: "Basics" },
-    { name: "Docker", level: "Learning" },
+    { name: "Docker", level: "Complete" },
+    { name: "Kubernetes", level: "Learning" },
     { name: "CI/CD Pipelines", level: "Core" },
     { name: "PostgreSQL", level: "Core" },
     { name: "Supabase", level: "Core" },
@@ -70,7 +71,7 @@ export default function DevOpsStack() {
                             marginBottom: 12,
                         }}
                     >
-                        03 / DEVOPS_STACK
+                        05 / DEVOPS_STACK
                     </p>
                     <h2
                         style={{

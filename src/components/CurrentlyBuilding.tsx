@@ -86,7 +86,7 @@ export default function CurrentlyBuilding() {
                             marginBottom: 12,
                         }}
                     >
-                        05 / CURRENTLY_BUILDING
+                        06 / CURRENTLY_BUILDING
                     </p>
                     <h2
                         style={{
@@ -113,7 +113,7 @@ export default function CurrentlyBuilding() {
                             [IN PROGRESS]
                         </motion.span>
                         <a
-                            href="https://github.com/yourusername/cicd-sentinel"
+                            href="https://github.com/ganeshak11/CI-CD_Sentinel"
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
