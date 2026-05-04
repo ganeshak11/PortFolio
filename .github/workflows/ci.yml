@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+# This workflow only runs when a Pull Request is made targeting the 'main' branch
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Build & Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Matches your package.json @types/node^20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Build (Typecheck & Lint)
+        # In Next.js, a build failure (like a TS error or bad import) 
+        # will cause this command to exit with an error (exit code 1), 
+        # which fails the entire GitHub Action.
+        run: npm run build
