@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "thinking", "contact", "README.md"],
     "/about": ["info.txt"],
-    "/projects": ["mysuru-bus", "ci-cd-sentinel"],
+    "/projects": ["mysuru-bus", "autoops", "cyber-kavach", "ci-cd-sentinel"],
     "/stack": ["tools.txt"],
     "/thinking": ["principles.txt"],
     "/contact": ["links.txt"],
@@ -60,23 +60,62 @@ KNOWN LIMITATIONS:
 △ GPS precision limits – urban canyon effects
 △ No traffic prediction yet – ETA is distance-based only`,
 
-    "/projects/ci-cd-sentinel": `CI/CD Sentinel [IN PROGRESS]
+    "/projects/ci-cd-sentinel": `CI/CD Sentinel [~80% COMPLETE]
 
-Designing a CI/CD monitoring and enforcement system focused on
-building observability around CI/CD instead of blindly trusting
-green checkmarks.
+Building a centralized observability and recovery layer for software
+deployments. Tracking deployment history, monitoring health status
+via polling, and providing one-click recovery controls.
 
-FOCUS AREAS:
-▸ Pipeline health visibility
-▸ Deployment audit tracking
-▸ Log aggregation insights
-▸ Failure pattern detection
-▸ Git commit-to-deploy traceability
-▸ Infrastructure sanity checks
+PROGRESS:
+▸ Backend Foundation & DB [█████████░] 95%
+▸ Webhook Ingestion       [█████████░] 90%
+▸ Health Monitoring       [███████░░░] 75%
+▸ Dashboard UI            [██████░░░░] 60%
 
 GOAL:
 Build observability around CI/CD pipelines. Make deployment
 decisions explicit, not implicit. Track what changed, when, and why.`,
+
+    "/projects/autoops": `AUTOops - AWS Infrastructure Orchestrator (Hackathon)
+
+The DevOps and Infrastructure layer for an AI-driven cloud provisioning
+platform built by a 4-person team. I architected the containerization
+and local deployment environment.
+
+ARCHITECTURE:
+- Frontend Dashboard – React
+- Backend API Gateway – Node.js
+- Master Agent – Python LLM Planner
+- Worker Agent – Python AWS Executor
+- Infrastructure – Docker & AWS EC2
+
+CORE PHILOSOPHY:
+▸ Containerized local parity ('Works on my machine')
+▸ Internal DNS for secure microservice communication
+▸ Automated bootstrap scripts over manual setup
+
+KNOWN LIMITATIONS:
+△ Heavy reliance on Docker limits deployment options
+△ Hot-reloading required mapping volumes, complicating Dockerfiles`,
+
+    "/projects/cyber-kavach": `Cyber Kavach - Cyber Security Platform Infrastructure (Hackathon)
+
+The infrastructure and deployment track for a real-time intrusion
+detection and response platform built for a DevSecOps hackathon.
+
+ARCHITECTURE:
+- Agent Container – Python + Scikit-Learn (Host Network)
+- Backend Container – FastAPI + WebSockets
+- Frontend Container – HTML/JS + Nginx
+
+CORE PHILOSOPHY:
+▸ Multi-container orchestration
+▸ Strict dependency ordering
+▸ Minimal attack surfaces
+
+KNOWN LIMITATIONS:
+△ Running containers in host network mode breaks Docker isolation
+△ Combining ML models and web servers increased memory footprint`,
 
     "/stack/tools.txt": `DEVOPS STACK:
 

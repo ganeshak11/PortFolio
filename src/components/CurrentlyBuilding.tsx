@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const PROGRESS_ITEMS = [
-    { label: "Architecture Design", pct: 65 },
-    { label: "Core Pipeline Engine", pct: 40 },
-    { label: "Observability Layer", pct: 30 },
-    { label: "Dashboard UI", pct: 15 },
+    { label: "Backend Foundation & DB", pct: 95 },
+    { label: "Webhook Ingestion & Idempotency", pct: 90 },
+    { label: "Health Monitoring Worker", pct: 75 },
+    { label: "Dashboard UI & Redeploy Control", pct: 60 },
 ];
 
 function ProgressBar({ label, pct, active, delay }: { label: string; pct: number; active: boolean; delay: number }) {
@@ -86,7 +86,7 @@ export default function CurrentlyBuilding() {
                             marginBottom: 12,
                         }}
                     >
-                        06 / CURRENTLY_BUILDING
+                        04 / CURRENTLY_BUILDING
                     </p>
                     <h2
                         style={{
@@ -110,7 +110,7 @@ export default function CurrentlyBuilding() {
                                 fontFamily: "monospace",
                             }}
                         >
-                            [IN PROGRESS]
+                            [~80% COMPLETE]
                         </motion.span>
                         <a
                             href="https://github.com/ganeshak11/CI-CD_Sentinel"
@@ -158,9 +158,9 @@ export default function CurrentlyBuilding() {
                             marginBottom: 40,
                         }}
                     >
-                        Designing a CI/CD monitoring and enforcement system focused on
-                        building observability around CI/CD instead of blindly trusting green
-                        checkmarks.
+                        Building a centralized observability and recovery layer for software deployments. 
+                        Tracking deployment history, monitoring health status via polling, and providing 
+                        one-click recovery controls—all from a single dashboard.
                     </p>
 
                     {/* ── Build progress bars ── */}

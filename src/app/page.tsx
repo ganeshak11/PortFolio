@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Achievements from "@/components/Achievements";
-import FeaturedProject from "@/components/FeaturedProject";
+import Projects from "@/components/Projects";
 import DevOpsStack from "@/components/DevOpsStack";
 import SystemThinking from "@/components/SystemThinking";
 import CurrentlyBuilding from "@/components/CurrentlyBuilding";
@@ -46,7 +46,7 @@ export default function Home() {
 
         <section aria-labelledby="projects-heading">
           <h2 id="projects-heading" className="sr-only">DevOps Projects</h2>
-          <FeaturedProject />
+          <Projects />
           <CurrentlyBuilding />
         </section>
 

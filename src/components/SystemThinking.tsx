@@ -28,9 +28,9 @@ const PRINCIPLES = [
 ];
 
 const STATS: { label: string; target: number; suffix: string; isImage?: boolean; imageUrl?: string }[] = [
-    { label: "Years learning systems", target: 2, suffix: "+" },
-    { label: "Failure simulations tested", target: 8, suffix: "+" },
-    { label: "Focus on reliability", target: 100, suffix: "%" },
+    { label: "Infrastructure projects", target: 4, suffix: "" },
+    { label: "Containers orchestrated", target: 12, suffix: "+" },
+    { label: "Uptime obsession", target: 99.9, suffix: "%" },
     { 
         label: "Live GitHub Stats", 
         target: 0, 
