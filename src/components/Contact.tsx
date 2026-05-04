@@ -148,7 +148,7 @@ export default function Contact() {
                     >
                         View all{" "}
                         <a
-                            href="#project"
+                            href="#projects"
                             style={{
                                 color: "var(--accent)",
                                 textDecoration: "underline",

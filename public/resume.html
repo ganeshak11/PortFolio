@@ -297,7 +297,7 @@
                 box-shadow: none;
             }
 
-            .section {
+            .project, .edu-entry {
                 page-break-inside: avoid;
             }
 
@@ -422,26 +422,42 @@
 
             <div class="project">
                 <div class="project-name">MY(suru) BUS — Real-Time Smart Bus Tracking System</div>
-                <div class="project-tech">Technologies: Node.js, PostgreSQL, React Native (Expo), Next.js, Supabase</div>
+                <div class="project-tech">Technologies: Node.js, PostgreSQL, React Native, Next.js, Supabase, WebSockets</div>
                 <ul>
-                    <li>Built a real-time GPS bus tracking platform with <1–2 sec update latency enabling live bus location and ETA visibility for passengers.</li>
-                    <li>Designed schema with circular FK handling between trips and buses to preserve relational integrity while maintaining referential consistency.</li>
-                    <li>Implemented geofence-based stop detection to automatically identify bus arrival at stops.</li>
-                    <li>Designed backend services using Node.js and PostgreSQL with Row-Level Security policies enforced at database level.</li>
-                    <li>Developed offline-first driver location syncing with queue-based sync to maintain reliability during unreliable network conditions.</li>
-                    <li>Built event-driven realtime architecture using WebSocket-based live updates for passenger apps.</li>
+                    <li>Built a real-time GPS bus tracking platform with <1–2 sec update latency using Node.js and event-driven WebSocket architecture.</li>
+                    <li>Designed complex PostgreSQL schema with circular FK handling between trips and buses to preserve referential consistency.</li>
+                    <li>Implemented geofence-based stop detection to automatically identify bus arrivals without manual driver input.</li>
+                    <li>Developed an offline-first driver location syncing mechanism with queue-based caching to maintain reliability during network failures.</li>
                 </ul>
             </div>
 
             <div class="project">
-                <div class="project-name">CI/CD Sentinel — Mobile-First CI/CD Observability Platform</div>
-                <div class="project-tech">Technologies: React Native (Expo), Node.js, GitHub Actions APIs, Vercel API, Render API</div>
+                <div class="project-name">CI/CD Sentinel — Centralized Deployment Observability Platform</div>
+                <div class="project-tech">Technologies: Next.js, Node.js, PostgreSQL, GitHub Actions, Webhooks</div>
                 <ul>
-                    <li>Designing a CI/CD observability platform that aggregates pipeline execution events from GitHub Actions, Vercel, and Render APIs.</li>
-                    <li>Building event normalization layer for multi-provider observability to unify deployment states across different platforms.</li>
-                    <li>Implementing real-time alerts for build failures and deployment issues with failure pattern detection.</li>
-                    <li>Developing mobile-first monitoring interface using React Native for on-the-go pipeline visibility.</li>
-                    <li>Focused on Git commit-to-deploy traceability and deployment audit tracking.</li>
+                    <li>Built a centralized observability layer tracking deployment history, health status, and recovery controls for software teams.</li>
+                    <li>Developed webhook ingestion systems for GitHub Actions with idempotency, storing deployment metadata in PostgreSQL.</li>
+                    <li>Implemented automated service health monitoring with a 60-second polling worker and one-click GitHub Actions redeploy triggers.</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-name">AUTOops (Hackathon) — AWS Infrastructure Orchestrator</div>
+                <div class="project-tech">Technologies: Docker, Docker Compose, CI/CD, AWS</div>
+                <ul>
+                    <li>Led the DevOps and Infrastructure layer for an AI-driven cloud provisioning platform built by a 4-person team.</li>
+                    <li>Architected local orchestration using Docker Compose, establishing internal networking and environment variable injection for 4 microservices.</li>
+                    <li>Developed automated deployment scripts for Windows and Ubuntu to rapidly install Docker and spin up the environment on AWS EC2 instances.</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-name">Cyber Kavach (Hackathon) — Cyber Security Platform</div>
+                <div class="project-tech">Technologies: Docker, Linux, System Administration</div>
+                <ul>
+                    <li>Led the Infrastructure and Deployment track for a real-time intrusion detection and response platform.</li>
+                    <li>Architected the multi-container orchestration using Docker Compose, configuring host network modes to allow the agent container to securely monitor host processes.</li>
+                    <li>Packaged the frontend, FastAPI backend, and AI agent into optimized Docker images, ensuring seamless communication across the tech stack.</li>
                 </ul>
             </div>
         </section>
