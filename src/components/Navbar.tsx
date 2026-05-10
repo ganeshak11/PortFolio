@@ -12,15 +12,23 @@ const NAV_LINKS = [
     { href: "#stack", label: "Stack" },
     { href: "/blog", label: "Blog" },
     { href: "#contact", label: "Contact" },
-    { href: "/resume.html", label: "Resume", external: true },
 ];
-
-const RESUME_PDF_PATH = "/Resume/Ganesh Angadi — Resume.pdf";
 
 export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => void }) {
     const { theme, toggle } = useTheme();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const handleDownloadCV = () => {
+        const resumeWindow = window.open('/resume.html', '_blank');
+        if (resumeWindow) {
+            resumeWindow.addEventListener('load', () => {
+                setTimeout(() => {
+                    resumeWindow.print();
+                }, 500);
+            });
+        }
+    };
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 40);
@@ -93,9 +101,8 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                         ))}
 
                         {/* Download Resume Button */}
-                        <a
-                            href={RESUME_PDF_PATH}
-                            download
+                        <button
+                            onClick={handleDownloadCV}
                             style={{
                                 fontSize: 11.5,
                                 fontWeight: 500,
@@ -108,7 +115,6 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                                 background: "transparent",
                                 borderRadius: 4,
                                 cursor: "pointer",
-                                textDecoration: "none",
                                 transition: "all 0.2s",
                             }}
                             onMouseEnter={(e) => {
@@ -121,7 +127,7 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                             }}
                         >
                             ↓ CV
-                        </a>
+                        </button>
 
                         {/* Terminal Mode Toggle */}
                         {onTerminalToggle && (
@@ -256,10 +262,11 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                             </a>
                         ))}
 
-                        <a
-                            href={RESUME_PDF_PATH}
-                            download
-                            onClick={() => setMobileMenuOpen(false)}
+                        <button
+                            onClick={() => {
+                                handleDownloadCV();
+                                setMobileMenuOpen(false);
+                            }}
                             style={{
                                 fontFamily: "monospace",
                                 fontSize: 12,
@@ -271,12 +278,12 @@ export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => 
                                 color: "var(--accent)",
                                 background: "transparent",
                                 borderRadius: 4,
-                                textDecoration: "none",
-                                textAlign: "center",
+                                cursor: "pointer",
+                                textAlign: "center" as const,
                             }}
                         >
                             ↓ Download CV
-                        </a>
+                        </button>
 
                         {onTerminalToggle && (
                             <button

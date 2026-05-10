@@ -303,22 +303,29 @@ export default function Hero() {
                     >
                         View Resume →
                     </a>
-                    <a
-                        href="/Resume/Ganesh Angadi — Resume.pdf"
-                        download
+                    <button
+                        onClick={() => {
+                            const resumeWindow = window.open('/resume.html', '_blank');
+                            if (resumeWindow) {
+                                resumeWindow.addEventListener('load', () => {
+                                    setTimeout(() => {
+                                        resumeWindow.print();
+                                    }, 500);
+                                });
+                            }
+                        }}
                         style={{
                             fontFamily: "monospace",
                             fontSize: 13,
                             fontWeight: 600,
                             letterSpacing: "0.08em",
-                            textTransform: "uppercase",
+                            textTransform: "uppercase" as const,
                             padding: "10px 28px",
                             border: "1.5px solid var(--accent)",
                             color: "var(--accent)",
                             background: "transparent",
                             borderRadius: 4,
                             cursor: "pointer",
-                            textDecoration: "none",
                             transition: "all 0.25s",
                         }}
                         onMouseEnter={(e) => {
@@ -331,7 +338,7 @@ export default function Hero() {
                         }}
                     >
                         ↓ Download Resume
-                    </a>
+                    </button>
                 </motion.div>
 
                 {/* ── Scroll indicator ─── */}
