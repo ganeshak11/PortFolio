@@ -1,5 +1,5 @@
 import React from "react";
-import { NAV_LINKS, RESUME_PDF_PATH } from "./navData";
+import { NAV_LINKS } from "./navData";
 
 interface DesktopNavProps {
     theme: string;
@@ -33,14 +33,22 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
             ))}
 
             {/* Download Resume Button */}
-            <a
-                href={RESUME_PDF_PATH}
-                download
+            <button
+                onClick={() => {
+                    const resumeWindow = window.open('/resume.html', '_blank');
+                    if (resumeWindow) {
+                        resumeWindow.addEventListener('load', () => {
+                            setTimeout(() => {
+                                resumeWindow.print();
+                            }, 500);
+                        });
+                    }
+                }}
                 style={{
-                    fontSize: 12.5,
+                    fontSize: 11.5,
                     fontWeight: 500,
                     fontFamily: "monospace",
-                    letterSpacing: "0.05em",
+                    letterSpacing: "0.08em",
                     textTransform: "uppercase" as const,
                     padding: "5px 14px",
                     border: "1.5px solid var(--accent)",
@@ -48,18 +56,19 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
                     background: "transparent",
                     borderRadius: 4,
                     cursor: "pointer",
-                    textDecoration: "none",
-                    transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
+                    transition: "all 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                    e.currentTarget.style.cssText = "font-size: 12.5px; font-weight: 500; font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 14px; border: 1.5px solid var(--accent); color: var(--bg); background: var(--accent); border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                    e.currentTarget.style.background = "var(--accent)";
+                    e.currentTarget.style.color = "var(--bg)";
                 }}
                 onMouseLeave={(e) => {
-                    e.currentTarget.style.cssText = "font-size: 12.5px; font-weight: 500; font-family: monospace; letter-spacing: 0.05em; text-transform: uppercase; padding: 5px 14px; border: 1.5px solid var(--accent); color: var(--accent); background: transparent; border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.color = "var(--accent)";
                 }}
             >
                 ↓ CV
-            </a>
+            </button>
 
             {/* Terminal Mode Toggle */}
             {onTerminalToggle && (

@@ -91,6 +91,18 @@ export default function About() {
 
                         {/* Content */}
                         <div style={{ flex: 1, minWidth: 280 }}>
+                            <h3
+                                style={{
+                                    fontSize: 24,
+                                    fontWeight: 800,
+                                    color: "var(--accent)",
+                                    marginBottom: 24,
+                                    letterSpacing: "0.05em",
+                                    fontFamily: "monospace",
+                                }}
+                            >
+                                GANESH ANGADI
+                            </h3>
                             <div
                                 style={{
                                     display: "grid",

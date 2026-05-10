@@ -1,6 +1,6 @@
 import React from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { NAV_LINKS, RESUME_PDF_PATH } from "./navData";
+import { NAV_LINKS } from "./navData";
 
 interface MobileNavProps {
     mobileMenuOpen: boolean;
@@ -114,27 +114,35 @@ export function MobileNav({
                             </a>
                         ))}
 
-                        <a
-                            href={RESUME_PDF_PATH}
-                            download
-                            onClick={() => setMobileMenuOpen(false)}
+                        <button
+                            onClick={() => {
+                                const resumeWindow = window.open('/resume.html', '_blank');
+                                if (resumeWindow) {
+                                    resumeWindow.addEventListener('load', () => {
+                                        setTimeout(() => {
+                                            resumeWindow.print();
+                                        }, 500);
+                                    });
+                                }
+                                setMobileMenuOpen(false);
+                            }}
                             style={{
                                 fontFamily: "monospace",
                                 fontSize: 12,
                                 fontWeight: 600,
-                                letterSpacing: "0.05em",
+                                letterSpacing: "0.08em",
                                 textTransform: "uppercase" as const,
                                 padding: "10px 20px",
                                 border: "1.5px solid var(--accent)",
                                 color: "var(--accent)",
                                 background: "transparent",
                                 borderRadius: 4,
-                                textDecoration: "none",
-                                textAlign: "center",
+                                cursor: "pointer",
+                                textAlign: "center" as const,
                             }}
                         >
                             ↓ Download CV
-                        </a>
+                        </button>
 
                         {onTerminalToggle && (
                             <button

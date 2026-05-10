@@ -1,10 +1,15 @@
-export const NAV_LINKS = [
+export interface NavLink {
+    href: string;
+    label: string;
+    external?: boolean;
+}
+
+export const NAV_LINKS: NavLink[] = [
     { href: "#about", label: "About" },
     { href: "#achievements", label: "Awards" },
     { href: "#projects", label: "Projects" },
     { href: "#stack", label: "Stack" },
+    { href: "/blog", label: "Blog" },
     { href: "#contact", label: "Contact" },
-    { href: "/resume.html", label: "Resume", external: true },
 ];
 
-export const RESUME_PDF_PATH = "/Resume/Ganesh Angadi — Resume.pdf";
