@@ -3,8 +3,21 @@
 import Link from "next/link";
 import { useTheme } from "./ThemeProvider";
 import { useState, useEffect } from "react";
-import { DesktopNav } from "./navbar/DesktopNav";
-import { MobileNav } from "./navbar/MobileNav";
+
+import { motion, AnimatePresence } from "framer-motion";
+
+const NAV_LINKS = [
+    { href: "#about", label: "About" },
+    { href: "#achievements", label: "Awards" },
+    { href: "#projects", label: "Projects" },
+    { href: "#stack", label: "Stack" },
+    { href: "/blog", label: "Blog" },
+    { href: "#contact", label: "Contact" },
+    { href: "/resume.html", label: "Resume", external: true },
+];
+
+const RESUME_PDF_PATH = "/Resume/Ganesh Angadi — Resume.pdf";
+
 
 export default function Navbar({ onTerminalToggle }: { onTerminalToggle?: () => void }) {
     const { theme, toggle } = useTheme();
