@@ -209,33 +209,42 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                     >
                         View Resume →
                     </Link>
-                    <Link
-                        href="/Resume/Ganesh Angadi — Resume.pdf"
-                        download
+                    <button
+                        onClick={() => {
+                            const resumeWindow = window.open('/resume.html', '_blank');
+                            if (resumeWindow) {
+                                resumeWindow.addEventListener('load', () => {
+                                    setTimeout(() => {
+                                        resumeWindow.print();
+                                    }, 500);
+                                });
+                            }
+                        }}
                         style={{
                             fontFamily: "monospace",
                             fontSize: 13,
                             fontWeight: 600,
-                            letterSpacing: "0.05em",
-                            textTransform: "uppercase",
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase" as const,
                             padding: "10px 28px",
                             border: "1.5px solid var(--accent)",
                             color: "var(--accent)",
                             background: "transparent",
                             borderRadius: 4,
                             cursor: "pointer",
-                            textDecoration: "none",
-                            transition: "opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s",
+                            transition: "all 0.25s",
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 28px; border: 1.5px solid var(--accent); color: var(--accent); background: transparent; border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s;";
+                            e.currentTarget.style.background = "var(--accent)";
+                            e.currentTarget.style.color = "var(--bg)";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 28px; border: 1.5px solid var(--accent); color: var(--accent); background: transparent; border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s;";
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "var(--accent)";
                         }}
                     >
                         ↓ Download Resume
-                    </Link>
+                    </button>
                 </m.div>
 
                 {/* ── Scroll indicator ─── */}
