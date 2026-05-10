@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
 
 const STACK = [
     { name: "Linux", level: "Advanced" },
@@ -32,8 +32,7 @@ export default function DevOpsStack() {
             const dy = (e.clientY - cy) / (rect.height / 2);
             const rotX = -dy * 12;
             const rotY = dx * 12;
-            el.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04)`;
-            el.style.boxShadow = `0 8px 30px rgba(var(--accent-rgb, 6 182 212) / 0.25), 0 0 0 1px var(--accent)`;
+            el.style.cssText = `padding: 12px 20px; border-radius: 6px; border: 1px solid var(--border); transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; background: var(--card-bg, rgba(20,20,20,0.4)); will-change: transform, box-shadow; display: flex; flex-direction: column; gap: 4px; transform: perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04); box-shadow: 0 8px 30px rgba(var(--accent-rgb, 6 182 212) / 0.25), 0 0 0 1px var(--accent);`;
         },
         []
     );
@@ -41,8 +40,7 @@ export default function DevOpsStack() {
     const handleMouseLeave = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             const el = e.currentTarget;
-            el.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)";
-            el.style.boxShadow = "";
+            el.style.cssText = "padding: 12px 20px; border-radius: 6px; border: 1px solid var(--border); transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; background: var(--card-bg, rgba(20,20,20,0.4)); will-change: transform, box-shadow; display: flex; flex-direction: column; gap: 4px; transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1); box-shadow: none;";
         },
         []
     );
@@ -56,7 +54,7 @@ export default function DevOpsStack() {
             }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -66,7 +64,7 @@ export default function DevOpsStack() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -83,9 +81,9 @@ export default function DevOpsStack() {
                     >
                         Tools &amp; Technologies
                     </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -96,7 +94,7 @@ export default function DevOpsStack() {
                     }}
                 >
                     {STACK.map((item, i) => (
-                        <motion.div
+                        <m.div
                             key={item.name}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -121,16 +119,16 @@ export default function DevOpsStack() {
                             </span>
                             <span
                                 style={{
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     color: "var(--accent)",
-                                    letterSpacing: "0.1em",
+                                    letterSpacing: "0.05em",
                                 }}
                             >
                                 {item.level}
                             </span>
-                        </motion.div>
+                        </m.div>
                     ))}
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

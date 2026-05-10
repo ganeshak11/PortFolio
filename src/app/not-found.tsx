@@ -1,25 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export default function NotFound() {
-  const router = useRouter();
+  const { push } = useRouter();
   const [countdown, setCountdown] = useState(3);
   const [currentPath, setCurrentPath] = useState("");
-  const [mounted, setMounted] = useState(false);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
-    setMounted(true);
+    mountedRef.current = true;
     setCurrentPath(window.location.pathname);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mountedRef.current) return;
 
     if (countdown === 0) {
-      router.push("/");
+      window.location.href = "/";
       return;
     }
 
@@ -28,9 +28,10 @@ export default function NotFound() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [countdown, mounted, router]);
+  }, [countdown]);
 
-  if (!mounted) {
+
+  if (!mountedRef.current) {
     return (
       <div
         style={{
@@ -55,7 +56,7 @@ export default function NotFound() {
         padding: "24px",
       }}
     >
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -158,7 +159,7 @@ export default function NotFound() {
                 fontSize: 12,
                 color: "var(--accent)",
                 marginBottom: 8,
-                letterSpacing: "0.1em",
+                letterSpacing: "0.05em",
               }}
             >
               [AUTO-REDIRECT]
@@ -186,7 +187,7 @@ export default function NotFound() {
           {/* Manual redirect button */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
             <button
-              onClick={() => router.push("/")}
+              onClick={() => push("/")}
               style={{
                 fontFamily: "monospace",
                 fontSize: 13,
@@ -196,22 +197,20 @@ export default function NotFound() {
                 color: "var(--accent)",
                 borderRadius: 4,
                 cursor: "pointer",
-                transition: "all 0.2s",
+                transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--accent)";
-                e.currentTarget.style.color = "var(--bg)";
+                e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; padding: 12px 24px; background: var(--accent); border: 1px solid var(--accent); color: var(--bg); border-radius: 4px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "var(--accent)";
+                e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; padding: 12px 24px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
               }}
             >
               [Go Home Now]
             </button>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }

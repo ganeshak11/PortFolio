@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
 
 const PROGRESS_ITEMS = [
     { label: "Backend Foundation & DB", pct: 95 },
@@ -30,7 +30,7 @@ function ProgressBar({ label, pct, active, delay }: { label: string; pct: number
                 borderRadius: 3,
                 overflow: "hidden",
             }}>
-                <motion.div
+                <m.div
                     initial={{ width: 0 }}
                     animate={active ? { width: `${pct}%` } : { width: 0 }}
                     transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
@@ -44,7 +44,7 @@ function ProgressBar({ label, pct, active, delay }: { label: string; pct: number
             </div>
             <div style={{
                 fontFamily: "monospace",
-                fontSize: 10,
+                fontSize: 12,
                 color: "var(--accent)",
                 marginTop: 4,
                 opacity: 0.6,
@@ -71,7 +71,7 @@ export default function CurrentlyBuilding() {
             }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -81,7 +81,7 @@ export default function CurrentlyBuilding() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -101,7 +101,7 @@ export default function CurrentlyBuilding() {
                         }}
                     >
                         CI/CD Sentinel
-                        <motion.span
+                        <m.span
                             animate={{ opacity: [1, 0.4, 1] }}
                             transition={{ repeat: Infinity, duration: 2 }}
                             style={{
@@ -111,7 +111,7 @@ export default function CurrentlyBuilding() {
                             }}
                         >
                             [~80% COMPLETE]
-                        </motion.span>
+                        </m.span>
                         <a
                             href="https://github.com/ganeshak11/CI-CD_Sentinel"
                             target="_blank"
@@ -124,23 +124,21 @@ export default function CurrentlyBuilding() {
                                 color: "var(--accent)",
                                 textDecoration: "none",
                                 borderRadius: 4,
-                                transition: "all 0.2s",
+                                transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                             }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.background = "var(--accent)";
-                                e.currentTarget.style.color = "var(--bg)";
+                                e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--bg); background: var(--accent); text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                             }}
                             onMouseLeave={(e) => {
-                                e.currentTarget.style.background = "transparent";
-                                e.currentTarget.style.color = "var(--accent)";
+                                e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--accent); background: transparent; text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                             }}
                         >
                             [GitHub]
                         </a>
                     </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -167,8 +165,8 @@ export default function CurrentlyBuilding() {
                     <div style={{ marginBottom: 40 }}>
                         <p style={{
                             fontFamily: "monospace",
-                            fontSize: 11,
-                            letterSpacing: "0.15em",
+                            fontSize: 12,
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 20,
                         }}>
@@ -196,8 +194,8 @@ export default function CurrentlyBuilding() {
                             <p
                                 style={{
                                     fontFamily: "monospace",
-                                    fontSize: 11,
-                                    letterSpacing: "0.15em",
+                                    fontSize: 12,
+                                    letterSpacing: "0.05em",
                                     color: "var(--accent)",
                                     marginBottom: 16,
                                 }}
@@ -212,9 +210,9 @@ export default function CurrentlyBuilding() {
                                     "Failure pattern detection",
                                     "Git commit-to-deploy traceability",
                                     "Infrastructure sanity checks",
-                                ].map((item, i) => (
+                                ].map((item) => (
                                     <li
-                                        key={i}
+                                        key={item}
                                         style={{
                                             fontSize: 14,
                                             color: "var(--muted)",
@@ -239,8 +237,8 @@ export default function CurrentlyBuilding() {
                             <p
                                 style={{
                                     fontFamily: "monospace",
-                                    fontSize: 11,
-                                    letterSpacing: "0.15em",
+                                    fontSize: 12,
+                                    letterSpacing: "0.05em",
                                     color: "var(--accent)",
                                     marginBottom: 16,
                                 }}
@@ -253,7 +251,7 @@ export default function CurrentlyBuilding() {
                                     lineHeight: 1.8,
                                     color: "var(--fg)",
                                     padding: "16px",
-                                    borderLeft: "3px solid var(--accent)",
+                                    boxShadow: "inset 3px 0 0 var(--accent)",
                                     background: "var(--bg)",
                                 }}
                             >
@@ -263,7 +261,7 @@ export default function CurrentlyBuilding() {
                             </p>
                         </div>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );
