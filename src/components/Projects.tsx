@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
+import Link from "next/link";
 
 const PROJECTS = [
     {
@@ -11,7 +12,7 @@ const PROJECTS = [
         intro: (
             <>
                 A city-scale real-time bus tracking and management platform built by{" "}
-                <a
+                <Link
                     href="#about"
                     style={{
                         color: "var(--accent)",
@@ -19,7 +20,7 @@ const PROJECTS = [
                     }}
                 >
                     Ganesh Angadi
-                </a>
+                </Link>
                 , a DevOps engineer focused on system reliability and Linux-based infrastructure design.
             </>
         ),
@@ -168,7 +169,7 @@ export default function Projects() {
             }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -178,18 +179,18 @@ export default function Projects() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
                     >
                         03 / PROJECTS
                     </p>
-                </motion.div>
+                </m.div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 100 }}>
                     {PROJECTS.map((project, index) => (
-                        <motion.div
+                        <m.div
                             key={project.name}
                             initial={{ opacity: 0, y: 24 }}
                             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -221,15 +222,13 @@ export default function Projects() {
                                             color: "var(--accent)",
                                             textDecoration: "none",
                                             borderRadius: 4,
-                                            transition: "all 0.2s",
+                                            transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                                         }}
                                         onMouseEnter={(e) => {
-                                            e.currentTarget.style.background = "var(--accent)";
-                                            e.currentTarget.style.color = "var(--bg)";
+                                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--bg); background: var(--accent); text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                                         }}
                                         onMouseLeave={(e) => {
-                                            e.currentTarget.style.background = "transparent";
-                                            e.currentTarget.style.color = "var(--accent)";
+                                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--accent); background: transparent; text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                                         }}
                                     >
                                         [GitHub]
@@ -275,9 +274,9 @@ export default function Projects() {
                                     {/* Architecture */}
                                     <Block label="ARCHITECTURE">
                                         <ul style={{ listStyle: "none", padding: 0 }}>
-                                            {project.architecture.map((item, i) => (
+                                            {project.architecture.map((item) => (
                                                 <li
-                                                    key={i}
+                                                    key={item}
                                                     style={{
                                                         fontSize: 14,
                                                         color: "var(--fg)",
@@ -295,9 +294,9 @@ export default function Projects() {
                                     {/* Core Philosophy */}
                                     <Block label="CORE DESIGN PHILOSOPHY">
                                         <ul style={{ listStyle: "none", padding: 0 }}>
-                                            {project.philosophy.map((item, i) => (
+                                            {project.philosophy.map((item) => (
                                                 <li
-                                                    key={i}
+                                                    key={item}
                                                     style={{
                                                         fontSize: 13,
                                                         color: "var(--muted)",
@@ -320,9 +319,9 @@ export default function Projects() {
                                     {/* Key Features */}
                                     <Block label="KEY FEATURES">
                                         <ul style={{ listStyle: "none", padding: 0 }}>
-                                            {project.features.map((item, i) => (
+                                            {project.features.map((item) => (
                                                 <li
-                                                    key={i}
+                                                    key={item}
                                                     style={{
                                                         fontSize: 13,
                                                         color: "var(--muted)",
@@ -345,9 +344,9 @@ export default function Projects() {
                                     {/* Technical Highlights */}
                                     <Block label="TECHNICAL HIGHLIGHTS">
                                         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                            {project.highlights.map((item, i) => (
+                                            {project.highlights.map((item) => (
                                                 <div
-                                                    key={i}
+                                                    key={item.title}
                                                     style={{
                                                         borderLeft: "2px solid var(--accent)",
                                                         paddingLeft: 16,
@@ -383,8 +382,8 @@ export default function Projects() {
                                     <p
                                         style={{
                                             fontFamily: "monospace",
-                                            fontSize: 11,
-                                            letterSpacing: "0.15em",
+                                            fontSize: 12,
+                                            letterSpacing: "0.05em",
                                             color: "var(--accent)",
                                             marginBottom: 16,
                                         }}
@@ -392,9 +391,9 @@ export default function Projects() {
                                         [KNOWN LIMITATIONS]
                                     </p>
                                     <ul style={{ listStyle: "none", padding: 0 }}>
-                                        {project.limitations.map((item, i) => (
+                                        {project.limitations.map((item) => (
                                             <li
-                                                key={i}
+                                                key={item}
                                                 style={{
                                                     fontSize: 13,
                                                     color: "var(--muted)",
@@ -415,7 +414,7 @@ export default function Projects() {
                                     </ul>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     ))}
                 </div>
             </div>
@@ -429,8 +428,8 @@ function Block({ label, children }: { label: string; children: React.ReactNode }
             <p
                 style={{
                     fontFamily: "monospace",
-                    fontSize: 10,
-                    letterSpacing: "0.2em",
+                    fontSize: 12,
+                    letterSpacing: "0.05em",
                     color: "var(--accent)",
                     marginBottom: 16,
                 }}

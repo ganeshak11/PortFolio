@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+@property --active {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --start {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --mx {
+  syntax: "<length>";
+  initial-value: -999px;
+  inherits: false;
+}
+
+@property --my {
+  syntax: "<length>";
+  initial-value: -999px;
+  inherits: false;
+}
+
 /* ─── Design Tokens ──────────────────────────────────────────── */
 :root {
   /* Light mode */
@@ -255,4 +279,18 @@ body {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
 }

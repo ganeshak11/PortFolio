@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence  } from "framer-motion";
 
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "thinking", "contact", "README.md"],
@@ -166,9 +166,11 @@ const QUICK_COMMANDS = [
 ];
 
 export default function TerminalMode({ onExit }: { onExit: () => void }) {
-    const [history, setHistory] = useState<{ type: "input" | "output"; text: string }[]>([
-        { type: "output", text: "Welcome to portfolio.sh v1.0.0" },
-        { type: "output", text: "Type 'help' for available commands or 'ls' to explore\n" },
+    const entryId = useRef(0);
+    const makeEntry = (type: "input" | "output", text: string) => ({ id: ++entryId.current, type, text });
+    const [history, setHistory] = useState<{ id: number; type: "input" | "output"; text: string }[]>([
+        makeEntry("output", "Welcome to portfolio.sh v1.0.0"),
+        makeEntry("output", "Type 'help' for available commands or 'ls' to explore\n"),
     ]);
     const [input, setInput] = useState("");
     const [currentDir, setCurrentDir] = useState("/");
@@ -185,20 +187,20 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
         const trimmed = cmd.trim();
         if (!trimmed) return;
 
-        setHistory((prev) => [...prev, { type: "input", text: `ganesh@portfolio:${currentDir}$ ${trimmed}` }]);
+        setHistory((prev) => [...prev, makeEntry("input", `ganesh@portfolio:${currentDir}$ ${trimmed}`)]);
 
         const [command, ...args] = trimmed.split(" ");
 
         switch (command) {
             case "ls":
                 const contents = FILE_SYSTEM[currentDir as keyof typeof FILE_SYSTEM] || [];
-                setHistory((prev) => [...prev, { type: "output", text: contents.join("\n") + "\n" }]);
+                setHistory((prev) => [...prev, makeEntry("output", contents.join("\n") + "\n")]);
                 break;
 
             case "cd":
                 const target = args[0];
                 if (!target) {
-                    setHistory((prev) => [...prev, { type: "output", text: "cd: missing operand\n" }]);
+                    setHistory((prev) => [...prev, makeEntry("output", "cd: missing operand\n")]);
                 } else if (target === "..") {
                     const newDir = currentDir === "/" ? "/" : currentDir.split("/").slice(0, -1).join("/") || "/";
                     setCurrentDir(newDir);
@@ -209,7 +211,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                     if (FILE_SYSTEM[newPath as keyof typeof FILE_SYSTEM]) {
                         setCurrentDir(newPath);
                     } else {
-                        setHistory((prev) => [...prev, { type: "output", text: `cd: ${target}: No such directory\n` }]);
+                        setHistory((prev) => [...prev, makeEntry("output", `cd: ${target}: No such directory\n`)]);
                     }
                 }
                 break;
@@ -217,14 +219,14 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
             case "cat":
                 const filename = args[0];
                 if (!filename) {
-                    setHistory((prev) => [...prev, { type: "output", text: "cat: missing operand\n" }]);
+                    setHistory((prev) => [...prev, makeEntry("output", "cat: missing operand\n")]);
                 } else {
                     const filePath = currentDir === "/" ? filename : `${currentDir}/${filename}`;
                     const content = FILE_CONTENTS[filePath] || FILE_CONTENTS[filename];
                     if (content) {
-                        setHistory((prev) => [...prev, { type: "output", text: content + "\n" }]);
+                        setHistory((prev) => [...prev, makeEntry("output", content + "\n")]);
                     } else {
-                        setHistory((prev) => [...prev, { type: "output", text: `cat: ${filename}: No such file\n` }]);
+                        setHistory((prev) => [...prev, makeEntry("output", `cat: ${filename}: No such file\n`)]);
                     }
                 }
                 break;
@@ -237,7 +239,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
             case "help":
                 setHistory((prev) => [
                     ...prev,
-                    { type: "output", text: FILE_CONTENTS["README.md"] + "\n" },
+                    makeEntry("output", FILE_CONTENTS["README.md"] + "\n"),
                 ]);
                 break;
 
@@ -248,7 +250,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
             default:
                 setHistory((prev) => [
                     ...prev,
-                    { type: "output", text: `${command}: command not found. Type 'help' for available commands.\n` },
+                    makeEntry("output", `${command}: command not found. Type 'help' for available commands.\n`),
                 ]);
         }
 
@@ -256,15 +258,15 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
     };
 
     return (
-        <motion.div
+        <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             style={{
                 position: "fixed",
                 inset: 0,
-                background: "#000",
-                zIndex: 100,
+                background: "#0a0a0f",
+                zIndex: 50,
                 display: "flex",
                 flexDirection: "column",
             }}
@@ -292,18 +294,16 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                             border: "1px solid #facc15",
                             color: "#facc15",
                             fontFamily: "monospace",
-                            fontSize: 11,
+                            fontSize: 12,
                             padding: "4px 12px",
                             cursor: "pointer",
-                            transition: "all 0.2s",
+                            transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "#facc15";
-                            e.currentTarget.style.color = "#000";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid #facc15; color: #facc15; font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: #facc15; color: #000;";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "none";
-                            e.currentTarget.style.color = "#facc15";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid #facc15; color: #facc15; font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                         }}
                     >
                         {showCommands ? "[HIDE COMMANDS]" : "[SHOW COMMANDS]"}
@@ -315,18 +315,16 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                             border: "1px solid #39ff14",
                             color: "#39ff14",
                             fontFamily: "monospace",
-                            fontSize: 11,
+                            fontSize: 12,
                             padding: "4px 12px",
                             cursor: "pointer",
-                            transition: "all 0.2s",
+                            transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "#39ff14";
-                            e.currentTarget.style.color = "#000";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid #39ff14; color: #39ff14; font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: #39ff14; color: #000;";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "none";
-                            e.currentTarget.style.color = "#39ff14";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid #39ff14; color: #39ff14; font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                         }}
                     >
                         [EXIT]
@@ -336,7 +334,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
 
             {/* Quick Commands Panel */}
             {showCommands && (
-                <motion.div
+                <m.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
@@ -365,19 +363,17 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                                     border: "1px solid #06b6d4",
                                     color: "#06b6d4",
                                     fontFamily: "monospace",
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     padding: "6px 12px",
                                     cursor: "pointer",
-                                    transition: "all 0.2s",
+                                    transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                                     borderRadius: 4,
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.background = "#06b6d4";
-                                    e.currentTarget.style.color = "#000";
+                                    e.currentTarget.style.cssText = "background: none; border: 1px solid #06b6d4; color: #06b6d4; font-family: monospace; font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px; background: #06b6d4; color: #000;";
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.background = "none";
-                                    e.currentTarget.style.color = "#06b6d4";
+                                    e.currentTarget.style.cssText = "background: none; border: 1px solid #06b6d4; color: #06b6d4; font-family: monospace; font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px;";
                                 }}
                                 title={qc.desc}
                             >
@@ -385,12 +381,13 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                             </button>
                         ))}
                     </div>
-                </motion.div>
+                </m.div>
             )}
 
             {/* Terminal Content */}
             <div
                 ref={terminalRef}
+                role="presentation"
                 style={{
                     flex: 1,
                     overflow: "auto",
@@ -401,10 +398,11 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                     color: "#ccc",
                 }}
                 onClick={() => inputRef.current?.focus()}
+                onKeyDown={() => inputRef.current?.focus()}
             >
-                {history.map((entry, i) => (
+                {history.map((entry) => (
                     <div
-                        key={i}
+                        key={entry.id}
                         style={{
                             color: entry.type === "input" ? "#39ff14" : "#ccc",
                             whiteSpace: "pre-wrap",
@@ -432,7 +430,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                             flex: 1,
                             background: "none",
                             border: "none",
-                            outline: "none",
+                            outline: "2px solid transparent", outlineOffset: "2px",
                             color: "#39ff14",
                             fontFamily: "monospace",
                             fontSize: "clamp(12px, 1.5vw, 14px)",
@@ -444,6 +442,6 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                     />
                 </div>
             </div>
-        </motion.div>
+        </m.div>
     );
 }
