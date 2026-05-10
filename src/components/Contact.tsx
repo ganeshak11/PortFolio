@@ -1,15 +1,15 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
+import Link from "next/link";
 
 const FULL_TEXT = "$ connect --with ganesh";
 
 export default function Contact() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
-    const [typed, setTyped] = useState("");
-    const [typingDone, setTypingDone] = useState(false);
+    const [state, setState] = useState({ typed: "", typingDone: false });
     const startedRef = useRef(false);
 
     useEffect(() => {
@@ -20,10 +20,10 @@ export default function Contact() {
         const speed = 45; // ms per char
         const interval = setInterval(() => {
             i++;
-            setTyped(FULL_TEXT.slice(0, i));
-            if (i >= FULL_TEXT.length) {
+            const isDone = i >= FULL_TEXT.length;
+            setState({ typed: FULL_TEXT.slice(0, i), typingDone: isDone });
+            if (isDone) {
                 clearInterval(interval);
-                setTypingDone(true);
             }
         }, speed);
         return () => clearInterval(interval);
@@ -36,7 +36,7 @@ export default function Contact() {
             style={{ padding: "100px 24px" }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -46,7 +46,7 @@ export default function Contact() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -67,17 +67,17 @@ export default function Contact() {
                             gap: 4,
                         }}
                     >
-                        {typed}
-                        {!typingDone && (
+                        {state.typed}
+                        {!state.typingDone && (
                             <span className="cursor-blink" style={{ marginLeft: 2 }} />
                         )}
-                        {typingDone && (
+                        {state.typingDone && (
                             <span className="cursor-blink" style={{ marginLeft: 2 }} />
                         )}
                     </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -104,7 +104,7 @@ export default function Contact() {
                             },
                             { label: "Email", href: "mailto:ganeshangadi13012006@gmail.com", icon: "→" },
                         ].map((link, i) => (
-                            <motion.a
+                            <m.a
                                 key={link.label}
                                 href={link.href}
                                 target="_blank"
@@ -121,20 +121,18 @@ export default function Contact() {
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "center",
-                                    transition: "all 0.2s",
+                                    transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.color = "var(--accent)";
-                                    e.currentTarget.style.paddingLeft = "16px";
+                                    e.currentTarget.style.cssText = "padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; color: var(--accent); padding-left: 16px; text-decoration: none;";
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.color = "var(--muted)";
-                                    e.currentTarget.style.paddingLeft = "0";
+                                    e.currentTarget.style.cssText = "padding: 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; color: var(--muted); padding-left: 0; text-decoration: none;";
                                 }}
                             >
                                 <span>{link.label}</span>
                                 <span style={{ color: "var(--accent)" }}>{link.icon}</span>
-                            </motion.a>
+                            </m.a>
                         ))}
                     </div>
 
@@ -147,7 +145,7 @@ export default function Contact() {
                         }}
                     >
                         View all{" "}
-                        <a
+                        <Link
                             href="#projects"
                             style={{
                                 color: "var(--accent)",
@@ -155,7 +153,7 @@ export default function Contact() {
                             }}
                         >
                             DevOps projects
-                        </a>
+                        </Link>
                         {" "}or connect on{" "}
                         <a
                             href="https://github.com/ganeshak11"
@@ -170,7 +168,7 @@ export default function Contact() {
                         </a>
                         .
                     </p>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

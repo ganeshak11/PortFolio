@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
 
 export default function Achievements() {
     const ref = useRef<HTMLElement>(null);
@@ -17,7 +17,7 @@ export default function Achievements() {
             }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -27,7 +27,7 @@ export default function Achievements() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -44,9 +44,9 @@ export default function Achievements() {
                     >
                         Recognition & Awards
                     </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -81,8 +81,8 @@ export default function Achievements() {
                                 background: "var(--accent)",
                                 color: "var(--bg)",
                                 fontFamily: "monospace",
-                                fontSize: 11,
-                                letterSpacing: "0.15em",
+                                fontSize: 12,
+                                letterSpacing: "0.05em",
                                 borderRadius: 4,
                                 marginBottom: 16,
                             }}
@@ -139,8 +139,8 @@ export default function Achievements() {
                             <p
                                 style={{
                                     fontFamily: "monospace",
-                                    fontSize: 11,
-                                    letterSpacing: "0.15em",
+                                    fontSize: 12,
+                                    letterSpacing: "0.05em",
                                     color: "var(--accent)",
                                     marginBottom: 16,
                                 }}
@@ -153,9 +153,9 @@ export default function Achievements() {
                                     "Bridge between accessibility tools and AI systems",
                                     "Protocol implementation for Model Context Protocol",
                                     "Integration layer for AI assistants",
-                                ].map((item, i) => (
+                                ].map((item) => (
                                     <li
-                                        key={i}
+                                        key={item}
                                         style={{
                                             fontSize: 14,
                                             color: "var(--muted)",
@@ -181,8 +181,8 @@ export default function Achievements() {
                             <p
                                 style={{
                                     fontFamily: "monospace",
-                                    fontSize: 11,
-                                    letterSpacing: "0.15em",
+                                    fontSize: 12,
+                                    letterSpacing: "0.05em",
                                     color: "var(--accent)",
                                     marginBottom: 16,
                                 }}
@@ -203,9 +203,9 @@ export default function Achievements() {
                                         title: "Accessibility Focus",
                                         desc: "Made ISL translation accessible to AI assistants and developers",
                                     },
-                                ].map((item, i) => (
+                                ].map((item) => (
                                     <div
-                                        key={i}
+                                        key={item.title}
                                         style={{
                                             borderLeft: "2px solid var(--accent)",
                                             paddingLeft: 16,
@@ -249,8 +249,8 @@ export default function Achievements() {
                         <p
                             style={{
                                 fontFamily: "monospace",
-                                fontSize: 11,
-                                letterSpacing: "0.1em",
+                                fontSize: 12,
+                                letterSpacing: "0.05em",
                                 color: "var(--accent)",
                                 marginBottom: 8,
                             }}
@@ -269,7 +269,7 @@ export default function Achievements() {
                             seamlessly with AI systems and development environments.
                         </p>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );
