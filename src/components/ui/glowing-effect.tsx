@@ -62,7 +62,7 @@ const GlowingEffect = memo(
                     const inactiveRadius = 0.5 * Math.min(width, height) * inactiveZone;
 
                     if (distanceFromCenter < inactiveRadius) {
-                        element.style.setProperty("--active", "0");
+                        element.style.setProperty("--active", "0"); // @property inherits:false — no cascade
                         return;
                     }
 
@@ -72,7 +72,7 @@ const GlowingEffect = memo(
                         mouseY > top - proximity &&
                         mouseY < top + height + proximity;
 
-                    element.style.setProperty("--active", isActive ? "1" : "0");
+                    element.style.setProperty("--active", isActive ? "1" : "0"); // @property inherits:false — no cascade
 
                     if (!isActive) return;
 
@@ -90,7 +90,7 @@ const GlowingEffect = memo(
                         duration: movementDuration,
                         ease: [0.16, 1, 0.3, 1],
                         onUpdate: (value) => {
-                            element.style.setProperty("--start", String(value));
+                            element.style.setProperty("--start", String(value)); // @property inherits:false — no cascade
                         },
                     });
                 });

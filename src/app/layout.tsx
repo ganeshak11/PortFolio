@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import CyberneticGridShader from "@/components/ui/cybernetic-grid-shader";
+import { ClientProviders } from "@/components/ClientProviders";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -117,15 +118,18 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
-          <div style={{ position: "relative", minHeight: "100vh" }}>
-            <CyberneticGridShader />
-            <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
-          </div>
+          <ClientProviders>
+            <div style={{ position: "relative", minHeight: "100vh" }}>
+              <CyberneticGridShader />
+              <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
+            </div>
+          </ClientProviders>
         </ThemeProvider>
       </body>
     </html>

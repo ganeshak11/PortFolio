@@ -1,7 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function About() {
     const ref = useRef<HTMLElement>(null);
@@ -14,7 +16,7 @@ export default function About() {
             style={{ padding: "100px 24px" }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -24,7 +26,7 @@ export default function About() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -41,9 +43,9 @@ export default function About() {
                     >
                         System Thinker
                     </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -62,7 +64,7 @@ export default function About() {
                         }}
                     >
                         {/* Profile Photo */}
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={inView ? { opacity: 1, scale: 1 } : {}}
                             transition={{ delay: 0.3, duration: 0.5 }}
@@ -73,18 +75,19 @@ export default function About() {
                                 overflow: "hidden",
                                 border: "3px solid var(--accent)",
                                 flexShrink: 0,
+                                position: "relative"
                             }}
                         >
-                            <img
+                            <Image
                                 src="/profile.jpg"
                                 alt="Ganesh Angadi - DevOps Engineer specializing in Docker, Kubernetes, and Linux system administration"
+                                fill
+                                sizes="(max-width: 768px) 120px, 120px"
                                 style={{
-                                    width: "100%",
-                                    height: "100%",
                                     objectFit: "cover",
                                 }}
                             />
-                        </motion.div>
+                        </m.div>
 
                         {/* Content */}
                         <div style={{ flex: 1, minWidth: 280 }}>
@@ -128,7 +131,7 @@ export default function About() {
                                     >
                                         I don't just build features. I design systems. I think in control
                                         flow, model failure states, and design for observability. Read about my{" "}
-                                        <a
+                                        <Link
                                             href="#project"
                                             style={{
                                                 color: "var(--accent)",
@@ -136,7 +139,7 @@ export default function About() {
                                             }}
                                         >
                                             MY(suru) BUS system design project
-                                        </a>
+                                        </Link>
                                         {" "}or explore my DevOps learning journey.
                                     </p>
                                 </div>
@@ -145,8 +148,8 @@ export default function About() {
                                     <p
                                         style={{
                                             fontFamily: "monospace",
-                                            fontSize: 11,
-                                            letterSpacing: "0.15em",
+                                            fontSize: 12,
+                                            letterSpacing: "0.05em",
                                             color: "var(--accent)",
                                             marginBottom: 16,
                                         }}
@@ -160,9 +163,9 @@ export default function About() {
                                             "Git beyond push - commit graph mental model, branching strategies",
                                             "CI/CD pipelines - Jenkins, GitLab CI, automated testing and deployment",
                                             "System architecture - questioning decisions instead of blindly using tools",
-                                        ].map((item, i) => (
+                                        ].map((item) => (
                                             <li
-                                                key={i}
+                                                key={item}
                                                 style={{
                                                     fontSize: 14,
                                                     color: "var(--muted)",
@@ -185,7 +188,7 @@ export default function About() {
                             </div>
                         </div>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

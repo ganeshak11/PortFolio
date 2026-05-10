@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView  } from "framer-motion";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import Image from "next/image";
 
 const PRINCIPLES = [
     {
@@ -39,6 +40,9 @@ const STATS: { label: string; target: number; suffix: string; isImage?: boolean;
         imageUrl: "https://github-readme-stats-rho-six-90.vercel.app/api?username=ganeshak11&show_icons=true&count_private=true&hide_border=true&bg_color=0d0d0d&title_color=39ff14&icon_color=06b6d4&text_color=f0f0f0&border_radius=8"
     },
 ];
+
+const NUMERIC_STATS = STATS.filter((s) => !s.isImage);
+const GITHUB_STAT = STATS.find((s) => s.isImage);
 
 function Counter({ target, suffix, active }: { target: number; suffix: string; active: boolean }) {
     const [count, setCount] = useState(0);
@@ -81,7 +85,7 @@ export default function SystemThinking() {
             style={{ padding: "100px 24px" }}
         >
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
@@ -91,7 +95,7 @@ export default function SystemThinking() {
                         style={{
                             fontFamily: "monospace",
                             fontSize: 12,
-                            letterSpacing: "0.2em",
+                            letterSpacing: "0.05em",
                             color: "var(--accent)",
                             marginBottom: 12,
                         }}
@@ -109,10 +113,10 @@ export default function SystemThinking() {
                         I don&apos;t just build features.
                         <br />I design systems.
                     </h2>
-                </motion.div>
+                </m.div>
 
                 {/* ── Stat counters ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.15, duration: 0.5 }}
@@ -123,7 +127,7 @@ export default function SystemThinking() {
                         marginBottom: 32,
                     }}
                 >
-                    {STATS.filter(s => !s.isImage).map((s) => (
+                    {NUMERIC_STATS.map((s) => (
                         <div 
                             key={s.label} 
                             className="glass-card"
@@ -136,8 +140,8 @@ export default function SystemThinking() {
                             <Counter target={s.target} suffix={s.suffix} active={inView} />
                             <p style={{
                                 fontFamily: "monospace",
-                                fontSize: 11,
-                                letterSpacing: "0.1em",
+                                fontSize: 12,
+                                letterSpacing: "0.05em",
                                 color: "var(--muted)",
                                 marginTop: 6,
                             }}>
@@ -145,10 +149,10 @@ export default function SystemThinking() {
                             </p>
                         </div>
                     ))}
-                </motion.div>
+                </m.div>
 
                 {/* ── GitHub Stats Card ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.3, duration: 0.5 }}
@@ -166,23 +170,26 @@ export default function SystemThinking() {
                     <p style={{
                         fontFamily: "monospace",
                         fontSize: 12,
-                        letterSpacing: "0.15em",
+                        letterSpacing: "0.05em",
                         color: "var(--accent)",
                         textAlign: "center",
                     }}>
                         [LIVE GITHUB ACTIVITY]
                     </p>
-                    <img 
-                        src={STATS.find(s => s.isImage)?.imageUrl} 
-                        alt="GitHub Stats"
-                        style={{
-                            width: "100%",
-                            maxWidth: "600px",
-                            height: "auto",
-                            borderRadius: 8,
-                        }}
-                    />
-                </motion.div>
+                    <div style={{ position: "relative", width: "100%", maxWidth: "600px", height: "195px" }}>
+                        <Image 
+                            src={GITHUB_STAT?.imageUrl || ""} 
+                            alt="GitHub Stats"
+                            fill
+                            unoptimized
+                            sizes="(max-width: 768px) 100vw, 600px"
+                            style={{
+                                borderRadius: 8,
+                                objectFit: "contain"
+                            }}
+                        />
+                    </div>
+                </m.div>
 
                 {/* ── Principles grid ── */}
                 <div
@@ -192,12 +199,12 @@ export default function SystemThinking() {
                         gap: 24,
                     }}
                 >
-                    {PRINCIPLES.map((principle, i) => (
-                        <motion.div
-                            key={i}
+                    {PRINCIPLES.map((principle) => (
+                        <m.div
+                            key={principle.title}
                             initial={{ opacity: 0, y: 24 }}
                             animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
+                            transition={{ delay: 0.1, duration: 0.5 }}
                             className="glass-card"
                             style={{
                                 padding: "32px",
@@ -233,7 +240,7 @@ export default function SystemThinking() {
                             >
                                 {principle.desc}
                             </p>
-                        </motion.div>
+                        </m.div>
                     ))}
                 </div>
             </div>
