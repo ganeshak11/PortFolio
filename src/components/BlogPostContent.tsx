@@ -3,15 +3,17 @@
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Navbar from "@/components/Navbar";
+import BlogComments from "@/components/BlogComments";
 
 interface Post {
     title: string;
     date: string;
     tags: string[];
     content: string;
+    slug: string;
 }
 
-export default function BlogPostContent({ post }: { post: Post }) {
+export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
     return (
         <>
             <Navbar />
@@ -263,6 +265,8 @@ export default function BlogPostContent({ post }: { post: Post }) {
                     <p style={{ margin: 0 }}>— Ganesh</p>
                     <p style={{ margin: "4px 0 0 0", fontSize: 11 }}>DevOps Engineer | System Thinker</p>
                 </div>
+
+                <BlogComments slug={slug} />
             </article>
         </main>
         </>
