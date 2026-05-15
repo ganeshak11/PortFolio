@@ -23,6 +23,7 @@ async function getPost(slug: string) {
         date: data.date,
         tags: data.tags || [],
         content: markdown,
+        slug,
     };
 }
 
