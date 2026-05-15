@@ -45,5 +45,5 @@ export default async function BlogPost({ params }: BlogPostProps) {
         notFound();
     }
     
-    return <BlogPostContent post={post} />;
+    return <BlogPostContent post={post} slug={slug} />;
 }
