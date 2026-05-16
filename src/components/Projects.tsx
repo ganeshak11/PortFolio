@@ -278,7 +278,7 @@ export default function Projects() {
                     style={{ marginBottom: 48 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        03 / PROJECTS
+                        $ ls -lh /opt/projects
                     </p>
                     <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
                         Things I've Built

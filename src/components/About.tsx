@@ -33,7 +33,7 @@ export default function About() {
                         style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}
                         className={inView ? "flicker" : ""}
                     >
-                        01 / ABOUT
+                        $ man ganesh
                     </p>
                     <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
                         {heading}

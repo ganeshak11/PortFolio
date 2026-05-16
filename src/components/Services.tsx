@@ -113,7 +113,7 @@ export default function Services() {
                     style={{ marginBottom: 48 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        $ services --list
+                        $ systemctl list-units --type=service
                     </p>
                     <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)", marginBottom: 12 }}>
                         How I solve<br />

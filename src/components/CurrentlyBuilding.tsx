@@ -44,7 +44,7 @@ export default function CurrentlyBuilding() {
                     style={{ marginBottom: 24 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        04 / CURRENTLY_BUILDING
+                        $ tail -f /var/log/deployment.log
                     </p>
                 </m.div>
 

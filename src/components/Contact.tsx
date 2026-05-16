@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { m, useInView } from "framer-motion";
 import { FaInstagram, FaDiscord, FaWhatsapp } from "react-icons/fa";
 
-const FULL_TEXT = "$ connect --with ganesh";
+const FULL_TEXT = "Let's build something great.";
 
 const LINKS = [
     { label: "GitHub", sub: "github.com/ganeshak11", href: "https://github.com/ganeshak11" },
@@ -47,7 +47,7 @@ export default function Contact() {
                     style={{ marginBottom: 48 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        08 / CONTACT
+                        $ ping -c 4 ganesh.online
                     </p>
                     <h2 style={{
                         fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800,

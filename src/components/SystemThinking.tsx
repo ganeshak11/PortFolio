@@ -100,7 +100,7 @@ export default function SystemThinking() {
                     style={{ marginBottom: 64 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 16 }}>
-                        06 / SYSTEM_THINKING
+                        $ cat /etc/sysctl.conf
                     </p>
                     <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)", lineHeight: 1.1, marginBottom: 16 }}>
                         I don't just build features.<br />
