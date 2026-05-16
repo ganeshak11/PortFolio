@@ -9,7 +9,9 @@ export const NAV_LINKS: NavLink[] = [
     { href: "#achievements", label: "Awards" },
     { href: "#projects", label: "Projects" },
     { href: "#stack", label: "Stack" },
-    { href: "/blog", label: "Blog" },
+    { href: "#thinking", label: "Thinking" },
+    { href: "#services", label: "Services" },
     { href: "#contact", label: "Contact" },
+    { href: "/blog", label: "Blog" },
 ];
 

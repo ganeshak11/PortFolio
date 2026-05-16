@@ -15,6 +15,7 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
                     key={l.href}
                     href={l.href}
                     {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="nav-underline"
                     style={{
                         fontSize: 13,
                         fontWeight: 500,
@@ -24,9 +25,7 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
                         transition: "color 0.2s",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
-                    onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "var(--muted)")
-                    }
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
                 >
                     {l.label}
                 </a>
@@ -34,6 +33,7 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
 
             {/* Download Resume Button */}
             <button
+                className="btn-slide"
                 onClick={() => {
                     const resumeWindow = window.open('/resume.html', '_blank');
                     if (resumeWindow) {
@@ -56,15 +56,6 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
                     background: "transparent",
                     borderRadius: 4,
                     cursor: "pointer",
-                    transition: "all 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "var(--accent)";
-                    e.currentTarget.style.color = "var(--bg)";
-                }}
-                onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.color = "var(--accent)";
                 }}
             >
                 ↓ CV

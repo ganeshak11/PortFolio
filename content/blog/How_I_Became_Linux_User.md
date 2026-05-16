@@ -1,8 +1,10 @@
 ---
 title: "How I Accidentally Became a Linux User"
 date: "2025-01-15"
-slug: "I become the guy who says 'I use LINUX btw'"
+slug: "I become a guy who says 'I use LINUX btw'"
 excerpt: "I didn't choose Linux. Linux chose me — after destroying my Windows installation, corrupting a USB, and nearly giving my roommates a heart attack."
+hook: "Sometimes the system failure is the feature."
+featured: true
 tags: ["linux", "kubuntu", "devops", "story"]
 ---
 
@@ -162,4 +164,3 @@ Sometimes the system failure is the feature.
 
 And if I'm ever in a burning building where the only way out is Windows — I'm becoming kebab.
 
-— Ganesh
