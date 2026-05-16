@@ -93,12 +93,15 @@ export function MobileNav({
                             gap: 24,
                         }}
                     >
-                        {NAV_LINKS.map((l) => (
-                            <a
+                        {NAV_LINKS.map((l, i) => (
+                            <m.a
                                 key={l.href}
                                 href={l.href}
                                 {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                                 onClick={() => setMobileMenuOpen(false)}
+                                initial={{ opacity: 0, x: 24 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.05 + i * 0.07, duration: 0.3 }}
                                 style={{
                                     fontFamily: "monospace",
                                     fontSize: 14,
@@ -108,10 +111,11 @@ export function MobileNav({
                                     textDecoration: "none",
                                     padding: "12px 0",
                                     borderBottom: "1px solid var(--border)",
+                                    display: "block",
                                 }}
                             >
                                 {l.label}
-                            </a>
+                            </m.a>
                         ))}
 
                         <button

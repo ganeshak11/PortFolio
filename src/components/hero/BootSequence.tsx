@@ -31,9 +31,18 @@ function bootReducer(state: BootState, action: BootAction): BootState {
 export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => void }) {
     const [bootState, dispatch] = useReducer(bootReducer, { lineIdx: 0, typedLines: [] });
 
+    // Lock scroll during boot
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => { document.body.style.overflow = ""; };
+    }, []);
+
     useEffect(() => {
         if (bootState.lineIdx >= BOOT_LINES.length) {
-            setTimeout(() => setBootDone(true), 800);
+            setTimeout(() => {
+                document.body.style.overflow = "";
+                setBootDone(true);
+            }, 800);
             return;
         }
         const delay = bootState.lineIdx === 0 ? 1000 : 400 + Math.random() * 500;
@@ -53,6 +62,10 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                 padding: "80px 24px 40px",
                 background: "#0a0a0f",
                 color: "#39ff14",
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                zIndex: 50,
             }}
         >
             <div

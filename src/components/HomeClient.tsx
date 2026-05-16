@@ -8,59 +8,64 @@ import Achievements from "@/components/Achievements";
 import Projects from "@/components/Projects";
 import DevOpsStack from "@/components/DevOpsStack";
 import SystemThinking from "@/components/SystemThinking";
-import CurrentlyBuilding from "@/components/CurrentlyBuilding";
+import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TerminalMode from "@/components/TerminalMode";
+import FAB from "@/components/FAB";
 
 export default function Home() {
-  const [terminalMode, setTerminalMode] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
 
   return (
     <>
-      <Navbar onTerminalToggle={() => setTerminalMode(true)} />
-      
+      <Navbar />
+
       <AnimatePresence>
-        {terminalMode && (
-          <TerminalMode onExit={() => setTerminalMode(false)} />
-        )}
+        {terminalOpen && <TerminalMode onExit={() => setTerminalOpen(false)} />}
       </AnimatePresence>
+
+      <FAB onTerminalOpen={() => setTerminalOpen(true)} />
 
       <main>
         <h1 className="sr-only">Ganesh Angadi - DevOps Engineer</h1>
-        
-        <section aria-label="Introduction">
+
+        <section id="hero" aria-label="Introduction">
           <Hero />
         </section>
 
-        <section aria-labelledby="about-heading">
+        <section id="about" aria-labelledby="about-heading">
           <h2 id="about-heading" className="sr-only">About Ganesh Angadi</h2>
           <About />
         </section>
 
-        <section aria-labelledby="achievements-heading">
+        <section id="achievements" aria-labelledby="achievements-heading">
           <h2 id="achievements-heading" className="sr-only">Achievements & Awards</h2>
           <Achievements />
         </section>
 
-        <section aria-labelledby="projects-heading">
+        <section id="projects" aria-labelledby="projects-heading">
           <h2 id="projects-heading" className="sr-only">DevOps Projects</h2>
           <Projects />
-          <CurrentlyBuilding />
         </section>
 
-        <section aria-labelledby="skills-heading">
+        <section id="stack" aria-labelledby="skills-heading">
           <h2 id="skills-heading" className="sr-only">DevOps Skills & Technologies</h2>
           <DevOpsStack />
         </section>
 
-        <section aria-labelledby="architecture-heading">
+        <section id="thinking" aria-labelledby="architecture-heading">
           <h2 id="architecture-heading" className="sr-only">System Architecture & Engineering Principles</h2>
           <SystemThinking />
         </section>
 
-        <section aria-labelledby="contact-heading">
+        <section id="services" aria-labelledby="services-heading">
+          <h2 id="services-heading" className="sr-only">Services</h2>
+          <Services />
+        </section>
+
+        <section id="contact" aria-labelledby="contact-heading">
           <h2 id="contact-heading" className="sr-only">Contact Ganesh Angadi</h2>
           <Contact />
         </section>

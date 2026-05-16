@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import CyberneticGridShader from "@/components/ui/cybernetic-grid-shader";
 import { ClientProviders } from "@/components/ClientProviders";
 
 const inter = Inter({
@@ -125,10 +124,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider>
           <ClientProviders>
-            <div style={{ position: "relative", minHeight: "100vh" }}>
-              <CyberneticGridShader />
-              <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
-            </div>
+            {children}
           </ClientProviders>
         </ThemeProvider>
       </body>

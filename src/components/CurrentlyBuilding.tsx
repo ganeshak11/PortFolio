@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { m, useInView  } from "framer-motion";
+import { useRef, useState } from "react";
+import { m, useInView, AnimatePresence } from "framer-motion";
 
 const PROGRESS_ITEMS = [
     { label: "Backend Foundation & DB", pct: 95 },
@@ -12,47 +12,18 @@ const PROGRESS_ITEMS = [
 
 function ProgressBar({ label, pct, active, delay }: { label: string; pct: number; active: boolean; delay: number }) {
     return (
-        <div style={{ marginBottom: 20 }}>
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontFamily: "monospace",
-                fontSize: 12,
-                color: "var(--muted)",
-                marginBottom: 8,
-            }}>
+        <div style={{ padding: "10px 0", borderBottom: "1px solid var(--border)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
                 <span>{label}</span>
                 <span style={{ color: "var(--accent)" }}>{pct}%</span>
             </div>
-            <div style={{
-                height: 6,
-                background: "var(--border)",
-                borderRadius: 3,
-                overflow: "hidden",
-            }}>
+            <div style={{ height: 4, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
                 <m.div
                     initial={{ width: 0 }}
                     animate={active ? { width: `${pct}%` } : { width: 0 }}
                     transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                        height: "100%",
-                        background: "linear-gradient(90deg, var(--accent), var(--accent-2, var(--accent)))",
-                        borderRadius: 3,
-                        boxShadow: "0 0 8px var(--accent)",
-                    }}
+                    style={{ height: "100%", background: "var(--accent)", borderRadius: 2 }}
                 />
-            </div>
-            <div style={{
-                fontFamily: "monospace",
-                fontSize: 12,
-                color: "var(--accent)",
-                marginTop: 4,
-                opacity: 0.6,
-            }}>
-                {"["}
-                {"█".repeat(Math.floor(pct / 10))}
-                {"░".repeat(10 - Math.floor(pct / 10))}
-                {"]"}
             </div>
         </div>
     );
@@ -61,207 +32,102 @@ function ProgressBar({ label, pct, active, delay }: { label: string; pct: number
 export default function CurrentlyBuilding() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
+    const [open, setOpen] = useState(false);
 
     return (
-        <section
-            ref={ref}
-            id="building"
-            style={{
-                padding: "100px 24px",
-            }}
-        >
+        <section ref={ref} id="building" style={{ padding: "60px 24px 0" }}>
             <div style={{ maxWidth: 1100, margin: "0 auto" }}>
                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
-                    style={{ marginBottom: 48 }}
+                    style={{ marginBottom: 24 }}
                 >
-                    <p
-                        style={{
-                            fontFamily: "monospace",
-                            fontSize: 12,
-                            letterSpacing: "0.05em",
-                            color: "var(--accent)",
-                            marginBottom: 12,
-                        }}
-                    >
+                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
                         04 / CURRENTLY_BUILDING
                     </p>
-                    <h2
-                        style={{
-                            fontSize: "clamp(28px, 4vw, 48px)",
-                            fontWeight: 800,
-                            letterSpacing: "-0.02em",
-                            color: "var(--fg)",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "clamp(8px, 2vw, 16px)",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        CI/CD Sentinel
-                        <m.span
-                            animate={{ opacity: [1, 0.4, 1] }}
-                            transition={{ repeat: Infinity, duration: 2 }}
-                            style={{
-                                fontSize: "clamp(16px, 2vw, 24px)",
-                                color: "var(--status-warn)",
-                                fontFamily: "monospace",
-                            }}
-                        >
-                            [~80% COMPLETE]
-                        </m.span>
-                        <a
-                            href="https://github.com/ganeshak11/CI-CD_Sentinel"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                                fontFamily: "monospace",
-                                fontSize: 12,
-                                padding: "6px 12px",
-                                border: "1px solid var(--accent)",
-                                color: "var(--accent)",
-                                textDecoration: "none",
-                                borderRadius: 4,
-                                transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--bg); background: var(--accent); text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.cssText = "font-family: monospace; font-size: 12px; padding: 6px 12px; border: 1px solid var(--accent); color: var(--accent); background: transparent; text-decoration: none; border-radius: 4px; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
-                            }}
-                        >
-                            [GitHub]
-                        </a>
-                    </h2>
                 </m.div>
 
-                <m.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="glass-card"
-                    style={{
-                        padding: "clamp(24px, 5vw, 48px)",
-                        borderRadius: 8,
-                    }}
-                >
-                    <p
+                <div style={{ borderTop: "1px solid var(--border)" }}>
+                    <button
+                        onClick={() => setOpen(!open)}
                         style={{
-                            fontSize: 15,
-                            lineHeight: 1.8,
-                            color: "var(--muted)",
-                            marginBottom: 40,
-                        }}
-                    >
-                        Building a centralized observability and recovery layer for software deployments. 
-                        Tracking deployment history, monitoring health status via polling, and providing 
-                        one-click recovery controls—all from a single dashboard.
-                    </p>
-
-                    {/* ── Build progress bars ── */}
-                    <div style={{ marginBottom: 40 }}>
-                        <p style={{
-                            fontFamily: "monospace",
-                            fontSize: 12,
-                            letterSpacing: "0.05em",
-                            color: "var(--accent)",
-                            marginBottom: 20,
-                        }}>
-                            [BUILD_PROGRESS]
-                        </p>
-                        {PROGRESS_ITEMS.map((item, i) => (
-                            <ProgressBar
-                                key={item.label}
-                                label={item.label}
-                                pct={item.pct}
-                                active={inView}
-                                delay={0.3 + i * 0.15}
-                            />
-                        ))}
-                    </div>
-
-                    <div
-                        style={{
+                            width: "100%",
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            padding: "24px 0",
                             display: "grid",
-                            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                            gap: 32,
+                            gridTemplateColumns: "40px 1fr auto",
+                            alignItems: "center",
+                            gap: 20,
+                            textAlign: "left",
                         }}
                     >
+                        <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>WIP</span>
                         <div>
-                            <p
-                                style={{
-                                    fontFamily: "monospace",
-                                    fontSize: 12,
-                                    letterSpacing: "0.05em",
-                                    color: "var(--accent)",
-                                    marginBottom: 16,
-                                }}
-                            >
-                                [FOCUS AREAS]
-                            </p>
-                            <ul style={{ listStyle: "none", padding: 0 }}>
-                                {[
-                                    "Pipeline health visibility",
-                                    "Deployment audit tracking",
-                                    "Log aggregation insights",
-                                    "Failure pattern detection",
-                                    "Git commit-to-deploy traceability",
-                                    "Infrastructure sanity checks",
-                                ].map((item) => (
-                                    <li
-                                        key={item}
-                                        style={{
-                                            fontSize: 14,
-                                            color: "var(--muted)",
-                                            padding: "8px 0",
-                                            borderBottom: "1px solid var(--border)",
-                                            display: "flex",
-                                            gap: 10,
-                                            alignItems: "flex-start",
-                                            lineHeight: 1.6,
-                                        }}
-                                    >
-                                        <span style={{ color: "var(--accent)", flexShrink: 0 }}>
-                                            ▸
-                                        </span>
-                                        {item}
-                                    </li>
+                            <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
+                                <span style={{ fontSize: "clamp(16px, 2.5vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
+                                    CI/CD Sentinel
+                                </span>
+                                <m.span
+                                    animate={{ opacity: [1, 0.3, 1] }}
+                                    transition={{ repeat: Infinity, duration: 2 }}
+                                    style={{ fontFamily: "monospace", fontSize: 12, color: "var(--status-warn)" }}
+                                >
+                                    ~80% COMPLETE
+                                </m.span>
+                            </div>
+                            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                                {["Next.js", "Supabase", "Webhooks", "CI/CD"].map(t => (
+                                    <span key={t} style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>{t}</span>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
+                        <span style={{
+                            fontSize: 20, color: "var(--accent)", flexShrink: 0,
+                            transition: "transform 0.2s",
+                            transform: open ? "rotate(45deg)" : "none",
+                            display: "inline-block",
+                        }}>+</span>
+                    </button>
 
-                        <div>
-                            <p
-                                style={{
-                                    fontFamily: "monospace",
-                                    fontSize: 12,
-                                    letterSpacing: "0.05em",
-                                    color: "var(--accent)",
-                                    marginBottom: 16,
-                                }}
+                    <AnimatePresence>
+                        {open && (
+                            <m.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                style={{ overflow: "hidden" }}
                             >
-                                [GOAL]
-                            </p>
-                            <p
-                                style={{
-                                    fontSize: 15,
-                                    lineHeight: 1.8,
-                                    color: "var(--fg)",
-                                    padding: "16px",
-                                    boxShadow: "inset 3px 0 0 var(--accent)",
-                                    background: "var(--bg)",
-                                }}
-                            >
-                                Build observability around CI/CD pipelines. Make deployment
-                                decisions explicit, not implicit. Track what changed, when, and
-                                why.
-                            </p>
-                        </div>
-                    </div>
-                </m.div>
+                                <div className="currently-expanded" style={{ paddingBottom: 36, paddingLeft: 60 }}>
+                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 28 }}>
+                                        Building a centralized observability and recovery layer for software deployments.
+                                        Tracking deployment history, monitoring health via polling, one-click recovery — all from a single dashboard.
+                                    </p>
+
+                                    <div style={{ marginBottom: 28 }}>
+                                        <p style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.08em", color: "var(--accent)", marginBottom: 12 }}>[BUILD_PROGRESS]</p>
+                                        {PROGRESS_ITEMS.map((item, i) => (
+                                            <ProgressBar key={item.label} label={item.label} pct={item.pct} active={open} delay={i * 0.15} />
+                                        ))}
+                                    </div>
+
+                                    <a
+                                        href="https://github.com/ganeshak11/CI-CD_Sentinel"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
+                                    >
+                                        [GitHub] →
+                                    </a>
+                                </div>
+                            </m.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+                <div style={{ borderTop: "1px solid var(--border)" }} />
             </div>
         </section>
     );

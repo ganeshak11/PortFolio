@@ -3,6 +3,7 @@ title: "How I Won My First Hackathon"
 date: "2026-04-09"
 slug: "my-first-hackathon-win"
 excerpt: "Smart engineering isn't about writing more code — it's about solving the right problem."
+hook: "Sometimes the best code is the code you don't write."
 tags: ["hackathon", "MCP", "system-thinking", "devops"]
 ---
 

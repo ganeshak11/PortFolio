@@ -1,135 +1,99 @@
 "use client";
 
-import { useRef, useCallback } from "react";
-import { m, useInView  } from "framer-motion";
+import { useRef } from "react";
+import { m, useInView } from "framer-motion";
 
 const STACK = [
     { name: "Linux", level: "Advanced" },
-    { name: "Git", level: "Deep Mental Model" },
-    { name: "Systemd", level: "Core" },
-    { name: "Bash", level: "Core" },
-    { name: "Networking", level: "Basics" },
     { name: "Docker", level: "Complete" },
-    { name: "Kubernetes", level: "Learning" },
+    { name: "Git", level: "Deep Mental Model" },
+    { name: "Bash", level: "Core" },
+    { name: "Systemd", level: "Core" },
     { name: "CI/CD Pipelines", level: "Core" },
     { name: "PostgreSQL", level: "Core" },
     { name: "Supabase", level: "Core" },
+    { name: "Networking", level: "Fundamentals" },
+    { name: "Kubernetes", level: "Learning" },
     { name: "Next.js", level: "Core" },
     { name: "React Native", level: "Core" },
 ];
+
+// duplicate for seamless loop
+const ITEMS = [...STACK, ...STACK];
 
 export default function DevOpsStack() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
 
-    const handleMouseMove = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
-            const el = e.currentTarget;
-            const rect = el.getBoundingClientRect();
-            const cx = rect.left + rect.width / 2;
-            const cy = rect.top + rect.height / 2;
-            const dx = (e.clientX - cx) / (rect.width / 2);
-            const dy = (e.clientY - cy) / (rect.height / 2);
-            const rotX = -dy * 12;
-            const rotY = dx * 12;
-            el.style.cssText = `padding: 12px 20px; border-radius: 6px; border: 1px solid var(--border); transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; background: var(--card-bg, rgba(20,20,20,0.4)); will-change: transform, box-shadow; display: flex; flex-direction: column; gap: 4px; transform: perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.04); box-shadow: 0 8px 30px rgba(var(--accent-rgb, 6 182 212) / 0.25), 0 0 0 1px var(--accent);`;
-        },
-        []
-    );
-
-    const handleMouseLeave = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
-            const el = e.currentTarget;
-            el.style.cssText = "padding: 12px 20px; border-radius: 6px; border: 1px solid var(--border); transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s; background: var(--card-bg, rgba(20,20,20,0.4)); will-change: transform, box-shadow; display: flex; flex-direction: column; gap: 4px; transform: perspective(600px) rotateX(0deg) rotateY(0deg) scale(1); box-shadow: none;";
-        },
-        []
-    );
-
     return (
-        <section
-            ref={ref}
-            id="stack"
-            style={{
-                padding: "100px 24px",
-            }}
-        >
-            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <section ref={ref} id="stack" style={{ padding: "100px 0" }}>
+            <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.5 }}
                     style={{ marginBottom: 48 }}
                 >
-                    <p
-                        style={{
-                            fontFamily: "monospace",
-                            fontSize: 12,
-                            letterSpacing: "0.05em",
-                            color: "var(--accent)",
-                            marginBottom: 12,
-                        }}
-                    >
-                        05 / DEVOPS_STACK
+                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
+                        04 / DEVOPS_STACK
                     </p>
-                    <h2
-                        style={{
-                            fontSize: "clamp(28px, 4vw, 48px)",
-                            fontWeight: 800,
-                            letterSpacing: "-0.02em",
-                            color: "var(--fg)",
-                        }}
-                    >
+                    <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
                         Tools &amp; Technologies
                     </h2>
                 </m.div>
+            </div>
 
-                <m.div
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.2, duration: 0.5 }}
+            {/* Carousel — full width, no padding */}
+            <div style={{ position: "relative", overflow: "hidden" }}>
+                {/* fade edges */}
+                <div className="carousel-fade" style={{
+                    position: "absolute", left: 0, top: 0, bottom: 0, width: 120, zIndex: 2,
+                    background: "linear-gradient(to right, var(--bg), transparent)",
+                    pointerEvents: "none",
+                }} />
+                <div className="carousel-fade" style={{
+                    position: "absolute", right: 0, top: 0, bottom: 0, width: 120, zIndex: 2,
+                    background: "linear-gradient(to left, var(--bg), transparent)",
+                    pointerEvents: "none",
+                }} />
+
+                <div
                     style={{
                         display: "flex",
-                        flexWrap: "wrap",
                         gap: 16,
+                        width: "max-content",
+                        animation: "scroll-left 30s linear infinite",
                     }}
                 >
-                    {STACK.map((item, i) => (
-                        <m.div
-                            key={item.name}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={inView ? { opacity: 1, scale: 1 } : {}}
-                            transition={{ delay: 0.3 + i * 0.05 }}
-                            className="glass-card tilt-card"
-                            onMouseMove={handleMouseMove}
-                            onMouseLeave={handleMouseLeave}
+                    {ITEMS.map((item, i) => (
+                        <div
+                            key={i}
+                            className="glass-card"
                             style={{
                                 fontFamily: "monospace",
                                 fontSize: 13,
-                                padding: "12px 20px",
+                                padding: "14px 24px",
                                 borderRadius: 6,
                                 display: "flex",
                                 flexDirection: "column",
                                 gap: 4,
+                                flexShrink: 0,
                                 cursor: "default",
-                                transition: "transform 0.15s ease, box-shadow 0.15s ease",
                             }}
                         >
-                            <span style={{ color: "var(--fg)", fontWeight: 600 }}>
-                                {item.name}
-                            </span>
-                            <span
-                                style={{
-                                    fontSize: 12,
-                                    color: "var(--accent)",
-                                    letterSpacing: "0.05em",
-                                }}
-                            >
-                                {item.level}
-                            </span>
-                        </m.div>
+                            <span style={{ color: "var(--fg)", fontWeight: 600, whiteSpace: "nowrap" }}>{item.name}</span>
+                            <span style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{item.level}</span>
+                        </div>
                     ))}
-                </m.div>
+                </div>
             </div>
+
+            <style>{`
+                @keyframes scroll-left {
+                    0%   { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+            `}</style>
         </section>
     );
 }

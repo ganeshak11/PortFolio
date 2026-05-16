@@ -1,18 +1,48 @@
 "use client";
 
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 
 const HERO_DEFAULT = ["I BUILD", "RELIABLE", "SYSTEMS"];
-const HERO_REVEAL = ["I QUESTION", "FRAGILE", "ARCHITECTURE"];
+const HERO_REVEAL  = ["I QUESTION", "FRAGILE", "ARCHITECTURE"];
+const SUBLINE = "Infrastructure is not magic — it is decisions with trade-offs.";
+const SUBLINE2 = "I make those decisions explicit.";
 
 export function HeroContent({ isMobile }: { isMobile: boolean }) {
     const heroRef = useRef<HTMLDivElement>(null);
-    const maskRef = useRef<{ x: number; y: number }>({ x: -999, y: -999 });
-    const rafRef = useRef<number | null>(null);
-    const textRef = useRef<HTMLDivElement>(null);
+    const maskRef   = useRef<{ x: number; y: number }>({ x: -999, y: -999 });
+    const rafRef    = useRef<number | null>(null);
+    const textRef   = useRef<HTMLDivElement>(null);
     const maskLayerRef = useRef<HTMLDivElement>(null);
+    const [typed, setTyped] = useState("");
+    const [typed2, setTyped2] = useState("");
+    const [line1Done, setLine1Done] = useState(false);
+    const startedRef = useRef(false);
+
+    useEffect(() => {
+        if (startedRef.current) return;
+        startedRef.current = true;
+        const delay1 = setTimeout(() => {
+            let i = 0;
+            const iv = setInterval(() => {
+                i++;
+                setTyped(SUBLINE.slice(0, i));
+                if (i >= SUBLINE.length) { clearInterval(iv); setLine1Done(true); }
+            }, 28);
+        }, 900);
+        return () => clearTimeout(delay1);
+    }, []);
+
+    useEffect(() => {
+        if (!line1Done) return;
+        let i = 0;
+        const iv = setInterval(() => {
+            i++;
+            setTyped2(SUBLINE2.slice(0, i));
+            if (i >= SUBLINE2.length) clearInterval(iv);
+        }, 28);
+        return () => clearInterval(iv);
+    }, [line1Done]);
 
     const onMouseMove = useCallback((e: React.MouseEvent) => {
         if (!textRef.current) return;
@@ -44,8 +74,6 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
         <AnimatePresence>
             <m.section
                 ref={heroRef}
-                onMouseMove={!isMobile ? onMouseMove : undefined}
-                onMouseLeave={!isMobile ? onMouseLeave : undefined}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
@@ -57,7 +85,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                     padding: "80px 24px 40px",
                     position: "relative",
                     overflow: "hidden",
-                    cursor: isMobile ? "default" : "crosshair",
+                    cursor: isMobile ? "default" : "default",
                 }}
             >
                 {/* ── Eyebrow ─── */}
@@ -65,6 +93,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
+                    className="hero-eyebrow"
                     style={{
                         fontFamily: "monospace",
                         fontSize: 13,
@@ -82,11 +111,14 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                 {/* ── Dual-layer headline ─── */}
                 <div
                     ref={textRef}
+                    onMouseMove={!isMobile ? onMouseMove : undefined}
+                    onMouseLeave={!isMobile ? onMouseLeave : undefined}
                     style={{
                         position: "relative",
                         maxWidth: 1100,
                         margin: "0 auto",
                         width: "100%",
+                        cursor: isMobile ? "default" : "crosshair",
                     }}
                 >
                     {/* Layer A — default text */}
@@ -104,7 +136,6 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                                     letterSpacing: "-0.03em",
                                     color: "var(--fg)",
                                     userSelect: "none",
-                                    whiteSpace: "nowrap",
                                 }}
                             >
                                 {line}
@@ -136,7 +167,6 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                                         letterSpacing: "-0.03em",
                                         color: "var(--bg)",
                                         userSelect: "none",
-                                        whiteSpace: "nowrap",
                                     }}
                                 >
                                     {line}
@@ -162,119 +192,9 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                         lineHeight: 1.8,
                     }}
                 >
-                    Infrastructure is not magic — it is decisions with trade-offs.
-                    <br />
-                    I make those decisions explicit.
+                    {typed}<br />{typed2}
                 </m.p>
 
-                {/* ── Resume CTA Buttons ─── */}
-                <m.div
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                    style={{
-                        maxWidth: 1100,
-                        margin: "32px auto 0",
-                        width: "100%",
-                        display: "flex",
-                        gap: 16,
-                        flexWrap: "wrap",
-                    }}
-                >
-                    <Link
-                        href="/resume.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            fontFamily: "monospace",
-                            fontSize: 13,
-                            fontWeight: 600,
-                            letterSpacing: "0.05em",
-                            textTransform: "uppercase",
-                            padding: "10px 28px",
-                            border: "1.5px solid var(--accent)",
-                            color: "var(--bg)",
-                            background: "var(--accent)",
-                            borderRadius: 4,
-                            cursor: "pointer",
-                            textDecoration: "none",
-                            transition: "opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s",
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 28px; border: 1.5px solid var(--accent); color: var(--bg); background: var(--accent); border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s;";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 28px; border: 1.5px solid var(--accent); color: var(--bg); background: var(--accent); border-radius: 4px; cursor: pointer; text-decoration: none; transition: opacity 0.25s, transform 0.25s, color 0.25s, background-color 0.25s, border-color 0.25s;";
-                        }}
-                    >
-                        View Resume →
-                    </Link>
-                    <button
-                        onClick={() => {
-                            const resumeWindow = window.open('/resume.html', '_blank');
-                            if (resumeWindow) {
-                                resumeWindow.addEventListener('load', () => {
-                                    setTimeout(() => {
-                                        resumeWindow.print();
-                                    }, 500);
-                                });
-                            }
-                        }}
-                        style={{
-                            fontFamily: "monospace",
-                            fontSize: 13,
-                            fontWeight: 600,
-                            letterSpacing: "0.08em",
-                            textTransform: "uppercase" as const,
-                            padding: "10px 28px",
-                            border: "1.5px solid var(--accent)",
-                            color: "var(--accent)",
-                            background: "transparent",
-                            borderRadius: 4,
-                            cursor: "pointer",
-                            transition: "all 0.25s",
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.background = "var(--accent)";
-                            e.currentTarget.style.color = "var(--bg)";
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.background = "transparent";
-                            e.currentTarget.style.color = "var(--accent)";
-                        }}
-                    >
-                        ↓ Download Resume
-                    </button>
-                </m.div>
-
-                {/* ── Scroll indicator ─── */}
-                <m.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.4 }}
-                    transition={{ delay: 1.2 }}
-                    style={{
-                        position: "absolute",
-                        bottom: 40,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        fontFamily: "monospace",
-                        fontSize: 12,
-                        letterSpacing: "0.05em",
-                        color: "var(--muted)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: 8,
-                    }}
-                >
-                    <span>scroll</span>
-                    <m.span
-                        animate={{ y: [0, 6, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.6 }}
-                    >
-                        ↓
-                    </m.span>
-                </m.div>
             </m.section>
         </AnimatePresence>
     );
