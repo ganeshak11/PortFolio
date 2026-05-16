@@ -22,7 +22,7 @@ $ cat /etc/motd
 
 ## $ cat README.md
 
-This is the source repo for my **DevOps Engineer portfolio** — a terminal-styled, dark-by-default site built to reflect how I think: systems-first, failure-aware, explicitly designed.
+This is the source repo for my **DevOps Engineer portfolio** — a terminal-inspired, editorially designed site built to reflect how I think: systems-first, failure-aware, explicitly designed.
 
 No magic. No handwaving. Every design decision is deliberate.
 
@@ -34,9 +34,13 @@ No magic. No handwaving. Every design decision is deliberate.
 ● portfolio.service — Ganesh Angadi Personal Portfolio
      Loaded: loaded (/home/ganeshak11/dev/PortFolio)
      Active: active (running)
-    Version: Next.js 16 + Tailwind CSS + Framer Motion
-   Features: Boot animation, dual-color hover, comet cursor trail,
-             animated stat counters, progress bars, terminal typewriter
+    Version: Next.js 16 + Tailwind CSS v4 + Framer Motion
+   Features: Boot animation, dual-color radial mask hero, floating dock navbar,
+             rotating tech carousel, accordion projects, hover-depth cards,
+             interactive terminal overlay, FAB action menu, blog with comments,
+             Supabase-backed comments, hide-on-scroll blog navbar
+   Sections: Hero → About → Awards → Projects → Stack → Thinking →
+             Services → Contact → Blog
 ```
 
 ---
@@ -45,18 +49,45 @@ No magic. No handwaving. Every design decision is deliberate.
 
 ```
 drwxr-xr-x  components/
-  ├── Hero.tsx              # Boot sequence + dual-color radial mask hover
-  ├── About.tsx             # Profile + core competencies
-  ├── FeaturedProject.tsx   # Pinned project with live metrics
-  ├── DevOpsStack.tsx       # 3D tilt tech badges
-  ├── SystemThinking.tsx    # Animated stat counters + principles grid
-  ├── FailureLog.tsx        # Failure retrospectives with glitch badges
-  ├── CurrentlyBuilding.tsx # Animated build progress bars
-  ├── Contact.tsx           # Typewriter terminal prompt
-  ├── ParticleField.tsx     # Canvas comet-tail cursor trail
-  ├── Navbar.tsx            # Theme toggle + terminal mode trigger
-  ├── TerminalMode.tsx      # Full-screen interactive terminal overlay
-  └── ThemeProvider.tsx     # Dark / light mode context
+  ├── hero/
+  │   ├── BootSequence.tsx      # Boot sequence with scroll lock
+  │   └── HeroContent.tsx       # Dual-color radial mask hover headline
+  ├── navbar/
+  │   ├── DesktopNav.tsx        # Floating pill navbar with active indicator
+  │   ├── MobileNav.tsx         # Hamburger with staggered link reveal
+  │   └── navData.ts            # Nav links config
+  ├── About.tsx                 # Profile photo, bio, social icons, status badges
+  ├── Achievements.tsx          # Awards + internship experience cards
+  ├── BlogComments.tsx          # Supabase comment form
+  ├── BlogList.tsx              # Featured + list blog layout with reading time
+  ├── BlogPostContent.tsx       # Editorial reading layout, hide-on-scroll navbar
+  ├── Contact.tsx               # Typewriter heading, links, human closure panel
+  ├── CurrentlyBuilding.tsx     # CI/CD Sentinel accordion (merged into Projects)
+  ├── DevOpsStack.tsx           # 3D rotating circular tech carousel
+  ├── FAB.tsx                   # WhatsApp-style floating action button
+  ├── Footer.tsx                # Minimal footer
+  ├── Hero.tsx                  # Boot → Hero transition
+  ├── HomeClient.tsx            # Page composition
+  ├── Navbar.tsx                # Floating dock with scroll-aware active pill
+  ├── Projects.tsx              # Accordion list with status, stack, highlights
+  ├── Services.tsx              # Hover-depth service cards
+  ├── SystemThinking.tsx        # Philosophy cards with hover story reveal
+  ├── TerminalMode.tsx          # Full-screen interactive terminal overlay
+  └── ThemeProvider.tsx         # Dark / light mode context
+
+drwxr-xr-x  app/
+  ├── blog/
+  │   ├── [slug]/page.tsx       # Dynamic blog post page
+  │   └── page.tsx              # Blog index
+  ├── api/
+  │   ├── comments/[slug]/      # Supabase comments API
+  │   └── likes/[slug]/         # Supabase likes API
+  ├── globals.css               # Design tokens, animations, mobile utilities
+  └── layout.tsx                # Root layout with SEO + JSON-LD
+
+drwxr-xr-x  content/blog/
+  ├── How_I_Became_Linux_User.md    # Featured post
+  └── My_First_Hackathon_Win.md
 ```
 
 ---
@@ -70,6 +101,9 @@ cd PortFolio
 
 # Install dependencies
 npm install
+
+# Copy env and fill in Supabase credentials
+cp .env.example .env.local
 
 # Start dev server
 npm run dev
@@ -91,14 +125,19 @@ framework   = Next.js 16 (App Router, Turbopack)
 language    = TypeScript
 styling     = Tailwind CSS v4
 animation   = Framer Motion
-canvas      = Canvas API (cursor trail)
 fonts       = Inter + JetBrains Mono
+icons       = Lucide React + React Icons
 
 [design]
-dark_mode   = #000000 base, cyan-teal accent
-light_mode  = warm off-white base, neon-orange accent
-cursor      = comet trail (lerp-smoothed, aura dot cloud)
-grid_bg     = CSS linear-gradient 50px grid overlay
+dark_mode   = #020818 navy base, red #e53935 accent, gold #c9a84c secondary
+light_mode  = #f8f6f0 warm base, navy #001489 text, gold #c9a84c accent
+navbar      = floating centered pill, scroll-aware active indicator
+blog        = editorial reading mode, hide-on-scroll navbar, 680px max-width
+
+[backend]
+comments    = Supabase (PostgreSQL)
+blog        = markdown files in /content/blog (version-controlled)
+deploy      = Vercel
 ```
 
 ---
@@ -127,6 +166,7 @@ grid_bg     = CSS linear-gradient 50px grid overlay
 GitHub   →  https://github.com/ganeshak11
 LinkedIn →  https://linkedin.com/in/ganeshangadi1301
 Email    →  ganeshangadi13012006@gmail.com
+Website  →  https://ganeshangadi.online
 ```
 
 ---

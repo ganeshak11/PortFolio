@@ -161,6 +161,3 @@ I didn't plan to become a Linux user. I planned a safe, sensible dual boot.
 But one wrong click, one corrupted USB, three days of BIOS purgatory, and a very loud HDD later — here I am. Running Ollama locally on a machine that Windows had given up on.
 
 Sometimes the system failure is the feature.
-
-And if I'm ever in a burning building where the only way out is Windows — I'm becoming kebab.
-
