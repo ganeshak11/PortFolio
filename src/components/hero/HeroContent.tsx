@@ -136,6 +136,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                                     letterSpacing: "-0.03em",
                                     color: "var(--fg)",
                                     userSelect: "none",
+                                    fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
                                 }}
                             >
                                 {line}
@@ -167,6 +168,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                                         letterSpacing: "-0.03em",
                                         color: "var(--bg)",
                                         userSelect: "none",
+                                        fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
                                     }}
                                 >
                                     {line}

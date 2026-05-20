@@ -81,10 +81,14 @@ html {
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-playfair), Georgia, serif;
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
 

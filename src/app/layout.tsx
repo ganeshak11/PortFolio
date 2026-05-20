@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ClientProviders } from "@/components/ClientProviders";
@@ -7,6 +7,12 @@ import { ClientProviders } from "@/components/ClientProviders";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -121,7 +127,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
         <ThemeProvider>
           <ClientProviders>
             {children}
