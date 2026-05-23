@@ -99,6 +99,30 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     <div style={{ color: "var(--fg)", fontSize: 16, lineHeight: 1.85 }}>
                         <ReactMarkdown
                             components={{
+                                img: ({ src, alt }) => {
+                                    let cleanSrc = typeof src === "string" ? src : "";
+                                    if (cleanSrc.startsWith("/public/")) {
+                                        cleanSrc = cleanSrc.substring(7);
+                                    } else if (cleanSrc.startsWith("public/")) {
+                                        cleanSrc = "/" + cleanSrc.substring(7);
+                                    } else if (!cleanSrc.startsWith("/") && !cleanSrc.startsWith("http")) {
+                                        cleanSrc = "/" + cleanSrc;
+                                    }
+                                    return (
+                                        <img 
+                                            src={cleanSrc} 
+                                            alt={alt} 
+                                            style={{ 
+                                                width: "100%", 
+                                                height: "auto", 
+                                                borderRadius: 8, 
+                                                border: "1px solid var(--border)", 
+                                                margin: "32px 0",
+                                                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.15)"
+                                            }} 
+                                        />
+                                    );
+                                },
                                 h1: ({ children }) => (
                                     <h1 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: 800, color: "var(--fg)", marginTop: 56, marginBottom: 16, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
                                         {children}

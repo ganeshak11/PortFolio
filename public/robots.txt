@@ -1,6 +1,8 @@
 # Allow all search engines
 User-agent: *
 Allow: /
+Disallow: /blog/Why_am_I_Obssesed_with_DEVOPS
+Disallow: /blog/My_Linux_Journey
 
 # Sitemap location
 Sitemap: https://ganeshangadi.online/sitemap.xml
