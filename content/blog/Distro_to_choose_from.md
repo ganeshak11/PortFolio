@@ -56,6 +56,8 @@ Here is the breakdown based on who you are:
 * **Why it's great:** Almost every software developer tool, SDK, and package is built and tested for Ubuntu first. If you encounter an error, someone on StackOverflow solved it in 2018. It's the industry standard for a reason.
 * **Desktop Environment:** **GNOME** (modern, clean, workflows focused on keyboard shortcuts) or **KDE Plasma** (ultra-customizable, gorgeous).
 
+![My Desktop](/Desktop.png)
+
 ### 3. Kali Linux (The Mr. Robot Phase)
 * **Best for:** Cybersecurity enthusiasts and penetration testers.
 * **Why it's great:** It comes pre-packaged with every hacking, network analysis, and security tool you could ever need. 
@@ -81,6 +83,8 @@ In the Windows or macOS world, you are stuck with whatever interface they give y
 * **GNOME:** Minimalist and modern. It uses a clean workspace design that keeps you focused on your work. Very keyboard-shortcut friendly.
 * **XFCE / LXQt:** Ultra-lightweight. Perfect if you have an older machine with low RAM and want to make it feel brand new.
 
+![My Custom smart Zellij Workspace](/terminal.png)
+
 ---
 
 ## My Personal Rig (The Daily Driver)
@@ -98,13 +102,8 @@ Sanity Level: Restored
 
 I chose **Ubuntu 22.04 LTS** for its rock-solid development environment, but I replaced the default GNOME shell with **KDE Plasma running on X11**. It gives me the perfect mix of stability for my DevOps and systems projects, combined with endless customizability and gorgeous layout configs.
 
-Here is what my current workspace looks like:
-
-![My Custom smart Zellij Workspace](/terminal.png)
-
 ![My Custom smart KDE Plasma Bash](/terminal1.png)
 ![My eDEX setup](/eDEX.png)
-![My Desktop](/Desktop.png)
 
 ---
 
