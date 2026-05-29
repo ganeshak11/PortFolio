@@ -5,6 +5,26 @@ import { m, useInView, AnimatePresence } from "framer-motion";
 
 const PROJECTS = [
     {
+        num: "00",
+        name: "Portfolio Infrastructure",
+        github: "https://github.com/ganeshak11/PortFolio",
+        tagline: "Zero-to-Production DevOps Pipeline",
+        status: "Deployed",
+        statusColor: "var(--status-ok)",
+        stack: ["Docker", "Terraform", "AWS EC2", "GitHub Actions", "Minikube"],
+        intro: "Transformed a standard Next.js web application into a production-grade infrastructure deployment. Moved from manual deployments to a fully automated CI/CD pipeline with Infrastructure as Code.",
+        highlights: [
+            { title: "Containerization", desc: "Multi-stage Dockerfile optimization (75MB final image)" },
+            { title: "Infrastructure as Code", desc: "Terraform AWS provisioning (VPC, Subnets, EC2, SG)" },
+            { title: "CI/CD Automation", desc: "GitHub Actions pipeline for automated build, push, and deploy" },
+            { title: "Container Orchestration", desc: "Kubernetes local deployment testing with self-healing Pods" },
+        ],
+        limitations: [
+            "Currently running local Minikube for K8s testing to optimize cloud costs",
+            "Exploring managed EKS migration in the future",
+        ],
+    },
+    {
         num: "01",
         name: "MY(suru) BUS",
         github: "https://github.com/ganeshak11/MY-suru-BUS",

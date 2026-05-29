@@ -4,18 +4,17 @@ import { useRef } from "react";
 import { m, useInView } from "framer-motion";
 
 const STACK = [
-    { name: "Linux", level: "Advanced" },
-    { name: "Docker", level: "Complete" },
-    { name: "Git", level: "Deep Mental Model" },
+    { name: "Linux", level: "Deep Dive" },
+    { name: "Git", level: "Deep Dive" },
+    { name: "Docker", level: "Core Foundation" },
+    { name: "Terraform", level: "Core Foundation" },
+    { name: "CI/CD Pipelines", level: "Core Foundation" },
+    { name: "Kubernetes", level: "Actively Learning" },
     { name: "Bash", level: "Core" },
     { name: "Systemd", level: "Core" },
-    { name: "CI/CD Pipelines", level: "Core" },
     { name: "PostgreSQL", level: "Core" },
-    { name: "Supabase", level: "Core" },
     { name: "Networking", level: "Fundamentals" },
-    { name: "Kubernetes", level: "Learning" },
     { name: "Next.js", level: "Core" },
-    { name: "React Native", level: "Core" },
 ];
 
 // duplicate for seamless loop
