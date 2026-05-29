@@ -7,7 +7,7 @@ const PROJECTS = [
     {
         num: "00",
         name: "Portfolio Infrastructure",
-        github: "https://github.com/ganeshak11/PortFolio",
+        github: "https://github.com/ganeshak11/PortFolio/tree/dev",
         tagline: "Zero-to-Production DevOps Pipeline",
         status: "Deployed",
         statusColor: "var(--status-ok)",
