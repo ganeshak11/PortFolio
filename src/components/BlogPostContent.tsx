@@ -32,20 +32,23 @@ function BlogNavbar() {
             position: "fixed",
             top: 0, left: 0, right: 0,
             zIndex: 50,
-            background: "var(--bg)",
-            borderBottom: "1px solid var(--border)",
+            background: "color-mix(in srgb, var(--bg) 70%, transparent)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderBottom: "1px solid var(--glass-border)",
             transform: visible ? "translateY(0)" : "translateY(-100%)",
-            transition: "transform 0.3s ease",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             padding: "0 24px",
-            height: 48,
+            height: 54,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
         }}>
-            <Link href="/" style={{ fontSize: 12, fontFamily: "monospace", color: "var(--accent)", textDecoration: "none", letterSpacing: "0.05em" }}>
+            <Link href="/" className="btn-slide" style={{ fontSize: 13, fontFamily: "monospace", textDecoration: "none", letterSpacing: "0.05em", padding: "4px 8px", borderRadius: "4px" }}>
                 ~/ganesh
             </Link>
-            <Link href="/blog" style={{ fontSize: 12, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
+            <Link href="/blog" className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
                 ← all posts
             </Link>
         </header>
@@ -57,38 +60,64 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         <>
             <BlogNavbar />
             <main style={{ minHeight: "100vh", paddingTop: 80, paddingBottom: 120, paddingLeft: 24, paddingRight: 24 }}>
-                <article style={{ maxWidth: 680, margin: "0 auto" }}>
+                <article style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
+                    {/* Glowing Orb Background */}
+                    <div style={{
+                        position: "absolute",
+                        top: -100, left: "50%",
+                        transform: "translateX(-50%)",
+                        width: "100%", height: 300,
+                        background: "radial-gradient(circle, var(--accent) 0%, transparent 60%)",
+                        opacity: 0.08,
+                        filter: "blur(60px)",
+                        pointerEvents: "none",
+                        zIndex: -1
+                    }} />
 
                     {/* Header */}
-                    <header style={{ marginBottom: 56 }}>
-                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                    <header style={{ marginBottom: 56, position: "relative", zIndex: 1 }}>
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
                             {post.tags.map(tag => (
-                                <span key={tag} style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)", letterSpacing: "0.05em" }}>
+                                <span key={tag} className="glass-card" style={{ 
+                                    fontSize: 12, fontFamily: "monospace", color: "var(--accent)", 
+                                    padding: "4px 12px", borderRadius: 20, letterSpacing: "0.05em",
+                                    border: "1px solid var(--glass-border)",
+                                }}>
                                     #{tag}
                                 </span>
                             ))}
                         </div>
 
                         <h1 style={{
-                            fontSize: "clamp(26px, 4vw, 42px)",
+                            fontSize: "clamp(32px, 5vw, 48px)",
                             fontWeight: 900,
-                            letterSpacing: "-0.02em",
+                            letterSpacing: "-0.03em",
                             lineHeight: 1.15,
-                            color: "var(--fg)",
-                            marginBottom: 20,
+                            background: "linear-gradient(135deg, var(--fg) 0%, var(--muted) 100%)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            marginBottom: 28,
                         }}>
                             {post.title}
                         </h1>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: 12, paddingBottom: 32, borderBottom: "1px solid var(--border)" }}>
+                        <div className="glass-card" style={{ 
+                            display: "flex", alignItems: "center", gap: 16, 
+                            padding: "16px 20px", borderRadius: 12,
+                            border: "1px solid var(--glass-border)",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                        }}>
                             <img
                                 src="/profile.jpg"
                                 alt="Ganesh Angadi"
-                                style={{ width: 36, height: 36, borderRadius: "50%", objectFit: "cover", border: "1px solid var(--border)", flexShrink: 0 }}
+                                style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "2px solid var(--accent)", flexShrink: 0 }}
                             />
                             <div>
-                                <p style={{ fontSize: 13, fontWeight: 600, color: "var(--fg)", marginBottom: 2 }}>Ganesh Angadi</p>
-                                <time style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
+                                <p style={{ fontSize: 14, fontWeight: 700, color: "var(--fg)", marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}>
+                                    Ganesh Angadi
+                                    <span style={{ fontSize: 10, padding: "2px 6px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
+                                </p>
+                                <time style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
                                     {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                                 </time>
                             </div>
@@ -112,83 +141,124 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         <img 
                                             src={cleanSrc} 
                                             alt={alt} 
+                                            className="glass-card"
                                             style={{ 
                                                 width: "100%", 
                                                 height: "auto", 
-                                                borderRadius: 8, 
-                                                border: "1px solid var(--border)", 
-                                                margin: "32px 0",
-                                                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.15)"
+                                                borderRadius: 12, 
+                                                margin: "40px 0",
+                                                boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
+                                                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                                             }} 
+                                            onMouseOver={(e) => {
+                                                (e.target as HTMLImageElement).style.transform = "translateY(-4px)";
+                                                (e.target as HTMLImageElement).style.boxShadow = "0 12px 40px rgba(0, 229, 255, 0.15)";
+                                            }}
+                                            onMouseOut={(e) => {
+                                                (e.target as HTMLImageElement).style.transform = "translateY(0)";
+                                                (e.target as HTMLImageElement).style.boxShadow = "0 8px 30px rgba(0, 0, 0, 0.2)";
+                                            }}
                                         />
                                     );
                                 },
                                 h1: ({ children }) => (
-                                    <h1 style={{ fontSize: "clamp(20px, 3vw, 28px)", fontWeight: 800, color: "var(--fg)", marginTop: 56, marginBottom: 16, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
+                                    <h1 style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 800, color: "var(--fg)", marginTop: 64, marginBottom: 20, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
                                         {children}
                                     </h1>
                                 ),
                                 h2: ({ children }) => (
-                                    <h2 style={{ fontSize: "clamp(17px, 2.5vw, 22px)", fontWeight: 700, color: "var(--fg)", marginTop: 48, marginBottom: 14, lineHeight: 1.3 }}>
+                                    <h2 style={{ 
+                                        fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800, 
+                                        color: "var(--fg)", marginTop: 56, marginBottom: 16, lineHeight: 1.3,
+                                        display: "inline-block", position: "relative"
+                                    }}>
                                         {children}
+                                        <div style={{ position: "absolute", bottom: -4, left: 0, width: "40%", height: 3, background: "var(--accent)", borderRadius: 2 }} />
                                     </h2>
                                 ),
                                 h3: ({ children }) => (
-                                    <h3 style={{ fontSize: 17, fontWeight: 600, color: "var(--accent)", marginTop: 36, marginBottom: 12 }}>
+                                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--accent-2)", marginTop: 40, marginBottom: 16 }}>
                                         {children}
                                     </h3>
                                 ),
                                 p: ({ children }) => (
-                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)" }}>{children}</p>
+                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9 }}>{children}</p>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
                                     return isBlock ? (
-                                        <code style={{
-                                            display: "block", fontFamily: "monospace", fontSize: 13,
-                                            background: "var(--card-bg)", padding: "20px 24px",
-                                            borderRadius: 6, overflowX: "auto", marginBottom: 24,
-                                            marginTop: 8, color: "var(--accent-2)",
-                                            border: "1px solid var(--border)",
+                                        <div className="glass-card" style={{
+                                            marginBottom: 32, marginTop: 16, borderRadius: 12, overflow: "hidden",
+                                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)"
                                         }}>
-                                            {children}
-                                        </code>
+                                            <div style={{
+                                                display: "flex", gap: 6, padding: "12px 16px",
+                                                background: "rgba(0,0,0,0.2)", borderBottom: "1px solid var(--glass-border)"
+                                            }}>
+                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f56" }} />
+                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
+                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }} />
+                                            </div>
+                                            <code style={{
+                                                display: "block", fontFamily: "monospace", fontSize: 14,
+                                                padding: "20px 24px", overflowX: "auto",
+                                                color: "var(--accent-2)", lineHeight: 1.6
+                                            }}>
+                                                {children}
+                                            </code>
+                                        </div>
                                     ) : (
                                         <code style={{
-                                            fontFamily: "monospace", fontSize: 13,
-                                            background: "var(--card-bg)", color: "var(--accent)",
-                                            padding: "2px 6px", borderRadius: 3,
+                                            fontFamily: "monospace", fontSize: 14,
+                                            background: "var(--glass-border)", color: "var(--accent)",
+                                            padding: "2px 8px", borderRadius: 6, border: "1px solid var(--glass-border)"
                                         }}>
                                             {children}
                                         </code>
                                     );
                                 },
                                 ul: ({ children }) => (
-                                    <ul style={{ marginBottom: 24, paddingLeft: 0, listStyle: "none" }}>{children}</ul>
+                                    <ul style={{ marginBottom: 28, paddingLeft: 0, listStyle: "none" }}>{children}</ul>
                                 ),
                                 ol: ({ children }) => (
-                                    <ol style={{ marginBottom: 24, paddingLeft: 20 }}>{children}</ol>
+                                    <ol style={{ marginBottom: 28, paddingLeft: 24, color: "var(--fg)", fontSize: 17, lineHeight: 1.85 }}>{children}</ol>
                                 ),
                                 li: ({ children }) => (
-                                    <li style={{ marginBottom: 10, paddingLeft: 20, position: "relative", lineHeight: 1.75 }}>
-                                        <span style={{ position: "absolute", left: 0, color: "var(--accent)" }}>▸</span>
+                                    <li style={{ marginBottom: 12, paddingLeft: 24, position: "relative", lineHeight: 1.85, fontSize: 17, opacity: 0.9 }}>
+                                        <span style={{ position: "absolute", left: 0, color: "var(--accent)", fontWeight: "bold" }}>▹</span>
                                         {children}
                                     </li>
                                 ),
                                 blockquote: ({ children }) => (
-                                    <blockquote style={{
-                                        paddingLeft: 20, marginLeft: 0, marginBottom: 24,
-                                        color: "var(--muted)", fontStyle: "italic",
-                                        borderLeft: "2px solid var(--border)",
+                                    <blockquote className="glass-card" style={{
+                                        padding: "20px 24px", margin: "32px 0", borderRadius: 8,
+                                        color: "var(--fg)", fontStyle: "italic", fontSize: 18,
+                                        borderLeft: "4px solid var(--accent)",
+                                        position: "relative",
+                                        overflow: "hidden"
                                     }}>
-                                        {children}
+                                        <span style={{ 
+                                            position: "absolute", top: -10, left: 10, 
+                                            color: "var(--accent)", fontSize: 80, 
+                                            opacity: 0.1, fontFamily: "serif",
+                                            pointerEvents: "none", lineHeight: 1
+                                        }}>
+                                            "
+                                        </span>
+                                        <div style={{ position: "relative", zIndex: 1 }}>
+                                            {children}
+                                        </div>
                                     </blockquote>
                                 ),
                                 hr: () => (
-                                    <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "40px 0" }} />
+                                    <div style={{ margin: "56px 0", display: "flex", justifyContent: "center", gap: 12, opacity: 0.5 }}>
+                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                                    </div>
                                 ),
                                 strong: ({ children }) => (
-                                    <strong style={{ color: "var(--fg)", fontWeight: 700 }}>{children}</strong>
+                                    <strong style={{ color: "var(--accent)", fontWeight: 700 }}>{children}</strong>
                                 ),
                             }}
                         >

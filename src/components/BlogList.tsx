@@ -92,7 +92,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                     )}
 
                     {/* Rest of posts */}
-                    <div style={{ borderTop: "1px solid var(--border)" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 40 }}>
                         {rest.map((post) => (
                             <Link
                                 key={post.slug}
@@ -100,41 +100,56 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                 style={{ display: "block", textDecoration: "none", color: "var(--fg)" }}
                             >
                                 <div
-                                    className="blog-post-row"
+                                    className="glass-card"
                                     style={{
-                                        padding: "20px 0",
-                                        borderBottom: "1px solid var(--border)",
-                                        display: "grid",
-                                        gridTemplateColumns: "1fr auto",
-                                        gap: 24,
-                                        alignItems: "start",
-                                        transition: "color 0.2s",
+                                        padding: "24px 32px",
+                                        borderRadius: 12,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: 12,
+                                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
                                     }}
-                                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.color = "var(--accent)"; }}
-                                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.color = "var(--fg)"; }}
+                                    onMouseEnter={(e) => { 
+                                        const t = e.currentTarget as HTMLDivElement;
+                                        t.style.transform = "translateY(-4px)";
+                                        t.style.boxShadow = "0 12px 30px rgba(0, 229, 255, 0.1)";
+                                    }}
+                                    onMouseLeave={(e) => { 
+                                        const t = e.currentTarget as HTMLDivElement;
+                                        t.style.transform = "translateY(0)";
+                                        t.style.boxShadow = "none";
+                                    }}
                                 >
-                                    <div>
-                                        <h2 style={{ fontSize: "clamp(15px, 2vw, 18px)", fontWeight: 700, letterSpacing: "-0.01em", marginBottom: 6, lineHeight: 1.3 }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
+                                        <h2 style={{ fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 800, letterSpacing: "-0.01em", lineHeight: 1.3, margin: 0 }}>
                                             {post.title}
                                         </h2>
-                                        {post.hook && (
-                                            <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", marginBottom: 8 }}>
-                                                "{post.hook}"
-                                            </p>
-                                        )}
-                                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-                                            {post.tags.map(tag => (
-                                                <span key={tag} style={{ fontSize: 10, fontFamily: "monospace", color: "var(--muted)" }}>#{tag}</span>
-                                            ))}
+                                        <div style={{ textAlign: "right", flexShrink: 0 }}>
+                                            <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--muted)", display: "block", marginBottom: 4 }}>
+                                                {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                                            </time>
+                                            <span style={{ fontSize: 10, fontFamily: "monospace", color: "var(--accent)" }}>
+                                                {post.readingTime} min
+                                            </span>
                                         </div>
                                     </div>
-                                    <div className="blog-post-meta" style={{ textAlign: "right", flexShrink: 0 }}>
-                                        <time style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)", display: "block", marginBottom: 4 }}>
-                                            {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                                        </time>
-                                        <span style={{ fontSize: 10, fontFamily: "monospace", color: "var(--muted)" }}>
-                                            {post.readingTime} min
-                                        </span>
+                                    
+                                    {post.hook && (
+                                        <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", margin: "4px 0 8px", lineHeight: 1.6 }}>
+                                            "{post.hook}"
+                                        </p>
+                                    )}
+                                    
+                                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto", paddingTop: 8 }}>
+                                        {post.tags.map(tag => (
+                                            <span key={tag} style={{ 
+                                                fontSize: 11, fontFamily: "monospace", color: "var(--accent)", 
+                                                background: "var(--glass-border)", padding: "2px 8px", 
+                                                borderRadius: 12, letterSpacing: "0.05em" 
+                                            }}>
+                                                #{tag}
+                                            </span>
+                                        ))}
                                     </div>
                                 </div>
                             </Link>
