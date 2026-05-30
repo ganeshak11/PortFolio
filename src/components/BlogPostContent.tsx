@@ -312,7 +312,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     </h2>
                                 ),
                                 h3: ({ children }) => (
-                                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--accent-2)", marginTop: 40, marginBottom: 16 }}>
+                                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--fg)", marginTop: 40, marginBottom: 16 }}>
                                         {children}
                                     </h3>
                                 ),
