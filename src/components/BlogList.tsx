@@ -25,8 +25,8 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
                     {/* Header */}
                     <div style={{ marginBottom: 56 }}>
-                        <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                            $ cat /var/log/thoughts
+                        <p style={{ fontFamily: "monospace", fontSize: 13, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 16 }}>
+                            $ cat /var/log/thoughts <span className="cursor-blink" style={{ display: "inline-block", width: 8, height: 14, background: "var(--accent)", marginLeft: 4, verticalAlign: "middle" }} />
                         </p>
                         <h1 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, letterSpacing: "-0.03em", color: "var(--fg)", marginBottom: 12, lineHeight: 1.0 }}>
                             Blog
@@ -92,64 +92,65 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                     )}
 
                     {/* Rest of posts */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 40 }}>
+                    <div style={{ marginTop: 40 }}>
                         {rest.map((post) => (
                             <Link
                                 key={post.slug}
                                 href={`/blog/${post.slug}`}
-                                style={{ display: "block", textDecoration: "none", color: "var(--fg)" }}
+                                style={{ display: "block", textDecoration: "none", color: "var(--fg)", position: "relative" }}
                             >
                                 <div
-                                    className="glass-card"
                                     style={{
-                                        padding: "24px 32px",
-                                        borderRadius: 12,
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: 12,
-                                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                                        padding: "24px 0",
+                                        borderBottom: "1px solid var(--border)",
+                                        display: "grid",
+                                        gridTemplateColumns: "1fr auto",
+                                        gap: 24,
+                                        alignItems: "start",
+                                        transition: "all 0.3s ease",
                                     }}
-                                    onMouseEnter={(e) => { 
+                                    onMouseEnter={(e) => {
                                         const t = e.currentTarget as HTMLDivElement;
-                                        t.style.transform = "translateY(-4px)";
-                                        t.style.boxShadow = "0 12px 30px rgba(0, 229, 255, 0.1)";
+                                        const title = t.querySelector("h2");
+                                        if (title) title.style.color = "var(--accent)";
+                                        t.style.paddingLeft = "12px";
                                     }}
-                                    onMouseLeave={(e) => { 
+                                    onMouseLeave={(e) => {
                                         const t = e.currentTarget as HTMLDivElement;
-                                        t.style.transform = "translateY(0)";
-                                        t.style.boxShadow = "none";
+                                        const title = t.querySelector("h2");
+                                        if (title) title.style.color = "var(--fg)";
+                                        t.style.paddingLeft = "0px";
                                     }}
                                 >
-                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
-                                        <h2 style={{ fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 800, letterSpacing: "-0.01em", lineHeight: 1.3, margin: 0 }}>
+                                    <div>
+                                        <h2 style={{ 
+                                            fontSize: "clamp(16px, 2.2vw, 20px)", 
+                                            fontWeight: 700, 
+                                            letterSpacing: "-0.01em", 
+                                            marginBottom: 8, 
+                                            lineHeight: 1.3,
+                                            transition: "color 0.2s ease"
+                                        }}>
                                             {post.title}
                                         </h2>
-                                        <div style={{ textAlign: "right", flexShrink: 0 }}>
-                                            <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--muted)", display: "block", marginBottom: 4 }}>
-                                                {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                                            </time>
-                                            <span style={{ fontSize: 10, fontFamily: "monospace", color: "var(--accent)" }}>
-                                                {post.readingTime} min
-                                            </span>
+                                        {post.hook && (
+                                            <p style={{ fontSize: 13, color: "var(--muted)", fontStyle: "italic", marginBottom: 12, lineHeight: 1.5 }}>
+                                                "{post.hook}"
+                                            </p>
+                                        )}
+                                        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+                                            {post.tags.map(tag => (
+                                                <span key={tag} style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)" }}>#{tag}</span>
+                                            ))}
                                         </div>
                                     </div>
-                                    
-                                    {post.hook && (
-                                        <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", margin: "4px 0 8px", lineHeight: 1.6 }}>
-                                            "{post.hook}"
-                                        </p>
-                                    )}
-                                    
-                                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto", paddingTop: 8 }}>
-                                        {post.tags.map(tag => (
-                                            <span key={tag} style={{ 
-                                                fontSize: 11, fontFamily: "monospace", color: "var(--accent)", 
-                                                background: "var(--glass-border)", padding: "2px 8px", 
-                                                borderRadius: 12, letterSpacing: "0.05em" 
-                                            }}>
-                                                #{tag}
-                                            </span>
-                                        ))}
+                                    <div style={{ textAlign: "right", flexShrink: 0, paddingTop: 4 }}>
+                                        <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--muted)", display: "block", marginBottom: 4 }}>
+                                            {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                                        </time>
+                                        <span style={{ fontSize: 10, fontFamily: "monospace", color: "var(--accent)" }}>
+                                            {post.readingTime} min
+                                        </span>
                                     </div>
                                 </div>
                             </Link>

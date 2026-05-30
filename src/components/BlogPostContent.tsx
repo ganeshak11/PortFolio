@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
 import { useEffect, useState } from "react";
+import { Copy, Check, ArrowUp, Share2, ArrowLeft } from "lucide-react";
 
 interface Post {
     title: string;
@@ -11,6 +13,80 @@ interface Post {
     tags: string[];
     content: string;
     slug: string;
+}
+
+function CodeBlock({ children, className }: { children: React.ReactNode; className?: string }) {
+    const [copied, setCopied] = useState(false);
+    
+    const handleCopy = () => {
+        let textToCopy = "";
+        if (typeof children === "string") {
+            textToCopy = children;
+        } else if (Array.isArray(children)) {
+            textToCopy = children.join("");
+        } else {
+            textToCopy = String(children);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(textToCopy);
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+        
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <div className="glass-card" style={{
+            marginBottom: 32, marginTop: 16, borderRadius: 12, overflow: "hidden",
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)", position: "relative"
+        }}>
+            <div style={{
+                display: "flex", justifyContent: "space-between", alignItems: "center",
+                padding: "12px 16px", background: "rgba(0,0,0,0.2)", borderBottom: "1px solid var(--glass-border)"
+            }}>
+                <div style={{ display: "flex", gap: 6 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f56" }} />
+                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
+                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }} />
+                </div>
+                <button 
+                    onClick={handleCopy}
+                    style={{ 
+                        background: "transparent", border: "none", cursor: "pointer", 
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: copied ? "var(--status-ok)" : "var(--muted)",
+                        transition: "color 0.2s"
+                    }}
+                    title="Copy code"
+                >
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                </button>
+            </div>
+            <code style={{
+                display: "block", fontFamily: "monospace", fontSize: 14,
+                padding: "20px 24px", overflowX: "auto",
+                color: "var(--accent-2)", lineHeight: 1.6
+            }}>
+                {children}
+            </code>
+        </div>
+    );
 }
 
 function BlogNavbar() {
@@ -56,8 +132,39 @@ function BlogNavbar() {
 }
 
 export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const totalScroll = document.documentElement.scrollTop;
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scroll = `${totalScroll / (windowHeight || 1)}`;
+            setScrollProgress(Number(scroll));
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <>
+            {/* Scroll Progress Bar */}
+            <div style={{
+                position: "fixed",
+                top: 0, left: 0, right: 0,
+                height: 3,
+                background: "transparent",
+                zIndex: 100,
+                pointerEvents: "none"
+            }}>
+                <div style={{
+                    height: "100%",
+                    width: `${scrollProgress * 100}%`,
+                    background: "var(--accent)",
+                    transition: "width 0.1s ease-out",
+                    boxShadow: "0 0 10px var(--accent)"
+                }} />
+            </div>
+
             <BlogNavbar />
             <main style={{ minHeight: "100vh", paddingTop: 80, paddingBottom: 120, paddingLeft: 24, paddingRight: 24 }}>
                 <article style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
@@ -127,6 +234,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     {/* Content */}
                     <div style={{ color: "var(--fg)", fontSize: 16, lineHeight: 1.85 }}>
                         <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
                             components={{
                                 img: ({ src, alt }) => {
                                     let cleanSrc = typeof src === "string" ? src : "";
@@ -187,26 +295,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
                                     return isBlock ? (
-                                        <div className="glass-card" style={{
-                                            marginBottom: 32, marginTop: 16, borderRadius: 12, overflow: "hidden",
-                                            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)"
-                                        }}>
-                                            <div style={{
-                                                display: "flex", gap: 6, padding: "12px 16px",
-                                                background: "rgba(0,0,0,0.2)", borderBottom: "1px solid var(--glass-border)"
-                                            }}>
-                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f56" }} />
-                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
-                                                <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }} />
-                                            </div>
-                                            <code style={{
-                                                display: "block", fontFamily: "monospace", fontSize: 14,
-                                                padding: "20px 24px", overflowX: "auto",
-                                                color: "var(--accent-2)", lineHeight: 1.6
-                                            }}>
-                                                {children}
-                                            </code>
-                                        </div>
+                                        <CodeBlock className={className}>{children}</CodeBlock>
                                     ) : (
                                         <code style={{
                                             fontFamily: "monospace", fontSize: 14,
@@ -266,14 +355,50 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         </ReactMarkdown>
                     </div>
 
-                    {/* Closing signature */}
-                    <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid var(--border)" }}>
-                        <p style={{ fontSize: 13, color: "var(--muted)", fontFamily: "monospace" }}>— Ganesh Angadi</p>
-                        <p style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace", opacity: 0.5, marginTop: 4 }}>
-                            DevOps Engineer · System Thinker
-                        </p>
-                    </div>
-
+                    {/* Footer Section */}
+                    <footer style={{ marginTop: 80, borderTop: "1px solid var(--border)", paddingTop: 40, paddingBottom: 40 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+                            <Link href="/blog" style={{ 
+                                display: "flex", alignItems: "center", gap: 8, 
+                                textDecoration: "none", color: "var(--fg)", fontWeight: 600 
+                            }}>
+                                <ArrowLeft size={16} /> Back to all posts
+                            </Link>
+                            <button 
+                                onClick={() => {
+                                    const url = window.location.href;
+                                    if (navigator.clipboard && window.isSecureContext) {
+                                        navigator.clipboard.writeText(url);
+                                    } else {
+                                        const textArea = document.createElement("textarea");
+                                        textArea.value = url;
+                                        textArea.style.position = "fixed";
+                                        textArea.style.left = "-999999px";
+                                        textArea.style.top = "-999999px";
+                                        document.body.appendChild(textArea);
+                                        textArea.focus();
+                                        textArea.select();
+                                        try {
+                                            document.execCommand('copy');
+                                        } catch (err) {
+                                            console.error('Fallback: Oops, unable to copy', err);
+                                        }
+                                        document.body.removeChild(textArea);
+                                    }
+                                    alert("Link copied to clipboard!");
+                                }}
+                                className="glass-card" 
+                                style={{ 
+                                    display: "flex", alignItems: "center", gap: 8, 
+                                    padding: "8px 16px", borderRadius: 20, border: "1px solid var(--glass-border)",
+                                    background: "transparent", color: "var(--accent)", cursor: "pointer",
+                                    fontFamily: "inherit", fontSize: 14, fontWeight: 600
+                                }}
+                            >
+                                <Share2 size={16} /> Share Post
+                            </button>
+                        </div>
+                    </footer>
                 </article>
             </main>
 
