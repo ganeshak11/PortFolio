@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
 import { useEffect, useState } from "react";
-import { Copy, Check, ArrowUp, Share2, ArrowLeft } from "lucide-react";
+import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
 
 interface Post {
     title: string;
@@ -133,8 +133,23 @@ function BlogNavbar() {
 
 export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
     const [scrollProgress, setScrollProgress] = useState(0);
+    const [views, setViews] = useState<number | null>(null);
 
     useEffect(() => {
+        // Record and fetch views
+        const recordView = async () => {
+            try {
+                const res = await fetch(`/api/views/${slug}`, { method: "POST" });
+                const data = await res.json();
+                if (data.count !== undefined) {
+                    setViews(data.count);
+                }
+            } catch (err) {
+                console.error("Failed to track view", err);
+            }
+        };
+        recordView();
+
         const handleScroll = () => {
             const totalScroll = document.documentElement.scrollTop;
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -224,8 +239,18 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     Ganesh Angadi
                                     <span style={{ fontSize: 10, padding: "2px 6px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
                                 </p>
-                                <time style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
-                                    {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                                <time style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
+                                    <span>{new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                                    <span>•</span>
+                                    <span>{post.readingTime} min read</span>
+                                    {views !== null && (
+                                        <>
+                                            <span>•</span>
+                                            <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                                <Eye size={12} /> {views.toLocaleString()} views
+                                            </span>
+                                        </>
+                                    )}
                                 </time>
                             </div>
                         </div>
