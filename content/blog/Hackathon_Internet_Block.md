@@ -52,11 +52,19 @@ My DevOps survival instincts kicked in. It wasn't the Wi-Fi. It was the server. 
 
 And there it was. The most horrifying, beautiful mistake I've ever made.
 
-When our automated script detected my mobile’s brute-force attack, it didn't just block my specific IP. Through a cascading sequence of events involving our Docker networking and the Rook (Termux) shell, the script had panicked and added an `iptables` rule blocking `0.0.0.0/0`.
+When our automated script detected my mobile’s brute-force attack, it didn't just block my specific IP. Our script was designed to dynamically update `iptables` when an attack was detected. Due to a bug in how it parsed the attacker's source IP from the Docker logs, a parsing failure returned an empty value, and our fallback logic silently substituted `0.0.0.0/0`. It then cheerfully injected this wildcard into the `INPUT` chain, effectively blocking all incoming traffic.
 
 For those who don't speak networking, `0.0.0.0/0` is CIDR notation for "literally every IP address in existence."
 
 Our security system was so determined to keep us safe that it decided the only way to prevent a brute-force attack was to disconnect the server from the entire universe. It was the digital equivalent of seeing a spider in your house and deciding to burn the house down.
+
+I ran `iptables -L -n` and saw the smoking gun:
+
+```text
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       all  --  0.0.0.0/0            0.0.0.0/0
+```
 
 ---
 
@@ -64,7 +72,7 @@ Our security system was so determined to keep us safe that it decided the only w
 
 With the judge's eyes practically burning a hole in the side of my head, I had to act fast.
 
-I quickly flushed the offending `iptables` rule, restoring `0.0.0.0/0` access. Instantly, the network connection sprang back to life. The dashboard loaded, the internet returned, and I showed the working demo right then and there.
+I quickly deleted the offending `iptables` rule (`iptables -D INPUT ...`), removing the block and restoring network connectivity. Instantly, the dashboard loaded, the internet returned, and I showed the working demo right then and there.
 
 ---
 
@@ -73,7 +81,9 @@ I quickly flushed the offending `iptables` rule, restoring `0.0.0.0/0` access. I
 1. **Automation is ruthless.** It does exactly what you tell it to do, even if what you told it to do is block the entire planet.
 2. **Blast Radius is a real thing.** When building automated defenses, always ask: *"If this script goes crazy, what is the maximum damage it can do?"*
 3. **Never block `0.0.0.0/0` automatically.** Enterprise security systems have safeguards for a reason. They only target specific `/32` IPs and whitelist local subnets.
-4. **DevOps is 10% building tools and 90% fixing them while people watch.**
+4. **Every automation system eventually becomes a production system.** The moment a script is allowed to take action without human approval, you have created an operator. Operators need guardrails.
+
+The first change we made afterward was adding validation to reject any automated blocklist entry broader than a single host IP.
 
 I walked away from that hackathon with a working project and a profound realization. Anyone can build an automated firewall, but it takes a true DevOps engineer to accidentally lock themselves out of it in front of a judge.
 
