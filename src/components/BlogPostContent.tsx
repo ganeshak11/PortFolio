@@ -13,6 +13,8 @@ interface Post {
     tags: string[];
     content: string;
     slug: string;
+    readingTime?: number;
+    hook?: string;
 }
 
 function CodeBlock({ children, className }: { children: React.ReactNode; className?: string }) {
