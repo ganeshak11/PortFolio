@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { m, AnimatePresence  } from "framer-motion";
+import MatrixRain from "./MatrixRain";
 
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "thinking", "contact", "README.md"],
@@ -23,6 +24,7 @@ Available commands:
   cat <file>      - display file contents
   clear           - clear terminal
   help            - show this help message
+  resume          - view my resume summary
   exit            - return to normal view`,
 
     "/about/info.txt": `Student since 2023. Focused on DevOps & System Architecture.
@@ -161,6 +163,7 @@ const QUICK_COMMANDS = [
     { cmd: "cd projects", desc: "go to projects" },
     { cmd: "cd ..", desc: "go back" },
     { cmd: "cat README.md", desc: "read readme" },
+    { cmd: "resume", desc: "view resume" },
     { cmd: "help", desc: "show help" },
     { cmd: "clear", desc: "clear screen" },
 ];
@@ -175,6 +178,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
     const [input, setInput] = useState("");
     const [currentDir, setCurrentDir] = useState("/");
     const [showCommands, setShowCommands] = useState(true);
+    const [showMatrix, setShowMatrix] = useState(false);
     const terminalRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -247,6 +251,94 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                 onExit();
                 break;
 
+            case "whoami":
+                setHistory((prev) => [
+                    ...prev,
+                    makeEntry("output", `
+  ____                        _     
+ / ___| __ _ _ __   ___  ___| |__  
+| |  _ / _\` | '_ \\ / _ \\/ __| '_ \\ 
+| |_| | (_| | | | |  __/\\__ \\ | | |
+ \\____|\\__,_|_| |_|\\___||___/_| |_/
+                                   
+Ganesh Angadi — DevOps Engineer & System Architect
+`),
+                ]);
+                break;
+
+            case "neofetch":
+                setHistory((prev) => [
+                    ...prev,
+                    makeEntry("output", `
+       _,met$$$$$gg.          ganesh@portfolio
+    ,g$$$$$$$$$$$$$$$P.       ----------------
+  ,g$$P"     """Y$$.".        OS: Linux (Mental Model)
+ ,$$P'              \`$$$.     Host: Portfolio.sh
+',$$P       ,ggs.     \`$$b:   Kernel: Next.js 16
+\`d$$'     ,$P"'   .    $$$    Uptime: up indefinitely
+ $$P      d$'     ,    $$P    Packages: 15 (npm)
+ $$:      $$.   -    ,d$$'    Shell: bash
+ $$;      Y$b._   _,d$P'      Terminal: Framer Motion
+ Y$$.    \`.\`"Y$$$$P"'         WM: Docker & Kubernetes
+ \`$$b      "-.__              CPU: System Thinker
+  \`Y$$                        Memory: 100% Focused
+   \`Y$$.                      
+     \`$$b.                    
+       \`Y$$b.                 
+          \`"Y$b._             
+`),
+                ]);
+                break;
+
+            case "sudo":
+                if (args.join(" ") === "rm -rf /") {
+                    setHistory((prev) => [
+                        ...prev,
+                        makeEntry("output", "Nice try. I have backups. (And you're not in the sudoers file)\nThis incident will be reported.\n"),
+                    ]);
+                } else {
+                    setHistory((prev) => [
+                        ...prev,
+                        makeEntry("output", `sudo: execute command as another user. But you are stuck as 'ganesh'.\n`),
+                    ]);
+                }
+                break;
+                
+            case "matrix":
+                setShowMatrix(prev => !prev);
+                setHistory((prev) => [
+                    ...prev,
+                    makeEntry("output", "Initializing Matrix Protocol...\\n"),
+                ]);
+                break;
+
+            case "resume":
+                setHistory((prev) => [
+                    ...prev,
+                    makeEntry("output", `
+=========================================
+      GANESH ANGADI - RESUME SUMMARY
+=========================================
+Role: DevOps Engineer & System Architect
+Location: Mysuru, Karnataka, India
+
+[EXPERIENCE & ACHIEVEMENTS]
+▸ AI & Machine Learning Intern @ Artsy Technologies
+▸ 1st Place - MCP-Based Systems Engineering Hackathon
+
+[TOP PROJECTS]
+▸ Infra Sentinel - Graph-Native AI SRE Platform
+▸ Portfolio Infrastructure - Zero-to-Production DevOps
+▸ MY(suru) BUS - Real-Time Smart Bus Tracking
+▸ CI/CD Sentinel - Centralized Deployment Observability
+
+To view the full resume, close the terminal and click 'View Resume', 
+or go directly to /resume.html
+=========================================
+`),
+                ]);
+                break;
+
             default:
                 setHistory((prev) => [
                     ...prev,
@@ -271,6 +363,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                 flexDirection: "column",
             }}
         >
+            {showMatrix && <MatrixRain />}
             {/* Terminal Header */}
             <div
                 style={{

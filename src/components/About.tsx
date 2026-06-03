@@ -73,6 +73,7 @@ export default function About() {
                             src="/profile.jpg"
                             alt="Ganesh Angadi - DevOps Engineer"
                             fill
+                            priority
                             sizes="(max-width: 768px) 100vw, 36vw"
                             style={{ objectFit: "cover", objectPosition: "center top" }}
                         />
