@@ -4,6 +4,7 @@ import { useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Code2, Download, Layers, X } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
+import Magnetic from "@/components/Magnetic";
 
 interface FABProps {
     onTerminalOpen: () => void;
@@ -91,41 +92,45 @@ export default function FAB({ onTerminalOpen }: FABProps) {
                         </m.span>
 
                         {/* Button */}
-                        <button
-                            onClick={() => handleAction(action.id)}
-                            onMouseEnter={() => setHoveredId(action.id)}
-                            onMouseLeave={() => setHoveredId(null)}
-                            style={btnStyle("var(--accent)")}
-                            aria-label={action.label}
-                        >
-                            {getIcon(action.id)}
-                        </button>
+                        <Magnetic>
+                            <button
+                                onClick={() => handleAction(action.id)}
+                                onMouseEnter={() => setHoveredId(action.id)}
+                                onMouseLeave={() => setHoveredId(null)}
+                                style={btnStyle("var(--accent)")}
+                                aria-label={action.label}
+                            >
+                                {getIcon(action.id)}
+                            </button>
+                        </Magnetic>
                     </m.div>
                 ))}
             </AnimatePresence>
 
             {/* Main FAB button */}
-            <button
-                onClick={() => setOpen(!open)}
-                style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: "50%",
-                    border: "1px solid var(--accent)",
-                    background: "var(--accent)",
-                    color: "var(--bg)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-                }}
-                aria-label="Actions"
-            >
-                <m.div animate={{ rotate: open ? 45 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
-                    {open ? <X size={20} /> : <Layers size={20} />}
-                </m.div>
-            </button>
+            <Magnetic>
+                <button
+                    onClick={() => setOpen(!open)}
+                    style={{
+                        width: 52,
+                        height: 52,
+                        borderRadius: "50%",
+                        border: "1px solid var(--accent)",
+                        background: "var(--accent)",
+                        color: "var(--bg)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+                    }}
+                    aria-label="Actions"
+                >
+                    <m.div animate={{ rotate: open ? 45 : 0 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
+                        {open ? <X size={20} /> : <Layers size={20} />}
+                    </m.div>
+                </button>
+            </Magnetic>
         </div>
     );
 }

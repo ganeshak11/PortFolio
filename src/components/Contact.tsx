@@ -55,7 +55,6 @@ export default function Contact() {
                         fontFamily: "monospace", display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4,
                     }}>
                         {typed}
-                        <span className="cursor-blink" />
                     </h2>
                 </m.div>
 

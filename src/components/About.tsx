@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useScramble } from "@/lib/useScramble";
 import { Linkedin, Github, Instagram, MessageCircle } from "lucide-react";
 import { FaLinkedin, FaGithub, FaInstagram, FaDiscord } from "react-icons/fa";
+import Magnetic from "@/components/Magnetic";
 
 const SOCIALS = [
     { icon: FaLinkedin, href: "https://linkedin.com/in/ganeshangadi1301", label: "LinkedIn" },
@@ -99,7 +100,7 @@ export default function About() {
                                 2+ yrs in DevOps
                             </span>
                             <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--accent)", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 999 }}>
-                                ⚡ Building CI/CD Sentinel
+                                ⚡ Building Fortis-CI
                             </span>
                         </div>
 
@@ -116,46 +117,52 @@ export default function About() {
                             <p style={{ fontSize: 13, color: "var(--muted)", fontFamily: "monospace" }}>
                                 📍 Mysuru, Karnataka, India
                             </p>
-                            <Link
-                                href="/resume.html"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn-slide"
-                                style={{
-                                    fontFamily: "monospace",
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    letterSpacing: "0.05em",
-                                    textTransform: "uppercase",
-                                    padding: "8px 20px",
-                                    border: "1.5px solid var(--accent)",
-                                    borderRadius: 4,
-                                    textDecoration: "none",
-                                }}
-                            >
-                                View Resume →
-                            </Link>
-                            <button
-                                className="btn-slide"
-                                onClick={() => {
-                                    const w = window.open("/resume.html", "_blank");
-                                    if (w) w.addEventListener("load", () => setTimeout(() => w.print(), 500));
-                                }}
-                                style={{
-                                    fontFamily: "monospace",
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    letterSpacing: "0.05em",
-                                    textTransform: "uppercase",
-                                    padding: "8px 20px",
-                                    border: "1.5px solid var(--accent)",
-                                    borderRadius: 4,
-                                    cursor: "pointer",
-                                    background: "transparent",
-                                }}
-                            >
-                                ↓ Download
-                            </button>
+                            <Magnetic>
+                                <Link
+                                    href="/resume.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-slide"
+                                    style={{
+                                        display: "inline-block",
+                                        fontFamily: "monospace",
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        letterSpacing: "0.05em",
+                                        textTransform: "uppercase",
+                                        padding: "8px 20px",
+                                        border: "1.5px solid var(--accent)",
+                                        borderRadius: 4,
+                                        textDecoration: "none",
+                                    }}
+                                >
+                                    View Resume →
+                                </Link>
+                            </Magnetic>
+                            <Magnetic>
+                                <button
+                                    className="btn-slide"
+                                    onClick={() => {
+                                        const w = window.open("/resume.html", "_blank");
+                                        if (w) w.addEventListener("load", () => setTimeout(() => w.print(), 500));
+                                    }}
+                                    style={{
+                                        display: "inline-block",
+                                        fontFamily: "monospace",
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        letterSpacing: "0.05em",
+                                        textTransform: "uppercase",
+                                        padding: "8px 20px",
+                                        border: "1.5px solid var(--accent)",
+                                        borderRadius: 4,
+                                        cursor: "pointer",
+                                        background: "transparent",
+                                    }}
+                                >
+                                    ↓ Download
+                                </button>
+                            </Magnetic>
                         </div>
 
                         {/* Divider */}

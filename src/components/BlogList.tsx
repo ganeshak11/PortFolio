@@ -15,8 +15,6 @@ interface BlogPost {
 }
 
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
-    const [featured, ...rest] = posts;
-
     return (
         <>
             <Navbar />
@@ -36,64 +34,9 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                         </p>
                     </div>
 
-                    {/* Featured post */}
-                    {featured && (
-                        <Link
-                            href={`/blog/${featured.slug}`}
-                            style={{ display: "block", textDecoration: "none", marginBottom: 16 }}
-                        >
-                            <div
-                                className="blog-featured-card"
-                                style={{
-                                    padding: "36px",
-                                    background: "var(--card-bg)",
-                                    border: "1px solid var(--accent)",
-                                    borderRadius: 8,
-                                    transition: "background 0.2s",
-                                }}
-                                onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "var(--bg)"; }}
-                                onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "var(--card-bg)"; }}
-                            >
-                                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-                                    <span style={{ fontSize: 10, fontFamily: "monospace", letterSpacing: "0.1em", background: "var(--accent)", color: "var(--bg)", padding: "3px 10px", borderRadius: 999 }}>
-                                        FEATURED
-                                    </span>
-                                    <time style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)" }}>
-                                        {new Date(featured.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                                    </time>
-                                    <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)" }}>
-                                        {featured.readingTime} min read
-                                    </span>
-                                </div>
-
-                                <h2 style={{ fontSize: "clamp(20px, 3vw, 30px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)", marginBottom: 12, lineHeight: 1.2 }}>
-                                    {featured.title}
-                                </h2>
-
-                                {featured.hook && (
-                                    <p style={{ fontSize: 15, color: "var(--accent)", fontStyle: "italic", marginBottom: 16, lineHeight: 1.6 }}>
-                                        "{featured.hook}"
-                                    </p>
-                                )}
-
-                                <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7, marginBottom: 20, maxWidth: 560 }}>
-                                    {featured.excerpt}
-                                </p>
-
-                                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                                    {featured.tags.map(tag => (
-                                        <span key={tag} style={{ fontSize: 10, fontFamily: "monospace", color: "var(--muted)", letterSpacing: "0.05em" }}>
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </Link>
-                    )}
-
-                    {/* Rest of posts */}
+                    {/* All posts */}
                     <div style={{ marginTop: 40 }}>
-                        {rest.map((post) => (
+                        {posts.map((post) => (
                             <Link
                                 key={post.slug}
                                 href={`/blog/${post.slug}`}

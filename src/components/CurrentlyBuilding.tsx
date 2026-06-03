@@ -3,32 +3,6 @@
 import { useRef, useState } from "react";
 import { m, useInView, AnimatePresence } from "framer-motion";
 
-const PROGRESS_ITEMS = [
-    { label: "Backend Foundation & DB", pct: 95 },
-    { label: "Webhook Ingestion & Idempotency", pct: 90 },
-    { label: "Health Monitoring Worker", pct: 75 },
-    { label: "Dashboard UI & Redeploy Control", pct: 60 },
-];
-
-function ProgressBar({ label, pct, active, delay }: { label: string; pct: number; active: boolean; delay: number }) {
-    return (
-        <div style={{ padding: "10px 0", borderBottom: "1px solid var(--border)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 12, color: "var(--muted)", marginBottom: 8 }}>
-                <span>{label}</span>
-                <span style={{ color: "var(--accent)" }}>{pct}%</span>
-            </div>
-            <div style={{ height: 4, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
-                <m.div
-                    initial={{ width: 0 }}
-                    animate={active ? { width: `${pct}%` } : { width: 0 }}
-                    transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ height: "100%", background: "var(--accent)", borderRadius: 2 }}
-                />
-            </div>
-        </div>
-    );
-}
-
 export default function CurrentlyBuilding() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -43,9 +17,9 @@ export default function CurrentlyBuilding() {
                     transition={{ duration: 0.5 }}
                     style={{ marginBottom: 24 }}
                 >
-                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        $ tail -f /var/log/deployment.log
-                    </p>
+                    <h2 style={{ fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
+                        Things I'm Building
+                    </h2>
                 </m.div>
 
                 <div style={{ borderTop: "1px solid var(--border)" }}>
@@ -68,18 +42,18 @@ export default function CurrentlyBuilding() {
                         <div>
                             <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
                                 <span style={{ fontSize: "clamp(16px, 2.5vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
-                                    CI/CD Sentinel
+                                    Fortis-CI
                                 </span>
                                 <m.span
                                     animate={{ opacity: [1, 0.3, 1] }}
                                     transition={{ repeat: Infinity, duration: 2 }}
                                     style={{ fontFamily: "monospace", fontSize: 12, color: "var(--status-warn)" }}
                                 >
-                                    ~80% COMPLETE
+                                    OPEN SOURCE
                                 </m.span>
                             </div>
                             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                                {["Next.js", "Supabase", "Webhooks", "CI/CD"].map(t => (
+                                {["Self-Hosted"].map(t => (
                                     <span key={t} style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>{t}</span>
                                 ))}
                             </div>
@@ -102,25 +76,21 @@ export default function CurrentlyBuilding() {
                                 style={{ overflow: "hidden" }}
                             >
                                 <div className="currently-expanded" style={{ paddingBottom: 36, paddingLeft: 60 }}>
-                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 28 }}>
-                                        Building a centralized observability and recovery layer for software deployments.
-                                        Tracking deployment history, monitoring health via polling, one-click recovery — all from a single dashboard.
+                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 16 }}>
+                                        Building a centralized observability and recovery layer for software deployments. Open source, graph-native deployment tracking with root cause analysis and automated rollbacks.
+                                    </p>
+                                    
+                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--accent)", maxWidth: 640, marginBottom: 28, fontStyle: "italic" }}>
+                                        🚀 Looking for open-source developers to collaborate! If you're interested in system architecture, graphs, or DevOps tools, I'd love to build this together.
                                     </p>
 
-                                    <div style={{ marginBottom: 28 }}>
-                                        <p style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.08em", color: "var(--accent)", marginBottom: 12 }}>[BUILD_PROGRESS]</p>
-                                        {PROGRESS_ITEMS.map((item, i) => (
-                                            <ProgressBar key={item.label} label={item.label} pct={item.pct} active={open} delay={i * 0.15} />
-                                        ))}
-                                    </div>
-
                                     <a
-                                        href="https://github.com/ganeshak11/CI-CD_Sentinel"
+                                        href="https://github.com/Fortis-CI/Fortis-CI"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
                                     >
-                                        [GitHub] →
+                                        [GitHub / Contribute] →
                                     </a>
                                 </div>
                             </m.div>

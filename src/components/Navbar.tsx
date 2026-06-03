@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "./navbar/navData";
+import { useScrambleHover } from "@/lib/useScrambleHover";
 
 const SECTION_IDS = ["hero", "about", "achievements", "projects", "stack", "thinking", "services", "contact"];
 const PRIMARY = ["#about", "#projects", "#contact","#achievements","#stack","#thinking","#services","/blog"]; // Primary sections to highlight
@@ -138,30 +139,16 @@ export default function Navbar() {
                         const isPrimary = PRIMARY.includes(link.href);
 
                         return (
-                            <a
+                            <NavItem
                                 key={link.href}
-                                href={resolveHref(link.href)}
-                                ref={(el) => { linkRefs.current[link.href] = el; }}
-                                onClick={() => handleNavClick(link.href.replace("#", ""))}
-                                style={{
-                                    position: "relative",
-                                    zIndex: 1,
-                                    fontSize: isUtility ? 11 : isPrimary ? 12 : 11,
-                                    fontWeight: isActive ? 600 : isPrimary ? 500 : 400,
-                                    letterSpacing: "0.03em",
-                                    color: isActive ? "var(--accent)" : isUtility ? "var(--muted)" : isPrimary ? "var(--fg)" : "var(--muted)",
-                                    opacity: isUtility ? 0.6 : 1,
-                                    textDecoration: "none",
-                                    padding: isUtility ? "5px 8px" : "5px 10px",
-                                    borderRadius: 999,
-                                    transition: "color 0.2s, opacity 0.2s",
-                                    whiteSpace: "nowrap",
-                                }}
-                                onMouseEnter={(e) => { e.currentTarget.style.color = "var(--fg)"; e.currentTarget.style.opacity = "1"; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.color = isActive ? "var(--accent)" : isUtility ? "var(--muted)" : isPrimary ? "var(--fg)" : "var(--muted)"; e.currentTarget.style.opacity = isUtility ? "0.6" : "1"; }}
-                            >
-                                {link.label}
-                            </a>
+                                link={link}
+                                isActive={isActive}
+                                isUtility={isUtility}
+                                isPrimary={isPrimary}
+                                resolveHref={resolveHref}
+                                linkRefs={linkRefs}
+                                handleNavClick={handleNavClick}
+                            />
                         );
                     })}
                 </div>
@@ -266,5 +253,52 @@ export default function Navbar() {
                 )}
             </AnimatePresence>
         </>
+    );
+}
+
+function NavItem({ 
+    link, 
+    isActive, 
+    isUtility, 
+    isPrimary, 
+    resolveHref, 
+    linkRefs, 
+    handleNavClick 
+}: any) {
+    const { display, setIsHovering } = useScrambleHover(link.label);
+    
+    return (
+        <a
+            href={resolveHref(link.href)}
+            ref={(el) => { linkRefs.current[link.href] = el; }}
+            onClick={() => handleNavClick(link.href.replace("#", ""))}
+            style={{
+                position: "relative",
+                zIndex: 1,
+                fontSize: isUtility ? 11 : isPrimary ? 12 : 11,
+                fontWeight: isActive ? 600 : isPrimary ? 500 : 400,
+                letterSpacing: "0.03em",
+                color: isActive ? "var(--accent)" : isUtility ? "var(--muted)" : isPrimary ? "var(--fg)" : "var(--muted)",
+                opacity: isUtility ? 0.6 : 1,
+                textDecoration: "none",
+                padding: isUtility ? "5px 8px" : "5px 10px",
+                borderRadius: 999,
+                transition: "color 0.2s, opacity 0.2s",
+                whiteSpace: "nowrap",
+                fontFamily: "monospace",
+            }}
+            onMouseEnter={(e) => { 
+                setIsHovering(true);
+                e.currentTarget.style.color = "var(--fg)"; 
+                e.currentTarget.style.opacity = "1"; 
+            }}
+            onMouseLeave={(e) => { 
+                setIsHovering(false);
+                e.currentTarget.style.color = isActive ? "var(--accent)" : isUtility ? "var(--muted)" : isPrimary ? "var(--fg)" : "var(--muted)"; 
+                e.currentTarget.style.opacity = isUtility ? "0.6" : "1"; 
+            }}
+        >
+            {display}
+        </a>
     );
 }

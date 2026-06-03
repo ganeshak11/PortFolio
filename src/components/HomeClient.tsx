@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TerminalMode from "@/components/TerminalMode";
 import FAB from "@/components/FAB";
+import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 
 export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false);
@@ -48,6 +49,11 @@ export default function Home() {
         <section id="projects" aria-labelledby="projects-heading">
           <h2 id="projects-heading" className="sr-only">DevOps Projects</h2>
           <Projects />
+        </section>
+
+        <section id="currently-building" aria-labelledby="currently-building-heading">
+          <h2 id="currently-building-heading" className="sr-only">Currently Building</h2>
+          <CurrentlyBuilding />
         </section>
 
         <section id="stack" aria-labelledby="skills-heading">
