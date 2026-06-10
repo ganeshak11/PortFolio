@@ -19,7 +19,7 @@ interface Post {
 
 function CodeBlock({ children, className }: { children: React.ReactNode; className?: string }) {
     const [copied, setCopied] = useState(false);
-    
+
     const handleCopy = () => {
         let textToCopy = "";
         if (typeof children === "string") {
@@ -48,7 +48,7 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
             }
             document.body.removeChild(textArea);
         }
-        
+
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -67,10 +67,10 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
                     <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
                     <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }} />
                 </div>
-                <button 
+                <button
                     onClick={handleCopy}
-                    style={{ 
-                        background: "transparent", border: "none", cursor: "pointer", 
+                    style={{
+                        background: "transparent", border: "none", cursor: "pointer",
                         display: "flex", alignItems: "center", justifyContent: "center",
                         color: copied ? "var(--status-ok)" : "var(--muted)",
                         transition: "color 0.2s"
@@ -202,8 +202,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     <header style={{ marginBottom: 56, position: "relative", zIndex: 1 }}>
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
                             {post.tags.map(tag => (
-                                <span key={tag} className="glass-card" style={{ 
-                                    fontSize: 12, fontFamily: "monospace", color: "var(--accent)", 
+                                <span key={tag} className="glass-card" style={{
+                                    fontSize: 12, fontFamily: "monospace", color: "var(--accent)",
                                     padding: "4px 12px", borderRadius: 20, letterSpacing: "0.05em",
                                     border: "1px solid var(--glass-border)",
                                 }}>
@@ -225,8 +225,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                             {post.title}
                         </h1>
 
-                        <div className="glass-card" style={{ 
-                            display: "flex", alignItems: "center", gap: 16, 
+                        <div className="glass-card" style={{
+                            display: "flex", alignItems: "center", gap: 16,
                             padding: "16px 20px", borderRadius: 12,
                             border: "1px solid var(--glass-border)",
                             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
@@ -273,18 +273,18 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         cleanSrc = "/" + cleanSrc;
                                     }
                                     return (
-                                        <img 
-                                            src={cleanSrc} 
-                                            alt={alt} 
+                                        <img
+                                            src={cleanSrc}
+                                            alt={alt}
                                             className="glass-card"
-                                            style={{ 
-                                                width: "100%", 
-                                                height: "auto", 
-                                                borderRadius: 12, 
+                                            style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                borderRadius: 12,
                                                 margin: "40px 0",
                                                 boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
                                                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                                            }} 
+                                            }}
                                             onMouseOver={(e) => {
                                                 (e.target as HTMLImageElement).style.transform = "translateY(-4px)";
                                                 (e.target as HTMLImageElement).style.boxShadow = "0 12px 40px rgba(0, 229, 255, 0.15)";
@@ -302,8 +302,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     </h1>
                                 ),
                                 h2: ({ children }) => (
-                                    <h2 style={{ 
-                                        fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800, 
+                                    <h2 style={{
+                                        fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800,
                                         color: "var(--fg)", marginTop: 56, marginBottom: 16, lineHeight: 1.3,
                                         display: "inline-block", position: "relative"
                                     }}>
@@ -353,9 +353,9 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         position: "relative",
                                         overflow: "hidden"
                                     }}>
-                                        <span style={{ 
-                                            position: "absolute", top: -10, left: 10, 
-                                            color: "var(--accent)", fontSize: 80, 
+                                        <span style={{
+                                            position: "absolute", top: -10, left: 10,
+                                            color: "var(--accent)", fontSize: 80,
                                             opacity: 0.1, fontFamily: "serif",
                                             pointerEvents: "none", lineHeight: 1
                                         }}>
@@ -385,13 +385,13 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     {/* Footer Section */}
                     <footer style={{ marginTop: 80, borderTop: "1px solid var(--border)", paddingTop: 40, paddingBottom: 40 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
-                            <Link href="/blog" style={{ 
-                                display: "flex", alignItems: "center", gap: 8, 
-                                textDecoration: "none", color: "var(--fg)", fontWeight: 600 
+                            <Link href="/blog" style={{
+                                display: "flex", alignItems: "center", gap: 8,
+                                textDecoration: "none", color: "var(--fg)", fontWeight: 600
                             }}>
                                 <ArrowLeft size={16} /> Back to all posts
                             </Link>
-                            <button 
+                            <button
                                 onClick={() => {
                                     const url = window.location.href;
                                     if (navigator.clipboard && window.isSecureContext) {
@@ -414,9 +414,9 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     }
                                     alert("Link copied to clipboard!");
                                 }}
-                                className="glass-card" 
-                                style={{ 
-                                    display: "flex", alignItems: "center", gap: 8, 
+                                className="glass-card"
+                                style={{
+                                    display: "flex", alignItems: "center", gap: 8,
                                     padding: "8px 16px", borderRadius: 20, border: "1px solid var(--glass-border)",
                                     background: "transparent", color: "var(--accent)", cursor: "pointer",
                                     fontFamily: "inherit", fontSize: 14, fontWeight: 600
