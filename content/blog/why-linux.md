@@ -53,6 +53,14 @@ Linux was different. I checked the services, inspected the logs, looked at the k
 
 Did I fix it? No. And that's the funny part. I still failed, but this time, I understood *why* I failed. That sounds insignificant until you realize that understanding failure is literally the foundation of engineering. A broken system is frustrating, but a broken system with absolutely no visibility is terrifying.
 
+The funny thing is that both operating systems gave me the same final result.
+
+Bluetooth still didn't work.
+
+The difference was that Windows gave me an **apology**.
+
+Linux gave me **evidence**.
+
 ---
 
 ## The Fan Mystery
