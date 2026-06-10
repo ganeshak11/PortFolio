@@ -133,11 +133,53 @@ function BlogNavbar() {
     );
 }
 
+const SURVIVAL_MESSAGES = [
+    { title: "You made it to the end! 🎉", body: "Hey, you survived this long—drop your name in the comments below and let me know who made it till the end!" },
+    { title: "Achievement Unlocked: Attention Span! 🏆", body: "You actually read the whole thing! Prove you're not a bot by dropping your name in the comments." },
+    { title: "Still here? 👀", body: "Most people left after the first paragraph. You are special. Leave a comment so I can frame it!" },
+    { title: "Wow, you have a lot of free time! ⏳", body: "Just kidding (mostly). Thanks for sticking around! Drop your name below so I know who my real fans are." },
+    { title: "Plot Twist: You finished it! 🍿", body: "I didn't actually expect anyone to read this far. Leave a comment to claim your imaginary gold star! ⭐" },
+    { title: "Error 404: Attention Not Lost 🤖", body: "Wait, you didn't just skim the headings? Drop your name in the comments—I need to verify this miracle." },
+    { title: "Level Complete! 🎮", body: "You survived the wall of text. Drop your name below to save your progress." },
+    { title: "Are you lost? 🗺️", body: "Because you've reached the absolute bottom of this post. Since you're here, why not leave a comment?" },
+    { title: "Bravo! 👏", body: "You read faster than I can write. Drop your name below and let me know what you thought!" },
+    { title: "The End of the Line 🚂", body: "No more words. Only the comment section awaits. Be brave, drop your name below!" },
+    { title: "You win absolutely nothing! 🎁", body: "Except for my eternal gratitude. Drop a comment to claim it!" },
+    { title: "A wild reader appeared! 👾", body: "Use 'Leave a Comment'. It's super effective!" },
+    { title: "Coffee's empty, post is done ☕", body: "Since we both made it this far, introduce yourself in the comments!" }
+];
+
+const REACTIONS = [
+    { id: 'useful', emoji: '👍', label: 'Useful' },
+    { id: 'think', emoji: '🤔', label: 'Made me think' },
+    { id: 'loved', emoji: '🔥', label: 'Loved it' }
+];
+
 export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [views, setViews] = useState<number | null>(null);
+    const [survivalMessage, setSurvivalMessage] = useState<{title: string, body: string} | null>(null);
+    const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
+    const [isAnimatingReaction, setIsAnimatingReaction] = useState<string | null>(null);
+
+    const handleReaction = async (id: string) => {
+        if (selectedReaction) return; // Prevent spamming
+        setSelectedReaction(id);
+        setIsAnimatingReaction(id);
+        setTimeout(() => setIsAnimatingReaction(null), 300);
+
+        // Record the reaction as a 'like' in Supabase
+        try {
+            await fetch(`/api/likes/${slug}`, { method: "POST" });
+        } catch (err) {
+            console.error("Failed to record reaction", err);
+        }
+    };
 
     useEffect(() => {
+        // Pick a random survival message after mount to prevent hydration mismatch
+        setSurvivalMessage(SURVIVAL_MESSAGES[Math.floor(Math.random() * SURVIVAL_MESSAGES.length)]);
+        
         // Record and fetch views
         const recordView = async () => {
             try {
@@ -381,6 +423,77 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                             {post.content}
                         </ReactMarkdown>
                     </div>
+
+                    {/* Survival Sign-off */}
+                    {survivalMessage && (
+                        <div className="glass-card" style={{
+                            marginTop: 64,
+                            padding: "24px 32px",
+                            borderRadius: 16,
+                            border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
+                            background: "color-mix(in srgb, var(--accent) 5%, transparent)",
+                            textAlign: "center",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.05)"
+                        }}>
+                            <h3 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 8 }}>
+                                {survivalMessage.title}
+                            </h3>
+                            <p style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.6, margin: 0, marginBottom: 24 }}>
+                                {survivalMessage.body}
+                            </p>
+
+                            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                                {REACTIONS.map(r => (
+                                    <button
+                                        key={r.id}
+                                        onClick={() => handleReaction(r.id)}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 8,
+                                            padding: '8px 16px',
+                                            borderRadius: 24,
+                                            border: `1px solid ${selectedReaction === r.id ? 'var(--accent)' : 'var(--glass-border)'}`,
+                                            background: selectedReaction === r.id ? 'color-mix(in srgb, var(--accent) 20%, transparent)' : 'transparent',
+                                            color: selectedReaction === r.id ? 'var(--accent)' : 'var(--fg)',
+                                            cursor: 'pointer',
+                                            fontWeight: 600,
+                                            fontSize: 15,
+                                            transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                            transform: isAnimatingReaction === r.id ? 'scale(0.9)' : (selectedReaction === r.id ? 'scale(1.05)' : 'scale(1)'),
+                                        }}
+                                        onMouseOver={(e) => {
+                                            if (selectedReaction !== r.id) {
+                                                e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 10%, transparent)';
+                                                e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--accent) 50%, transparent)';
+                                            }
+                                        }}
+                                        onMouseOut={(e) => {
+                                            if (selectedReaction !== r.id) {
+                                                e.currentTarget.style.background = 'transparent';
+                                                e.currentTarget.style.borderColor = 'var(--glass-border)';
+                                            }
+                                        }}
+                                    >
+                                        <span style={{ fontSize: 18 }}>{r.emoji}</span>
+                                        {r.label}
+                                    </button>
+                                ))}
+                            </div>
+                            <div style={{
+                                marginTop: selectedReaction ? 16 : 0,
+                                height: selectedReaction ? 20 : 0,
+                                opacity: selectedReaction ? 1 : 0,
+                                overflow: 'hidden',
+                                transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                color: "var(--accent)", 
+                                fontSize: 14, 
+                                fontWeight: 600
+                            }}>
+                                Thanks for your feedback! ✨
+                            </div>
+                        </div>
+                    )}
 
                     {/* Footer Section */}
                     <footer style={{ marginTop: 80, borderTop: "1px solid var(--border)", paddingTop: 40, paddingBottom: 40 }}>
