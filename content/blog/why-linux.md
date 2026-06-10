@@ -13,7 +13,7 @@ tags: ["linux", "systems", "engineering", "journey", "devops"]
 > "Sometimes Linux fixes your problem. Sometimes it simply shows you exactly why you're doomed. Strangely, that feels better."
 
 **Topic:** Linux Adoption  
-**Severity:** P1 - User accidentally learns how computers work  
+**Severity:** P1 - I accidentally learns how computers work  
 **Root Cause:** Excessive exposure to transparency  
 **Resolution:** Irreversible systems thinking  
 
