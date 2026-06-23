@@ -19,9 +19,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
         return NextResponse.json({ error: "Name and message are required" }, { status: 400 });
     }
 
+    // Generate current time in IST (UTC+5:30) as a plain datetime string
+    // Stored as-is when column type is 'timestamp' (not 'timestamptz')
+    const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in ms
+    const istTimestamp = new Date(Date.now() + istOffset).toISOString().slice(0, 19).replace('T', ' ');
+    // e.g. "2026-06-23 19:14:26" — stored exactly as IST in Supabase
+
     const { data, error } = await supabase
         .from("comments")
-        .insert({ slug, name: name.trim(), email: email?.trim() || null, message: message.trim() })
+        .insert({ slug, name: name.trim(), email: email?.trim() || null, message: message.trim(), created_at: istTimestamp })
         .select("id, name, message, created_at")
         .single();
 

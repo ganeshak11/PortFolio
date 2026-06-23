@@ -4,7 +4,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
 
 interface Post {
@@ -176,23 +176,28 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         }
     };
 
+    const hasTrackedView = useRef(false);
+
     useEffect(() => {
         // Pick a random survival message after mount to prevent hydration mismatch
         setSurvivalMessage(SURVIVAL_MESSAGES[Math.floor(Math.random() * SURVIVAL_MESSAGES.length)]);
         
-        // Record and fetch views
-        const recordView = async () => {
-            try {
-                const res = await fetch(`/api/views/${slug}`, { method: "POST" });
-                const data = await res.json();
-                if (data.count !== undefined) {
-                    setViews(data.count);
+        // Record and fetch views — guard prevents double-fire from React Strict Mode
+        if (!hasTrackedView.current) {
+            hasTrackedView.current = true;
+            const recordView = async () => {
+                try {
+                    const res = await fetch(`/api/views/${slug}`, { method: "POST" });
+                    const data = await res.json();
+                    if (data.count !== undefined) {
+                        setViews(data.count);
+                    }
+                } catch (err) {
+                    console.error("Failed to track view", err);
                 }
-            } catch (err) {
-                console.error("Failed to track view", err);
-            }
-        };
-        recordView();
+            };
+            recordView();
+        }
 
         const handleScroll = () => {
             const totalScroll = document.documentElement.scrollTop;

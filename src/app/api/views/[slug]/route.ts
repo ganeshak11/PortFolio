@@ -14,38 +14,31 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
         const salt = process.env.VIEWS_SALT || "portfolio-salt-123";
         const visitorHash = crypto.createHash("sha256").update(ip + salt).digest("hex");
 
-        // 3. Check if this unique hash has viewed this specific blog post before
-        const { data: existingView } = await supabase
-            .from("unique_visitors")
-            .select("id")
-            .eq("slug", slug)
-            .eq("visitor_hash", visitorHash)
-            .single();
+        // 3. Generate current time in IST (UTC+5:30) as a plain datetime string
+        // We strip the 'Z' suffix so Postgres stores it as-is (requires 'timestamp' column type, not 'timestamptz')
+        const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours 30 minutes in ms
+        const istTimestamp = new Date(Date.now() + istOffset).toISOString().slice(0, 19).replace('T', ' ');
+        // e.g. "2026-06-23 19:14:26" — stored exactly as IST in Supabase
 
-        let isNewView = false;
-        
-        if (!existingView) {
-            // Record that they have now seen it
-            await supabase.from("unique_visitors").insert({
-                slug,
-                visitor_hash: visitorHash
-            });
-            isNewView = true;
-        }
+        // 4. Log every visit (including repeat visits from the same IP)
+        const { error: insertError } = await supabase.from("unique_visitors").insert({
+            slug,
+            visitor_hash: visitorHash,
+            created_at: istTimestamp
+        });
+        if (insertError) console.error("[visitors insert error]", insertError.message);
 
-        // 4. If it's a new view, increment the total counter securely via RPC
-        if (isNewView) {
-            await supabase.rpc('increment_page_view', { page_slug: slug });
-        }
+        // 5. Increment the view counter on every visit
+        await supabase.rpc('increment_page_view', { page_slug: slug });
 
-        // 5. Fetch and return the latest count
+        // 6. Fetch and return the latest count
         const { data: viewData } = await supabase
             .from("page_views")
             .select("view_count")
             .eq("slug", slug)
             .single();
 
-        const count = viewData ? viewData.view_count : (isNewView ? 1 : 0);
+        const count = viewData ? viewData.view_count : 1;
         return NextResponse.json({ count });
 
     } catch (e: any) {

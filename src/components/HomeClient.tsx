@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -18,6 +18,15 @@ import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 
 export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const hasTrackedVisit = useRef(false);
+
+  useEffect(() => {
+    if (!hasTrackedVisit.current) {
+      hasTrackedVisit.current = true;
+      // Track portfolio homepage visit using the same views API with slug "portfolio"
+      fetch("/api/views/portfolio", { method: "POST" }).catch(() => {});
+    }
+  }, []);
 
   return (
     <>
