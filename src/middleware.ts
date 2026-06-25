@@ -16,14 +16,14 @@ function buildCard(): string {
         "",
         `${CYAN}${B}  ╔══════════════════════════════════════════════════╗${R}`,
         `${CYAN}${B}  ║${R}  ${WHITE}${B}GANESH ANGADI${R}                                   ${CYAN}${B}║${R}`,
-        `${CYAN}${B}  ║${R}  ${YELLOW}DevOps Engineer  •  Creator of Fortis-CI${R}        ${CYAN}${B}║${R}`,
+        `${CYAN}${B}  ║${R}  ${YELLOW}DevOps Aspirant  •  Creator of Fortis-CI${R}        ${CYAN}${B}║${R}`,
         `${CYAN}${B}  ╚══════════════════════════════════════════════════╝${R}`,
         "",
         `  ${GREEN}${B}About${R}`,
         `  ${DIM}────────────────────────────────────────────${R}`,
         `  Building infrastructure that doesn't break at 3AM.`,
         `  Graph-native deployment observability with Neo4j.`,
-        `  1st Place — MCP Server Hackathon 2024 🏆`,
+        `  1st Place — MCP Server Hackathon 2026 🏆`,
         "",
         `  ${GREEN}${B}Stack${R}`,
         `  ${DIM}────────────────────────────────────────────${R}`,
@@ -44,6 +44,9 @@ function buildCard(): string {
         `  ${YELLOW}TicketFlow${R}  Event ticketing platform, microservices`,
         "",
         `  ${DIM}────────────────────────────────────────────${R}`,
+        `  ${DIM}Portfolio v2.3.1${R}`,
+        `  ${DIM}Last Deploy: 2026-06-25${R}`,
+        "",
         `  ${DIM}tip: open https://ganeshangadi.online in a browser${R}`,
         `  ${DIM}     for the full experience.${R}`,
         "",
@@ -64,6 +67,13 @@ export function middleware(req: NextRequest) {
     const ua = req.headers.get("user-agent") || "";
     const isCurl = ua.toLowerCase().startsWith("curl");
 
+    // Enforce HTTPS
+    if (req.headers.get("x-forwarded-proto") === "http" && process.env.NODE_ENV === "production") {
+        const url = req.nextUrl.clone();
+        url.protocol = "https:";
+        return NextResponse.redirect(url, { status: 301 });
+    }
+
     // Root "/" — return the card only when the request comes from curl
     if (pathname === "/" && isCurl) {
         return new Response(buildCard(), {
@@ -71,6 +81,38 @@ export function middleware(req: NextRequest) {
                 "Content-Type": "text/plain; charset=utf-8",
                 "X-Content-Type-Options": "nosniff",
             },
+        });
+    }
+
+    // /version endpoint
+    if (pathname === "/version") {
+        const commit = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev-local";
+        const isVercel = !!process.env.VERCEL;
+
+        const versionInfo = [
+            "Portfolio        v2.3.1",
+            `Commit           ${commit}`,
+            "Deployment       Vercel CI/CD",
+            `Hosted           ${isVercel ? "Vercel Edge Network" : "Local / AWS"}`,
+            "Status           Healthy"
+        ].join("\n") + "\n";
+        
+        return new Response(versionInfo, {
+            headers: {
+                "Content-Type": "text/plain; charset=utf-8",
+                "X-Content-Type-Options": "nosniff",
+            },
+        });
+    }
+
+    // /health endpoint
+    if (pathname === "/health") {
+        return NextResponse.json({
+            status: "healthy",
+            version: "2.3.1",
+            commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || "dev-local",
+            environment: process.env.VERCEL_ENV || "development",
+            region: process.env.VERCEL_REGION || "local"
         });
     }
 
@@ -89,5 +131,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/", "/blog/:slug*"],
+    matcher: ["/", "/version", "/health", "/blog/:slug*"],
 };

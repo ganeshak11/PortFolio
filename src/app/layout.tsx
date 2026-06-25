@@ -122,7 +122,7 @@ export default function RootLayout({
       "https://github.com/ganeshak11",
       "https://linkedin.com/in/ganeshangadi1301",
     ],
-    award: "1st Place - MCP Server Hackathon 2024",
+    award: "1st Place - MCP Server Hackathon 2026",
   };
 
   const websiteSchema = {
