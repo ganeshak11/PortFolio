@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getOrCreateVisitorId } from "@/lib/visitorId";
 import { AnimatePresence } from "framer-motion";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -23,8 +24,14 @@ export default function Home() {
   useEffect(() => {
     if (!hasTrackedVisit.current) {
       hasTrackedVisit.current = true;
+      // Get or generate a stable visitor UUID stored in localStorage
+      const visitorId = getOrCreateVisitorId();
       // Track portfolio homepage visit using the same views API with slug "portfolio"
-      fetch("/api/views/portfolio", { method: "POST" }).catch(() => {});
+      fetch("/api/views/portfolio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorId }),
+      }).catch(() => {});
     }
   }, []);
 

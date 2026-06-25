@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
 import { useEffect, useRef, useState } from "react";
 import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
+import { getOrCreateVisitorId } from "@/lib/visitorId";
 
 interface Post {
     title: string;
@@ -187,7 +188,14 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
             hasTrackedView.current = true;
             const recordView = async () => {
                 try {
-                    const res = await fetch(`/api/views/${slug}`, { method: "POST" });
+                    // Get or generate a stable visitor UUID stored in localStorage
+                    const visitorId = getOrCreateVisitorId();
+
+                    const res = await fetch(`/api/views/${slug}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ visitorId }),
+                    });
                     const data = await res.json();
                     if (data.count !== undefined) {
                         setViews(data.count);
