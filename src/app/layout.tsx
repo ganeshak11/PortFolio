@@ -18,45 +18,50 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Ganesh Angadi | DevOps Engineer | Docker, Kubernetes, Linux, CI/CD | 1st Place MCP Hackathon Winner",
+  title: "Ganesh Angadi | DevOps Engineer | AWS • Kubernetes • Terraform • CI/CD",
   description:
-    "Ganesh Angadi - DevOps Engineer specializing in Docker, Kubernetes, Linux systems, and CI/CD automation. 1st place MCP hackathon winner for Indian Sign Language translation wrapper with proven system design expertise.",
+    "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP hackathon winner.",
   keywords: [
     "Ganesh Angadi",
     "ganesh angadi",
     "ganeshak11",
+    "Ganesh Raju Angadi",
     "DevOps Engineer",
     "DevOps portfolio",
+    "student devops portfolio",
+    "aws devops portfolio",
+    "kubernetes portfolio",
+    "terraform portfolio",
+    "devops engineer portfolio india",
+    "Fortis-CI",
+    "graph native observability",
+    "deployment observability",
+    "neo4j observability",
     "Docker",
-    "Docker projects",
     "Kubernetes",
-    "Kubernetes learning",
+    "AWS",
+    "Terraform",
     "Linux",
-    "Linux engineering",
-    "Linux fundamentals",
     "CI/CD",
+    "GitHub Actions",
     "System Design",
-    "System design portfolio",
     "MCP Server",
-    "MCP server architecture",
     "Model Context Protocol",
     "Node.js",
     "PostgreSQL",
-    "React Native",
+    "Neo4j",
     "Next.js",
-    "Git",
-    "Bash",
     "DevOps automation",
-    "MY(suru) BUS",
     "1st place hackathon winner",
   ],
   authors: [{ name: "Ganesh Angadi" }],
   creator: "Ganesh Angadi",
   openGraph: {
-    title: "Ganesh Angadi | DevOps Engineer Portfolio",
-    description: "DevOps Engineer specializing in Docker, Kubernetes, Linux, CI/CD. 1st place MCP hackathon winner.",
+    title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
+    description: "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD. 1st place MCP hackathon winner.",
     type: "website",
     url: "https://ganeshangadi.online",
+    siteName: "Ganesh Angadi Portfolio",
     images: [
       {
         url: "https://ganeshangadi.online/profile.jpg",
@@ -68,9 +73,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ganesh Angadi | DevOps Engineer",
-    description: "DevOps Engineer | Docker, Kubernetes, Linux | 1st Place MCP Hackathon Winner",
+    title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
+    description: "Creator of Fortis-CI — graph-native deployment observability. DevOps engineer | AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
     images: ["https://ganeshangadi.online/profile.jpg"],
+    creator: "@ganeshak11",
   },
   metadataBase: new URL("https://ganeshangadi.online"),
   alternates: {
@@ -81,7 +87,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const jsonLd = {
+  const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Ganesh Angadi",
@@ -90,13 +96,19 @@ export default function RootLayout({
     image: "https://ganeshangadi.online/profile.jpg",
     jobTitle: "DevOps Engineer",
     description:
-      "DevOps Engineer specializing in Docker, Kubernetes, Linux system administration, CI/CD pipelines, and cloud infrastructure automation. 1st place MCP server hackathon winner.",
+      "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP server hackathon winner.",
     knowsAbout: [
       "Docker",
       "Kubernetes",
+      "AWS",
+      "Terraform",
       "Linux System Administration",
       "CI/CD Pipelines",
+      "GitHub Actions",
       "System Design",
+      "Deployment Observability",
+      "Graph Databases",
+      "Neo4j",
       "Model Context Protocol (MCP)",
       "Node.js",
       "PostgreSQL",
@@ -105,19 +117,45 @@ export default function RootLayout({
       "System Architecture",
       "DevOps Automation",
       "Container Orchestration",
-      "React Native",
-      "Next.js",
     ],
     sameAs: [
       "https://github.com/ganeshak11",
       "https://linkedin.com/in/ganeshangadi1301",
     ],
     award: "1st Place - MCP Server Hackathon 2024",
-    alumniOf: {
-      "@type": "EducationalOrganization",
-      name: "DevOps Engineering",
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Ganesh Angadi Portfolio",
+    url: "https://ganeshangadi.online",
+    description: "Portfolio and blog of Ganesh Angadi — DevOps engineer and creator of Fortis-CI.",
+    author: { "@type": "Person", name: "Ganesh Angadi" },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: "https://ganeshangadi.online/blog?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
     },
   };
+
+  const fortisCISchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "Fortis-CI",
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Linux, macOS, Windows",
+    description:
+      "An open-source graph-native deployment observability platform built on Neo4j. Tracks deployment pipelines as a graph, enabling real-time observability and dependency mapping for CI/CD workflows.",
+    author: { "@type": "Person", name: "Ganesh Angadi", url: "https://ganeshangadi.online" },
+    url: "https://github.com/ganeshak11",
+    keywords: "deployment observability, graph-native, Neo4j, CI/CD, DevOps",
+  };
+
+  const jsonLd = [personSchema, websiteSchema, fortisCISchema];
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -126,6 +164,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className={`${inter.variable} ${playfair.variable} antialiased`}>
         <div className="noise" />

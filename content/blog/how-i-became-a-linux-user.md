@@ -1,7 +1,7 @@
 ---
 title: "How I Accidentally Became a Linux User"
 date: "2025-01-15"
-slug: "I become a guy who says 'I use LINUX btw'"
+slug: "how-i-became-a-linux-user"
 excerpt: "I didn't choose Linux. Linux chose me — after destroying my Windows installation, corrupting a USB, and nearly giving my roommates a heart attack."
 hook: "Sometimes the system failure is the feature."
 featured: true

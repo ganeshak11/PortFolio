@@ -14,17 +14,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
         blogPosts = files
             .filter((file) => file.endsWith(".md"))
             .map((file) => {
-                const slug = file.replace(".md", "");
                 const raw = fs.readFileSync(path.join(blogDir, file), "utf8");
                 const { data } = matter(raw);
-                
-                // Fallback to today if no date in matter
+
+                // Prefer frontmatter slug over filename
+                const slug = data.slug || file.replace(".md", "");
                 const date = data.date ? new Date(data.date) : new Date();
 
                 return {
                     url: `${DOMAIN}/blog/${slug}`,
                     lastModified: date,
-                    changeFrequency: 'monthly',
+                    changeFrequency: 'monthly' as const,
                     priority: 0.7,
                 };
             });
