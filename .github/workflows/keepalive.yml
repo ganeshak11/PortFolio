@@ -1,0 +1,16 @@
+name: Supabase Keep-Alive Cron
+
+on:
+  schedule:
+    # Runs every 5 minutes to prevent the Supabase database from pausing
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Allows manual triggering from the GitHub UI
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Keepalive Endpoint
+        run: |
+          echo "Pinging https://ganeshangadi.online/api/keepalive to keep Supabase awake..."
+          curl -s --fail https://ganeshangadi.online/api/keepalive > /dev/null || echo "Ping failed, but request was sent."

@@ -62,7 +62,7 @@ const SLUG_REDIRECTS: Record<string, string> = {
 };
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
     const { pathname } = req.nextUrl;
     const ua = req.headers.get("user-agent") || "";
     const isCurl = ua.toLowerCase().startsWith("curl");

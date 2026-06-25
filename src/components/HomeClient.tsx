@@ -32,6 +32,14 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ visitorId }),
       }).catch(() => {});
+
+      // Send telemetry to Fortis Observe
+      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || 'http://localhost:3000';
+      fetch(`${fortisUrl}/api/track`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visitorId, path: "/" }),
+      }).catch(() => {});
     }
   }, []);
 
