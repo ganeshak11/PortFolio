@@ -35,15 +35,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
         const istTimestamp = new Date(Date.now() + istOffset).toISOString().slice(0, 19).replace("T", " ");
         // e.g. "2026-06-23 19:14:26" — stored exactly as IST in Supabase
 
-        // 5. Log the visit — visitor_hash is the client UUID (stable across requests),
-        //    ip_hash is stored as optional abuse-detection metadata
-        const { error: insertError } = await supabase.from("unique_visitors").insert({
-            slug,
-            visitor_hash: visitorId,   // primary identifier: client UUID
-            ip_address: ip,            // raw IP for geo-analytics / abuse detection
-            created_at: istTimestamp,
+        // 5. Upsert the visitor row:
+        //    - New UUID  → INSERT a fresh row (visit_count = 1)
+        //    - Known UUID → UPDATE visit_count + 1 and last_seen to now
+        const { error: upsertError } = await supabase.rpc("upsert_visitor", {
+            p_slug:          slug,
+            p_visitor_hash:  visitorId,
+            p_ip_address:    ip,
+            p_timestamp:     istTimestamp,
         });
-        if (insertError) console.error("[visitors insert error]", insertError.message);
+        if (upsertError) console.error("[upsert_visitor error]", upsertError.message);
 
         // 6. Increment the view counter on every visit
         await supabase.rpc("increment_page_view", { page_slug: slug });
