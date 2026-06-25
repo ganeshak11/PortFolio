@@ -11,6 +11,7 @@ export interface BlogPost {
     tags: string[];
     readingTime: number;
     featured: boolean;
+    series?: string;
 }
 
 export function getBlogPosts(): BlogPost[] {
@@ -35,6 +36,7 @@ export function getBlogPosts(): BlogPost[] {
                 tags: data.tags || [],
                 readingTime,
                 featured: data.featured || false,
+                series: data.series || undefined,
             };
         })
         .sort((a, b) => {
