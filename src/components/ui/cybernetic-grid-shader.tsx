@@ -11,7 +11,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-const GRID_COLOR = "6,182,212";   // matches --accent cyan in dark mode
+const GRID_COLOR = "255,122,0";   // matches --accent orange in dark mode
 const PULSE_COLOR = "220,50,200";  // magenta energy pulses
 const COLS = 14;            // vertical grid columns
 const ROWS = 10;            // horizontal grid rows
