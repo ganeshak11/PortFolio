@@ -202,12 +202,14 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     }
 
                     // Send telemetry to Fortis Observe
-                    const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || 'http://localhost:3000';
-                    fetch(`${fortisUrl}/api/track`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ visitorId, path: `/blog/${slug}` }),
-                    }).catch(() => {});
+                    const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+                    if (fortisUrl) {
+                        fetch(`${fortisUrl}/api/track`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ visitorId, path: `/blog/${slug}` }),
+                        }).catch(() => {});
+                    }
                 } catch (err) {
                     console.error("Failed to track view", err);
                 }

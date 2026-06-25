@@ -34,7 +34,7 @@ export default function Home() {
       }).catch(() => {});
 
       // Send telemetry to Fortis Observe
-      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || 'http://localhost:3000';
+      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
       fetch(`${fortisUrl}/api/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
