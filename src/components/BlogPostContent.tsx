@@ -297,7 +297,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                             boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                         }}>
                             <img
-                                src="/profile.jpg"
+                                src="/blog-profile.jpeg"
                                 alt="Ganesh Angadi"
                                 style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "2px solid var(--accent)", flexShrink: 0 }}
                             />
@@ -382,7 +382,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     </h3>
                                 ),
                                 p: ({ children }) => (
-                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9 }}>{children}</p>
+                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9, textAlign: "justify" }}>{children}</p>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
@@ -405,7 +405,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     <ol style={{ marginBottom: 28, paddingLeft: 24, color: "var(--fg)", fontSize: 17, lineHeight: 1.85 }}>{children}</ol>
                                 ),
                                 li: ({ children }) => (
-                                    <li style={{ marginBottom: 12, paddingLeft: 24, position: "relative", lineHeight: 1.85, fontSize: 17, opacity: 0.9 }}>
+                                    <li style={{ marginBottom: 12, paddingLeft: 24, position: "relative", lineHeight: 1.85, fontSize: 17, opacity: 0.9, textAlign: "justify" }}>
                                         <span style={{ position: "absolute", left: 0, color: "var(--accent)", fontWeight: "bold" }}>▹</span>
                                         {children}
                                     </li>

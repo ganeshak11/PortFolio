@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: BlogPostProps): Promise<Metad
 
     const url = `${DOMAIN}/blog/${slug}`;
     const description = post.excerpt || post.hook || `${post.title} — by Ganesh Angadi`;
-    const ogImage = `${DOMAIN}/profile.jpg`;
+    const ogImage = `${DOMAIN}/blog-profile.jpeg`;
 
     return {
         title: `${post.title} | Ganesh Angadi`,
@@ -119,7 +119,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
             url: DOMAIN,
         },
         url: `${DOMAIN}/blog/${slug}`,
-        image: `${DOMAIN}/profile.jpg`,
+        image: `${DOMAIN}/blog-profile.jpeg`,
         keywords: post.tags.join(", "),
         mainEntityOfPage: {
             "@type": "WebPage",
