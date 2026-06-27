@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { BootSequence } from "./hero/BootSequence";
 import { HeroContent } from "./hero/HeroContent";
+import AnnouncementBanner from "./AnnouncementBanner";
 
 export default function Hero() {
     const [bootDone, setBootDone] = useState(false);
@@ -19,5 +20,10 @@ export default function Hero() {
         return <BootSequence setBootDone={setBootDone} />;
     }
 
-    return <HeroContent isMobile={isMobile} />;
+    return (
+        <>
+            <AnnouncementBanner />
+            <HeroContent isMobile={isMobile} />
+        </>
+    );
 }

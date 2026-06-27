@@ -82,6 +82,41 @@ const PROJECTS = [
         ],
     },
     {
+        num: "04",
+        name: "FortisObserve",
+        github: "https://github.com/ganeshak11/FortisObserve",
+        tagline: "Telemetry & Command Center",
+        status: "Deployed",
+        statusColor: "var(--status-ok)",
+        stack: ["Next.js", "Supabase", "WebGL", "TOTP"],
+        intro: "A decoupled telemetry and visitor analytics platform. Acts as an invisible observatory, capturing real-time visitor metrics and traffic flows.",
+        highlights: [
+            { title: "Zero-Trust Security", desc: "Edge middleware enforcing TOTP and WebAuthn hardware keys." },
+            { title: "Global Radar", desc: "Real-time 3D globe visualization of connection arcs using react-globe.gl." },
+            { title: "Intelligent Telemetry", desc: "PostgreSQL RPCs for atomic session management and bot fingerprinting." }
+        ],
+        limitations: [
+            "Currently direct DB inserts — planning Redis queue for high traffic spikes."
+        ],
+    },
+    {
+        num: "05",
+        name: "DevCard",
+        github: "https://github.com/ganeshak11/devcard-ganeshak11",
+        tagline: "Dynamic CLI Dashboard",
+        status: "Deployed",
+        statusColor: "var(--status-ok)",
+        stack: ["Markdown", "GitHub APIs", "Github Stats"],
+        intro: "A highly customized and dynamic GitHub profile README showcasing live metrics, system design philosophy, and technical stacks.",
+        highlights: [
+            { title: "Live Metrics", desc: "Dynamic integration of GitHub stats, language breakdowns, and activity graphs." },
+            { title: "System Thinker Aesthetic", desc: "Terminal-styled themes and formatting that matches a DevOps mentality." }
+        ],
+        limitations: [
+            "Relies heavily on external APIs for dynamic badge generation."
+        ],
+    },
+    {
         num: "WIP",
         name: "CI/CD Sentinel",
         github: "https://github.com/ganeshak11/CI-CD_Sentinel",

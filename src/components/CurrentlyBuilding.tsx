@@ -3,10 +3,110 @@
 import { useRef, useState } from "react";
 import { m, useInView, AnimatePresence } from "framer-motion";
 
+const WIP_PROJECTS = [
+    {
+        name: "Fortis-CI",
+        github: "https://github.com/Fortis-CI/Fortis-CI",
+        tags: ["OPEN SOURCE", "Self-Hosted"],
+        desc: "Building a centralized observability and recovery layer for software deployments. Open source, graph-native deployment tracking with root cause analysis and automated rollbacks.",
+        note: "🚀 Looking for open-source developers to collaborate! If you're interested in system architecture, graphs, or DevOps tools, I'd love to build this together."
+    },
+    {
+        name: "Fortis-Tools",
+        github: "https://github.com/Fortis-Tools",
+        tags: ["CLI", "DevOps"],
+        desc: "A suite of infrastructure tools and scripts designed for system observability and reliability.",
+        note: "Currently building tools like fortis-healthcheck for active polling and service health monitoring."
+    }
+];
+
+function WipRow({ project, index, openIndex, setOpenIndex }: { project: any, index: number, openIndex: number | null, setOpenIndex: any }) {
+    const open = openIndex === index;
+    return (
+        <div style={{ borderTop: "1px solid var(--border)" }}>
+            <button
+                onClick={() => setOpenIndex(open ? null : index)}
+                style={{
+                    width: "100%",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "24px 0",
+                    display: "grid",
+                    gridTemplateColumns: "40px 1fr auto",
+                    alignItems: "center",
+                    gap: 20,
+                    textAlign: "left",
+                }}
+            >
+                <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>WIP</span>
+                <div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
+                        <span style={{ fontSize: "clamp(16px, 2.5vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
+                            {project.name}
+                        </span>
+                        {project.tags.includes("OPEN SOURCE") && (
+                            <m.span
+                                animate={{ opacity: [1, 0.3, 1] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                style={{ fontFamily: "monospace", fontSize: 12, color: "var(--status-warn)" }}
+                            >
+                                OPEN SOURCE
+                            </m.span>
+                        )}
+                    </div>
+                    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                        {project.tags.filter((t: string) => t !== "OPEN SOURCE").map((t: string) => (
+                            <span key={t} style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>{t}</span>
+                        ))}
+                    </div>
+                </div>
+                <span style={{
+                    fontSize: 20, color: "var(--accent)", flexShrink: 0,
+                    transition: "transform 0.2s",
+                    transform: open ? "rotate(45deg)" : "none",
+                    display: "inline-block",
+                }}>+</span>
+            </button>
+
+            <AnimatePresence>
+                {open && (
+                    <m.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        style={{ overflow: "hidden" }}
+                    >
+                        <div className="currently-expanded" style={{ paddingBottom: 36, paddingLeft: 60 }}>
+                            <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 16 }}>
+                                {project.desc}
+                            </p>
+                            
+                            <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--accent)", maxWidth: 640, marginBottom: 28, fontStyle: "italic" }}>
+                                {project.note}
+                            </p>
+
+                            <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
+                            >
+                                [GitHub / Contribute] →
+                            </a>
+                        </div>
+                    </m.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
+
 export default function CurrentlyBuilding() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
-    const [open, setOpen] = useState(false);
+    const [openIndex, setOpenIndex] = useState<number | null>(0); // Keep first open by default
 
     return (
         <section ref={ref} id="building" style={{ padding: "60px 24px 0" }}>
@@ -22,80 +122,16 @@ export default function CurrentlyBuilding() {
                     </h2>
                 </m.div>
 
-                <div style={{ borderTop: "1px solid var(--border)" }}>
-                    <button
-                        onClick={() => setOpen(!open)}
-                        style={{
-                            width: "100%",
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                            padding: "24px 0",
-                            display: "grid",
-                            gridTemplateColumns: "40px 1fr auto",
-                            alignItems: "center",
-                            gap: 20,
-                            textAlign: "left",
-                        }}
-                    >
-                        <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>WIP</span>
-                        <div>
-                            <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
-                                <span style={{ fontSize: "clamp(16px, 2.5vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
-                                    Fortis-CI
-                                </span>
-                                <m.span
-                                    animate={{ opacity: [1, 0.3, 1] }}
-                                    transition={{ repeat: Infinity, duration: 2 }}
-                                    style={{ fontFamily: "monospace", fontSize: 12, color: "var(--status-warn)" }}
-                                >
-                                    OPEN SOURCE
-                                </m.span>
-                            </div>
-                            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                                {["Self-Hosted"].map(t => (
-                                    <span key={t} style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>{t}</span>
-                                ))}
-                            </div>
-                        </div>
-                        <span style={{
-                            fontSize: 20, color: "var(--accent)", flexShrink: 0,
-                            transition: "transform 0.2s",
-                            transform: open ? "rotate(45deg)" : "none",
-                            display: "inline-block",
-                        }}>+</span>
-                    </button>
-
-                    <AnimatePresence>
-                        {open && (
-                            <m.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                                style={{ overflow: "hidden" }}
-                            >
-                                <div className="currently-expanded" style={{ paddingBottom: 36, paddingLeft: 60 }}>
-                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 16 }}>
-                                        Building a centralized observability and recovery layer for software deployments. Open source, graph-native deployment tracking with root cause analysis and automated rollbacks.
-                                    </p>
-                                    
-                                    <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--accent)", maxWidth: 640, marginBottom: 28, fontStyle: "italic" }}>
-                                        🚀 Looking for open-source developers to collaborate! If you're interested in system architecture, graphs, or DevOps tools, I'd love to build this together.
-                                    </p>
-
-                                    <a
-                                        href="https://github.com/Fortis-CI/Fortis-CI"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
-                                    >
-                                        [GitHub / Contribute] →
-                                    </a>
-                                </div>
-                            </m.div>
-                        )}
-                    </AnimatePresence>
+                <div>
+                    {WIP_PROJECTS.map((project, i) => (
+                        <WipRow 
+                            key={project.name} 
+                            project={project} 
+                            index={i} 
+                            openIndex={openIndex} 
+                            setOpenIndex={setOpenIndex} 
+                        />
+                    ))}
                 </div>
                 <div style={{ borderTop: "1px solid var(--border)" }} />
             </div>

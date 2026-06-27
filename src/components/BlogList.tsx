@@ -67,7 +67,8 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                     ⚔️ DevOps Duels
                                 </h2>
                                 <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 32 }}>
-                                    Weekly head-to-head architectural showdowns. No fluff, just trade-offs.
+                                    Weekly head-to-head architectural showdowns. No fluff, just trade-offs. 
+                                    <br/><span style={{ color: "var(--accent)" }}>New duels drop every Sunday and Thursday.</span>
                                 </p>
                                 
                                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
