@@ -1,6 +1,6 @@
 ---
 title: "I Didn't Switch to Linux. I Changed My Way of Living With Computers."
-date: "2026-06-10"
+date: "2026-05-23"
 slug: "linux-changed-my-way-of-living"
 excerpt: "I thought Linux was an operating system. Five months later, I realized it was a different way of thinking."
 hook: "Sometimes Linux fixes your problem. Sometimes it simply shows you exactly why you're doomed. Strangely, that feels better."

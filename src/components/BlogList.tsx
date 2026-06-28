@@ -2,6 +2,11 @@
 
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { Github, Settings, Box, Hexagon, Swords } from "lucide-react";
+import { Bangers, Permanent_Marker } from "next/font/google";
+
+const bangers = Bangers({ subsets: ["latin"], weight: "400" });
+const marker = Permanent_Marker({ subsets: ["latin"], weight: "400" });
 
 interface BlogPost {
     slug: string;
@@ -21,6 +26,43 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
     return (
         <>
+            <style>{`
+                @media (max-width: 600px) {
+                    .duel-vs-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 12px !important;
+                    }
+                    .duel-tool-a, .duel-tool-b {
+                        justify-content: center !important;
+                    }
+                    .duel-tool-b {
+                        flex-direction: row-reverse !important;
+                    }
+                    .duel-vs-badge {
+                        margin: 0 auto;
+                    }
+                    .duel-footer {
+                        flex-direction: column !important;
+                        align-items: center !important;
+                        text-align: center;
+                        gap: 12px;
+                    }
+                    .duel-footer p {
+                        padding-right: 0 !important;
+                    }
+                    .devops-title {
+                        font-size: clamp(40px, 12vw, 84px) !important;
+                    }
+                    .duels-title {
+                        font-size: clamp(48px, 14vw, 96px) !important;
+                    }
+                    .matchmaking-divider {
+                        font-size: 11px !important;
+                        padding: 6px 12px !important;
+                        text-align: center;
+                    }
+                }
+            `}</style>
             <Navbar />
             <main style={{ minHeight: "100vh", padding: "120px 24px 80px" }}>
                 <div style={{ maxWidth: 860, margin: "0 auto" }}>
@@ -38,89 +80,268 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                         </p>
                     </div>
 
-                    {/* DevOps Duels Series Section */}
+                    {/* Premium DevOps Duels Series Section */}
                     {seriesPosts.length > 0 && (
-                        <div style={{ marginTop: 48, marginBottom: 64 }}>
+                        <div style={{ marginTop: 48, marginBottom: 72, position: "relative" }}>
                             <div style={{ 
-                                padding: "32px", 
-                                background: "var(--card-bg)", 
-                                border: "1px solid var(--border)", 
-                                borderTop: "4px solid var(--accent)",
+                                padding: "48px 24px 56px", 
+                                background: "linear-gradient(145deg, var(--card-bg) 0%, color-mix(in srgb, var(--accent) 2%, var(--card-bg)) 100%)", 
+                                border: "1px solid color-mix(in srgb, var(--accent) 15%, var(--border))", 
+                                borderRadius: 32,
                                 position: "relative",
-                                overflow: "hidden"
+                                zIndex: 1,
+                                overflow: "hidden",
+                                boxShadow: "0 24px 48px color-mix(in srgb, var(--fg) 3%, transparent)"
                             }}>
-                                {/* Decorative VS Background */}
+                                {/* Subtle Dot Background Pattern */}
                                 <div style={{
                                     position: "absolute",
-                                    top: -40,
-                                    right: -20,
-                                    fontSize: 180,
-                                    fontWeight: 900,
-                                    color: "var(--fg)",
-                                    opacity: 0.03,
-                                    fontStyle: "italic",
-                                    userSelect: "none",
-                                    pointerEvents: "none"
-                                }}>VS</div>
+                                    inset: 0,
+                                    backgroundImage: "radial-gradient(color-mix(in srgb, var(--fg) 10%, transparent) 1px, transparent 1px)",
+                                    backgroundSize: "24px 24px",
+                                    opacity: 0.5,
+                                    pointerEvents: "none",
+                                    zIndex: 0
+                                }} />
                                 
-                                <h2 style={{ fontSize: 24, fontWeight: 900, color: "var(--fg)", marginBottom: 8, letterSpacing: "-0.02em" }}>
-                                    ⚔️ DevOps Duels
-                                </h2>
-                                <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 32 }}>
-                                    Weekly head-to-head architectural showdowns. No fluff, just trade-offs. 
-                                    <br/><span style={{ color: "var(--accent)" }}>New duels drop every Sunday and Thursday.</span>
-                                </p>
-                                
-                                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                    {seriesPosts.map((post) => (
-                                        <Link
-                                            key={post.slug}
-                                            href={`/blog/${post.slug}`}
-                                            style={{ display: "block", textDecoration: "none" }}
+                                <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+                                    
+                                    {/* Swords Icon */}
+                                    <div style={{ marginBottom: 16, color: "var(--fg)", filter: "drop-shadow(0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent))" }}>
+                                        <Swords size={48} strokeWidth={1.5} />
+                                    </div>
+
+                                    {/* Stacked Massive Title */}
+                                    <h2 style={{ 
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        lineHeight: 0.9,
+                                        marginBottom: 24,
+                                        position: "relative"
+                                    }}>
+                                        <span 
+                                            className={`${bangers.className} devops-title`}
+                                            style={{ 
+                                                fontSize: "clamp(56px, 10vw, 96px)", 
+                                                color: "var(--fg)",
+                                                textTransform: "uppercase",
+                                                letterSpacing: "0.05em"
+                                            }}
                                         >
-                                            <div
-                                                style={{
-                                                    background: "var(--bg)",
-                                                    border: "1px solid var(--border)",
-                                                    padding: "20px 24px",
-                                                    display: "grid",
-                                                    gridTemplateColumns: "1fr auto",
-                                                    gap: 16,
-                                                    alignItems: "center",
-                                                    transition: "all 0.2s ease"
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    const t = e.currentTarget as HTMLDivElement;
-                                                    t.style.borderColor = "var(--accent)";
-                                                    t.style.transform = "translateX(4px)";
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    const t = e.currentTarget as HTMLDivElement;
-                                                    t.style.borderColor = "var(--border)";
-                                                    t.style.transform = "translateX(0px)";
-                                                }}
+                                            DevOps
+                                        </span>
+                                        <span 
+                                            className={`${marker.className} duels-title`}
+                                            style={{ 
+                                                fontSize: "clamp(56px, 9vw, 96px)", 
+                                                color: "var(--accent)",
+                                                textTransform: "uppercase",
+                                                letterSpacing: "0.02em",
+                                                transform: "translateY(-4px) rotate(-3deg)",
+                                                filter: "drop-shadow(0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent))"
+                                            }}
+                                        >
+                                            Duels
+                                        </span>
+                                        
+                                        {/* Decorative sparks */}
+                                        <div style={{ position: "absolute", top: "10%", left: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-15deg)" }}>\</div>
+                                        <div style={{ position: "absolute", top: "30%", left: "-15%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-45deg)" }}>-</div>
+                                        <div style={{ position: "absolute", top: "50%", left: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-75deg)" }}>/</div>
+                                        
+                                        <div style={{ position: "absolute", top: "10%", right: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(15deg)" }}>/</div>
+                                        <div style={{ position: "absolute", top: "30%", right: "-15%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(45deg)" }}>-</div>
+                                        <div style={{ position: "absolute", top: "50%", right: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(75deg)" }}>\</div>
+                                    </h2>
+                                    
+                                    {/* Announcement Pill */}
+                                    <div style={{ 
+                                        display: "inline-flex", 
+                                        alignItems: "center", 
+                                        gap: 8,
+                                        padding: "8px 20px", 
+                                        background: "color-mix(in srgb, var(--accent) 15%, var(--bg))",
+                                        border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
+                                        borderRadius: 999,
+                                        color: "var(--fg)",
+                                        fontWeight: 800,
+                                        fontSize: 14,
+                                        textTransform: "uppercase",
+                                        letterSpacing: "0.05em",
+                                        marginBottom: 24,
+                                        boxShadow: "0 4px 12px color-mix(in srgb, var(--accent) 15%, transparent)"
+                                    }}>
+                                        <span style={{ fontSize: 18 }}>📢</span> NEW BLOG SERIES
+                                    </div>
+                                    
+                                    <p style={{ fontSize: 16, color: "var(--muted)", marginBottom: 48, maxWidth: "560px", lineHeight: 1.6 }}>
+                                        DevOps is full of choices. Some are simple, some are powerful, and some... are just overkill. 
+                                        <br/><br/>
+                                        <span style={{ color: "var(--accent)", fontWeight: 700 }}>NEW BLOGS RELEASE EVERY SUNDAY AND THURSDAY.</span>
+                                    </p>
+                                    
+                                    {/* UPCOMING DUELS DIVIDER */}
+                                    <div style={{ display: "flex", alignItems: "center", gap: 16, width: "100%", maxWidth: 600, marginBottom: 32 }}>
+                                        <div style={{ flex: 1, height: 1, background: "color-mix(in srgb, var(--accent) 30%, transparent)" }} />
+                                        <span className="matchmaking-divider" style={{ 
+                                            background: "var(--fg)", 
+                                            color: "var(--bg)", 
+                                            padding: "6px 16px", 
+                                            borderRadius: 999, 
+                                            fontSize: 13, 
+                                            fontWeight: 800,
+                                            letterSpacing: "0.05em",
+                                            textTransform: "uppercase"
+                                        }}>
+                                            Matchmaking In Progress...
+                                        </span>
+                                        <div style={{ flex: 1, height: 1, background: "color-mix(in srgb, var(--accent) 30%, transparent)" }} />
+                                    </div>
+
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
+                                        {seriesPosts.map((post, index) => {
+                                            // Parse the title e.g. "Docker Compose vs. Kubernetes: When..."
+                                            const parts = post.title.split(':');
+                                            const toolsPart = parts[0];
+                                            const subtitle = parts.slice(1).join(':').trim() || post.hook;
+                                            
+                                            let toolA = toolsPart;
+                                            let toolB = "";
+                                            const vsMatch = toolsPart.match(/ vs\.? | VS | vs /i);
+                                            if (vsMatch) {
+                                                const split = toolsPart.split(vsMatch[0]);
+                                                toolA = split[0].trim();
+                                                toolB = split[1].trim();
+                                            }
+
+                                            // Helper to pick a Lucide icon based on tool name
+                                            const getIcon = (name: string) => {
+                                                const n = name.toLowerCase();
+                                                if (n.includes('docker')) return <Box size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('kubernetes')) return <Hexagon size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('github')) return <Github size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('jenkins')) return <Settings size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                                return <Swords size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                            };
+
+                                            return (
+                                            <Link
+                                                key={post.slug}
+                                                href={`/blog/${post.slug}`}
+                                                style={{ display: "block", textDecoration: "none" }}
                                             >
-                                                <div>
-                                                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--fg)", marginBottom: 4 }}>
-                                                        {post.title}
-                                                    </h3>
-                                                    {post.hook && (
-                                                        <p style={{ fontSize: 13, color: "var(--muted)", fontStyle: "italic" }}>
-                                                            {post.hook}
-                                                        </p>
+                                                <div
+                                                    style={{
+                                                        background: "var(--bg)",
+                                                        border: "1px solid color-mix(in srgb, var(--accent) 10%, var(--border))",
+                                                        padding: "20px",
+                                                        borderRadius: 16,
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        gap: 16,
+                                                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                                        boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)",
+                                                        position: "relative"
+                                                    }}
+                                                    onMouseEnter={(e) => {
+                                                        const t = e.currentTarget as HTMLDivElement;
+                                                        t.style.borderColor = "var(--accent)";
+                                                        t.style.transform = "translateY(-4px)";
+                                                        t.style.boxShadow = "0 12px 24px color-mix(in srgb, var(--accent) 15%, transparent)";
+                                                    }}
+                                                    onMouseLeave={(e) => {
+                                                        const t = e.currentTarget as HTMLDivElement;
+                                                        t.style.borderColor = "color-mix(in srgb, var(--accent) 10%, var(--border))";
+                                                        t.style.transform = "translateY(0px)";
+                                                        t.style.boxShadow = "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)";
+                                                    }}
+                                                >
+                                                    {/* Number Badge */}
+                                                    <div style={{
+                                                        position: "absolute",
+                                                        top: -10,
+                                                        left: -10,
+                                                        width: 28,
+                                                        height: 28,
+                                                        borderRadius: 8,
+                                                        background: "var(--accent)",
+                                                        color: "var(--bg)",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        fontWeight: 900,
+                                                        fontSize: 14,
+                                                        boxShadow: "0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)"
+                                                    }}>
+                                                        {seriesPosts.length - index}
+                                                    </div>
+
+                                                    {/* VS Layout */}
+                                                    {toolB ? (
+                                                        <div className="duel-vs-grid" style={{ 
+                                                            display: "grid", 
+                                                            gridTemplateColumns: "1fr auto 1fr", 
+                                                            alignItems: "center", 
+                                                            gap: 16,
+                                                            padding: "12px 16px",
+                                                            background: "color-mix(in srgb, var(--card-bg) 50%, transparent)",
+                                                            borderRadius: 12,
+                                                            border: "1px dashed color-mix(in srgb, var(--accent) 20%, transparent)"
+                                                        }}>
+                                                            {/* Tool A */}
+                                                            <div className="duel-tool-a" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
+                                                                <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "right" }}>{toolA}</span>
+                                                                <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
+                                                                    {getIcon(toolA)}
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            {/* VS Badge */}
+                                                            <div className="duel-vs-badge" style={{
+                                                                width: 36,
+                                                                height: 36,
+                                                                borderRadius: "50%",
+                                                                background: "var(--fg)",
+                                                                color: "var(--bg)",
+                                                                display: "flex",
+                                                                alignItems: "center",
+                                                                justifyContent: "center",
+                                                                fontSize: 13,
+                                                                fontWeight: 900,
+                                                                boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent)",
+                                                                zIndex: 2,
+                                                                flexShrink: 0
+                                                            }}>VS</div>
+                                                            
+                                                            {/* Tool B */}
+                                                            <div className="duel-tool-b" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-start" }}>
+                                                                <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
+                                                                    {getIcon(toolB)}
+                                                                </div>
+                                                                <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "left" }}>{toolB}</span>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <h3 style={{ fontSize: 19, fontWeight: 700, color: "var(--fg)", marginBottom: 6, letterSpacing: "-0.01em", paddingLeft: 16 }}>
+                                                            {post.title}
+                                                        </h3>
                                                     )}
+
+                                                    {/* Subtitle & Meta */}
+                                                    <div className="duel-footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 8px", marginTop: 4 }}>
+                                                        <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", lineHeight: 1.5, flex: 1, paddingRight: 24 }}>
+                                                            {subtitle}
+                                                        </p>
+                                                        <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--accent)", fontWeight: 600 }}>
+                                                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                                                        </time>
+                                                    </div>
                                                 </div>
-                                                <div style={{ textAlign: "right", flexShrink: 0 }}>
-                                                    <time style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)", display: "block", marginBottom: 4 }}>
-                                                        {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                                                    </time>
-                                                    <span style={{ fontSize: 10, fontFamily: "monospace", color: "var(--accent)", background: "color-mix(in srgb, var(--accent) 15%, transparent)", padding: "2px 6px", borderRadius: 4 }}>
-                                                        Duel
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    ))}
+                                            </Link>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
