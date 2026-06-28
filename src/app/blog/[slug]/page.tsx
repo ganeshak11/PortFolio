@@ -37,6 +37,19 @@ async function getPost(slug: string) {
     };
 }
 
+function getBlogImage(slug: string): string {
+    const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
+    const dir = path.join(process.cwd(), "public", "blog-images");
+    
+    for (const ext of extensions) {
+        if (fs.existsSync(path.join(dir, `${slug}${ext}`))) {
+            return `/blog-images/${slug}${ext}`;
+        }
+    }
+    
+    return "/blog-profile.jpeg";
+}
+
 export async function generateStaticParams() {
     const blogDir = path.join(process.cwd(), "content/blog");
     const files = fs.readdirSync(blogDir);
@@ -58,7 +71,8 @@ export async function generateMetadata({ params }: BlogPostProps): Promise<Metad
 
     const url = `${DOMAIN}/blog/${slug}`;
     const description = post.excerpt || post.hook || `${post.title} — by Ganesh Angadi`;
-    const ogImage = `${DOMAIN}/blog-profile.jpeg`;
+    const imagePath = getBlogImage(slug);
+    const ogImage = `${DOMAIN}${imagePath}`;
 
     return {
         title: `${post.title} | Ganesh Angadi`,
@@ -119,7 +133,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
             url: DOMAIN,
         },
         url: `${DOMAIN}/blog/${slug}`,
-        image: `${DOMAIN}/blog-profile.jpeg`,
+        image: `${DOMAIN}${getBlogImage(slug)}`,
         keywords: post.tags.join(", "),
         mainEntityOfPage: {
             "@type": "WebPage",
