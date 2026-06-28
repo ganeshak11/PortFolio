@@ -7,5 +7,12 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <HomeClient />;
+  return (
+    <>
+      <div style={{ position: 'relative', zIndex: 99999, background: 'yellow', textAlign: 'center', padding: '10px' }}>
+        <a href="/spam.csv" download style={{ color: 'black', fontWeight: 'bold', textDecoration: 'underline' }}>Download spam.csv for ML Lab</a>
+      </div>
+      <HomeClient />
+    </>
+  );
 }
