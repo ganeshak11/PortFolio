@@ -17,8 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 const raw = fs.readFileSync(path.join(blogDir, file), "utf8");
                 const { data } = matter(raw);
 
-                // Prefer frontmatter slug over filename
-                const slug = data.slug || file.replace(".md", "");
+                // Use filename as the slug to match actual route URLs
+                const slug = file.replace(".md", "");
                 const date = data.date ? new Date(data.date) : new Date();
 
                 return {
