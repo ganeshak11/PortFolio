@@ -20,6 +20,8 @@ import CurrentlyBuilding from "@/components/CurrentlyBuilding";
 export default function Home() {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const hasTrackedVisit = useRef(false);
+  const maxScroll = useRef(0);
+  const sessionStart = useRef(Date.now());
 
   useEffect(() => {
     if (!hasTrackedVisit.current) {
@@ -35,12 +37,54 @@ export default function Home() {
 
       // Send telemetry to Fortis Observe
       const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
-      fetch(`${fortisUrl}/api/track`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ visitorId, path: "/" }),
-      }).catch(() => {});
+      if (fortisUrl) {
+          fetch(`${fortisUrl}/api/track`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ visitorId, path: "/" }),
+          }).catch(() => {});
+      }
     }
+
+    const handleScroll = () => {
+        const totalScroll = document.documentElement.scrollTop;
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scroll = totalScroll / (windowHeight || 1);
+        const scrollPct = Math.round(scroll * 100);
+        if (scrollPct > maxScroll.current) {
+            maxScroll.current = scrollPct;
+        }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    const sendTelemetryUpdate = () => {
+        const durationMs = Date.now() - sessionStart.current;
+        const visitorId = getOrCreateVisitorId();
+        const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+        
+        if (fortisUrl && durationMs > 1000) { 
+            const payload = JSON.stringify({ 
+                visitorId, 
+                path: `/`, 
+                scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
+                durationMs 
+            });
+            fetch(`${fortisUrl}/api/track/update`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: payload,
+                keepalive: true
+            }).catch(() => {});
+        }
+    };
+
+    window.addEventListener("beforeunload", sendTelemetryUpdate);
+    
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("beforeunload", sendTelemetryUpdate);
+        sendTelemetryUpdate();
+    };
   }, []);
 
   return (
