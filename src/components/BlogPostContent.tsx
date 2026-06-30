@@ -178,6 +178,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
     };
 
     const hasTrackedView = useRef(false);
+    const maxScroll = useRef(0);
+    const sessionStart = useRef(Date.now());
 
     useEffect(() => {
         // Pick a random survival message after mount to prevent hydration mismatch
@@ -220,12 +222,47 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         const handleScroll = () => {
             const totalScroll = document.documentElement.scrollTop;
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scroll = `${totalScroll / (windowHeight || 1)}`;
-            setScrollProgress(Number(scroll));
+            const scroll = totalScroll / (windowHeight || 1);
+            setScrollProgress(scroll);
+            
+            const scrollPct = Math.round(scroll * 100);
+            if (scrollPct > maxScroll.current) {
+                maxScroll.current = scrollPct;
+            }
         };
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+
+        const sendTelemetryUpdate = () => {
+            const durationMs = Date.now() - sessionStart.current;
+            const visitorId = getOrCreateVisitorId();
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+            
+            if (fortisUrl && durationMs > 1000) { // Only send if they stayed for more than 1 second
+                const payload = JSON.stringify({ 
+                    visitorId, 
+                    path: `/blog/${slug}`, 
+                    scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
+                    durationMs 
+                });
+                
+                // Use fetch with keepalive as it supports custom headers better, or fallback to beacon
+                fetch(`${fortisUrl}/api/track/update`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: payload,
+                    keepalive: true
+                }).catch(() => {});
+            }
+        };
+
+        window.addEventListener("beforeunload", sendTelemetryUpdate);
+        
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("beforeunload", sendTelemetryUpdate);
+            sendTelemetryUpdate(); // Trigger when navigating away via React Router
+        };
+    }, [slug]);
 
     return (
         <>
