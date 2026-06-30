@@ -209,7 +209,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         fetch(`${fortisUrl}/api/track`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ visitorId, path: `/blog/${slug}` }),
+                            body: JSON.stringify({ visitorId, path: `/blog/${slug}`, referer: document.referrer }),
                         }).catch(() => {});
                     }
                 } catch (err) {

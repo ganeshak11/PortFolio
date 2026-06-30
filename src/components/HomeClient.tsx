@@ -41,7 +41,7 @@ export default function Home() {
           fetch(`${fortisUrl}/api/track`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ visitorId, path: "/" }),
+            body: JSON.stringify({ visitorId, path: "/", referer: document.referrer }),
           }).catch(() => {});
       }
     }

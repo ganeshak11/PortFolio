@@ -40,7 +40,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 fetch(`${fortisUrl}/api/track`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ visitorId, path: "/blog" }),
+                    body: JSON.stringify({ visitorId, path: "/blog", referer: document.referrer }),
                 }).catch(() => {});
             }
         }
