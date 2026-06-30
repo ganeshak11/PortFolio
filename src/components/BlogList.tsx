@@ -4,6 +4,8 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { Github, Settings, Box, Hexagon, Swords } from "lucide-react";
 import { Bangers, Permanent_Marker } from "next/font/google";
+import { useEffect, useRef } from "react";
+import { getOrCreateVisitorId } from "@/lib/visitorId";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });
 const marker = Permanent_Marker({ subsets: ["latin"], weight: "400" });
@@ -23,6 +25,73 @@ interface BlogPost {
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
     const seriesPosts = posts.filter((p) => p.series === "DevOps Duels");
     const regularPosts = posts.filter((p) => p.series !== "DevOps Duels");
+
+    const hasTrackedVisit = useRef(false);
+    const maxScroll = useRef(0);
+    const sessionStart = useRef(Date.now());
+
+    useEffect(() => {
+        if (!hasTrackedVisit.current) {
+            hasTrackedVisit.current = true;
+            const visitorId = getOrCreateVisitorId();
+            
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+            if (fortisUrl) {
+                fetch(`${fortisUrl}/api/track`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ visitorId, path: "/blog" }),
+                }).catch(() => {});
+            }
+        }
+
+        const handleScroll = () => {
+            const totalScroll = document.documentElement.scrollTop;
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scroll = totalScroll / (windowHeight || 1);
+            const scrollPct = Math.round(scroll * 100);
+            if (scrollPct > maxScroll.current) {
+                maxScroll.current = scrollPct;
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+
+        const sendTelemetryUpdate = () => {
+            const durationMs = Date.now() - sessionStart.current;
+            const visitorId = getOrCreateVisitorId();
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+            
+            if (fortisUrl && durationMs > 1000) { 
+                fetch(`${fortisUrl}/api/track/update`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        visitorId, 
+                        path: `/blog`, 
+                        scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
+                        durationMs 
+                    }),
+                    keepalive: true
+                }).catch(() => {});
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                sendTelemetryUpdate();
+            }
+        };
+
+        window.addEventListener("beforeunload", sendTelemetryUpdate);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+        
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("beforeunload", sendTelemetryUpdate);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+            sendTelemetryUpdate();
+        };
+    }, []);
 
     return (
         <>

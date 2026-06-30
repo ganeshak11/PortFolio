@@ -78,11 +78,19 @@ export default function Home() {
         }
     };
 
+    const handleVisibilityChange = () => {
+        if (document.visibilityState === 'hidden') {
+            sendTelemetryUpdate();
+        }
+    };
+
     window.addEventListener("beforeunload", sendTelemetryUpdate);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     
     return () => {
         window.removeEventListener("scroll", handleScroll);
         window.removeEventListener("beforeunload", sendTelemetryUpdate);
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
         sendTelemetryUpdate();
     };
   }, []);

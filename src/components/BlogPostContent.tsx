@@ -255,11 +255,19 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
             }
         };
 
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                sendTelemetryUpdate();
+            }
+        };
+
         window.addEventListener("beforeunload", sendTelemetryUpdate);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
         
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("beforeunload", sendTelemetryUpdate);
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
             sendTelemetryUpdate(); // Trigger when navigating away via React Router
         };
     }, [slug]);
