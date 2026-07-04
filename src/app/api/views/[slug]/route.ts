@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 // Uses the Web Crypto API (globalThis.crypto) which is available in
 // Node.js 18+, Edge Runtime, and all modern browsers — no Node 'crypto' import needed.
 
