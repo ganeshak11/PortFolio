@@ -204,13 +204,18 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     }
 
                     // Send telemetry to Fortis Observe
-                    const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+                    let fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL;
+                    if (process.env.NODE_ENV === 'production') {
+                        fortisUrl = 'https://analytics.ganeshangadi.online';
+                    } else if (!fortisUrl) {
+                        fortisUrl = 'http://localhost:3000';
+                    }
                     if (fortisUrl) {
                         const urlParams = new URLSearchParams(window.location.search);
                         const utm = urlParams.get("utm_source") || urlParams.get("ref");
                         const finalReferer = utm ? `utm_source:${utm}` : document.referrer;
 
-                        fetch(`${fortisUrl}/api/track`, {
+                        fetch(`${fortisUrl}/api/telemetry`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ visitorId, path: `/blog/${slug}`, referer: finalReferer }),
