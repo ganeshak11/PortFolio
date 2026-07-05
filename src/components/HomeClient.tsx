@@ -33,69 +33,69 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ visitorId }),
-      }).catch(() => {});
+      }).catch(() => { });
 
       // Send telemetry to Fortis Observe
-      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3001');
       if (fortisUrl) {
-          const urlParams = new URLSearchParams(window.location.search);
-          const utm = urlParams.get("utm_source") || urlParams.get("ref");
-          const finalReferer = utm ? `utm_source:${utm}` : document.referrer;
+        const urlParams = new URLSearchParams(window.location.search);
+        const utm = urlParams.get("utm_source") || urlParams.get("ref");
+        const finalReferer = utm ? `utm_source:${utm}` : document.referrer;
 
-          fetch(`${fortisUrl}/api/track`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ visitorId, path: "/", referer: finalReferer }),
-          }).catch(() => {});
+        fetch(`${fortisUrl}/api/telemetry`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ visitorId, path: "/", referer: finalReferer }),
+        }).catch(() => { });
       }
     }
 
     const handleScroll = () => {
-        const totalScroll = document.documentElement.scrollTop;
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scroll = totalScroll / (windowHeight || 1);
-        const scrollPct = Math.round(scroll * 100);
-        if (scrollPct > maxScroll.current) {
-            maxScroll.current = scrollPct;
-        }
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = totalScroll / (windowHeight || 1);
+      const scrollPct = Math.round(scroll * 100);
+      if (scrollPct > maxScroll.current) {
+        maxScroll.current = scrollPct;
+      }
     };
     window.addEventListener("scroll", handleScroll);
 
     const sendTelemetryUpdate = () => {
-        const durationMs = Date.now() - sessionStart.current;
-        const visitorId = getOrCreateVisitorId();
-        const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
-        
-        if (fortisUrl && durationMs > 1000) { 
-            const payload = JSON.stringify({ 
-                visitorId, 
-                path: `/`, 
-                scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
-                durationMs 
-            });
-            fetch(`${fortisUrl}/api/track/update`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: payload,
-                keepalive: true
-            }).catch(() => {});
-        }
+      const durationMs = Date.now() - sessionStart.current;
+      const visitorId = getOrCreateVisitorId();
+      const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3001');
+
+      if (fortisUrl && durationMs > 1000) {
+        const payload = JSON.stringify({
+          visitorId,
+          path: `/`,
+          scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current,
+          durationMs
+        });
+        fetch(`${fortisUrl}/api/telemetry/update`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+          keepalive: true
+        }).catch(() => { });
+      }
     };
 
     const handleVisibilityChange = () => {
-        if (document.visibilityState === 'hidden') {
-            sendTelemetryUpdate();
-        }
+      if (document.visibilityState === 'hidden') {
+        sendTelemetryUpdate();
+      }
     };
 
     window.addEventListener("beforeunload", sendTelemetryUpdate);
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    
+
     return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("beforeunload", sendTelemetryUpdate);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
-        sendTelemetryUpdate();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("beforeunload", sendTelemetryUpdate);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      sendTelemetryUpdate();
     };
   }, []);
 

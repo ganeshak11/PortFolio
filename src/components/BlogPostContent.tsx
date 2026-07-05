@@ -159,7 +159,7 @@ const REACTIONS = [
 export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [views, setViews] = useState<number | null>(null);
-    const [survivalMessage, setSurvivalMessage] = useState<{title: string, body: string} | null>(null);
+    const [survivalMessage, setSurvivalMessage] = useState<{ title: string, body: string } | null>(null);
     const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
     const [isAnimatingReaction, setIsAnimatingReaction] = useState<string | null>(null);
 
@@ -184,7 +184,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
     useEffect(() => {
         // Pick a random survival message after mount to prevent hydration mismatch
         setSurvivalMessage(SURVIVAL_MESSAGES[Math.floor(Math.random() * SURVIVAL_MESSAGES.length)]);
-        
+
         // Record and fetch views — guard prevents double-fire from React Strict Mode
         if (!hasTrackedView.current) {
             hasTrackedView.current = true;
@@ -208,7 +208,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     if (process.env.NODE_ENV === 'production') {
                         fortisUrl = 'https://analytics.ganeshangadi.online';
                     } else if (!fortisUrl) {
-                        fortisUrl = 'http://localhost:3000';
+                        fortisUrl = 'http://localhost:3001';
                     }
                     if (fortisUrl) {
                         const urlParams = new URLSearchParams(window.location.search);
@@ -219,7 +219,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ visitorId, path: `/blog/${slug}`, referer: finalReferer }),
-                        }).catch(() => {});
+                        }).catch(() => { });
                     }
                 } catch (err) {
                     console.error("Failed to track view", err);
@@ -233,7 +233,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scroll = totalScroll / (windowHeight || 1);
             setScrollProgress(scroll);
-            
+
             const scrollPct = Math.round(scroll * 100);
             if (scrollPct > maxScroll.current) {
                 maxScroll.current = scrollPct;
@@ -244,23 +244,22 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         const sendTelemetryUpdate = () => {
             const durationMs = Date.now() - sessionStart.current;
             const visitorId = getOrCreateVisitorId();
-            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
-            
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3001');
             if (fortisUrl && durationMs > 1000) { // Only send if they stayed for more than 1 second
-                const payload = JSON.stringify({ 
-                    visitorId, 
-                    path: `/blog/${slug}`, 
-                    scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
-                    durationMs 
+                const payload = JSON.stringify({
+                    visitorId,
+                    path: `/blog/${slug}`,
+                    scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current,
+                    durationMs
                 });
-                
+
                 // Use fetch with keepalive as it supports custom headers better, or fallback to beacon
-                fetch(`${fortisUrl}/api/track/update`, {
+                fetch(`${fortisUrl}/api/telemetry/update`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: payload,
                     keepalive: true
-                }).catch(() => {});
+                }).catch(() => { });
             }
         };
 
@@ -272,7 +271,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
 
         window.addEventListener("beforeunload", sendTelemetryUpdate);
         document.addEventListener("visibilitychange", handleVisibilityChange);
-        
+
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("beforeunload", sendTelemetryUpdate);
@@ -563,8 +562,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                 opacity: selectedReaction ? 1 : 0,
                                 overflow: 'hidden',
                                 transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                color: "var(--accent)", 
-                                fontSize: 14, 
+                                color: "var(--accent)",
+                                fontSize: 14,
                                 fontWeight: 600
                             }}>
                                 Thanks for your feedback! ✨

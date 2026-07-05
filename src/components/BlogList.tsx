@@ -34,18 +34,18 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
         if (!hasTrackedVisit.current) {
             hasTrackedVisit.current = true;
             const visitorId = getOrCreateVisitorId();
-            
-            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
+
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3001');
             if (fortisUrl) {
                 const urlParams = new URLSearchParams(window.location.search);
                 const utm = urlParams.get("utm_source") || urlParams.get("ref");
                 const finalReferer = utm ? `utm_source:${utm}` : document.referrer;
 
-                fetch(`${fortisUrl}/api/track`, {
+                fetch(`${fortisUrl}/api/telemetry`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ visitorId, path: "/blog", referer: finalReferer }),
-                }).catch(() => {});
+                }).catch(() => { });
             }
         }
 
@@ -63,20 +63,20 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
         const sendTelemetryUpdate = () => {
             const durationMs = Date.now() - sessionStart.current;
             const visitorId = getOrCreateVisitorId();
-            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3000');
-            
-            if (fortisUrl && durationMs > 1000) { 
-                fetch(`${fortisUrl}/api/track/update`, {
+            const fortisUrl = process.env.NEXT_PUBLIC_FORTIS_URL || (process.env.NODE_ENV === 'production' ? 'https://analytics.ganeshangadi.online' : 'http://localhost:3001');
+
+            if (fortisUrl && durationMs > 1000) {
+                fetch(`${fortisUrl}/api/telemetry/update`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ 
-                        visitorId, 
-                        path: `/blog`, 
-                        scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current, 
-                        durationMs 
+                    body: JSON.stringify({
+                        visitorId,
+                        path: `/blog`,
+                        scrollDepth: maxScroll.current > 100 ? 100 : maxScroll.current,
+                        durationMs
                     }),
                     keepalive: true
-                }).catch(() => {});
+                }).catch(() => { });
             }
         };
 
@@ -88,7 +88,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
         window.addEventListener("beforeunload", sendTelemetryUpdate);
         document.addEventListener("visibilitychange", handleVisibilityChange);
-        
+
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("beforeunload", sendTelemetryUpdate);
@@ -156,10 +156,10 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                     {/* Premium DevOps Duels Series Section */}
                     {seriesPosts.length > 0 && (
                         <div style={{ marginTop: 48, marginBottom: 72, position: "relative" }}>
-                            <div style={{ 
-                                padding: "48px 24px 56px", 
-                                background: "linear-gradient(145deg, var(--card-bg) 0%, color-mix(in srgb, var(--accent) 2%, var(--card-bg)) 100%)", 
-                                border: "1px solid color-mix(in srgb, var(--accent) 15%, var(--border))", 
+                            <div style={{
+                                padding: "48px 24px 56px",
+                                background: "linear-gradient(145deg, var(--card-bg) 0%, color-mix(in srgb, var(--accent) 2%, var(--card-bg)) 100%)",
+                                border: "1px solid color-mix(in srgb, var(--accent) 15%, var(--border))",
                                 borderRadius: 32,
                                 position: "relative",
                                 zIndex: 1,
@@ -176,16 +176,16 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                     pointerEvents: "none",
                                     zIndex: 0
                                 }} />
-                                
+
                                 <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-                                    
+
                                     {/* Swords Icon */}
                                     <div style={{ marginBottom: 16, color: "var(--fg)", filter: "drop-shadow(0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent))" }}>
                                         <Swords size={48} strokeWidth={1.5} />
                                     </div>
 
                                     {/* Stacked Massive Title */}
-                                    <h2 style={{ 
+                                    <h2 style={{
                                         display: "flex",
                                         flexDirection: "column",
                                         alignItems: "center",
@@ -193,10 +193,10 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                         marginBottom: 24,
                                         position: "relative"
                                     }}>
-                                        <span 
+                                        <span
                                             className={`${bangers.className} devops-title`}
-                                            style={{ 
-                                                fontSize: "clamp(56px, 10vw, 96px)", 
+                                            style={{
+                                                fontSize: "clamp(56px, 10vw, 96px)",
                                                 color: "var(--fg)",
                                                 textTransform: "uppercase",
                                                 letterSpacing: "0.05em"
@@ -204,10 +204,10 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                         >
                                             DevOps
                                         </span>
-                                        <span 
+                                        <span
                                             className={`${marker.className} duels-title`}
-                                            style={{ 
-                                                fontSize: "clamp(56px, 9vw, 96px)", 
+                                            style={{
+                                                fontSize: "clamp(56px, 9vw, 96px)",
                                                 color: "var(--accent)",
                                                 textTransform: "uppercase",
                                                 letterSpacing: "0.02em",
@@ -217,23 +217,23 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                         >
                                             Duels
                                         </span>
-                                        
+
                                         {/* Decorative sparks */}
                                         <div style={{ position: "absolute", top: "10%", left: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-15deg)" }}>\</div>
                                         <div style={{ position: "absolute", top: "30%", left: "-15%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-45deg)" }}>-</div>
                                         <div style={{ position: "absolute", top: "50%", left: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(-75deg)" }}>/</div>
-                                        
+
                                         <div style={{ position: "absolute", top: "10%", right: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(15deg)" }}>/</div>
                                         <div style={{ position: "absolute", top: "30%", right: "-15%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(45deg)" }}>-</div>
                                         <div style={{ position: "absolute", top: "50%", right: "-10%", color: "var(--accent)", fontWeight: 900, fontSize: 24, transform: "rotate(75deg)" }}>\</div>
                                     </h2>
-                                    
+
                                     {/* Announcement Pill */}
-                                    <div style={{ 
-                                        display: "inline-flex", 
-                                        alignItems: "center", 
+                                    <div style={{
+                                        display: "inline-flex",
+                                        alignItems: "center",
                                         gap: 8,
-                                        padding: "8px 20px", 
+                                        padding: "8px 20px",
                                         background: "color-mix(in srgb, var(--accent) 15%, var(--bg))",
                                         border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
                                         borderRadius: 999,
@@ -247,22 +247,22 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                     }}>
                                         <span style={{ fontSize: 18 }}>📢</span> NEW BLOG SERIES
                                     </div>
-                                    
+
                                     <p style={{ fontSize: 16, color: "var(--muted)", marginBottom: 48, maxWidth: "560px", lineHeight: 1.6 }}>
-                                        DevOps is full of choices. Some are simple, some are powerful, and some... are just overkill. 
-                                        <br/><br/>
+                                        DevOps is full of choices. Some are simple, some are powerful, and some... are just overkill.
+                                        <br /><br />
                                         <span style={{ color: "var(--accent)", fontWeight: 700 }}>NEW BLOGS RELEASE EVERY SUNDAY AND THURSDAY.</span>
                                     </p>
-                                    
+
                                     {/* UPCOMING DUELS DIVIDER */}
                                     <div style={{ display: "flex", alignItems: "center", gap: 16, width: "100%", maxWidth: 600, marginBottom: 32 }}>
                                         <div style={{ flex: 1, height: 1, background: "color-mix(in srgb, var(--accent) 30%, transparent)" }} />
-                                        <span className="matchmaking-divider" style={{ 
-                                            background: "var(--fg)", 
-                                            color: "var(--bg)", 
-                                            padding: "6px 16px", 
-                                            borderRadius: 999, 
-                                            fontSize: 13, 
+                                        <span className="matchmaking-divider" style={{
+                                            background: "var(--fg)",
+                                            color: "var(--bg)",
+                                            padding: "6px 16px",
+                                            borderRadius: 999,
+                                            fontSize: 13,
                                             fontWeight: 800,
                                             letterSpacing: "0.05em",
                                             textTransform: "uppercase"
@@ -278,7 +278,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                             const parts = post.title.split(':');
                                             const toolsPart = parts[0];
                                             const subtitle = parts.slice(1).join(':').trim() || post.hook;
-                                            
+
                                             let toolA = toolsPart;
                                             let toolB = "";
                                             const vsMatch = toolsPart.match(/ vs\.? | VS | vs /i);
@@ -299,119 +299,119 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                             };
 
                                             return (
-                                            <Link
-                                                key={post.slug}
-                                                href={`/blog/${post.slug}`}
-                                                style={{ display: "block", textDecoration: "none" }}
-                                            >
-                                                <div
-                                                    style={{
-                                                        background: "var(--bg)",
-                                                        border: "1px solid color-mix(in srgb, var(--accent) 10%, var(--border))",
-                                                        padding: "20px",
-                                                        borderRadius: 16,
-                                                        display: "flex",
-                                                        flexDirection: "column",
-                                                        gap: 16,
-                                                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                                        boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)",
-                                                        position: "relative"
-                                                    }}
-                                                    onMouseEnter={(e) => {
-                                                        const t = e.currentTarget as HTMLDivElement;
-                                                        t.style.borderColor = "var(--accent)";
-                                                        t.style.transform = "translateY(-4px)";
-                                                        t.style.boxShadow = "0 12px 24px color-mix(in srgb, var(--accent) 15%, transparent)";
-                                                    }}
-                                                    onMouseLeave={(e) => {
-                                                        const t = e.currentTarget as HTMLDivElement;
-                                                        t.style.borderColor = "color-mix(in srgb, var(--accent) 10%, var(--border))";
-                                                        t.style.transform = "translateY(0px)";
-                                                        t.style.boxShadow = "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)";
-                                                    }}
+                                                <Link
+                                                    key={post.slug}
+                                                    href={`/blog/${post.slug}`}
+                                                    style={{ display: "block", textDecoration: "none" }}
                                                 >
-                                                    {/* Number Badge */}
-                                                    <div style={{
-                                                        position: "absolute",
-                                                        top: -10,
-                                                        left: -10,
-                                                        width: 28,
-                                                        height: 28,
-                                                        borderRadius: 8,
-                                                        background: "var(--accent)",
-                                                        color: "var(--bg)",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                        fontWeight: 900,
-                                                        fontSize: 14,
-                                                        boxShadow: "0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)"
-                                                    }}>
-                                                        {seriesPosts.length - index}
-                                                    </div>
-
-                                                    {/* VS Layout */}
-                                                    {toolB ? (
-                                                        <div className="duel-vs-grid" style={{ 
-                                                            display: "grid", 
-                                                            gridTemplateColumns: "1fr auto 1fr", 
-                                                            alignItems: "center", 
+                                                    <div
+                                                        style={{
+                                                            background: "var(--bg)",
+                                                            border: "1px solid color-mix(in srgb, var(--accent) 10%, var(--border))",
+                                                            padding: "20px",
+                                                            borderRadius: 16,
+                                                            display: "flex",
+                                                            flexDirection: "column",
                                                             gap: 16,
-                                                            padding: "12px 16px",
-                                                            background: "color-mix(in srgb, var(--card-bg) 50%, transparent)",
-                                                            borderRadius: 12,
-                                                            border: "1px dashed color-mix(in srgb, var(--accent) 20%, transparent)"
+                                                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                                                            boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)",
+                                                            position: "relative"
+                                                        }}
+                                                        onMouseEnter={(e) => {
+                                                            const t = e.currentTarget as HTMLDivElement;
+                                                            t.style.borderColor = "var(--accent)";
+                                                            t.style.transform = "translateY(-4px)";
+                                                            t.style.boxShadow = "0 12px 24px color-mix(in srgb, var(--accent) 15%, transparent)";
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            const t = e.currentTarget as HTMLDivElement;
+                                                            t.style.borderColor = "color-mix(in srgb, var(--accent) 10%, var(--border))";
+                                                            t.style.transform = "translateY(0px)";
+                                                            t.style.boxShadow = "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)";
+                                                        }}
+                                                    >
+                                                        {/* Number Badge */}
+                                                        <div style={{
+                                                            position: "absolute",
+                                                            top: -10,
+                                                            left: -10,
+                                                            width: 28,
+                                                            height: 28,
+                                                            borderRadius: 8,
+                                                            background: "var(--accent)",
+                                                            color: "var(--bg)",
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                            fontWeight: 900,
+                                                            fontSize: 14,
+                                                            boxShadow: "0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)"
                                                         }}>
-                                                            {/* Tool A */}
-                                                            <div className="duel-tool-a" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
-                                                                <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "right" }}>{toolA}</span>
-                                                                <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
-                                                                    {getIcon(toolA)}
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            {/* VS Badge */}
-                                                            <div className="duel-vs-badge" style={{
-                                                                width: 36,
-                                                                height: 36,
-                                                                borderRadius: "50%",
-                                                                background: "var(--fg)",
-                                                                color: "var(--bg)",
-                                                                display: "flex",
-                                                                alignItems: "center",
-                                                                justifyContent: "center",
-                                                                fontSize: 13,
-                                                                fontWeight: 900,
-                                                                boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent)",
-                                                                zIndex: 2,
-                                                                flexShrink: 0
-                                                            }}>VS</div>
-                                                            
-                                                            {/* Tool B */}
-                                                            <div className="duel-tool-b" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-start" }}>
-                                                                <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
-                                                                    {getIcon(toolB)}
-                                                                </div>
-                                                                <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "left" }}>{toolB}</span>
-                                                            </div>
+                                                            {seriesPosts.length - index}
                                                         </div>
-                                                    ) : (
-                                                        <h3 style={{ fontSize: 19, fontWeight: 700, color: "var(--fg)", marginBottom: 6, letterSpacing: "-0.01em", paddingLeft: 16 }}>
-                                                            {post.title}
-                                                        </h3>
-                                                    )}
 
-                                                    {/* Subtitle & Meta */}
-                                                    <div className="duel-footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 8px", marginTop: 4 }}>
-                                                        <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", lineHeight: 1.5, flex: 1, paddingRight: 24 }}>
-                                                            {subtitle}
-                                                        </p>
-                                                        <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--accent)", fontWeight: 600 }}>
-                                                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                                                        </time>
+                                                        {/* VS Layout */}
+                                                        {toolB ? (
+                                                            <div className="duel-vs-grid" style={{
+                                                                display: "grid",
+                                                                gridTemplateColumns: "1fr auto 1fr",
+                                                                alignItems: "center",
+                                                                gap: 16,
+                                                                padding: "12px 16px",
+                                                                background: "color-mix(in srgb, var(--card-bg) 50%, transparent)",
+                                                                borderRadius: 12,
+                                                                border: "1px dashed color-mix(in srgb, var(--accent) 20%, transparent)"
+                                                            }}>
+                                                                {/* Tool A */}
+                                                                <div className="duel-tool-a" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
+                                                                    <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "right" }}>{toolA}</span>
+                                                                    <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
+                                                                        {getIcon(toolA)}
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* VS Badge */}
+                                                                <div className="duel-vs-badge" style={{
+                                                                    width: 36,
+                                                                    height: 36,
+                                                                    borderRadius: "50%",
+                                                                    background: "var(--fg)",
+                                                                    color: "var(--bg)",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                    justifyContent: "center",
+                                                                    fontSize: 13,
+                                                                    fontWeight: 900,
+                                                                    boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent)",
+                                                                    zIndex: 2,
+                                                                    flexShrink: 0
+                                                                }}>VS</div>
+
+                                                                {/* Tool B */}
+                                                                <div className="duel-tool-b" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-start" }}>
+                                                                    <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
+                                                                        {getIcon(toolB)}
+                                                                    </div>
+                                                                    <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "left" }}>{toolB}</span>
+                                                                </div>
+                                                            </div>
+                                                        ) : (
+                                                            <h3 style={{ fontSize: 19, fontWeight: 700, color: "var(--fg)", marginBottom: 6, letterSpacing: "-0.01em", paddingLeft: 16 }}>
+                                                                {post.title}
+                                                            </h3>
+                                                        )}
+
+                                                        {/* Subtitle & Meta */}
+                                                        <div className="duel-footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 8px", marginTop: 4 }}>
+                                                            <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", lineHeight: 1.5, flex: 1, paddingRight: 24 }}>
+                                                                {subtitle}
+                                                            </p>
+                                                            <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--accent)", fontWeight: 600 }}>
+                                                                {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                                                            </time>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </Link>
+                                                </Link>
                                             );
                                         })}
                                     </div>
@@ -452,11 +452,11 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                     }}
                                 >
                                     <div>
-                                        <h2 style={{ 
-                                            fontSize: "clamp(16px, 2.2vw, 20px)", 
-                                            fontWeight: 700, 
-                                            letterSpacing: "-0.01em", 
-                                            marginBottom: 8, 
+                                        <h2 style={{
+                                            fontSize: "clamp(16px, 2.2vw, 20px)",
+                                            fontWeight: 700,
+                                            letterSpacing: "-0.01em",
+                                            marginBottom: 8,
                                             lineHeight: 1.3,
                                             transition: "color 0.2s ease"
                                         }}>
