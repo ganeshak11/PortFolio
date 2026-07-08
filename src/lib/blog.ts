@@ -16,12 +16,12 @@ export interface BlogPost {
 
 export function getBlogPosts(): BlogPost[] {
     const blogDir = path.join(process.cwd(), "content/blog");
-    const files = fs.readdirSync(blogDir);
+    const files = fs.readdirSync(blogDir, { recursive: true }) as string[];
 
     const posts = files
         .filter((file) => file.endsWith(".md"))
         .map((file) => {
-            const slug = file.replace(".md", "");
+            const slug = path.basename(file, ".md");
             const raw = fs.readFileSync(path.join(blogDir, file), "utf8");
             const { data, content } = matter(raw);
             const words = content.trim().split(/\s+/).length;

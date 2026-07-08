@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let blogPosts: MetadataRoute.Sitemap = [];
 
     try {
-        const files = fs.readdirSync(blogDir);
+        const files = fs.readdirSync(blogDir, { recursive: true }) as string[];
         blogPosts = files
             .filter((file) => file.endsWith(".md"))
             .map((file) => {
@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
                 const { data } = matter(raw);
 
                 // Use filename as the slug to match actual route URLs
-                const slug = file.replace(".md", "");
+                const slug = path.basename(file, ".md");
                 const date = data.date ? new Date(data.date) : new Date();
 
                 return {

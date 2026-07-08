@@ -12,9 +12,18 @@ interface BlogPostProps {
 }
 
 async function getPost(slug: string) {
-    const filePath = path.join(process.cwd(), "content/blog", `${slug}.md`);
+    const blogDir = path.join(process.cwd(), "content/blog");
+    let filePath: string | null = null;
+    
+    if (fs.existsSync(blogDir)) {
+        const files = fs.readdirSync(blogDir, { recursive: true }) as string[];
+        const targetFile = files.find(f => f.endsWith(`${slug}.md`));
+        if (targetFile) {
+            filePath = path.join(blogDir, targetFile);
+        }
+    }
 
-    if (!fs.existsSync(filePath)) {
+    if (!filePath || !fs.existsSync(filePath)) {
         return null;
     }
 
@@ -52,12 +61,12 @@ function getBlogImage(slug: string): string {
 
 export async function generateStaticParams() {
     const blogDir = path.join(process.cwd(), "content/blog");
-    const files = fs.readdirSync(blogDir);
+    const files = fs.readdirSync(blogDir, { recursive: true }) as string[];
 
     return files
         .filter((file) => file.endsWith(".md"))
         .map((file) => ({
-            slug: file.replace(".md", ""),
+            slug: path.basename(file, ".md"),
         }));
 }
 
