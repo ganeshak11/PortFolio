@@ -317,63 +317,61 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     }} />
 
                     {/* Header */}
-                    <header style={{ marginBottom: 56, position: "relative", zIndex: 1 }}>
-                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
+                    <header style={{ marginBottom: 40, position: "relative", zIndex: 1 }}>
+                        {/* Author Metadata at the top */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                            <img
+                                src="/blog-profile.jpeg"
+                                alt="Ganesh Angadi"
+                                style={{ width: 38, height: 38, borderRadius: "50%", objectFit: "cover", border: "1.5px solid var(--glass-border)" }}
+                            />
+                            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                                <span style={{ fontSize: 13, fontWeight: 600, color: "var(--fg)", display: "flex", alignItems: "center", gap: 6 }}>
+                                    By Ganesh Angadi
+                                    <span style={{ fontSize: 9, padding: "1px 5px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
+                                </span>
+                                <time style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", display: "flex", gap: 6 }}>
+                                    <span>Published {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                                    <span>•</span>
+                                    <span>{post.readingTime} min read</span>
+                                    {views !== null && (
+                                        <>
+                                            <span>•</span>
+                                            <span>{views.toLocaleString()} views</span>
+                                        </>
+                                    )}
+                                </time>
+                            </div>
+                        </div>
+
+                        {/* Title */}
+                        <h1 style={{
+                            fontSize: "clamp(30px, 4.5vw, 44px)",
+                            fontWeight: 800,
+                            letterSpacing: "-0.02em",
+                            lineHeight: 1.25,
+                            color: "var(--fg)",
+                            marginBottom: 20,
+                        }}>
+                            {post.title}
+                        </h1>
+
+                        {/* Tags */}
+                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
                             {post.tags.map(tag => (
                                 <span key={tag} className="glass-card" style={{
-                                    fontSize: 12, fontFamily: "monospace", color: "var(--accent)",
-                                    padding: "4px 12px", borderRadius: 20, letterSpacing: "0.05em",
+                                    fontSize: 11, fontFamily: "monospace", color: "var(--muted)",
+                                    padding: "3px 8px", borderRadius: 4, letterSpacing: "0.02em",
                                     border: "1px solid var(--glass-border)",
+                                    background: "rgba(0, 0, 0, 0.02)"
                                 }}>
                                     #{tag}
                                 </span>
                             ))}
                         </div>
 
-                        <h1 style={{
-                            fontSize: "clamp(32px, 5vw, 48px)",
-                            fontWeight: 900,
-                            letterSpacing: "-0.03em",
-                            lineHeight: 1.15,
-                            background: "linear-gradient(135deg, var(--fg) 0%, var(--muted) 100%)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            marginBottom: 28,
-                        }}>
-                            {post.title}
-                        </h1>
-
-                        <div className="glass-card" style={{
-                            display: "flex", alignItems: "center", gap: 16,
-                            padding: "16px 20px", borderRadius: 12,
-                            border: "1px solid var(--glass-border)",
-                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                        }}>
-                            <img
-                                src="/blog-profile.jpeg"
-                                alt="Ganesh Angadi"
-                                style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover", border: "2px solid var(--accent)", flexShrink: 0 }}
-                            />
-                            <div>
-                                <p style={{ fontSize: 14, fontWeight: 700, color: "var(--fg)", marginBottom: 2, display: "flex", alignItems: "center", gap: 6 }}>
-                                    Ganesh Angadi
-                                    <span style={{ fontSize: 10, padding: "2px 6px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
-                                </p>
-                                <time style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
-                                    <span>{new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
-                                    <span>•</span>
-                                    <span>{post.readingTime} min read</span>
-                                    {views !== null && (
-                                        <>
-                                            <span>•</span>
-                                            <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                                                <Eye size={12} /> {views.toLocaleString()} views
-                                            </span>
-                                        </>
-                                    )}
-                                </time>
-                            </div>
-                        </div>
+                        {/* Separator */}
+                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.3, margin: "24px 0" }} />
                     </header>
 
                     {/* Content */}
@@ -414,11 +412,19 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         />
                                     );
                                 },
-                                h1: ({ children }) => (
-                                    <h1 style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 800, color: "var(--fg)", marginTop: 64, marginBottom: 20, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
-                                        {children}
-                                    </h1>
-                                ),
+                                h1: ({ children }) => {
+                                    const textContent = Array.isArray(children) 
+                                        ? children.join("") 
+                                        : String(children || "");
+                                    if (textContent.toLowerCase().trim() === post.title.toLowerCase().trim()) {
+                                        return null; // Skip duplicate H1 title
+                                    }
+                                    return (
+                                        <h2 style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 800, color: "var(--fg)", marginTop: 64, marginBottom: 20, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
+                                            {children}
+                                        </h2>
+                                    );
+                                },
                                 h2: ({ children }) => (
                                     <h2 style={{
                                         fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800,
@@ -435,7 +441,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     </h3>
                                 ),
                                 p: ({ children }) => (
-                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9, textAlign: "justify" }}>{children}</p>
+                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9 }}>{children}</p>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
