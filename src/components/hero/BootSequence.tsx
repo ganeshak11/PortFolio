@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { m } from "framer-motion";
 
 const BOOT_LINES = [
@@ -30,16 +28,30 @@ function bootReducer(state: BootState, action: BootAction): BootState {
 
 export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => void }) {
     const [bootState, dispatch] = useReducer(bootReducer, { lineIdx: 0, typedLines: [] });
+    const [skipped, setSkipped] = useState(false);
 
-    // Lock scroll during boot
+    // Skip instantly if completed in current session
     useEffect(() => {
+        if (typeof window !== "undefined" && window.sessionStorage.getItem("boot_sequence_completed") === "true") {
+            setBootDone(true);
+            setSkipped(true);
+        }
+    }, [setBootDone]);
+
+    // Lock scroll during active boot
+    useEffect(() => {
+        if (skipped) return;
         document.body.style.overflow = "hidden";
         return () => { document.body.style.overflow = ""; };
-    }, []);
+    }, [skipped]);
 
     useEffect(() => {
+        if (skipped) return;
         if (bootState.lineIdx >= BOOT_LINES.length) {
             setTimeout(() => {
+                if (typeof window !== "undefined") {
+                    window.sessionStorage.setItem("boot_sequence_completed", "true");
+                }
                 document.body.style.overflow = "";
                 setBootDone(true);
             }, 800);
@@ -50,7 +62,18 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
             dispatch({ type: "advance", line: BOOT_LINES[bootState.lineIdx] });
         }, delay);
         return () => clearTimeout(t);
-    }, [bootState.lineIdx, setBootDone]);
+    }, [bootState.lineIdx, setBootDone, skipped]);
+
+    const handleSkip = () => {
+        if (typeof window !== "undefined") {
+            window.sessionStorage.setItem("boot_sequence_completed", "true");
+        }
+        document.body.style.overflow = "";
+        setBootDone(true);
+        setSkipped(true);
+    };
+
+    if (skipped) return null;
 
     return (
         <section
@@ -68,6 +91,29 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                 zIndex: 50,
             }}
         >
+            {/* Skip Sequence Button */}
+            <button
+                onClick={handleSkip}
+                style={{
+                    position: "absolute",
+                    top: 24,
+                    right: 24,
+                    background: "transparent",
+                    border: "1px solid #39ff14",
+                    color: "#39ff14",
+                    fontFamily: "monospace",
+                    fontSize: 11,
+                    padding: "6px 12px",
+                    borderRadius: 4,
+                    cursor: "pointer",
+                    transition: "all 0.2s ease-in-out",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(57, 255, 20, 0.12)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+            >
+                [Skip Sequence]
+            </button>
+
             <div
                 style={{
                     maxWidth: 640,

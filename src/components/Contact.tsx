@@ -127,13 +127,18 @@ export default function Contact() {
                         initial={{ opacity: 0, y: 24 }}
                         animate={inView ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.35, duration: 0.5 }}
+                        whileHover={{
+                            y: -4,
+                            boxShadow: "0 12px 30px rgba(0, 0, 0, 0.05)",
+                        }}
                         className="contact-closure"
                         style={{
                             padding: "32px",
                             borderRadius: 8,
                             background: "var(--card-bg)",
                             border: "1px solid var(--border)",
-                            borderLeft: "3px solid var(--accent)",
+                            borderLeft: "3.5px solid var(--accent)",
+                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                     >
                         <p style={{ fontSize: 11, fontFamily: "monospace", letterSpacing: "0.1em", color: "var(--muted)", marginBottom: 20, textTransform: "uppercase" }}>

@@ -32,3 +32,23 @@ jobs:
         # will cause this command to exit with an error (exit code 1), 
         # which fails the entire GitHub Action.
         run: npm run build
+
+  deploy:
+    name: Deploy to Vercel
+    needs: build-and-test   # 👈 This guarantees it only runs if the check succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Project Info
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
