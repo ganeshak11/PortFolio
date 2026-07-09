@@ -156,6 +156,22 @@ const REACTIONS = [
     { id: 'loved', emoji: '🔥', label: 'Loved it' }
 ];
 
+const stripFirstH1 = (markdown: string) => {
+    if (!markdown) return "";
+    const lines = markdown.split("\n");
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line.startsWith("# ")) {
+            lines.splice(i, 1);
+            return lines.join("\n");
+        }
+        if (line !== "") {
+            break; // Stop if we hit any text that isn't an H1
+        }
+    }
+    return markdown;
+};
+
 export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [views, setViews] = useState<number | null>(null);
@@ -502,7 +518,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                 ),
                             }}
                         >
-                            {post.content}
+                            {stripFirstH1(post.content)}
                         </ReactMarkdown>
                     </div>
 
