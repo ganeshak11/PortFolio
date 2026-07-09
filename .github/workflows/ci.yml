@@ -37,6 +37,9 @@ jobs:
     name: Deploy to Vercel
     needs: build-and-test   # 👈 This guarantees it only runs if the check succeeds
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
