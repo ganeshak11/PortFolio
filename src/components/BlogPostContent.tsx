@@ -5,8 +5,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
 import { useEffect, useRef, useState } from "react";
-import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
+import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye, Sun, Moon } from "lucide-react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface Post {
     title: string;
@@ -95,6 +96,7 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
 function BlogNavbar() {
     const [visible, setVisible] = useState(true);
     const [lastY, setLastY] = useState(0);
+    const { theme, toggle } = useTheme();
 
     useEffect(() => {
         const handler = () => {
@@ -127,9 +129,31 @@ function BlogNavbar() {
             <Link href="/" className="btn-slide" style={{ fontSize: 13, fontFamily: "monospace", textDecoration: "none", letterSpacing: "0.05em", padding: "4px 8px", borderRadius: "4px" }}>
                 ~/ganesh
             </Link>
-            <Link href="/blog" className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
-                ← all posts
-            </Link>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <Link href="/blog" className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
+                    ← all posts
+                </Link>
+                <button
+                    onClick={toggle}
+                    style={{
+                        background: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "var(--fg)",
+                        padding: 6,
+                        borderRadius: 6,
+                        transition: "color 0.2s, background-color 0.2s",
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--border)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
+                    aria-label="Toggle theme"
+                >
+                    {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+                </button>
+            </div>
         </header>
     );
 }
@@ -178,6 +202,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
     const [survivalMessage, setSurvivalMessage] = useState<{ title: string, body: string } | null>(null);
     const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
     const [isAnimatingReaction, setIsAnimatingReaction] = useState<string | null>(null);
+    const [copiedUrl, setCopiedUrl] = useState(false);
 
     const handleReaction = async (id: string) => {
         if (selectedReaction) return; // Prevent spamming
@@ -317,8 +342,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
             </div>
 
             <BlogNavbar />
-            <main style={{ minHeight: "100vh", paddingTop: 80, paddingBottom: 120, paddingLeft: 24, paddingRight: 24 }}>
-                <article style={{ maxWidth: 720, margin: "0 auto", position: "relative" }}>
+            <main style={{ minHeight: "100vh", paddingTop: 70, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
+                <article style={{ maxWidth: 660, margin: "0 auto", position: "relative" }}>
                     {/* Glowing Orb Background */}
                     <div style={{
                         position: "absolute",
@@ -333,7 +358,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     }} />
 
                     {/* Header */}
-                    <header style={{ marginBottom: 40, position: "relative", zIndex: 1 }}>
+                    <header style={{ marginBottom: 28, position: "relative", zIndex: 1 }}>
                         {/* Author Metadata at the top */}
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
                             <img
@@ -362,24 +387,25 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
 
                         {/* Title */}
                         <h1 style={{
-                            fontSize: "clamp(30px, 4.5vw, 44px)",
+                            fontSize: "clamp(28px, 4vw, 38px)",
                             fontWeight: 800,
                             letterSpacing: "-0.02em",
                             lineHeight: 1.25,
                             color: "var(--fg)",
-                            marginBottom: 20,
+                            marginBottom: 16,
                         }}>
                             {post.title}
                         </h1>
 
                         {/* Tags */}
-                        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
+                        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
                             {post.tags.map(tag => (
                                 <span key={tag} className="glass-card" style={{
                                     fontSize: 11, fontFamily: "monospace", color: "var(--muted)",
-                                    padding: "3px 8px", borderRadius: 4, letterSpacing: "0.02em",
-                                    border: "1px solid var(--glass-border)",
-                                    background: "rgba(0, 0, 0, 0.02)"
+                                    padding: "2px 8px", borderRadius: 4, letterSpacing: "0.01em",
+                                    border: "1px solid var(--border)",
+                                    background: "var(--card-bg)",
+                                    opacity: 0.8
                                 }}>
                                     #{tag}
                                 </span>
@@ -387,11 +413,11 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         </div>
 
                         {/* Separator */}
-                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.3, margin: "24px 0" }} />
+                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.2, margin: "20px 0" }} />
                     </header>
 
                     {/* Content */}
-                    <div style={{ color: "var(--fg)", fontSize: 16, lineHeight: 1.85 }}>
+                    <div style={{ color: "var(--fg)", fontSize: 16, lineHeight: 1.75 }}>
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
@@ -413,7 +439,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                                 width: "100%",
                                                 height: "auto",
                                                 borderRadius: 12,
-                                                margin: "40px 0",
+                                                margin: "24px 0",
                                                 boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
                                                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
                                             }}
@@ -436,28 +462,27 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         return null; // Skip duplicate H1 title
                                     }
                                     return (
-                                        <h2 style={{ fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 800, color: "var(--fg)", marginTop: 64, marginBottom: 20, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
+                                        <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 700, color: "var(--fg)", marginTop: 40, marginBottom: 12, letterSpacing: "-0.01em", lineHeight: 1.3, paddingLeft: 12, borderLeft: "3.5px solid var(--accent)" }}>
                                             {children}
                                         </h2>
                                     );
                                 },
                                 h2: ({ children }) => (
                                     <h2 style={{
-                                        fontSize: "clamp(18px, 2.8vw, 24px)", fontWeight: 800,
-                                        color: "var(--fg)", marginTop: 56, marginBottom: 16, lineHeight: 1.3,
-                                        display: "inline-block", position: "relative"
+                                        fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 700,
+                                        color: "var(--fg)", marginTop: 36, marginBottom: 12, lineHeight: 1.3,
+                                        paddingLeft: 12, borderLeft: "3.5px solid var(--accent)"
                                     }}>
                                         {children}
-                                        <div style={{ position: "absolute", bottom: -4, left: 0, width: "40%", height: 3, background: "var(--accent)", borderRadius: 2 }} />
                                     </h2>
                                 ),
                                 h3: ({ children }) => (
-                                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--fg)", marginTop: 40, marginBottom: 16 }}>
+                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--fg)", marginTop: 28, marginBottom: 10 }}>
                                         {children}
                                     </h3>
                                 ),
                                 p: ({ children }) => (
-                                    <p style={{ marginBottom: 24, lineHeight: 1.85, color: "var(--fg)", fontSize: 17, opacity: 0.9 }}>{children}</p>
+                                    <p style={{ marginBottom: 18, lineHeight: 1.75, color: "var(--fg)", fontSize: 16, opacity: 0.95 }}>{children}</p>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
@@ -465,31 +490,31 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         <CodeBlock className={className}>{children}</CodeBlock>
                                     ) : (
                                         <code style={{
-                                            fontFamily: "monospace", fontSize: 14,
-                                            background: "var(--glass-border)", color: "var(--accent)",
-                                            padding: "2px 8px", borderRadius: 6, border: "1px solid var(--glass-border)"
+                                            fontFamily: "monospace", fontSize: 13.5,
+                                            background: "var(--card-bg)", color: "var(--accent-2)",
+                                            padding: "1px 5px", borderRadius: 4, border: "1px solid var(--border)"
                                         }}>
                                             {children}
                                         </code>
                                     );
                                 },
                                 ul: ({ children }) => (
-                                    <ul style={{ marginBottom: 28, paddingLeft: 0, listStyle: "none" }}>{children}</ul>
+                                    <ul style={{ marginBottom: 20, paddingLeft: 0, listStyle: "none" }}>{children}</ul>
                                 ),
                                 ol: ({ children }) => (
-                                    <ol style={{ marginBottom: 28, paddingLeft: 24, color: "var(--fg)", fontSize: 17, lineHeight: 1.85 }}>{children}</ol>
+                                    <ol style={{ marginBottom: 20, paddingLeft: 20, color: "var(--fg)", fontSize: 16, lineHeight: 1.75 }}>{children}</ol>
                                 ),
                                 li: ({ children }) => (
-                                    <li style={{ marginBottom: 12, paddingLeft: 24, position: "relative", lineHeight: 1.85, fontSize: 17, opacity: 0.9, textAlign: "justify" }}>
+                                    <li style={{ marginBottom: 8, paddingLeft: 20, position: "relative", lineHeight: 1.75, fontSize: 16, opacity: 0.95 }}>
                                         <span style={{ position: "absolute", left: 0, color: "var(--accent)", fontWeight: "bold" }}>▹</span>
                                         {children}
                                     </li>
                                 ),
                                 blockquote: ({ children }) => (
                                     <blockquote className="glass-card" style={{
-                                        padding: "20px 24px", margin: "32px 0", borderRadius: 8,
-                                        color: "var(--fg)", fontStyle: "italic", fontSize: 18,
-                                        borderLeft: "4px solid var(--accent)",
+                                        padding: "16px 20px", margin: "24px 0", borderRadius: 8,
+                                        color: "var(--fg)", fontStyle: "italic", fontSize: 17,
+                                        borderLeft: "3.5px solid var(--accent)",
                                         position: "relative",
                                         overflow: "hidden"
                                     }}>
@@ -525,22 +550,21 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     {/* Survival Sign-off */}
                     {survivalMessage && (
                         <div className="glass-card" style={{
-                            marginTop: 64,
-                            padding: "24px 32px",
-                            borderRadius: 16,
-                            border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
-                            background: "color-mix(in srgb, var(--accent) 5%, transparent)",
+                            marginTop: 48,
+                            padding: "20px 24px",
+                            borderRadius: 12,
+                            border: "1px solid var(--border)",
+                            background: "var(--card-bg)",
                             textAlign: "center",
-                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.05)"
                         }}>
-                            <h3 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 8 }}>
+                            <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--fg)", marginBottom: 6 }}>
                                 {survivalMessage.title}
                             </h3>
-                            <p style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.6, margin: 0, marginBottom: 24 }}>
+                            <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.5, margin: 0, marginBottom: 16 }}>
                                 {survivalMessage.body}
                             </p>
 
-                            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
                                 {REACTIONS.map(r => (
                                     <button
                                         key={r.id}
@@ -548,44 +572,43 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: 8,
-                                            padding: '8px 16px',
-                                            borderRadius: 24,
-                                            border: `1px solid ${selectedReaction === r.id ? 'var(--accent)' : 'var(--glass-border)'}`,
-                                            background: selectedReaction === r.id ? 'color-mix(in srgb, var(--accent) 20%, transparent)' : 'transparent',
+                                            gap: 6,
+                                            padding: '6px 12px',
+                                            borderRadius: 20,
+                                            border: `1px solid ${selectedReaction === r.id ? 'var(--accent)' : 'var(--border)'}`,
+                                            background: selectedReaction === r.id ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'transparent',
                                             color: selectedReaction === r.id ? 'var(--accent)' : 'var(--fg)',
                                             cursor: 'pointer',
-                                            fontWeight: 600,
-                                            fontSize: 15,
-                                            transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                            transform: isAnimatingReaction === r.id ? 'scale(0.9)' : (selectedReaction === r.id ? 'scale(1.05)' : 'scale(1)'),
+                                            fontWeight: 500,
+                                            fontSize: 13,
+                                            transition: 'all 0.15s ease',
                                         }}
                                         onMouseOver={(e) => {
                                             if (selectedReaction !== r.id) {
-                                                e.currentTarget.style.background = 'color-mix(in srgb, var(--accent) 10%, transparent)';
-                                                e.currentTarget.style.borderColor = 'color-mix(in srgb, var(--accent) 50%, transparent)';
+                                                e.currentTarget.style.background = 'var(--bg)';
+                                                e.currentTarget.style.borderColor = 'var(--accent)';
                                             }
                                         }}
                                         onMouseOut={(e) => {
                                             if (selectedReaction !== r.id) {
                                                 e.currentTarget.style.background = 'transparent';
-                                                e.currentTarget.style.borderColor = 'var(--glass-border)';
+                                                e.currentTarget.style.borderColor = 'var(--border)';
                                             }
                                         }}
                                     >
-                                        <span style={{ fontSize: 18 }}>{r.emoji}</span>
+                                        <span style={{ fontSize: 15 }}>{r.emoji}</span>
                                         {r.label}
                                     </button>
                                 ))}
                             </div>
                             <div style={{
-                                marginTop: selectedReaction ? 16 : 0,
-                                height: selectedReaction ? 20 : 0,
+                                marginTop: selectedReaction ? 12 : 0,
+                                height: selectedReaction ? 18 : 0,
                                 opacity: selectedReaction ? 1 : 0,
                                 overflow: 'hidden',
                                 transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
                                 color: "var(--accent)",
-                                fontSize: 14,
+                                fontSize: 13,
                                 fontWeight: 600
                             }}>
                                 Thanks for your feedback! ✨
@@ -594,12 +617,15 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     )}
 
                     {/* Footer Section */}
-                    <footer style={{ marginTop: 80, borderTop: "1px solid var(--border)", paddingTop: 40, paddingBottom: 40 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+                    <footer style={{ marginTop: 60, borderTop: "1px solid var(--border)", paddingTop: 32, paddingBottom: 32 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
                             <Link href="/blog" style={{
                                 display: "flex", alignItems: "center", gap: 8,
-                                textDecoration: "none", color: "var(--fg)", fontWeight: 600
-                            }}>
+                                textDecoration: "none", color: "var(--fg)", fontWeight: 500, fontSize: 14,
+                                transition: "color 0.2s"
+                            }}
+                            className="nav-underline"
+                            >
                                 <ArrowLeft size={16} /> Back to all posts
                             </Link>
                             <button
@@ -618,22 +644,34 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         textArea.select();
                                         try {
                                             document.execCommand('copy');
-                                        } catch (err) {
-                                            console.error('Fallback: Oops, unable to copy', err);
-                                        }
+                                        } catch (err) {}
                                         document.body.removeChild(textArea);
                                     }
-                                    alert("Link copied to clipboard!");
+                                    setCopiedUrl(true);
+                                    setTimeout(() => setCopiedUrl(false), 2000);
                                 }}
-                                className="glass-card"
                                 style={{
-                                    display: "flex", alignItems: "center", gap: 8,
-                                    padding: "8px 16px", borderRadius: 20, border: "1px solid var(--glass-border)",
-                                    background: "transparent", color: "var(--accent)", cursor: "pointer",
-                                    fontFamily: "inherit", fontSize: 14, fontWeight: 600
+                                    display: "flex", alignItems: "center", gap: 6,
+                                    padding: "6px 14px", borderRadius: 6, border: "1px solid var(--border)",
+                                    background: "var(--card-bg)", color: copiedUrl ? "var(--status-ok)" : "var(--fg)", cursor: "pointer",
+                                    fontFamily: "inherit", fontSize: 13, fontWeight: 500,
+                                    transition: "all 0.15s ease"
+                                }}
+                                onMouseOver={(e) => {
+                                    if (!copiedUrl) {
+                                        e.currentTarget.style.borderColor = "var(--accent)";
+                                        e.currentTarget.style.color = "var(--accent)";
+                                    }
+                                }}
+                                onMouseOut={(e) => {
+                                    if (!copiedUrl) {
+                                        e.currentTarget.style.borderColor = "var(--border)";
+                                        e.currentTarget.style.color = "var(--fg)";
+                                    }
                                 }}
                             >
-                                <Share2 size={16} /> Share Post
+                                {copiedUrl ? <Check size={14} /> : <Share2 size={14} />}
+                                {copiedUrl ? "Copied!" : "Share Post"}
                             </button>
                         </div>
                     </footer>
@@ -641,8 +679,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
             </main>
 
             {/* Comments — fully separated from article */}
-            <section style={{ borderTop: "2px solid var(--border)", padding: "80px 24px 120px", background: "var(--card-bg)" }}>
-                <div style={{ maxWidth: 680, margin: "0 auto" }}>
+            <section style={{ borderTop: "1px solid var(--border)", padding: "60px 20px 80px", background: "var(--card-bg)" }}>
+                <div style={{ maxWidth: 620, margin: "0 auto" }}>
                     <BlogComments slug={slug} />
                 </div>
             </section>
