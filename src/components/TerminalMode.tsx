@@ -148,6 +148,43 @@ const QUICK_COMMANDS = [
     { cmd: "exit", desc: "quit terminal" },
 ];
 
+function getDynamicAge() {
+    const birthDate = new Date(2006, 0, 13, 2, 30, 0); // 13 Jan 2006 2:30 AM
+    const now = new Date();
+    
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
+    let hours = now.getHours() - birthDate.getHours();
+    let minutes = now.getMinutes() - birthDate.getMinutes();
+    let seconds = now.getSeconds() - birthDate.getSeconds();
+
+    if (seconds < 0) {
+        seconds += 60;
+        minutes--;
+    }
+    if (minutes < 0) {
+        minutes += 60;
+        hours--;
+    }
+    if (hours < 0) {
+        hours += 24;
+        days--;
+    }
+    if (days < 0) {
+        // Get total days in last month
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+        months--;
+    }
+    if (months < 0) {
+        months += 12;
+        years--;
+    }
+
+    return `${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
 export default function TerminalMode({ onExit }: { onExit: () => void }) {
     const entryId = useRef(0);
     const makeEntry = (type: "input" | "output", text: string) => ({ id: ++entryId.current, type, text });
@@ -290,11 +327,13 @@ Closing terminal and scrolling to stats section...
                 setHistory((prev) => [
                     ...prev,
                     makeEntry("output", `
-  ____                        _     
- / ___| __ _ _ __   ___  ___| |__  
-| |  _ / _\` | '_ \\ / _ \\/ __| '_ \\ 
-| |_| | (_| | | | |  __/\\__ \\ | | |
- \\____|\\__,_|_| |_|\\___||___/_| |_/
+                        
+ ██████╗  █████╗ ███╗   ██╗███████╗███████╗██╗  ██╗
+██╔════╝ ██╔══██╗████╗  ██║██╔════╝██╔════╝██║  ██║
+██║  ███╗███████║██╔██╗ ██║█████╗  ███████╗███████║
+██║   ██║██╔══██║██║╚██╗██║██╔══╝  ╚════██║██╔══██║
+╚██████╔╝██║  ██║██║ ╚████║███████╗███████║██║  ██║
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝
                                    
 Ganesh Angadi — DevOps Engineer & Observability Specialist
 `),
@@ -302,26 +341,55 @@ Ganesh Angadi — DevOps Engineer & Observability Specialist
                 break;
 
             case "neofetch":
+                const age = getDynamicAge();
+                const asciiLogo = [
+                    "           ./ossyyyosso/.       ",
+                    "        .:oyyyyyyyyyyyyyyo:.    ",
+                    "      -oyyyyyyydMMyyyyyyyysyyyo-",
+                    "    -syyyyyyyydMMyoyyyydMMyyyyyyys-",
+                    "  oyyyyMyysyyyyoooooodMMyysssssyyyo",
+                    " oyyyyydMMMyyyyyyyyyyyydMMyyssssyysyyo",
+                    "oyyyyyyydMMyyyyyyyyyyyyydMMMMMyyyyyyyyo",
+                    "-yyyyyyyydMMyyyyyyyyyyyyyydMMMMMyyyyyyyy-",
+                    "oyyyyysoodMMyyyyyyyyyyyyyydMMMMMyyyyyyyyo",
+                    "yyyyydMMMMMyyyyyyyyyyyyyyyyysosyyyyyyysyy",
+                    "yyyyydMMMMMyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+                    "oyyyyysosdyyyyyyyyyyyyyyyyydMMMMMyyyyyyyo",
+                    "-yyyyyyyydMMyyyyyyyyyyyyyydMMMMMyyyyyyyy-",
+                    " oyyyyyyyydMMyyyyyyyyyyyyyydMMyoyyyyyyyyo",
+                    "  oyyyyMyysyyyoooooodMMyoyyoyyyyyyyyyo  ",
+                    "   -syyyyyyyydMMMMMMMMMMMyyyyyyys-      ",
+                    "     -oyyyyyyydMMyyyydMMyyyyyyys-       ",
+                    "       .:oyyyyyyyyyyyyyyo:.             ",
+                    "           ./ossyyyosso/.               "
+                ];
+
+                const specs = [
+                    "ganesh@ubuntu",
+                    "-------------",
+                    "OS        : Ubuntu 24.04.4 LTS",
+                    "Host      : ganeshak11-Vostro-15-3515",
+                    `Uptime    : ${age}`,
+                    "Kernel    : 6.8.0-134-generic",
+                    "Shell     : /bin/bash",
+                    "IDE       : VS Code, Vim",
+                    "Languages : TypeScript, Python, Shell, C",
+                    "Building  : Fortis Ecosystem (Fortis-CI, Observe)",
+                    "Telemetry : S1 (8-Puzzle: 3s) | S2 (Rubik: 48s) | S3 (Sudoku: 52s)"
+                ];
+
+                // Combine them
+                const neofetchLines: string[] = [];
+                const maxLines = Math.max(asciiLogo.length, specs.length);
+                for (let i = 0; i < maxLines; i++) {
+                    const logoLine = asciiLogo[i] || "".padEnd(40);
+                    const specLine = specs[i] || "";
+                    neofetchLines.push(`${logoLine.padEnd(42)}${specLine}`);
+                }
+
                 setHistory((prev) => [
                     ...prev,
-                    makeEntry("output", `
-       _,met$$$$$gg.          ganesh@portfolio
-    ,g$$$$$$$$$$$$$$$P.       ----------------
-  ,g$$P"     """Y$$.".        OS: Ubuntu 22.04 LTS (Mental Model)
-  ,$$P'              \`$$$.     Host: ganeshangadi.online
-',$$P       ,ggs.     \`$$b:   Kernel: next-16.1.6
-\`d$$'     ,$P"'   .    $$$    Uptime: up 24 mins
- $$$      d$'     ,    $$P    Packages: 24 (npm)
- $$:      $$.   -    ,d$$'    Shell: bash 5.1.16
- $$;      Y$b._   _,d$P'      Terminal: Framer Motion Terminal Simulator
- Y$$.    \`.\`"Y$$$$P"'         WM: Docker & Kubernetes (Local dev)
- \`$$b      "-.__              CPU: DevOps Core
-  \`Y$$                        Memory: 381 Commits / 12 Stars
-   \`Y$$.                      
-     \`$$b.                    
-       \`Y$$b.                 
-          \`"Y$b._             
-`),
+                    makeEntry("output", neofetchLines.join("\n") + "\n"),
                 ]);
                 break;
 
