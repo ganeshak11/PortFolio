@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { m, AnimatePresence  } from "framer-motion";
 import MatrixRain from "./MatrixRain";
+import { useTheme } from "@/components/ThemeProvider";
 
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "github", "thinking", "contact", "README.md"],
@@ -176,6 +177,21 @@ function getDynamicAge() {
 }
 
 export default function TerminalMode({ onExit }: { onExit: () => void }) {
+    const { theme, toggle } = useTheme();
+    const toggledRef = useRef(false);
+
+    useEffect(() => {
+        if (theme === "light") {
+            toggle();
+            toggledRef.current = true;
+        }
+        return () => {
+            if (toggledRef.current) {
+                toggle();
+            }
+        };
+    }, []);
+
     const entryId = useRef(0);
     const makeEntry = (type: "input" | "output", text: string, lineHeight?: number | string) => ({ id: ++entryId.current, type, text, lineHeight });
     const [history, setHistory] = useState<{ id: number; type: "input" | "output"; text: string; lineHeight?: number | string }[]>([
@@ -560,8 +576,8 @@ or go directly to /resume.html
                         key={entry.id}
                         style={{
                             color: entry.type === "input" ? "var(--accent)" : "var(--fg)",
-                            whiteSpace: "pre-wrap",
-                            wordBreak: "break-word",
+                            whiteSpace: entry.lineHeight ? "pre" : "pre-wrap",
+                            wordBreak: entry.lineHeight ? "normal" : "break-word",
                             lineHeight: entry.lineHeight || "inherit",
                         }}
                     >
