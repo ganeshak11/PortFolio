@@ -66,12 +66,11 @@ export default function NotFound() {
         }}
       >
         <div
-          className="glass-card"
           style={{
             padding: "clamp(32px, 5vw, 64px)",
             borderRadius: 8,
-            border: "1px solid var(--status-err)",
-            background: "rgba(220, 38, 38, 0.05)",
+            border: "1px solid var(--border)",
+            background: "var(--card-bg)",
           }}
         >
           {/* Terminal-style error */}
@@ -84,7 +83,8 @@ export default function NotFound() {
             <p
               style={{
                 fontSize: 14,
-                color: "var(--status-err)",
+                color: "var(--fg)",
+                fontWeight: 700,
                 marginBottom: 8,
               }}
             >
@@ -102,7 +102,7 @@ export default function NotFound() {
             <p
               style={{
                 fontSize: 12,
-                color: "var(--status-err)",
+                color: "var(--fg)",
               }}
             >
               ls: cannot access '{currentPath}': No such file or directory
@@ -115,7 +115,7 @@ export default function NotFound() {
               style={{
                 fontSize: "clamp(80px, 15vw, 140px)",
                 fontWeight: 900,
-                color: "var(--status-err)",
+                color: "var(--fg)",
                 lineHeight: 1,
                 fontFamily: "monospace",
                 marginBottom: 16,
@@ -127,6 +127,7 @@ export default function NotFound() {
               style={{
                 fontSize: 18,
                 color: "var(--fg)",
+                fontWeight: 700,
                 marginBottom: 8,
               }}
             >
@@ -148,7 +149,7 @@ export default function NotFound() {
             style={{
               textAlign: "center",
               padding: "24px",
-              background: "var(--card-bg)",
+              background: "color-mix(in srgb, var(--fg) 3%, transparent)",
               borderRadius: 6,
               border: "1px solid var(--border)",
             }}
@@ -157,7 +158,8 @@ export default function NotFound() {
               style={{
                 fontFamily: "monospace",
                 fontSize: 12,
-                color: "var(--accent)",
+                color: "var(--fg)",
+                fontWeight: 700,
                 marginBottom: 8,
                 letterSpacing: "0.05em",
               }}
@@ -173,8 +175,8 @@ export default function NotFound() {
               Redirecting to homepage in{" "}
               <span
                 style={{
-                  color: "var(--accent)",
-                  fontWeight: 700,
+                  color: "var(--fg)",
+                  fontWeight: 800,
                   fontSize: 20,
                 }}
               >
@@ -193,17 +195,19 @@ export default function NotFound() {
                 fontSize: 13,
                 padding: "12px 24px",
                 background: "transparent",
-                border: "1px solid var(--accent)",
-                color: "var(--accent)",
+                border: "1px solid var(--border)",
+                color: "var(--fg)",
                 borderRadius: 4,
                 cursor: "pointer",
                 transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; padding: 12px 24px; background: var(--accent); border: 1px solid var(--accent); color: var(--bg); border-radius: 4px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                e.currentTarget.style.background = "var(--fg)";
+                e.currentTarget.style.color = "var(--bg)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.cssText = "font-family: monospace; font-size: 13px; padding: 12px 24px; background: transparent; border: 1px solid var(--accent); color: var(--accent); border-radius: 4px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "var(--fg)";
               }}
             >
               [Go Home Now]
