@@ -342,28 +342,6 @@ Ganesh Angadi — DevOps Engineer & Observability Specialist
 
             case "neofetch":
                 const age = getDynamicAge();
-                const asciiLogo = [
-                    "           ./ossyyyosso/.       ",
-                    "        .:oyyyyyyyyyyyyyyo:.    ",
-                    "      -oyyyyyyydMMyyyyyyyysyyyo-",
-                    "    -syyyyyyyydMMyoyyyydMMyyyyyyys-",
-                    "  oyyyyMyysyyyyoooooodMMyysssssyyyo",
-                    " oyyyyydMMMyyyyyyyyyyyydMMyyssssyysyyo",
-                    "oyyyyyyydMMyyyyyyyyyyyyydMMMMMyyyyyyyyo",
-                    "-yyyyyyyydMMyyyyyyyyyyyyyydMMMMMyyyyyyyy-",
-                    "oyyyyysoodMMyyyyyyyyyyyyyydMMMMMyyyyyyyyo",
-                    "yyyyydMMMMMyyyyyyyyyyyyyyyyysosyyyyyyysyy",
-                    "yyyyydMMMMMyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-                    "oyyyyysosdyyyyyyyyyyyyyyyyydMMMMMyyyyyyyo",
-                    "-yyyyyyyydMMyyyyyyyyyyyyyydMMMMMyyyyyyyy-",
-                    " oyyyyyyyydMMyyyyyyyyyyyyyydMMyoyyyyyyyyo",
-                    "  oyyyyMyysyyyoooooodMMyoyyoyyyyyyyyyo  ",
-                    "   -syyyyyyyydMMMMMMMMMMMyyyyyyys-      ",
-                    "     -oyyyyyyydMMyyyydMMyyyyyyys-       ",
-                    "       .:oyyyyyyyyyyyyyyo:.             ",
-                    "           ./ossyyyosso/.               "
-                ];
-
                 const specs = [
                     "ganesh@ubuntu",
                     "-------------",
@@ -378,18 +356,9 @@ Ganesh Angadi — DevOps Engineer & Observability Specialist
                     "Telemetry : S1 (8-Puzzle: 3s) | S2 (Rubik: 48s) | S3 (Sudoku: 52s)"
                 ];
 
-                // Combine them
-                const neofetchLines: string[] = [];
-                const maxLines = Math.max(asciiLogo.length, specs.length);
-                for (let i = 0; i < maxLines; i++) {
-                    const logoLine = asciiLogo[i] || "".padEnd(40);
-                    const specLine = specs[i] || "";
-                    neofetchLines.push(`${logoLine.padEnd(42)}${specLine}`);
-                }
-
                 setHistory((prev) => [
                     ...prev,
-                    makeEntry("output", neofetchLines.join("\n") + "\n"),
+                    makeEntry("output", specs.join("\n") + "\n"),
                 ]);
                 break;
 
