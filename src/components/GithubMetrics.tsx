@@ -4,11 +4,22 @@ import { useRef, useState } from "react";
 import { m, useInView } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
 
+type GraphTheme = "gitblock" | "green" | "season" | "south-season" | "night-green" | "night-rainbow";
+
+const THEME_FILES: Record<GraphTheme, string> = {
+    "gitblock": "gitblock.svg",
+    "green": "green-animate.svg",
+    "season": "season-animate.svg",
+    "south-season": "south-season-animate.svg",
+    "night-green": "night-green.svg",
+    "night-rainbow": "night-rainbow.svg"
+};
+
 export default function GithubMetrics() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const { theme } = useTheme();
-    const [activeGraphTheme, setActiveGraphTheme] = useState<"green" | "season" | "south-season">("green");
+    const [activeGraphTheme, setActiveGraphTheme] = useState<GraphTheme>("gitblock");
 
     const isDark = theme === "dark";
 
@@ -23,7 +34,7 @@ export default function GithubMetrics() {
     const langsUrl = `https://github-readme-stats-rho-six-90.vercel.app/api/top-langs/?username=ganeshak11&layout=compact&bg_color=${bgColor}&title_color=${titleColor}&text_color=${textColor}&border_color=${borderColor}`;
 
     // 3D animated contribution graph URL
-    const github3dUrl = `https://raw.githubusercontent.com/ganeshak11/ganeshak11/main/profile-3d-contrib/profile-${activeGraphTheme}-animate.svg`;
+    const github3dUrl = `https://raw.githubusercontent.com/ganeshak11/ganeshak11/main/profile-3d-contrib/profile-${THEME_FILES[activeGraphTheme]}`;
 
     return (
         <section ref={ref} id="github-metrics" style={{ padding: "80px 24px" }}>
@@ -132,8 +143,8 @@ export default function GithubMetrics() {
                                         render-3d-contrib --theme={activeGraphTheme} --animate
                                     </span>
                                 </div>
-                                <div style={{ display: "flex", gap: 6, fontFamily: "monospace" }}>
-                                    {(["green", "season", "south-season"] as const).map((t) => (
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, fontFamily: "monospace" }}>
+                                    {(["gitblock", "green", "season", "south-season", "night-green", "night-rainbow"] as const).map((t) => (
                                         <button
                                             key={t}
                                             onClick={() => setActiveGraphTheme(t)}
