@@ -56,18 +56,23 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
     };
 
     return (
-        <div className="glass-card" style={{
-            marginBottom: 32, marginTop: 16, borderRadius: 12, overflow: "hidden",
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)", position: "relative"
+        <div style={{
+            marginBottom: 32, marginTop: 16, borderRadius: 8, overflow: "hidden",
+            border: "1px solid var(--border)",
+            background: "var(--card-bg)",
+            position: "relative",
+            transition: "all 0.2s ease"
         }}>
             <div style={{
                 display: "flex", justifyContent: "space-between", alignItems: "center",
-                padding: "12px 16px", background: "rgba(0,0,0,0.2)", borderBottom: "1px solid var(--glass-border)"
+                padding: "10px 16px",
+                background: "color-mix(in srgb, var(--fg) 5%, transparent)",
+                borderBottom: "1px solid var(--border)"
             }}>
                 <div style={{ display: "flex", gap: 6 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f56" }} />
-                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ffbd2e" }} />
-                    <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#27c93f" }} />
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff5f56" }} />
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#ffbd2e" }} />
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#27c93f" }} />
                 </div>
                 <button
                     onClick={handleCopy}
@@ -79,13 +84,17 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
                     }}
                     title="Copy code"
                 >
-                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                    {copied ? <Check size={13} /> : <Copy size={13} />}
                 </button>
             </div>
             <code style={{
-                display: "block", fontFamily: "monospace", fontSize: 14,
-                padding: "20px 24px", overflowX: "auto",
-                color: "var(--accent-2)", lineHeight: 1.6
+                display: "block",
+                fontFamily: "var(--font-mono), monospace",
+                fontSize: 13.5,
+                padding: "16px 20px",
+                overflowX: "auto",
+                color: "var(--fg)",
+                lineHeight: 1.6
             }}>
                 {children}
             </code>
@@ -400,12 +409,16 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         {/* Tags */}
                         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
                             {post.tags.map(tag => (
-                                <span key={tag} className="glass-card" style={{
-                                    fontSize: 11, fontFamily: "monospace", color: "var(--muted)",
-                                    padding: "2px 8px", borderRadius: 4, letterSpacing: "0.01em",
+                                <span key={tag} style={{
+                                    fontSize: 11,
+                                    fontFamily: "var(--font-mono), monospace",
+                                    color: "var(--muted)",
+                                    padding: "2px 8px",
+                                    borderRadius: 4,
+                                    letterSpacing: "0.01em",
                                     border: "1px solid var(--border)",
                                     background: "var(--card-bg)",
-                                    opacity: 0.8
+                                    transition: "all 0.2s ease"
                                 }}>
                                     #{tag}
                                 </span>
@@ -462,27 +475,27 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         return null; // Skip duplicate H1 title
                                     }
                                     return (
-                                        <h2 style={{ fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 700, color: "var(--fg)", marginTop: 40, marginBottom: 12, letterSpacing: "-0.01em", lineHeight: 1.3, paddingLeft: 12, borderLeft: "3.5px solid var(--accent)" }}>
+                                        <h2 style={{ fontSize: "clamp(21px, 3vw, 25px)", fontWeight: 800, color: "var(--fg)", marginTop: 44, marginBottom: 14, letterSpacing: "-0.02em", lineHeight: 1.3, paddingLeft: 14, borderLeft: "4px solid var(--accent)" }}>
                                             {children}
                                         </h2>
                                     );
                                 },
                                 h2: ({ children }) => (
                                     <h2 style={{
-                                        fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 700,
-                                        color: "var(--fg)", marginTop: 36, marginBottom: 12, lineHeight: 1.3,
-                                        paddingLeft: 12, borderLeft: "3.5px solid var(--accent)"
+                                        fontSize: "clamp(18px, 2.5vw, 21px)", fontWeight: 800,
+                                        color: "var(--fg)", marginTop: 38, marginBottom: 14, letterSpacing: "-0.01em", lineHeight: 1.3,
+                                        paddingLeft: 14, borderLeft: "4px solid var(--accent)"
                                     }}>
                                         {children}
                                     </h2>
                                 ),
                                 h3: ({ children }) => (
-                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: "var(--fg)", marginTop: 28, marginBottom: 10 }}>
+                                    <h3 style={{ fontSize: 17, fontWeight: 800, color: "var(--fg)", marginTop: 28, marginBottom: 10 }}>
                                         {children}
                                     </h3>
                                 ),
                                 p: ({ children }) => (
-                                    <p style={{ marginBottom: 18, lineHeight: 1.75, color: "var(--fg)", fontSize: 16, opacity: 0.95 }}>{children}</p>
+                                    <p style={{ marginBottom: 20, lineHeight: 1.8, color: "color-mix(in srgb, var(--fg) 92%, transparent)", fontSize: 17 }}>{children}</p>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
@@ -490,9 +503,13 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         <CodeBlock className={className}>{children}</CodeBlock>
                                     ) : (
                                         <code style={{
-                                            fontFamily: "monospace", fontSize: 13.5,
-                                            background: "var(--card-bg)", color: "var(--accent-2)",
-                                            padding: "1px 5px", borderRadius: 4, border: "1px solid var(--border)"
+                                            fontFamily: "var(--font-mono), monospace",
+                                            fontSize: 13.5,
+                                            background: "color-mix(in srgb, var(--fg) 5%, transparent)",
+                                            color: "var(--fg)",
+                                            padding: "2px 6px",
+                                            borderRadius: 4,
+                                            border: "1px solid color-mix(in srgb, var(--fg) 10%, transparent)"
                                         }}>
                                             {children}
                                         </code>
@@ -502,33 +519,27 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     <ul style={{ marginBottom: 20, paddingLeft: 0, listStyle: "none" }}>{children}</ul>
                                 ),
                                 ol: ({ children }) => (
-                                    <ol style={{ marginBottom: 20, paddingLeft: 20, color: "var(--fg)", fontSize: 16, lineHeight: 1.75 }}>{children}</ol>
+                                    <ol style={{ marginBottom: 20, paddingLeft: 20, color: "var(--fg)", fontSize: 17, lineHeight: 1.8 }}>{children}</ol>
                                 ),
                                 li: ({ children }) => (
-                                    <li style={{ marginBottom: 8, paddingLeft: 20, position: "relative", lineHeight: 1.75, fontSize: 16, opacity: 0.95 }}>
-                                        <span style={{ position: "absolute", left: 0, color: "var(--accent)", fontWeight: "bold" }}>▹</span>
+                                    <li style={{ marginBottom: 8, paddingLeft: 20, position: "relative", lineHeight: 1.8, fontSize: 17, color: "color-mix(in srgb, var(--fg) 92%, transparent)" }}>
+                                        <span style={{ position: "absolute", left: 0, color: "var(--accent)", fontWeight: "bold", userSelect: "none" }}>▹</span>
                                         {children}
                                     </li>
                                 ),
                                 blockquote: ({ children }) => (
-                                    <blockquote className="glass-card" style={{
-                                        padding: "16px 20px", margin: "24px 0", borderRadius: 8,
-                                        color: "var(--fg)", fontStyle: "italic", fontSize: 17,
-                                        borderLeft: "3.5px solid var(--accent)",
-                                        position: "relative",
-                                        overflow: "hidden"
+                                    <blockquote style={{
+                                        padding: "16px 24px",
+                                        margin: "28px 0",
+                                        borderRadius: 6,
+                                        background: "color-mix(in srgb, var(--fg) 3%, transparent)",
+                                        color: "color-mix(in srgb, var(--fg) 85%, transparent)",
+                                        fontStyle: "italic",
+                                        fontSize: 17,
+                                        borderLeft: "4px solid var(--accent)",
+                                        lineHeight: 1.8
                                     }}>
-                                        <span style={{
-                                            position: "absolute", top: -10, left: 10,
-                                            color: "var(--accent)", fontSize: 80,
-                                            opacity: 0.1, fontFamily: "serif",
-                                            pointerEvents: "none", lineHeight: 1
-                                        }}>
-                                            "
-                                        </span>
-                                        <div style={{ position: "relative", zIndex: 1 }}>
-                                            {children}
-                                        </div>
+                                        {children}
                                     </blockquote>
                                 ),
                                 hr: () => (
@@ -539,7 +550,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     </div>
                                 ),
                                 strong: ({ children }) => (
-                                    <strong style={{ color: "var(--accent)", fontWeight: 700 }}>{children}</strong>
+                                    <strong style={{ color: "var(--fg)", fontWeight: 700 }}>{children}</strong>
                                 ),
                             }}
                         >
