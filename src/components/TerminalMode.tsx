@@ -9,7 +9,7 @@ const FILE_SYSTEM = {
     "/about": ["info.txt"],
     "/projects": ["mysuru-bus", "autoops", "cyber-kavach", "fortis-ci"],
     "/stack": ["tools.txt"],
-    "/github": ["stats.txt", "contributions.txt"],
+    "/github": ["stats.txt"],
     "/thinking": ["principles.txt"],
     "/contact": ["links.txt"],
 };
@@ -111,16 +111,6 @@ Stars: 12
 Contributions: 17 repos
 Grade: B- (Focused on System Operations & Observability)`,
 
-    "/github/contributions.txt": `Contribution Matrix Summary:
-
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-░░░█░░░░█░░░░░░█░░░░░░░░░░░█░░░░█░░░░░░░░░
-░░███░░██░░░░░███░░██░░░░░███░████░░░░░░░░
-░█████████░░░████████░░░░███████████░░░░░░
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-Type 'github' to close terminal and view animated 3D grids on the main page!`,
-
     "/thinking/principles.txt": `SYSTEM ENGINEERING PRINCIPLES:
 
 1. System Architecture
@@ -187,8 +177,8 @@ function getDynamicAge() {
 
 export default function TerminalMode({ onExit }: { onExit: () => void }) {
     const entryId = useRef(0);
-    const makeEntry = (type: "input" | "output", text: string) => ({ id: ++entryId.current, type, text });
-    const [history, setHistory] = useState<{ id: number; type: "input" | "output"; text: string }[]>([
+    const makeEntry = (type: "input" | "output", text: string, lineHeight?: number | string) => ({ id: ++entryId.current, type, text, lineHeight });
+    const [history, setHistory] = useState<{ id: number; type: "input" | "output"; text: string; lineHeight?: number | string }[]>([
         makeEntry("output", "Welcome to portfolio.sh v1.0.0"),
         makeEntry("output", "Type 'help' for available commands or 'ls' to explore\n"),
     ]);
@@ -327,14 +317,14 @@ Closing terminal and scrolling to stats section...
                 setHistory((prev) => [
                     ...prev,
                     makeEntry("output", `
-                        
  ██████╗  █████╗ ███╗   ██╗███████╗███████╗██╗  ██╗
 ██╔════╝ ██╔══██╗████╗  ██║██╔════╝██╔════╝██║  ██║
 ██║  ███╗███████║██╔██╗ ██║█████╗  ███████╗███████║
 ██║   ██║██╔══██║██║╚██╗██║██╔══╝  ╚════██║██╔══██║
 ╚██████╔╝██║  ██║██║ ╚████║███████╗███████║██║  ██║
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝
-                                   
+`, "1"),
+                    makeEntry("output", `
 Ganesh Angadi — DevOps Engineer & Observability Specialist
 `),
                 ]);
@@ -572,6 +562,7 @@ or go directly to /resume.html
                             color: entry.type === "input" ? "var(--accent)" : "var(--fg)",
                             whiteSpace: "pre-wrap",
                             wordBreak: "break-word",
+                            lineHeight: entry.lineHeight || "inherit",
                         }}
                     >
                         {entry.text}
