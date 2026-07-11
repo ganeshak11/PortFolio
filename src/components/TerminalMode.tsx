@@ -5,10 +5,11 @@ import { m, AnimatePresence  } from "framer-motion";
 import MatrixRain from "./MatrixRain";
 
 const FILE_SYSTEM = {
-    "/": ["about", "projects", "stack", "thinking", "contact", "README.md"],
+    "/": ["about", "projects", "stack", "github", "thinking", "contact", "README.md"],
     "/about": ["info.txt"],
-    "/projects": ["mysuru-bus", "autoops", "cyber-kavach", "ci-cd-sentinel"],
+    "/projects": ["mysuru-bus", "autoops", "cyber-kavach", "fortis-ci"],
     "/stack": ["tools.txt"],
+    "/github": ["stats.txt", "contributions.txt"],
     "/thinking": ["principles.txt"],
     "/contact": ["links.txt"],
 };
@@ -16,156 +17,135 @@ const FILE_SYSTEM = {
 const FILE_CONTENTS: Record<string, string> = {
     "README.md": `# Ganesh Angadi - DevOps Engineer
 
-Student since 2023. Focused on DevOps & System Architecture.
+Focusing on AWS, Kubernetes, Terraform, and CI/CD automation.
 
 Available commands:
   ls              - list directory contents
   cd <dir>        - change directory
   cat <file>      - display file contents
-  clear           - clear terminal
-  help            - show this help message
+  pwd             - print working directory
+  date            - display current system date/time
+  uname -a        - print system information
+  echo [text]     - print text to standard output
+  whoami          - print user details
+  neofetch        - show system specifications
+  github          - trigger interactive 3D stats graphs
   resume          - view my resume summary
-  exit            - return to normal view`,
+  clear           - clear terminal screen
+  exit            - close terminal simulator`,
 
-    "/about/info.txt": `Student since 2023. Focused on DevOps & System Architecture.
+    "/about/info.txt": `Ganesh Angadi - DevOps Engineer & Observer
 
-I don't just build features. I design systems. I think in control
-flow, model failure states, and design for observability.
+I don't just write scripts. I design systems. My focus lies at the
+intersection of DevOps, Kubernetes infrastructure, and observability.
 
-CORE COMPETENCIES:
-▸ Linux internals (filesystem, permissions, processes, services)
-▸ Git beyond push (commit graph mental model)
-▸ Question architecture decisions instead of blindly using tools
-▸ Backend + DevOps oriented, not pure frontend`,
+CORE PRINCIPLES:
+▸ Linux-first daily user
+▸ Automated declarative configuration over manual tweaks
+▸ Designing robust failover and self-healing environments
+▸ Enforcing security boundaries and minimizing attack surfaces`,
 
-    "/projects/mysuru-bus": `MY(suru) BUS - Real-Time Bus Tracking System
+    "/projects/mysuru-bus": `MY(suru) BUS - Smart Transit Platform
 
-A city-scale real-time bus tracking and management platform built
-with system reliability as the priority.
-
-ARCHITECTURE:
-- Admin Dashboard – Next.js
-- Driver App – React Native (Expo)
-- Passenger App – React Native
-- Backend – Supabase (PostgreSQL, Auth, Realtime, RLS)
-- Maps – Leaflet + OpenStreetMap
-
-CORE PHILOSOPHY:
-▸ Reliability over UI
-▸ Database as single source of truth
-▸ Enforce logic at DB level using RLS
-▸ Event-driven realtime architecture
-▸ Offline-first design with queue + auto-sync
-
-KNOWN LIMITATIONS:
-△ Driver phone dependency – single point of failure
-△ GPS precision limits – urban canyon effects
-△ No traffic prediction yet – ETA is distance-based only`,
-
-    "/projects/ci-cd-sentinel": `CI/CD Sentinel [~80% COMPLETE]
-
-Building a centralized observability and recovery layer for software
-deployments. Tracking deployment history, monitoring health status
-via polling, and providing one-click recovery controls.
-
-PROGRESS:
-▸ Backend Foundation & DB [█████████░] 95%
-▸ Webhook Ingestion       [█████████░] 90%
-▸ Health Monitoring       [███████░░░] 75%
-▸ Dashboard UI            [██████░░░░] 60%
-
-GOAL:
-Build observability around CI/CD pipelines. Make deployment
-decisions explicit, not implicit. Track what changed, when, and why.`,
-
-    "/projects/autoops": `AUTOops - AWS Infrastructure Orchestrator (Hackathon)
-
-The DevOps and Infrastructure layer for an AI-driven cloud provisioning
-platform built by a 4-person team. I architected the containerization
-and local deployment environment.
+A city-scale public transportation platform tracking buses in real-time.
 
 ARCHITECTURE:
-- Frontend Dashboard – React
-- Backend API Gateway – Node.js
-- Master Agent – Python LLM Planner
-- Worker Agent – Python AWS Executor
-- Infrastructure – Docker & AWS EC2
+- Passenger Interface: React Native (Expo)
+- Fleet Tracking App: React Native (Driver client)
+- Operations Dashboard: Next.js + Tailwind
+- Database Backend: Supabase (Auth, RLS, WebSockets)
 
-CORE PHILOSOPHY:
-▸ Containerized local parity ('Works on my machine')
-▸ Internal DNS for secure microservice communication
-▸ Automated bootstrap scripts over manual setup
+DESIGN HIGHLIGHTS:
+▸ Offline-first queuing system synchronizes driver GPS buffers
+▸ Database-level security policies enforce role-based access`,
 
-KNOWN LIMITATIONS:
-△ Heavy reliance on Docker limits deployment options
-△ Hot-reloading required mapping volumes, complicating Dockerfiles`,
+    "/projects/fortis-ci": `Fortis-CI - Graph-Native CI/CD Observer
 
-    "/projects/cyber-kavach": `Cyber Kavach - Cyber Security Platform Infrastructure (Hackathon)
+An open-source observability layer designed to audit deployment graphs.
 
-The infrastructure and deployment track for a real-time intrusion
-detection and response platform built for a DevSecOps hackathon.
+STACK:
+- Graph Database: Neo4j
+- API Core: Node.js (Express)
+- Event Broker: Redis
+- Visual UI: Next.js (TypeScript)
+
+KEY CAPABILITY:
+Map pipelines, commits, configuration changes, and test failures into
+a dependency graph to locate single points of failure automatically.`,
+
+    "/projects/autoops": `AUTOops - Cloud Provisioner (Hackathon)
+
+An AI-driven AWS provisioning platform provisioning containers dynamically.
+Awarded 1st place in DevOps and local development tracks.
 
 ARCHITECTURE:
-- Agent Container – Python + Scikit-Learn (Host Network)
-- Backend Container – FastAPI + WebSockets
-- Frontend Container – HTML/JS + Nginx
+- LLM Scheduler: Python Agent Planner
+- Provisioner API: Node.js API Gateway
+- Deployment: Docker Containers & AWS EC2`,
 
-CORE PHILOSOPHY:
-▸ Multi-container orchestration
-▸ Strict dependency ordering
-▸ Minimal attack surfaces
+    "/projects/cyber-kavach": `Cyber Kavach - DevSecOps Intrusion Detection
 
-KNOWN LIMITATIONS:
-△ Running containers in host network mode breaks Docker isolation
-△ Combining ML models and web servers increased memory footprint`,
+A real-time network anomaly detector built for a secure hackathon.
 
-    "/stack/tools.txt": `DEVOPS STACK:
+ARCHITECTURE:
+- ML Ingestion Client: Scikit-Learn Python Daemon
+- Realtime Gateway: FastAPI (WebSockets)
+- Edge Server: Nginx Web Server`,
 
-Linux (Advanced)
-Git (Deep Mental Model)
-Systemd (Core)
-Bash (Core)
-Networking (Basics)
-Docker (Learning)
-CI/CD Pipelines (Core)
-PostgreSQL (Core)
-Supabase (Core)
-Next.js (Core)
-React Native (Core)`,
+    "/stack/tools.txt": `DEVOPS STACK & SKILLS:
 
-    "/thinking/principles.txt": `SYSTEM THINKING PRINCIPLES:
+Systems: Linux (Ubuntu), Bash Scripting
+Containers: Docker, Kubernetes (Core)
+IaC: Terraform (Core)
+Backend: Node.js, Express, Python, Redis
+Databases: PostgreSQL, Neo4j, Supabase
+Frontend: Next.js, TypeScript`,
 
-1. Think in control flow
-   Map the execution path. Understand what happens when, and why.
+    "/github/stats.txt": `Ganesh Angadi's GitHub Stats (Daily Sync)
 
-2. Model failure states
-   Design for what breaks, not what works. Every system has a failure mode.
+User: ganeshak11
+Commits (last year): 381
+PRs: 31
+Issues: 0
+Stars: 12
+Contributions: 17 repos
+Grade: B- (Focused on System Operations & Observability)`,
 
-3. Design for observability
-   If you can't measure it, you can't debug it. Logs, metrics, traces.
+    "/github/contributions.txt": `Contribution Matrix Summary:
 
-4. Prefer explicit over magical abstractions
-   Magic is technical debt. Explicit is maintainable.
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░█░░░░█░░░░░░█░░░░░░░░░░░█░░░░█░░░░░░░░░
+░░███░░██░░░░░███░░██░░░░░███░████░░░░░░░░
+░█████████░░░████████░░░░███████████░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-5. Break systems to understand them
-   Chaos engineering isn't optional. It's how you learn.`,
+Type 'github' to close terminal and view animated 3D grids on the main page!`,
 
-    "/contact/links.txt": `CONTACT:
+    "/thinking/principles.txt": `SYSTEM ENGINEERING PRINCIPLES:
 
-GitHub: https://github.com/ganeshak11
-LinkedIn: https://www.linkedin.com/in/ganeshangadi1301/
-Email: ganeshangadi13012006@gmail.com`,
+1. System Architecture
+   Map pipelines clearly. Avoid magical dependencies.
+2. Failure Modeling
+   Design around failovers. Assume things will break.
+3. Observability
+   Log explicitly. Collect metrics and telemetry dynamically.`,
+
+    "/contact/links.txt": `CONTACT & SOCIALS:
+
+GitHub:   https://github.com/ganeshak11
+LinkedIn: https://linkedin.com/in/ganeshangadi1301
+Email:    ganeshangadi13012006@gmail.com`,
 };
 
 const QUICK_COMMANDS = [
-    { cmd: "ls", desc: "list contents" },
-    { cmd: "cd about", desc: "go to about" },
-    { cmd: "cd projects", desc: "go to projects" },
-    { cmd: "cd ..", desc: "go back" },
-    { cmd: "cat README.md", desc: "read readme" },
-    { cmd: "resume", desc: "view resume" },
-    { cmd: "help", desc: "show help" },
+    { cmd: "ls", desc: "list files" },
+    { cmd: "cd github", desc: "go to stats" },
+    { cmd: "cat README.md", desc: "read manual" },
+    { cmd: "github", desc: "view 3D graphs" },
+    { cmd: "neofetch", desc: "system info" },
+    { cmd: "pwd", desc: "working path" },
     { cmd: "clear", desc: "clear screen" },
+    { cmd: "exit", desc: "quit terminal" },
 ];
 
 export default function TerminalMode({ onExit }: { onExit: () => void }) {
@@ -194,8 +174,9 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
         setHistory((prev) => [...prev, makeEntry("input", `ganesh@portfolio:${currentDir}$ ${trimmed}`)]);
 
         const [command, ...args] = trimmed.split(" ");
+        const lowerCmd = command.toLowerCase();
 
-        switch (command) {
+        switch (lowerCmd) {
             case "ls":
                 const contents = FILE_SYSTEM[currentDir as keyof typeof FILE_SYSTEM] || [];
                 setHistory((prev) => [...prev, makeEntry("output", contents.join("\n") + "\n")]);
@@ -226,13 +207,47 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                     setHistory((prev) => [...prev, makeEntry("output", "cat: missing operand\n")]);
                 } else {
                     const filePath = currentDir === "/" ? filename : `${currentDir}/${filename}`;
-                    const content = FILE_CONTENTS[filePath] || FILE_CONTENTS[filename];
-                    if (content) {
-                        setHistory((prev) => [...prev, makeEntry("output", content + "\n")]);
+                    const isDir = FILE_SYSTEM[filePath as keyof typeof FILE_SYSTEM] || (currentDir === "/" && FILE_SYSTEM[`/${filename}` as keyof typeof FILE_SYSTEM]);
+                    if (isDir) {
+                        setHistory((prev) => [...prev, makeEntry("output", `cat: ${filename}: Is a directory\n`)]);
                     } else {
-                        setHistory((prev) => [...prev, makeEntry("output", `cat: ${filename}: No such file\n`)]);
+                        const content = FILE_CONTENTS[filePath] || FILE_CONTENTS[filename];
+                        if (content) {
+                            setHistory((prev) => [...prev, makeEntry("output", content + "\n")]);
+                        } else {
+                            setHistory((prev) => [...prev, makeEntry("output", `cat: ${filename}: No such file\n`)]);
+                        }
                     }
                 }
+                break;
+
+            case "pwd":
+                setHistory((prev) => [...prev, makeEntry("output", `${currentDir}\n`)]);
+                break;
+
+            case "date":
+                setHistory((prev) => [...prev, makeEntry("output", `${new Date().toString()}\n`)]);
+                break;
+
+            case "uname":
+                if (args[0] === "-a") {
+                    setHistory((prev) => [...prev, makeEntry("output", "Linux ganeshangadi.online 5.15.0-88-generic #98-Ubuntu SMP x86_64 GNU/Linux\n")]);
+                } else {
+                    setHistory((prev) => [...prev, makeEntry("output", "Linux\n")]);
+                }
+                break;
+
+            case "echo":
+                setHistory((prev) => [...prev, makeEntry("output", `${args.join(" ")}\n`)]);
+                break;
+
+            case "touch":
+            case "mkdir":
+                setHistory((prev) => [...prev, makeEntry("output", `${lowerCmd}: cannot create: Read-only file system\n`)]);
+                break;
+
+            case "rm":
+                setHistory((prev) => [...prev, makeEntry("output", "rm: cannot remove: Read-only file system\n")]);
                 break;
 
             case "clear":
@@ -251,6 +266,26 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
                 onExit();
                 break;
 
+            case "github":
+            case "stats":
+                setHistory((prev) => [
+                    ...prev,
+                    makeEntry("output", `
+Opening GitHub Stats interface...
+User: ganeshak11
+Grade: B- (Focused on System Operations & Observability)
+Animated Themes available: gitblock, green, season, south-season, night-green, night-rainbow.
+
+Closing terminal and scrolling to stats section...
+`),
+                ]);
+                setTimeout(() => {
+                    onExit();
+                    const el = document.getElementById("github-metrics");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                }, 1200);
+                break;
+
             case "whoami":
                 setHistory((prev) => [
                     ...prev,
@@ -261,7 +296,7 @@ export default function TerminalMode({ onExit }: { onExit: () => void }) {
 | |_| | (_| | | | |  __/\\__ \\ | | |
  \\____|\\__,_|_| |_|\\___||___/_| |_/
                                    
-Ganesh Angadi — DevOps Engineer & System Architect
+Ganesh Angadi — DevOps Engineer & Observability Specialist
 `),
                 ]);
                 break;
@@ -272,16 +307,16 @@ Ganesh Angadi — DevOps Engineer & System Architect
                     makeEntry("output", `
        _,met$$$$$gg.          ganesh@portfolio
     ,g$$$$$$$$$$$$$$$P.       ----------------
-  ,g$$P"     """Y$$.".        OS: Linux (Mental Model)
- ,$$P'              \`$$$.     Host: Portfolio.sh
-',$$P       ,ggs.     \`$$b:   Kernel: Next.js 16
-\`d$$'     ,$P"'   .    $$$    Uptime: up indefinitely
- $$P      d$'     ,    $$P    Packages: 15 (npm)
- $$:      $$.   -    ,d$$'    Shell: bash
- $$;      Y$b._   _,d$P'      Terminal: Framer Motion
- Y$$.    \`.\`"Y$$$$P"'         WM: Docker & Kubernetes
- \`$$b      "-.__              CPU: System Thinker
-  \`Y$$                        Memory: 100% Focused
+  ,g$$P"     """Y$$.".        OS: Ubuntu 22.04 LTS (Mental Model)
+  ,$$P'              \`$$$.     Host: ganeshangadi.online
+',$$P       ,ggs.     \`$$b:   Kernel: next-16.1.6
+\`d$$'     ,$P"'   .    $$$    Uptime: up 24 mins
+ $$$      d$'     ,    $$P    Packages: 24 (npm)
+ $$:      $$.   -    ,d$$'    Shell: bash 5.1.16
+ $$;      Y$b._   _,d$P'      Terminal: Framer Motion Terminal Simulator
+ Y$$.    \`.\`"Y$$$$P"'         WM: Docker & Kubernetes (Local dev)
+ \`$$b      "-.__              CPU: DevOps Core
+  \`Y$$                        Memory: 381 Commits / 12 Stars
    \`Y$$.                      
      \`$$b.                    
        \`Y$$b.                 
@@ -497,7 +532,7 @@ or go directly to /resume.html
                     <div
                         key={entry.id}
                         style={{
-                            color: entry.type === "input" ? "var(--accent)" : "var(--muted)",
+                            color: entry.type === "input" ? "var(--accent)" : "var(--fg)",
                             whiteSpace: "pre-wrap",
                             wordBreak: "break-word",
                         }}
