@@ -8,6 +8,7 @@ import About from "@/components/About";
 import Achievements from "@/components/Achievements";
 import Projects from "@/components/Projects";
 import DevOpsStack from "@/components/DevOpsStack";
+import GithubMetrics from "@/components/GithubMetrics";
 import SystemThinking from "@/components/SystemThinking";
 import Services from "@/components/Services";
 import Contact from "@/components/Contact";
@@ -141,6 +142,11 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
         <section id="stack" aria-labelledby="skills-heading">
           <h2 id="skills-heading" className="sr-only">DevOps Skills & Technologies</h2>
           <DevOpsStack />
+        </section>
+
+        <section id="github-metrics" aria-labelledby="github-metrics-heading">
+          <h2 id="github-metrics-heading" className="sr-only">GitHub Contribution Activity & Metrics</h2>
+          <GithubMetrics />
         </section>
 
         <section id="latest-blogs" aria-labelledby="latest-blogs-heading">
