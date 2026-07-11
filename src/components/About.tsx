@@ -11,9 +11,9 @@ import Magnetic from "@/components/Magnetic";
 
 const SOCIALS = [
     { icon: FaLinkedin, href: "https://linkedin.com/in/ganeshangadi1301", label: "LinkedIn" },
-    { icon: FaGithub,   href: "https://github.com/ganeshak11",            label: "GitHub" },
-    { icon: FaInstagram,href: "https://instagram.com/ganesh_a_k_22",                    label: "Instagram" },
-    { icon: FaDiscord,  href: "https://discord.com",                      label: "Discord" },
+    { icon: FaGithub, href: "https://github.com/ganeshak11", label: "GitHub" },
+    { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22", label: "Instagram" },
+    { icon: FaDiscord, href: "https://discord.com", label: "Discord" },
 ];
 
 export default function About() {
@@ -70,14 +70,14 @@ export default function About() {
                         }}
                     >
                         <div className="about-photo-inner" style={{ position: "relative", width: "100%", aspectRatio: "4/5", borderRadius: 12, overflow: "hidden", background: "var(--bg)" }}>
-                        <Image
-                            src="/profile.jpg"
-                            alt="Ganesh Angadi - DevOps Engineer"
-                            fill
-                            priority
-                            sizes="(max-width: 768px) 100vw, 36vw"
-                            style={{ objectFit: "cover", objectPosition: "center top" }}
-                        />
+                            <Image
+                                src="/profile.png"
+                                alt="Ganesh Angadi - DevOps Engineer"
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 100vw, 36vw"
+                                style={{ objectFit: "cover", objectPosition: "center top" }}
+                            />
                         </div>
                     </m.div>
 

@@ -371,7 +371,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         {/* Author Metadata at the top */}
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
                             <img
-                                src="/blog-profile.jpeg"
+                                src="/profile.png"
                                 alt="Ganesh Angadi"
                                 style={{ width: 38, height: 38, borderRadius: "50%", objectFit: "cover", border: "1.5px solid var(--glass-border)" }}
                             />
@@ -468,8 +468,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     );
                                 },
                                 h1: ({ children }) => {
-                                    const textContent = Array.isArray(children) 
-                                        ? children.join("") 
+                                    const textContent = Array.isArray(children)
+                                        ? children.join("")
                                         : String(children || "");
                                     if (textContent.toLowerCase().trim() === post.title.toLowerCase().trim()) {
                                         return null; // Skip duplicate H1 title
@@ -635,7 +635,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                 textDecoration: "none", color: "var(--fg)", fontWeight: 500, fontSize: 14,
                                 transition: "color 0.2s"
                             }}
-                            className="nav-underline"
+                                className="nav-underline"
                             >
                                 <ArrowLeft size={16} /> Back to all posts
                             </Link>
@@ -655,7 +655,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         textArea.select();
                                         try {
                                             document.execCommand('copy');
-                                        } catch (err) {}
+                                        } catch (err) { }
                                         document.body.removeChild(textArea);
                                     }
                                     setCopiedUrl(true);

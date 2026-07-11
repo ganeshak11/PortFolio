@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     siteName: "Ganesh Angadi Portfolio",
     images: [
       {
-        url: "https://ganeshangadi.online/profile.jpg",
+        url: "https://ganeshangadi.online/profile.png",
         width: 800,
         height: 800,
         alt: "Ganesh Angadi - DevOps Engineer",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
     description: "Creator of Fortis-CI — graph-native deployment observability. DevOps engineer | AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
-    images: ["https://ganeshangadi.online/profile.jpg"],
+    images: ["https://ganeshangadi.online/profile.png"],
     creator: "@ganeshak11",
   },
   metadataBase: new URL("https://ganeshangadi.online"),
@@ -94,7 +94,7 @@ export default function RootLayout({
     name: "Ganesh Angadi",
     alternateName: "ganeshak11",
     url: "https://ganeshangadi.online",
-    image: "https://ganeshangadi.online/profile.jpg",
+    image: "https://ganeshangadi.online/profile.png",
     jobTitle: "DevOps Engineer",
     description:
       "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP server hackathon winner.",

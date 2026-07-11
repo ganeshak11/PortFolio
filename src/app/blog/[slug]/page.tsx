@@ -14,7 +14,7 @@ interface BlogPostProps {
 async function getPost(slug: string) {
     const blogDir = path.join(process.cwd(), "content/blog");
     let filePath: string | null = null;
-    
+
     if (fs.existsSync(blogDir)) {
         const files = fs.readdirSync(blogDir, { recursive: true }) as string[];
         const targetFile = files.find(f => f.endsWith(`${slug}.md`));
@@ -49,14 +49,14 @@ async function getPost(slug: string) {
 function getBlogImage(slug: string): string {
     const extensions = ['.png', '.jpg', '.jpeg', '.webp'];
     const dir = path.join(process.cwd(), "public", "blog-images");
-    
+
     for (const ext of extensions) {
         if (fs.existsSync(path.join(dir, `${slug}${ext}`))) {
             return `/blog-images/${slug}${ext}`;
         }
     }
-    
-    return "/blog-profile.jpeg";
+
+    return "/profile.png";
 }
 
 export async function generateStaticParams() {
