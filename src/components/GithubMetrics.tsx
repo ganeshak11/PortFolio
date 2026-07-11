@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { m, useInView } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
 
@@ -8,6 +8,7 @@ export default function GithubMetrics() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
     const { theme } = useTheme();
+    const [activeGraphTheme, setActiveGraphTheme] = useState<"green" | "season" | "south-season">("green");
 
     const isDark = theme === "dark";
 
@@ -21,10 +22,8 @@ export default function GithubMetrics() {
     const statsUrl = `https://github-readme-stats-rho-six-90.vercel.app/api?username=ganeshak11&show_icons=true&bg_color=${bgColor}&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&border_color=${borderColor}&count_private=true`;
     const langsUrl = `https://github-readme-stats-rho-six-90.vercel.app/api/top-langs/?username=ganeshak11&layout=compact&bg_color=${bgColor}&title_color=${titleColor}&text_color=${textColor}&border_color=${borderColor}`;
 
-    // 3D contribution graph URL
-    const github3dUrl = isDark
-        ? "https://raw.githubusercontent.com/ganeshak11/ganeshak11/main/profile-3d-contrib/profile-night-view.svg"
-        : "https://raw.githubusercontent.com/ganeshak11/ganeshak11/main/profile-3d-contrib/profile-green.svg";
+    // 3D animated contribution graph URL
+    const github3dUrl = `https://raw.githubusercontent.com/ganeshak11/ganeshak11/main/profile-3d-contrib/profile-${activeGraphTheme}-animate.svg`;
 
     return (
         <section ref={ref} id="github-metrics" style={{ padding: "80px 24px" }}>
@@ -126,11 +125,44 @@ export default function GithubMetrics() {
                             paddingTop: 24,
                             width: "100%"
                         }}>
-                            <div style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                                <span style={{ color: "var(--accent)", fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>$</span>
-                                <span style={{ fontFamily: "monospace", fontSize: 13, color: "var(--fg)" }}>
-                                    render-3d-contrib-graph --theme={isDark ? "night" : "green"}
-                                </span>
+                            <div style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", flexWrap: "wrap", gap: 12, marginBottom: 8 }}>
+                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                    <span style={{ color: "var(--accent)", fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>$</span>
+                                    <span style={{ fontFamily: "monospace", fontSize: 13, color: "var(--fg)" }}>
+                                        render-3d-contrib --theme={activeGraphTheme} --animate
+                                    </span>
+                                </div>
+                                <div style={{ display: "flex", gap: 6, fontFamily: "monospace" }}>
+                                    {(["green", "season", "south-season"] as const).map((t) => (
+                                        <button
+                                            key={t}
+                                            onClick={() => setActiveGraphTheme(t)}
+                                            style={{
+                                                background: activeGraphTheme === t ? "var(--accent)" : "transparent",
+                                                color: activeGraphTheme === t ? "var(--bg)" : "var(--fg)",
+                                                border: "1px solid var(--border)",
+                                                padding: "2px 8px",
+                                                borderRadius: 4,
+                                                cursor: "pointer",
+                                                fontSize: 11,
+                                                fontWeight: 700,
+                                                transition: "all 0.15s ease"
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (activeGraphTheme !== t) {
+                                                    e.currentTarget.style.background = "color-mix(in srgb, var(--accent) 10%, transparent)";
+                                                }
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                if (activeGraphTheme !== t) {
+                                                    e.currentTarget.style.background = "transparent";
+                                                }
+                                            }}
+                                        >
+                                            {t}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                             <img
                                 src={github3dUrl}

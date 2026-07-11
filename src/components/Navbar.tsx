@@ -7,7 +7,7 @@ import { m, AnimatePresence } from "framer-motion";
 import { NAV_LINKS } from "./navbar/navData";
 import { useScrambleHover } from "@/lib/useScrambleHover";
 
-const SECTION_IDS = ["hero", "about", "achievements", "projects", "stack", "thinking", "services", "contact"];
+const SECTION_IDS = ["hero", "about", "achievements", "projects", "stack", "github-metrics", "latest-blogs", "thinking", "services", "contact"];
 const PRIMARY = ["#about", "#projects", "#contact","#achievements","#stack","#thinking","#services","/blog"]; // Primary sections to highlight
 const UTILITY = [""];
 
@@ -61,6 +61,8 @@ export default function Navbar() {
         const activeLink = NAV_LINKS.find(
             (l) => l.href === `#${active}`
                 || (active === "hero" && l.href === "#about")
+                || (active === "github-metrics" && l.href === "#stack")
+                || (active === "latest-blogs" && l.href === "/blog")
         );
         if (!activeLink) return;
 
@@ -134,7 +136,9 @@ export default function Navbar() {
                     {NAV_LINKS.map((link) => {
                         const sectionId = link.href.replace("#", "");
                         const isActive = active === sectionId
-                                || (active === "hero" && link.href === "#about");
+                                || (active === "hero" && link.href === "#about")
+                                || (active === "github-metrics" && link.href === "#stack")
+                                || (active === "latest-blogs" && link.href === "/blog");
                         const isUtility = UTILITY.includes(link.href);
                         const isPrimary = PRIMARY.includes(link.href);
 
