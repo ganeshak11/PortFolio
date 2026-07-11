@@ -8,7 +8,7 @@ import { NAV_LINKS } from "./navbar/navData";
 import { useScrambleHover } from "@/lib/useScrambleHover";
 
 const SECTION_IDS = ["hero", "about", "achievements", "projects", "stack", "github-metrics", "latest-blogs", "thinking", "services", "contact"];
-const PRIMARY = ["#about", "#projects", "#contact","#achievements","#stack","#thinking","#services","/blog"]; // Primary sections to highlight
+const PRIMARY = ["#about", "#projects", "#contact", "#achievements", "#stack", "#github-metrics", "#latest-blogs", "#thinking", "#services", "/blog"]; // Primary sections to highlight
 const UTILITY = [""];
 
 export default function Navbar() {
