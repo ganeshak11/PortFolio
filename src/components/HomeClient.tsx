@@ -119,55 +119,28 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
           <Hero />
         </section>
 
-        <section id="about" aria-labelledby="about-heading">
-          <h2 id="about-heading" className="sr-only">About Ganesh Angadi</h2>
-          <About />
-        </section>
+        <About />
 
-        <section id="achievements" aria-labelledby="achievements-heading">
-          <h2 id="achievements-heading" className="sr-only">Achievements & Awards</h2>
-          <Achievements />
-        </section>
+        <Achievements />
 
-        <section id="projects" aria-labelledby="projects-heading">
-          <h2 id="projects-heading" className="sr-only">DevOps Projects</h2>
-          <Projects />
-        </section>
+        <Projects />
 
         <section id="currently-building" aria-labelledby="currently-building-heading">
           <h2 id="currently-building-heading" className="sr-only">Currently Building</h2>
           <CurrentlyBuilding />
         </section>
 
-        <section id="stack" aria-labelledby="skills-heading">
-          <h2 id="skills-heading" className="sr-only">DevOps Skills & Technologies</h2>
-          <DevOpsStack />
-        </section>
+        <DevOpsStack />
 
-        <section id="github-metrics" aria-labelledby="github-metrics-heading">
-          <h2 id="github-metrics-heading" className="sr-only">GitHub Contribution Activity & Metrics</h2>
-          <GithubMetrics />
-        </section>
+        <GithubMetrics />
 
-        <section id="latest-blogs" aria-labelledby="latest-blogs-heading">
-          <h2 id="latest-blogs-heading" className="sr-only">Latest Blogs</h2>
-          <LatestBlogs posts={posts} />
-        </section>
+        <LatestBlogs posts={posts} />
 
-        <section id="thinking" aria-labelledby="architecture-heading">
-          <h2 id="architecture-heading" className="sr-only">System Architecture & Engineering Principles</h2>
-          <SystemThinking />
-        </section>
+        <SystemThinking />
 
-        <section id="services" aria-labelledby="services-heading">
-          <h2 id="services-heading" className="sr-only">Services</h2>
-          <Services />
-        </section>
+        <Services />
 
-        <section id="contact" aria-labelledby="contact-heading">
-          <h2 id="contact-heading" className="sr-only">Contact Ganesh Angadi</h2>
-          <Contact />
-        </section>
+        <Contact />
       </main>
 
       <Footer />
