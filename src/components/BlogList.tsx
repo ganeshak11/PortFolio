@@ -107,6 +107,18 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
         <>
             <style>{`
                 @media (max-width: 600px) {
+                    main {
+                        padding-top: 150px !important;
+                    }
+                    .duel-vs-row {
+                        flex-direction: column !important;
+                        gap: 8px !important;
+                        padding: 12px !important;
+                    }
+                    .terminal-title {
+                        max-width: 140px !important;
+                        font-size: 9px !important;
+                    }
                     .duel-vs-grid {
                         grid-template-columns: 1fr !important;
                         gap: 12px !important;
@@ -406,15 +418,23 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                                                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#27c93f" }} />
                                                             </div>
                                                             {/* Terminal Filename */}
-                                                            <span style={{
-                                                                fontFamily: "monospace",
-                                                                fontSize: 11,
-                                                                color: "var(--muted)",
-                                                                position: "absolute",
-                                                                left: "50%",
-                                                                transform: "translateX(-50%)",
-                                                                letterSpacing: "0.02em"
-                                                            }}>
+                                                            <span
+                                                                className="terminal-title"
+                                                                style={{
+                                                                    fontFamily: "monospace",
+                                                                    fontSize: 11,
+                                                                    color: "var(--muted)",
+                                                                    position: "absolute",
+                                                                    left: "50%",
+                                                                    transform: "translateX(-50%)",
+                                                                    letterSpacing: "0.02em",
+                                                                    whiteSpace: "nowrap",
+                                                                    overflow: "hidden",
+                                                                    textOverflow: "ellipsis",
+                                                                    maxWidth: "60%",
+                                                                    textAlign: "center"
+                                                                }}
+                                                            >
                                                                 matchup_{matchNum}_{toolA.toLowerCase().replace(/[\s\.\-]+/g, '_')}_vs_{toolB.toLowerCase().replace(/[\s\.\-]+/g, '_')}.sh
                                                             </span>
                                                             {/* Dummy extension/active badge */}
@@ -424,34 +444,39 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                                         {/* Terminal Body */}
                                                         <div style={{ padding: "20px 24px" }}>
                                                             {/* Command Prompt */}
-                                                            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-                                                                <span style={{ color: "var(--accent)", fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>$</span>
-                                                                <span style={{ fontFamily: "monospace", fontSize: 13, color: "var(--fg)" }}>
+                                                            <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 16 }}>
+                                                                <span style={{ color: "var(--accent)", fontFamily: "monospace", fontSize: 13, fontWeight: 700, userSelect: "none" }}>$</span>
+                                                                <span style={{ fontFamily: "monospace", fontSize: 13, color: "var(--fg)", lineHeight: 1.5, wordBreak: "break-word" }}>
                                                                     devops-duel --run {toolA.toLowerCase()} --vs {toolB.toLowerCase()}
                                                                 </span>
                                                             </div>
 
                                                             {/* Visual Versus Output */}
                                                             {toolB ? (
-                                                                <div style={{
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                    gap: 16,
-                                                                    background: "color-mix(in srgb, var(--fg) 2%, transparent)",
-                                                                    border: "1px solid var(--border)",
-                                                                    padding: "12px 20px",
-                                                                    borderRadius: 8,
-                                                                    marginBottom: 16,
-                                                                    justifyContent: "center"
-                                                                }}>
+                                                                <div
+                                                                    className="duel-vs-row"
+                                                                    style={{
+                                                                        display: "flex",
+                                                                        flexWrap: "wrap",
+                                                                        alignItems: "center",
+                                                                        gap: 16,
+                                                                        background: "color-mix(in srgb, var(--fg) 2%, transparent)",
+                                                                        border: "1px solid var(--border)",
+                                                                        padding: "12px 20px",
+                                                                        borderRadius: 8,
+                                                                        marginBottom: 16,
+                                                                        justifyContent: "center",
+                                                                        transition: "all 0.2s ease"
+                                                                    }}
+                                                                >
                                                                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                                                         {getIcon(toolA)}
-                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)" }}>{toolA}</span>
+                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)", whiteSpace: "nowrap" }}>{toolA}</span>
                                                                     </div>
-                                                                    <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", fontWeight: 900 }}>VS</span>
+                                                                    <span className="duel-vs-text" style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", fontWeight: 900, userSelect: "none" }}>VS</span>
                                                                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                                                         {getIcon(toolB)}
-                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)" }}>{toolB}</span>
+                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)", whiteSpace: "nowrap" }}>{toolB}</span>
                                                                     </div>
                                                                 </div>
                                                             ) : (
