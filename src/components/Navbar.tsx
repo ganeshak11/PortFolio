@@ -61,10 +61,11 @@ export default function Navbar() {
         const activeLink = NAV_LINKS.find(
             (l) => l.href === `#${active}`
                 || (active === "hero" && l.href === "#about")
-                || (active === "github-metrics" && l.href === "#stack")
-                || (active === "latest-blogs" && l.href === "/blog")
         );
-        if (!activeLink) return;
+        if (!activeLink) {
+            setIndicatorStyle({ left: 0, width: 0 });
+            return;
+        }
 
         const key = activeLink.href;
         const el = linkRefs.current[key];
@@ -132,13 +133,11 @@ export default function Navbar() {
                             />
                         )}
                     </AnimatePresence>
-
+ 
                     {NAV_LINKS.map((link) => {
                         const sectionId = link.href.replace("#", "");
                         const isActive = active === sectionId
-                                || (active === "hero" && link.href === "#about")
-                                || (active === "github-metrics" && link.href === "#stack")
-                                || (active === "latest-blogs" && link.href === "/blog");
+                                || (active === "hero" && link.href === "#about");
                         const isUtility = UTILITY.includes(link.href);
                         const isPrimary = PRIMARY.includes(link.href);
 
