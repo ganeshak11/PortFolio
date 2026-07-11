@@ -8,14 +8,14 @@ $ uptime
 portfolio  up indefinitely  |  status: ONLINE  |  load: intentional
 
 $ cat /etc/motd
-  ____                        _     
- / ___| __ _ _ __   ___  ___| |__  
-| |  _ / _` | '_ \ / _ \/ __| '_ \ 
-| |_| | (_| | | | |  __/\__ \ | | |
- \____|\__,_|_| |_|\___||___/_| |_/
+  ██████╗  █████╗ ███╗   ██╗███████╗███████╗██╗  ██╗
+ ██╔════╝ ██╔══██╗████╗  ██║██╔════╝██╔════╝██║  ██║
+ ██║  ███╗███████║██╔██╗ ██║█████╗  ███████╗███████║
+ ██║   ██║██╔══██║██║╚██╗██║██╔══╝  ╚════██║██╔══██║
+ ╚██████╔╝██║  ██║██║ ╚████║███████╗███████║██║  ██║
+  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝
                                                      
  Ganesh — ganeshak11
- Status: Building reliable systems. Questioning fragile architecture.
 ```
 
 ---
@@ -140,23 +140,6 @@ blog        = markdown files in /content/blog (version-controlled)
 deploy      = Vercel
 ```
 
----
-
-## $ cat failure_log.md | grep -i lesson
-
-```
-[P1] 2024-08 — Cron job silently failed for 11 days
-  → Lesson: Exit codes are not enough. Add health checks + alerting on absence-of-signal.
-
-[P2] 2024-05 — Nginx upgrade wiped custom config
-  → Lesson: If it is not in version control, it does not exist.
-
-[P1] 2023-11 — No rollback plan caused 3h downtime
-  → Lesson: A deploy without a tested rollback is a gamble.
-
-[P3] 2023-07 — Disk filled: logs rotated but not compressed
-  → Lesson: Log rotation ≠ disk capacity planning. Both are needed.
-```
 
 ---
 
@@ -171,7 +154,7 @@ Website  →  https://ganeshangadi.online
 
 ---
 
-## $ shutdown -h now
+## $ shutdown -P now
 
 ```
 [  OK  ] Stopped portfolio.service

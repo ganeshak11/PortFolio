@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeClient from "@/components/HomeClient";
+import { getBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Ganesh Angadi | DevOps Engineer Portfolio",
@@ -7,5 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <HomeClient />;
+  const posts = getBlogPosts();
+  return <HomeClient posts={posts} />;
 }

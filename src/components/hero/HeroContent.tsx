@@ -55,7 +55,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
             rafRef.current = requestAnimationFrame(() => {
                 if (maskLayerRef.current) {
                     const { x, y } = maskRef.current;
-                    const mask = `radial-gradient(circle 160px at ${x}px ${y}px, black 80%, transparent 100%)`;
+                    const mask = `radial-gradient(circle 160px at ${x}px ${y}px, black 100%, transparent 100%)`;
                     maskLayerRef.current.style.cssText = `position:absolute;inset:0;pointer-events:none;-webkit-mask-image:${mask};mask-image:${mask};background:var(--accent);`;
                 }
                 rafRef.current = null;
@@ -65,7 +65,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
 
     const onMouseLeave = useCallback(() => {
         if (maskLayerRef.current) {
-            const mask = "radial-gradient(circle 160px at -999px -999px, black 80%, transparent 100%)";
+            const mask = "radial-gradient(circle 160px at -999px -999px, black 100%, transparent 100%)";
             maskLayerRef.current.style.cssText = `position:absolute;inset:0;pointer-events:none;-webkit-mask-image:${mask};mask-image:${mask};background:var(--accent);`;
         }
     }, []);
@@ -153,8 +153,8 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                                 position: "absolute",
                                 inset: 0,
                                 pointerEvents: "none",
-                                WebkitMaskImage: "radial-gradient(circle 160px at -999px -999px, black 80%, transparent 100%)",
-                                maskImage: "radial-gradient(circle 160px at -999px -999px, black 80%, transparent 100%)",
+                                WebkitMaskImage: "radial-gradient(circle 160px at -999px -999px, black 100%, transparent 100%)",
+                                maskImage: "radial-gradient(circle 160px at -999px -999px, black 100%, transparent 100%)",
                                 background: "var(--accent)",
                             }}
                         >

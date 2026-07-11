@@ -16,8 +16,10 @@ import Navbar from "@/components/Navbar";
 import TerminalMode from "@/components/TerminalMode";
 import FAB from "@/components/FAB";
 import CurrentlyBuilding from "@/components/CurrentlyBuilding";
+import LatestBlogs from "@/components/LatestBlogs";
+import { BlogPost } from "@/lib/blog";
 
-export default function Home() {
+export default function Home({ posts = [] }: { posts: BlogPost[] }) {
   const [terminalOpen, setTerminalOpen] = useState(false);
   const hasTrackedVisit = useRef(false);
   const maxScroll = useRef(0);
@@ -139,6 +141,11 @@ export default function Home() {
         <section id="stack" aria-labelledby="skills-heading">
           <h2 id="skills-heading" className="sr-only">DevOps Skills & Technologies</h2>
           <DevOpsStack />
+        </section>
+
+        <section id="latest-blogs" aria-labelledby="latest-blogs-heading">
+          <h2 id="latest-blogs-heading" className="sr-only">Latest Blogs</h2>
+          <LatestBlogs posts={posts} />
         </section>
 
         <section id="thinking" aria-labelledby="architecture-heading">

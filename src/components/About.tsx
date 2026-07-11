@@ -90,30 +90,20 @@ export default function About() {
                             </h3>
                         </div>
 
-                        {/* Status badges */}
+                        {/* Status badge */}
                         <div className="about-badges" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                             <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontFamily: "monospace", color: "var(--status-ok)", border: "1px solid var(--status-ok)", padding: "4px 12px", borderRadius: 999 }}>
                                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--status-ok)", display: "inline-block" }} />
-                                Open to opportunities
-                            </span>
-                            <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 999 }}>
-                                2+ yrs in DevOps
-                            </span>
-                            <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--accent)", border: "1px solid var(--border)", padding: "4px 12px", borderRadius: 999 }}>
-                                ⚡ Building Fortis-CI
+                                [ STATUS: OPEN TO OPPORTUNITIES ]
                             </span>
                         </div>
 
-                        <p style={{ fontSize: 15, lineHeight: 1.8, color: "var(--fg)", maxWidth: 480 }}>
-                            DevOps Engineer since 2023. Focused on Docker, Kubernetes, Linux fundamentals, and System Architecture with strong system design expertise.
-                        </p>
-
-                        <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 480 }}>
-                            I don't just build features. I design systems. I think in control flow, model failure states, and design for observability.
+                        <p style={{ fontSize: "clamp(14px, 1.8vw, 15px)", lineHeight: 1.8, color: "var(--fg)", maxWidth: 500 }}>
+                            I don't build features. I design observable systems that fail gracefully. Focused on Linux internals, Kubernetes orchestration, and declarative infrastructure automation.
                         </p>
 
                         {/* Address + Resume buttons */}
-                        <div className="about-resume-row" style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+                        <div className="about-resume-row" style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
                             <p style={{ fontSize: 13, color: "var(--muted)", fontFamily: "monospace" }}>
                                 📍 Mysuru, Karnataka, India
                             </p>
@@ -127,41 +117,21 @@ export default function About() {
                                         display: "inline-block",
                                         fontFamily: "monospace",
                                         fontSize: 12,
-                                        fontWeight: 600,
+                                        fontWeight: 700,
                                         letterSpacing: "0.05em",
                                         textTransform: "uppercase",
-                                        padding: "8px 20px",
+                                        padding: "10px 24px",
                                         border: "1.5px solid var(--accent)",
+                                        background: "var(--accent)",
+                                        color: "var(--bg)",
                                         borderRadius: 4,
                                         textDecoration: "none",
+                                        boxShadow: "0 4px 14px color-mix(in srgb, var(--accent) 25%, transparent)",
+                                        transition: "all 0.2s ease"
                                     }}
                                 >
                                     View Resume →
                                 </Link>
-                            </Magnetic>
-                            <Magnetic>
-                                <button
-                                    className="btn-slide"
-                                    onClick={() => {
-                                        const w = window.open("/resume.html", "_blank");
-                                        if (w) w.addEventListener("load", () => setTimeout(() => w.print(), 500));
-                                    }}
-                                    style={{
-                                        display: "inline-block",
-                                        fontFamily: "monospace",
-                                        fontSize: 12,
-                                        fontWeight: 600,
-                                        letterSpacing: "0.05em",
-                                        textTransform: "uppercase",
-                                        padding: "8px 20px",
-                                        border: "1.5px solid var(--accent)",
-                                        borderRadius: 4,
-                                        cursor: "pointer",
-                                        background: "transparent",
-                                    }}
-                                >
-                                    ↓ Download
-                                </button>
                             </Magnetic>
                         </div>
 

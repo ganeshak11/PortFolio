@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import { Github, Settings, Box, Hexagon, Swords } from "lucide-react";
+import { Github, Settings, Box, Hexagon, Swords, Key, Lock, Database, Server, Network, FileJson } from "lucide-react";
 import { Bangers, Permanent_Marker } from "next/font/google";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });
@@ -23,8 +23,14 @@ interface BlogPost {
 }
 
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
-    const seriesPosts = posts.filter((p) => p.series === "DevOps Duels");
-    const regularPosts = posts.filter((p) => p.series !== "DevOps Duels");
+    const seriesPosts = posts
+        .filter((p) => p.series === "DevOps Duels")
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const regularPosts = posts
+        .filter((p) => p.series !== "DevOps Duels")
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    const [activeTab, setActiveTab] = useState<"all" | "articles" | "duels">("all");
 
     const hasTrackedVisit = useRef(false);
     const maxScroll = useRef(0);
@@ -153,8 +159,58 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                         </p>
                     </div>
 
+                    {/* Category Switcher */}
+                    <div style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        marginBottom: 48,
+                        fontFamily: "monospace",
+                        fontSize: 13,
+                        flexWrap: "wrap"
+                    }}>
+                        <span style={{ color: "var(--muted)" }}>$ filter-posts --category=</span>
+                        <div style={{ display: "flex", gap: 8 }}>
+                            {(["all", "articles", "duels"] as const).map((tab) => {
+                                const active = activeTab === tab;
+                                const label = tab === "all" ? "ALL" : tab === "articles" ? "ARTICLES" : "DEV_DUELS";
+                                return (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveTab(tab)}
+                                        style={{
+                                            background: active ? "var(--accent)" : "color-mix(in srgb, var(--fg) 5%, transparent)",
+                                            color: active ? "var(--bg)" : "var(--fg)",
+                                            border: active ? "1px solid var(--accent)" : "1px solid var(--border)",
+                                            padding: "4px 12px",
+                                            borderRadius: "6px",
+                                            cursor: "pointer",
+                                            fontWeight: 700,
+                                            fontFamily: "monospace",
+                                            transition: "all 0.2s ease"
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!active) {
+                                                e.currentTarget.style.borderColor = "var(--accent)";
+                                                e.currentTarget.style.background = "color-mix(in srgb, var(--accent) 8%, transparent)";
+                                            }
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (!active) {
+                                                e.currentTarget.style.borderColor = "var(--border)";
+                                                e.currentTarget.style.background = "color-mix(in srgb, var(--fg) 5%, transparent)";
+                                            }
+                                        }}
+                                    >
+                                        {label}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
                     {/* Premium DevOps Duels Series Section */}
-                    {seriesPosts.length > 0 && (
+                    {seriesPosts.length > 0 && activeTab !== "articles" && (
                         <div style={{ marginTop: 48, marginBottom: 72, position: "relative" }}>
                             <div style={{
                                 padding: "48px 24px 56px",
@@ -272,7 +328,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                         <div style={{ flex: 1, height: 1, background: "color-mix(in srgb, var(--accent) 30%, transparent)" }} />
                                     </div>
 
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
                                         {seriesPosts.map((post, index) => {
                                             // Parse the title e.g. "Docker Compose vs. Kubernetes: When..."
                                             const parts = post.title.split(':');
@@ -291,12 +347,20 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                             // Helper to pick a Lucide icon based on tool name
                                             const getIcon = (name: string) => {
                                                 const n = name.toLowerCase();
-                                                if (n.includes('docker')) return <Box size={24} strokeWidth={1.5} color="var(--accent)" />;
-                                                if (n.includes('kubernetes')) return <Hexagon size={24} strokeWidth={1.5} color="var(--accent)" />;
-                                                if (n.includes('github')) return <Github size={24} strokeWidth={1.5} color="var(--accent)" />;
-                                                if (n.includes('jenkins')) return <Settings size={24} strokeWidth={1.5} color="var(--accent)" />;
-                                                return <Swords size={24} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('docker')) return <Box size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('kubernetes')) return <Hexagon size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('github')) return <Github size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('jenkins')) return <Settings size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('ssh')) return <Key size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('https')) return <Lock size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('monolith')) return <Server size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('microservices') || n.includes('micro-services')) return <Network size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('postgres')) return <Database size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                if (n.includes('mongo')) return <FileJson size={18} strokeWidth={1.5} color="var(--accent)" />;
+                                                return <Swords size={18} strokeWidth={1.5} color="var(--accent)" />;
                                             };
+
+                                            const matchNum = String(seriesPosts.length - index).padStart(2, '0');
 
                                             return (
                                                 <Link
@@ -306,109 +370,111 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                                 >
                                                     <div
                                                         style={{
-                                                            background: "var(--bg)",
-                                                            border: "1px solid color-mix(in srgb, var(--accent) 10%, var(--border))",
-                                                            padding: "20px",
-                                                            borderRadius: 16,
+                                                            background: "var(--card-bg)",
+                                                            border: "1px solid var(--border)",
+                                                            borderRadius: 12,
+                                                            overflow: "hidden",
                                                             display: "flex",
                                                             flexDirection: "column",
-                                                            gap: 16,
-                                                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                                            boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)",
-                                                            position: "relative"
+                                                            transition: "all 0.25s ease-in-out",
+                                                            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                                                         }}
                                                         onMouseEnter={(e) => {
                                                             const t = e.currentTarget as HTMLDivElement;
                                                             t.style.borderColor = "var(--accent)";
-                                                            t.style.transform = "translateY(-4px)";
-                                                            t.style.boxShadow = "0 12px 24px color-mix(in srgb, var(--accent) 15%, transparent)";
                                                         }}
                                                         onMouseLeave={(e) => {
                                                             const t = e.currentTarget as HTMLDivElement;
-                                                            t.style.borderColor = "color-mix(in srgb, var(--accent) 10%, var(--border))";
-                                                            t.style.transform = "translateY(0px)";
-                                                            t.style.boxShadow = "0 4px 12px color-mix(in srgb, var(--fg) 2%, transparent)";
+                                                            t.style.borderColor = "var(--border)";
                                                         }}
                                                     >
-                                                        {/* Number Badge */}
+                                                        {/* Terminal Titlebar */}
                                                         <div style={{
-                                                            position: "absolute",
-                                                            top: -10,
-                                                            left: -10,
-                                                            width: 28,
-                                                            height: 28,
-                                                            borderRadius: 8,
-                                                            background: "var(--accent)",
-                                                            color: "var(--bg)",
+                                                            height: 32,
+                                                            background: "color-mix(in srgb, var(--fg) 3%, transparent)",
+                                                            borderBottom: "1px solid var(--border)",
                                                             display: "flex",
                                                             alignItems: "center",
-                                                            justifyContent: "center",
-                                                            fontWeight: 900,
-                                                            fontSize: 14,
-                                                            boxShadow: "0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)"
+                                                            justifyContent: "space-between",
+                                                            padding: "0 16px",
+                                                            position: "relative"
                                                         }}>
-                                                            {seriesPosts.length - index}
+                                                            {/* Terminal Window Controls */}
+                                                            <div style={{ display: "flex", gap: 6 }}>
+                                                                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff5f56" }} />
+                                                                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#ffbd2e" }} />
+                                                                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#27c93f" }} />
+                                                            </div>
+                                                            {/* Terminal Filename */}
+                                                            <span style={{
+                                                                fontFamily: "monospace",
+                                                                fontSize: 11,
+                                                                color: "var(--muted)",
+                                                                position: "absolute",
+                                                                left: "50%",
+                                                                transform: "translateX(-50%)",
+                                                                letterSpacing: "0.02em"
+                                                            }}>
+                                                                matchup_{matchNum}_{toolA.toLowerCase().replace(/[\s\.\-]+/g, '_')}_vs_{toolB.toLowerCase().replace(/[\s\.\-]+/g, '_')}.sh
+                                                            </span>
+                                                            {/* Dummy extension/active badge */}
+                                                            <div style={{ width: 36 }} />
                                                         </div>
 
-                                                        {/* VS Layout */}
-                                                        {toolB ? (
-                                                            <div className="duel-vs-grid" style={{
-                                                                display: "grid",
-                                                                gridTemplateColumns: "1fr auto 1fr",
-                                                                alignItems: "center",
-                                                                gap: 16,
-                                                                padding: "12px 16px",
-                                                                background: "color-mix(in srgb, var(--card-bg) 50%, transparent)",
-                                                                borderRadius: 12,
-                                                                border: "1px dashed color-mix(in srgb, var(--accent) 20%, transparent)"
-                                                            }}>
-                                                                {/* Tool A */}
-                                                                <div className="duel-tool-a" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-end" }}>
-                                                                    <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "right" }}>{toolA}</span>
-                                                                    <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
-                                                                        {getIcon(toolA)}
-                                                                    </div>
-                                                                </div>
+                                                        {/* Terminal Body */}
+                                                        <div style={{ padding: "20px 24px" }}>
+                                                            {/* Command Prompt */}
+                                                            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+                                                                <span style={{ color: "var(--accent)", fontFamily: "monospace", fontSize: 13, fontWeight: 700 }}>$</span>
+                                                                <span style={{ fontFamily: "monospace", fontSize: 13, color: "var(--fg)" }}>
+                                                                    devops-duel --run {toolA.toLowerCase()} --vs {toolB.toLowerCase()}
+                                                                </span>
+                                                            </div>
 
-                                                                {/* VS Badge */}
-                                                                <div className="duel-vs-badge" style={{
-                                                                    width: 36,
-                                                                    height: 36,
-                                                                    borderRadius: "50%",
-                                                                    background: "var(--fg)",
-                                                                    color: "var(--bg)",
+                                                            {/* Visual Versus Output */}
+                                                            {toolB ? (
+                                                                <div style={{
                                                                     display: "flex",
                                                                     alignItems: "center",
-                                                                    justifyContent: "center",
-                                                                    fontSize: 13,
-                                                                    fontWeight: 900,
-                                                                    boxShadow: "0 4px 12px color-mix(in srgb, var(--fg) 20%, transparent)",
-                                                                    zIndex: 2,
-                                                                    flexShrink: 0
-                                                                }}>VS</div>
-
-                                                                {/* Tool B */}
-                                                                <div className="duel-tool-b" style={{ display: "flex", alignItems: "center", gap: 12, justifyContent: "flex-start" }}>
-                                                                    <div style={{ padding: 8, background: "color-mix(in srgb, var(--accent) 10%, transparent)", borderRadius: "50%", display: "flex", flexShrink: 0 }}>
-                                                                        {getIcon(toolB)}
+                                                                    gap: 16,
+                                                                    background: "color-mix(in srgb, var(--fg) 2%, transparent)",
+                                                                    border: "1px solid var(--border)",
+                                                                    padding: "12px 20px",
+                                                                    borderRadius: 8,
+                                                                    marginBottom: 16,
+                                                                    justifyContent: "center"
+                                                                }}>
+                                                                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                                                        {getIcon(toolA)}
+                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)" }}>{toolA}</span>
                                                                     </div>
-                                                                    <span style={{ fontSize: "clamp(15px, 2.5vw, 18px)", fontWeight: 800, color: "var(--fg)", textAlign: "left" }}>{toolB}</span>
+                                                                    <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", fontWeight: 900 }}>VS</span>
+                                                                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                                                        {getIcon(toolB)}
+                                                                        <span style={{ fontFamily: "monospace", fontSize: 15, fontWeight: 700, color: "var(--fg)" }}>{toolB}</span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        ) : (
-                                                            <h3 style={{ fontSize: 19, fontWeight: 700, color: "var(--fg)", marginBottom: 6, letterSpacing: "-0.01em", paddingLeft: 16 }}>
-                                                                {post.title}
-                                                            </h3>
-                                                        )}
+                                                            ) : (
+                                                                <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--fg)", marginBottom: 12 }}>
+                                                                    {post.title}
+                                                                </h3>
+                                                            )}
 
-                                                        {/* Subtitle & Meta */}
-                                                        <div className="duel-footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", padding: "0 8px", marginTop: 4 }}>
-                                                            <p style={{ fontSize: 14, color: "var(--muted)", fontStyle: "italic", lineHeight: 1.5, flex: 1, paddingRight: 24 }}>
+                                                            {/* Code Comment styled Excerpt */}
+                                                            <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.6, margin: "0 0 16px" }}>
+                                                                <span style={{ color: "var(--accent)", marginRight: 8, fontFamily: "monospace" }}>#</span>
                                                                 {subtitle}
                                                             </p>
-                                                            <time style={{ fontSize: 12, fontFamily: "monospace", color: "var(--accent)", fontWeight: 600 }}>
-                                                                {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                                                            </time>
+
+                                                            {/* Footer details */}
+                                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px dashed var(--border)", paddingTop: 12 }}>
+                                                                <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)" }}>
+                                                                    STATUS: <span style={{ color: "var(--status-ok)", fontWeight: 700 }}>PUBLISHED</span>
+                                                                </span>
+                                                                <time style={{ fontSize: 11, fontFamily: "monospace", color: "var(--accent)", fontWeight: 700 }}>
+                                                                    {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                                                                </time>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </Link>
@@ -421,7 +487,8 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                     )}
 
                     {/* Standard posts */}
-                    <div style={{ marginTop: 40 }}>
+                    {activeTab !== "duels" && (
+                        <div style={{ marginTop: 40 }}>
                         {regularPosts.map((post) => (
                             <Link
                                 key={post.slug}
@@ -485,6 +552,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                             </Link>
                         ))}
                     </div>
+                    )}
 
                 </div>
             </main>

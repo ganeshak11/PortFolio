@@ -3,30 +3,60 @@
 import { useRef } from "react";
 import { m, useInView } from "framer-motion";
 
-const STACK = [
-    { name: "Linux", level: "Deep Dive" },
-    { name: "Git", level: "Deep Dive" },
-    { name: "Docker", level: "Core Foundation" },
-    { name: "Terraform", level: "Core Foundation" },
-    { name: "CI/CD Pipelines", level: "Core Foundation" },
-    { name: "Kubernetes", level: "Actively Learning" },
-    { name: "Bash", level: "Core" },
-    { name: "Systemd", level: "Core" },
-    { name: "PostgreSQL", level: "Core" },
-    { name: "Networking", level: "Fundamentals" },
-    { name: "Next.js", level: "Core" },
+const SKILL_CATEGORIES = [
+    {
+        title: "Linux & OS Internals",
+        cmd: "ls -lh /proc/sys/kernel",
+        items: [
+            "File System",
+            "systemd Services",
+            "Linux Networking Stack",
+            "Bash/Shell Scripting",
+            "Permissions, Users & Groups"
+        ]
+    },
+    {
+        title: "Containerization (Docker)",
+        cmd: "docker inspect --format='{{json .Config}}'",
+        items: [
+            "Docker Images & Container Lifecycle",
+            "Bridge & Host Networking",
+            "Volumes & Bind Mounts",
+            "Docker Compose Orchestration",
+            "Dockerfile Writing & Build Basics"
+        ]
+    },
+    {
+        title: "Infrastructure as Code",
+        cmd: "terraform plan -out=tfplan",
+        items: [
+            "AWS Resources Provisioning",
+            "Variables, Inputs & Outputs",
+            "Terraform State Files",
+            "Modular Project Structure",
+            "Commands (Init, Plan, Apply)"
+        ]
+    },
+    {
+        title: "Container Orchestration",
+        cmd: "kubectl get pods -n production",
+        items: [
+            "Pods & Core Workloads",
+            "Service Discovery & ClusterIP",
+            "Deployments & Scaling",
+            "Ingress Routing Basics",
+            "ConfigMaps & Secrets"
+        ]
+    }
 ];
-
-// duplicate for seamless loop
-const ITEMS = [...STACK, ...STACK];
 
 export default function DevOpsStack() {
     const ref = useRef<HTMLElement>(null);
     const inView = useInView(ref, { once: true, margin: "-80px" });
 
     return (
-        <section ref={ref} id="stack" style={{ padding: "100px 0" }}>
-            <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
+        <section ref={ref} id="stack" className="section-pad" style={{ padding: "100px 24px" }}>
+            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -34,65 +64,77 @@ export default function DevOpsStack() {
                     style={{ marginBottom: 48 }}
                 >
                     <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        $ skills --level=expert
+                        $ capabilities --depth=system-level
                     </p>
                     <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
-                        Tools &amp; Technologies
+                        Systems Depth &amp; Stack
                     </h2>
                 </m.div>
-            </div>
 
-            {/* Carousel — full width, no padding */}
-            <div style={{ position: "relative", overflow: "hidden" }}>
-                {/* fade edges */}
-                <div className="carousel-fade" style={{
-                    position: "absolute", left: 0, top: 0, bottom: 0, width: 120, zIndex: 2,
-                    background: "linear-gradient(to right, var(--bg), transparent)",
-                    pointerEvents: "none",
-                }} />
-                <div className="carousel-fade" style={{
-                    position: "absolute", right: 0, top: 0, bottom: 0, width: 120, zIndex: 2,
-                    background: "linear-gradient(to left, var(--bg), transparent)",
-                    pointerEvents: "none",
-                }} />
-
-                <div
-                    style={{
-                        display: "flex",
-                        gap: 16,
-                        width: "max-content",
-                        animation: "scroll-left 30s linear infinite",
-                    }}
-                >
-                    {ITEMS.map((item, i) => (
-                        <div
-                            key={i}
-                            className="glass-card"
+                {/* 2x2 Grid for capabilities */}
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                    gap: 24,
+                    width: "100%"
+                }}>
+                    {SKILL_CATEGORIES.map((cat, i) => (
+                        <m.div
+                            key={cat.title}
+                            initial={{ opacity: 0, y: 24 }}
+                            animate={inView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ delay: 0.1 * i, duration: 0.5 }}
                             style={{
+                                background: "var(--card-bg)",
+                                border: "1px solid var(--border)",
+                                borderRadius: 12,
+                                padding: 24,
                                 fontFamily: "monospace",
-                                fontSize: 13,
-                                padding: "14px 24px",
-                                borderRadius: 6,
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 4,
-                                flexShrink: 0,
-                                cursor: "default",
+                                gap: 16,
+                                transition: "all 0.2s ease-in-out"
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = "var(--accent)";
+                                e.currentTarget.style.boxShadow = "0 8px 24px color-mix(in srgb, var(--accent) 5%, transparent)";
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = "var(--border)";
+                                e.currentTarget.style.boxShadow = "none";
                             }}
                         >
-                            <span style={{ color: "var(--fg)", fontWeight: 600, whiteSpace: "nowrap" }}>{item.name}</span>
-                            <span style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>{item.level}</span>
-                        </div>
+                            {/* Card Header */}
+                            <div>
+                                <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--fg)", marginBottom: 4 }}>
+                                    {cat.title}
+                                </h3>
+                                <p style={{ fontSize: 11, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                    $ {cat.cmd}
+                                </p>
+                            </div>
+
+                            {/* Divider line */}
+                            <div style={{ height: 1, background: "color-mix(in srgb, var(--border) 60%, transparent)", width: "100%" }} />
+
+                            {/* Tree List */}
+                            <div style={{ display: "flex", flexDirection: "column", gap: 8, fontSize: 13, color: "var(--fg)" }}>
+                                {cat.items.map((item, idx) => {
+                                    const isLast = idx === cat.items.length - 1;
+                                    return (
+                                        <div key={item} style={{ display: "flex", alignItems: "start", gap: 8 }}>
+                                            <span style={{ color: "var(--accent)", userSelect: "none" }}>
+                                                {isLast ? "└──" : "├──"}
+                                            </span>
+                                            <span style={{ fontSize: 12, color: "var(--muted)" }}>{item}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </m.div>
                     ))}
                 </div>
             </div>
-
-            <style>{`
-                @keyframes scroll-left {
-                    0%   { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
-                }
-            `}</style>
         </section>
     );
 }
