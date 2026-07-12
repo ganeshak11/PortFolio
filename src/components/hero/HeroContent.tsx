@@ -105,7 +105,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                         width: "100%",
                     }}
                 >
-                    $ whoami — DevOps Engineer | System Thinker
+                    $ whoami — DevOps Engineer &amp; Systems Engineering
                 </m.p>
 
                 {/* ── Dual-layer headline ─── */}

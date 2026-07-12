@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1.0,
         },
         {
+            url: `${DOMAIN}/about`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
             url: `${DOMAIN}/blog`,
             lastModified: new Date(),
             changeFrequency: 'weekly',

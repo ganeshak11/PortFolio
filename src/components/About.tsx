@@ -72,7 +72,7 @@ export default function About() {
                         <div className="about-photo-inner" style={{ position: "relative", width: "100%", aspectRatio: "4/5", borderRadius: 12, overflow: "hidden", background: "var(--bg)" }}>
                             <Image
                                 src="/profile.png"
-                                alt="Ganesh Angadi - DevOps Engineer"
+                                alt="Ganesh Angadi - DevOps Engineer Portfolio"
                                 fill
                                 priority
                                 sizes="(max-width: 768px) 100vw, 36vw"
@@ -99,7 +99,7 @@ export default function About() {
                         </div>
 
                         <p style={{ fontSize: "clamp(14px, 1.8vw, 15px)", lineHeight: 1.8, color: "var(--fg)", maxWidth: 500 }}>
-                            I don't build features. I design observable systems that fail gracefully. Focused on Linux internals, Kubernetes orchestration, and declarative infrastructure automation.
+                            Welcome to my DevOps portfolio. I don't build features; I design observable systems that fail gracefully. Focused on Linux internals, Kubernetes orchestration, and declarative infrastructure automation.
                         </p>
 
                         {/* Address + Resume buttons */}

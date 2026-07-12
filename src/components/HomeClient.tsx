@@ -113,7 +113,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
       <FAB onTerminalOpen={() => setTerminalOpen(true)} />
 
       <main>
-        <h1 className="sr-only">Ganesh Angadi - DevOps Engineer</h1>
+        <h1 className="sr-only">Ganesh Angadi | DevOps Engineer Portfolio | Systems &amp; Infrastructure</h1>
 
         <section id="hero" aria-label="Introduction">
           <Hero />

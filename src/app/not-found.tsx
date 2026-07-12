@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { m } from "framer-motion";
 
 export default function NotFound() {
@@ -188,9 +189,10 @@ export default function NotFound() {
 
           {/* Manual redirect button */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
-            <button
-              onClick={() => push("/")}
+            <Link
+              href="/"
               style={{
+                display: "inline-block",
                 fontFamily: "monospace",
                 fontSize: 13,
                 padding: "12px 24px",
@@ -199,6 +201,7 @@ export default function NotFound() {
                 color: "var(--fg)",
                 borderRadius: 4,
                 cursor: "pointer",
+                textDecoration: "none",
                 transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
               }}
               onMouseEnter={(e) => {
@@ -211,7 +214,7 @@ export default function NotFound() {
               }}
             >
               [Go Home Now]
-            </button>
+            </Link>
           </div>
         </div>
       </m.div>

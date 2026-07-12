@@ -122,6 +122,9 @@ export default function RootLayout({
     sameAs: [
       "https://github.com/ganeshak11",
       "https://linkedin.com/in/ganeshangadi1301",
+      "https://dev.to/ganeshak11",
+      "https://reddit.com/u/ganeshak11",
+      "https://x.com/Ganeshangadi16"
     ],
     award: "1st Place - MCP Server Hackathon 2026",
   };

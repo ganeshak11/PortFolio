@@ -134,6 +134,9 @@ export default async function BlogPost({ params }: BlogPostProps) {
             sameAs: [
                 "https://github.com/ganeshak11",
                 "https://linkedin.com/in/ganeshangadi1301",
+                "https://dev.to/ganeshak11",
+                "https://reddit.com/u/ganeshak11",
+                "https://x.com/Ganeshangadi16",
             ],
         },
         publisher: {

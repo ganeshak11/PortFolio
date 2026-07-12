@@ -627,6 +627,37 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                         </div>
                     )}
 
+                    {/* Author block for SEO */}
+                    <div style={{
+                        marginTop: 48,
+                        padding: "24px",
+                        border: "1px solid var(--border)",
+                        borderRadius: 8,
+                        background: "var(--card-bg)",
+                        lineHeight: 1.6
+                    }}>
+                        <p style={{ margin: "0 0 8px 0", fontSize: 16, fontWeight: 700, color: "var(--fg)" }}>
+                            Written by Ganesh Angadi
+                        </p>
+                        <p style={{ margin: "0 0 16px 0", fontSize: 14, color: "var(--muted)" }}>
+                            DevOps Engineer • Backend Engineer • Platform Engineering
+                        </p>
+                        <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: 13, fontWeight: 600 }}>
+                            <Link href="/" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                                Portfolio Home
+                            </Link>
+                            <a href="https://github.com/ganeshak11" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                                GitHub Profile
+                            </a>
+                            <a href="https://linkedin.com/in/ganeshangadi1301" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                                LinkedIn Connect
+                            </a>
+                            <a href="https://dev.to/ganeshak11" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                                Dev.to Profile
+                            </a>
+                        </div>
+                    </div>
+
                     {/* Footer Section */}
                     <footer style={{ marginTop: 60, borderTop: "1px solid var(--border)", paddingTop: 32, paddingBottom: 32 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>

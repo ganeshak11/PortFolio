@@ -16,7 +16,7 @@ function buildCard(): string {
         "",
         `${CYAN}${B}  ╔══════════════════════════════════════════════════╗${R}`,
         `${CYAN}${B}  ║${R}  ${WHITE}${B}GANESH ANGADI${R}                                   ${CYAN}${B}║${R}`,
-        `${CYAN}${B}  ║${R}  ${YELLOW}DevOps Aspirant  •  Creator of Fortis-CI${R}        ${CYAN}${B}║${R}`,
+        `${CYAN}${B}  ║${R}  ${YELLOW}DevOps Engineer  •  Creator of Fortis-CI${R}        ${CYAN}${B}║${R}`,
         `${CYAN}${B}  ╚══════════════════════════════════════════════════╝${R}`,
         "",
         `  ${GREEN}${B}About${R}`,
