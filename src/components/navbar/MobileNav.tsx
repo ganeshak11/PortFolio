@@ -97,7 +97,7 @@ export function MobileNav({
                             <m.a
                                 key={l.href}
                                 href={l.href}
-                                {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                                {...(l.external ? { target: "_blank", rel: "me noopener noreferrer" } : {})}
                                 onClick={() => setMobileMenuOpen(false)}
                                 initial={{ opacity: 0, x: 24 }}
                                 animate={{ opacity: 1, x: 0 }}

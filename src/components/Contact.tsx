@@ -13,9 +13,9 @@ const LINKS = [
 ];
 
 const SOCIALS = [
-    { icon: FaWhatsapp,  href: "https://wa.me/919986094984",            label: "WhatsApp" },
-    { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22",    label: "Instagram" },
-    { icon: FaDiscord,   href: "https://discord.com/ganeshak11",  label: "Discord" },
+    { icon: FaWhatsapp, href: "https://wa.me/919986094984", label: "WhatsApp" },
+    { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22", label: "Instagram" },
+    { icon: FaDiscord, href: "https://discord.com/ganeshak11", label: "Discord" },
 ];
 
 export default function Contact() {
@@ -75,7 +75,7 @@ export default function Contact() {
                                     key={link.label}
                                     href={link.href}
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="me noopener noreferrer"
                                     initial={{ opacity: 0, x: -12 }}
                                     animate={inView ? { opacity: 1, x: 0 } : {}}
                                     transition={{ delay: 0.3 + i * 0.1 }}
@@ -109,7 +109,7 @@ export default function Contact() {
                                     key={label}
                                     href={href}
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="me noopener noreferrer"
                                     aria-label={label}
                                     whileHover={{ scale: 1.2, rotate: 8 }}
                                     style={{ color: "var(--muted)", display: "flex", transition: "color 0.2s" }}

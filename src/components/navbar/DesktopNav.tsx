@@ -14,7 +14,7 @@ export function DesktopNav({ theme, toggle, onTerminalToggle }: DesktopNavProps)
                 <a
                     key={l.href}
                     href={l.href}
-                    {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    {...(l.external ? { target: "_blank", rel: "me noopener noreferrer" } : {})}
                     className="nav-underline"
                     style={{
                         fontSize: 13,

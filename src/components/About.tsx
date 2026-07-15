@@ -111,7 +111,7 @@ export default function About() {
                                 <Link
                                     href="/resume.html"
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="me noopener noreferrer"
                                     className="btn-slide"
                                     style={{
                                         display: "inline-block",
@@ -146,7 +146,7 @@ export default function About() {
                                     key={label}
                                     href={href}
                                     target="_blank"
-                                    rel="noopener noreferrer"
+                                    rel="me noopener noreferrer"
                                     aria-label={label}
                                     initial={{ opacity: 0, y: 8 }}
                                     animate={inView ? { opacity: 1, y: 0 } : {}}

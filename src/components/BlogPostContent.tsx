@@ -646,13 +646,13 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                             <Link href="/" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
                                 Portfolio Home
                             </Link>
-                            <a href="https://github.com/ganeshak11" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                            <a href="https://github.com/ganeshak11" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
                                 GitHub Profile
                             </a>
-                            <a href="https://linkedin.com/in/ganeshangadi1301" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                            <a href="https://linkedin.com/in/ganeshangadi1301" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
                                 LinkedIn Connect
                             </a>
-                            <a href="https://dev.to/ganeshak11" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
+                            <a href="https://dev.to/ganeshak11" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">
                                 Dev.to Profile
                             </a>
                         </div>

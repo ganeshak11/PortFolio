@@ -305,7 +305,7 @@ function ProjectRow({ project, index, inView, openIndex, setOpenIndex }: {
                             <a
                                 href={project.github}
                                 target="_blank"
-                                rel="noopener noreferrer"
+                                rel="me noopener noreferrer"
                                 style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
                             >
                                 View on GitHub →
