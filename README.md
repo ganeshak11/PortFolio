@@ -166,4 +166,12 @@ Website  →  https://ganeshangadi.online
 
 ---
 
+## 👨‍💻 Creator
+
+**Ganesh Angadi**
+- 🐙 GitHub: [@ganeshak11](https://github.com/ganeshak11)
+- 🌐 Portfolio: [ganeshangadi.online](https://ganeshangadi.online)
+- 💼 LinkedIn: [Ganesh Angadi](https://linkedin.com/in/ganeshangadi1301)
+
+---
 <sub>Built with intent. Deployed with a rollback plan.</sub>
