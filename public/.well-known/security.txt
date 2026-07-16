@@ -1,0 +1,7 @@
+# Security Policy for ganeshangadi.online
+# https://securitytxt.org/
+
+Contact: mailto:ganeshangadi1301@gmail.com
+Preferred-Languages: en
+Canonical: https://ganeshangadi.online/.well-known/security.txt
+Expires: 2027-07-16T00:00:00.000Z

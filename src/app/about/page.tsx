@@ -22,6 +22,30 @@ export const metadata: Metadata = {
     ],
     authors: [{ name: "Ganesh Angadi", url: DOMAIN }],
     creator: "Ganesh Angadi",
+    openGraph: {
+        title: "About Ganesh Angadi | DevOps Engineer",
+        description:
+            "Systems-first DevOps portfolio of Ganesh Angadi. Creator of Fortis-CI, hackathon winner, platform engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation.",
+        type: "profile",
+        url: `${DOMAIN}/about`,
+        siteName: "Ganesh Angadi Portfolio",
+        images: [
+            {
+                url: `${DOMAIN}/og-profile.jpg`,
+                width: 800,
+                height: 800,
+                alt: "Ganesh Angadi - DevOps Engineer",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "About Ganesh Angadi | DevOps Engineer",
+        description:
+            "Systems-first DevOps portfolio. Creator of Fortis-CI — graph-native deployment observability. AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
+        images: [`${DOMAIN}/og-profile.jpg`],
+        creator: "@ganeshak11",
+    },
     alternates: {
         canonical: `${DOMAIN}/about`,
     },
@@ -187,42 +211,42 @@ export default function AboutPage() {
                             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                                 <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
                                     <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
+                                        <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
                                             Fortis-CI
                                         </a>
                                     </h3>
                                     <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
                                         Graph-native deployment observability platform. Built on Neo4j.
                                     </p>
-                                    <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="me noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
+                                    <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
                                         Fortis-CI Repository
                                     </a>
                                 </div>
 
                                 <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
                                     <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/Fortis-Tools" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
+                                        <a href="https://github.com/Fortis-Tools" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
                                             Fortis-Tools
                                         </a>
                                     </h3>
                                     <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
                                         Open-source developer tools, CLI utilities, and DevOps automation.
                                     </p>
-                                    <a href="https://github.com/Fortis-Tools" target="_blank" rel="me noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
+                                    <a href="https://github.com/Fortis-Tools" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
                                         Fortis-Tools Organization
                                     </a>
                                 </div>
 
                                 <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
                                     <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="me noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
+                                        <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
                                             MY(suru) BUS
                                         </a>
                                     </h3>
                                     <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
                                         Real-time city transportation platform with live GPS tracking.
                                     </p>
-                                    <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="me noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
+                                    <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
                                         MY(suru) BUS Repository
                                     </a>
                                 </div>

@@ -380,7 +380,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                     By Ganesh Angadi
                                     <span style={{ fontSize: 9, padding: "1px 5px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
                                 </span>
-                                <time style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", display: "flex", gap: 6 }}>
+                                <time dateTime={new Date(post.date).toISOString()} style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", display: "flex", gap: 6 }}>
                                     <span>Published {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                                     <span>•</span>
                                     <span>{post.readingTime} min read</span>

@@ -111,7 +111,7 @@ export default function About() {
                                 <Link
                                     href="/resume.html"
                                     target="_blank"
-                                    rel="me noopener noreferrer"
+                                    rel="noopener noreferrer"
                                     className="btn-slide"
                                     style={{
                                         display: "inline-block",

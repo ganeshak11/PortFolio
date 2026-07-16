@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     siteName: "Ganesh Angadi Portfolio",
     images: [
       {
-        url: "https://ganeshangadi.online/profile.png",
+        url: "https://ganeshangadi.online/og-profile.jpg",
         width: 800,
         height: 800,
         alt: "Ganesh Angadi - DevOps Engineer",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
     description: "Creator of Fortis-CI — graph-native deployment observability. DevOps engineer | AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
-    images: ["https://ganeshangadi.online/profile.png"],
+    images: ["https://ganeshangadi.online/og-profile.jpg"],
     creator: "@ganeshak11",
   },
   metadataBase: new URL("https://ganeshangadi.online"),
@@ -155,7 +155,7 @@ export default function RootLayout({
     description:
       "An open-source graph-native deployment observability platform built on Neo4j. Tracks deployment pipelines as a graph, enabling real-time observability and dependency mapping for CI/CD workflows.",
     author: { "@type": "Person", name: "Ganesh Angadi", url: "https://ganeshangadi.online" },
-    url: "https://github.com/ganeshak11",
+    url: "https://github.com/Fortis-CI/Fortis-CI",
     keywords: "deployment observability, graph-native, Neo4j, CI/CD, DevOps",
   };
 
@@ -168,6 +168,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link rel="me" href="https://github.com/ganeshak11" />
+        <link rel="me" href="https://linkedin.com/in/ganeshangadi1301" />
+        <link rel="me" href="https://dev.to/ganeshak11" />
+        <link rel="me" href="https://reddit.com/u/ganeshak11" />
+        <link rel="me" href="https://x.com/Ganeshangadi16" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className={`${inter.variable} ${playfair.variable} antialiased`}>
