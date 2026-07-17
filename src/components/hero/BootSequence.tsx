@@ -85,10 +85,10 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                 padding: "80px 24px 40px",
                 background: "#0a0a0f",
                 color: "#39ff14",
-                position: "absolute",
+                position: "fixed",
                 inset: 0,
                 width: "100%",
-                zIndex: 50,
+                zIndex: 99999,
             }}
         >
             {/* Skip Sequence Button */}

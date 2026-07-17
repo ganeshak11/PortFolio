@@ -16,12 +16,9 @@ export default function Hero() {
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    if (!bootDone) {
-        return <BootSequence setBootDone={setBootDone} />;
-    }
-
     return (
         <>
+            {!bootDone && <BootSequence setBootDone={setBootDone} />}
             <AnnouncementBanner />
             <HeroContent isMobile={isMobile} />
         </>
