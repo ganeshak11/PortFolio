@@ -4,7 +4,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye, Sun, Moon } from "lucide-react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
 import { useTheme } from "@/components/ThemeProvider";
@@ -98,6 +98,158 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
             }}>
                 {children}
             </code>
+        </div>
+    );
+}
+
+function ClientIpBadge() {
+    const [ip, setIp] = useState("detecting...");
+    useEffect(() => {
+        // Cloudflare's trace API is extremely fast and rarely blocked by adblockers
+        fetch("https://1.1.1.1/cdn-cgi/trace")
+            .then(res => res.text())
+            .then(data => {
+                const ipLine = data.split('\n').find(line => line.startsWith('ip='));
+                if (ipLine) {
+                    setIp(ipLine.split('=')[1]);
+                } else {
+                    setIp("your actual IP");
+                }
+            })
+            .catch(() => setIp("your actual IP"));
+    }, []);
+
+    return (
+        <code style={{
+            fontFamily: "var(--font-mono), monospace",
+            fontSize: 13.5,
+            background: "color-mix(in srgb, #ff4757 15%, transparent)",
+            color: "#ff4757",
+            padding: "2px 6px",
+            borderRadius: 4,
+            border: "1px solid color-mix(in srgb, #ff4757 30%, transparent)",
+            fontWeight: "bold",
+            transition: "all 0.3s ease",
+            opacity: ip === "detecting..." ? 0.7 : 1
+        }}>
+            {ip}
+        </code>
+    );
+}
+
+function BrowserDataReveal() {
+    const [data, setData] = useState<any>(null);
+
+    useEffect(() => {
+        const getGPU = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl') as WebGLRenderingContext;
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                        // Clean up generic/long strings for better display
+                        return renderer.replace(/ANGLE \(|\)|Direct3D.*|vs_.*|ps_.*/g, '').trim() || 'Hidden';
+                    }
+                }
+                return 'Hidden/Blocked';
+            } catch (e) {
+                return 'Hidden/Blocked';
+            }
+        };
+
+        const parseBrowser = (ua: string) => {
+            if (ua.includes("Firefox/")) return "Firefox " + ua.split("Firefox/")[1].split(" ")[0];
+            if (ua.includes("Edg/")) return "Edge " + ua.split("Edg/")[1].split(" ")[0];
+            if (ua.includes("Chrome/")) return "Chrome " + ua.split("Chrome/")[1].split(".")[0];
+            if (ua.includes("Safari/") && !ua.includes("Chrome")) return "Safari " + (ua.includes("Version/") ? ua.split("Version/")[1].split(" ")[0] : "");
+            return "Unknown Browser";
+        };
+
+        const parseOS = (ua: string) => {
+            if (ua.includes('Android')) return 'Android';
+            if (ua.includes('like Mac')) return 'iOS';
+            if (ua.includes('Win')) return 'Windows';
+            if (ua.includes('Mac')) return 'MacOS';
+            if (ua.includes('Linux')) return 'Linux';
+            return 'Unknown OS';
+        };
+
+        const gatherData = async () => {
+            const nav = navigator as any;
+            let publicIp = "Fetching...";
+            try {
+                const res = await fetch("https://1.1.1.1/cdn-cgi/trace");
+                const text = await res.text();
+                const ipLine = text.split('\n').find(line => line.startsWith('ip='));
+                if (ipLine) publicIp = ipLine.split('=')[1];
+            } catch (e) {
+                publicIp = "Hidden";
+            }
+
+            let browserName = parseBrowser(nav.userAgent);
+            try {
+                if (nav.brave && await nav.brave.isBrave()) {
+                    browserName = "Brave";
+                }
+            } catch (e) {}
+
+            setData({
+                browser: browserName,
+                os: parseOS(nav.userAgent),
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                ip: publicIp,
+                theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light',
+                language: nav.language || 'Unknown',
+                resolution: `${window.screen.width} × ${window.screen.height}`,
+                cookies: nav.cookieEnabled ? 'Enabled' : 'Disabled',
+                cores: nav.hardwareConcurrency || 'Hidden',
+                gpu: getGPU()
+            });
+        };
+        gatherData();
+    }, []);
+
+    if (!data) return null;
+
+    const Item = ({ icon, label, value }: { icon: string, label: string, value: string }) => (
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ color: "var(--muted)", fontSize: 12, textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600 }}>
+                {icon} {label}
+            </span>
+            <span style={{ color: "var(--fg)", fontSize: 15, fontWeight: 500 }}>{value}</span>
+        </div>
+    );
+
+    return (
+        <div style={{
+            background: "color-mix(in srgb, var(--card-bg) 50%, transparent)",
+            border: "1px solid var(--border)",
+            borderRadius: 12,
+            padding: "24px 28px",
+            margin: "32px 0",
+            fontFamily: "var(--font-mono), monospace",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.1)"
+        }}>
+            <div style={{ color: "var(--fg)", fontSize: 18, fontWeight: 800, marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
+                🕵️ What Your Browser Just Told Me
+            </div>
+            
+            <hr style={{ border: "none", borderTop: "1px dashed var(--border)", margin: "0 0 20px 0", opacity: 0.5 }} />
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "20px 24px" }}>
+                <Item icon="🖥" label="Browser" value={data.browser} />
+                <Item icon="💻" label="OS" value={data.os} />
+                <Item icon="🌍" label="Timezone" value={data.timezone} />
+                <Item icon="📍" label="Public IP" value={data.ip} />
+                <Item icon="🌙" label="Theme" value={data.theme} />
+                <Item icon="🗣" label="Language" value={data.language} />
+                <Item icon="📏" label="Resolution" value={data.resolution} />
+                <Item icon="🍪" label="Cookies" value={data.cookies} />
+                <Item icon="🧠" label="CPU Cores" value={data.cores} />
+                <Item icon="🎮" label="GPU" value={data.gpu} />
+            </div>
         </div>
     );
 }
@@ -433,7 +585,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                     <div style={{ color: "var(--fg)", fontSize: 16, lineHeight: 1.75 }}>
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
-                            components={{
+                            components={useMemo(() => ({
                                 img: ({ src, alt }) => {
                                     let cleanSrc = typeof src === "string" ? src : "";
                                     if (cleanSrc.startsWith("/public/")) {
@@ -494,11 +646,45 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                         {children}
                                     </h3>
                                 ),
-                                p: ({ children }) => (
-                                    <p style={{ marginBottom: 20, lineHeight: 1.8, color: "color-mix(in srgb, var(--fg) 92%, transparent)", fontSize: 17 }}>{children}</p>
+                                p: ({ children }) => {
+                                    if (children === "[WHAT_YOUR_BROWSER_TOLD_ME]" || (Array.isArray(children) && children[0] === "[WHAT_YOUR_BROWSER_TOLD_ME]")) {
+                                        return <BrowserDataReveal />;
+                                    }
+                                    return <p style={{ marginBottom: 20, lineHeight: 1.8, color: "color-mix(in srgb, var(--fg) 92%, transparent)", fontSize: 17 }}>{children}</p>;
+                                },
+                                a: ({ href, children }) => (
+                                    <a 
+                                        href={href} 
+                                        target={href?.startsWith("http") ? "_blank" : "_self"}
+                                        rel={href?.startsWith("http") ? "noopener noreferrer" : ""}
+                                        style={{
+                                            color: "var(--accent)",
+                                            textDecoration: "underline",
+                                            textDecorationStyle: "dashed",
+                                            textUnderlineOffset: 4,
+                                            fontWeight: 600,
+                                            transition: "all 0.2s ease"
+                                        }}
+                                        onMouseOver={(e) => {
+                                            e.currentTarget.style.textDecorationStyle = "solid";
+                                            e.currentTarget.style.color = "color-mix(in srgb, var(--accent) 80%, white)";
+                                        }}
+                                        onMouseOut={(e) => {
+                                            e.currentTarget.style.textDecorationStyle = "dashed";
+                                            e.currentTarget.style.color = "var(--accent)";
+                                        }}
+                                    >
+                                        {children}
+                                    </a>
                                 ),
                                 code: ({ className, children }) => {
                                     const isBlock = className?.includes("language-");
+                                    const textContent = String(children);
+                                    
+                                    if (!isBlock && textContent === "[YOUR_PUBLIC_IP]") {
+                                        return <ClientIpBadge />;
+                                    }
+
                                     return isBlock ? (
                                         <CodeBlock className={className}>{children}</CodeBlock>
                                     ) : (
@@ -552,7 +738,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                                 strong: ({ children }) => (
                                     <strong style={{ color: "var(--fg)", fontWeight: 700 }}>{children}</strong>
                                 ),
-                            }}
+                            }), [post.title])}
                         >
                             {stripFirstH1(post.content)}
                         </ReactMarkdown>
