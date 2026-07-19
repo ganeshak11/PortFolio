@@ -9,8 +9,11 @@ export async function GET() {
         const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)?.replace(/^["']|["']$/g, '').trim();
         
         if (!supabaseUrl || !supabaseKey || supabaseUrl === 'undefined' || supabaseKey === 'undefined') {
-            return NextResponse.json({ error: `Missing Supabase configuration. URL: "${supabaseUrl}"` }, { status: 500 });
+            const keySuffix = supabaseKey ? supabaseKey.slice(-8) : 'missing';
+            return NextResponse.json({ error: `Missing Supabase configuration. URL: "${supabaseUrl}", Key ends with: "...${keySuffix}"` }, { status: 500 });
         }
+
+        console.log(`[Supabase Keepalive] URL: ${supabaseUrl}, Key ends with: ...${supabaseKey.slice(-8)}`);
 
         try {
             new URL(supabaseUrl);
