@@ -5,8 +5,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^["']|["']$/g, '').trim();
-        const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)?.replace(/^["']|["']$/g, '').trim();
+        const supabaseUrl = process.env.MY_SUPABASE_URL?.replace(/^["']|["']$/g, '').trim();
+        const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.MY_SUPABASE_ANON_KEY)?.replace(/^["']|["']$/g, '').trim();
         
         if (!supabaseUrl || !supabaseKey || supabaseUrl === 'undefined' || supabaseKey === 'undefined') {
             const keySuffix = supabaseKey ? supabaseKey.slice(-8) : 'missing';

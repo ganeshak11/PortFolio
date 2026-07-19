@@ -4,8 +4,8 @@ let clientInstance: ReturnType<typeof createClient> | null = null;
 
 function getClient() {
     if (!clientInstance) {
-        const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^["']|["']$/g, '').trim();
-        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.replace(/^["']|["']$/g, '').trim();
+        const url = process.env.MY_SUPABASE_URL?.replace(/^["']|["']$/g, '').trim();
+        const key = process.env.MY_SUPABASE_ANON_KEY?.replace(/^["']|["']$/g, '').trim();
         
         if (!url || !key || url === 'undefined' || key === 'undefined') {
             const keySuffix = key ? key.slice(-8) : 'missing';
