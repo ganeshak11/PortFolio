@@ -45,7 +45,7 @@ Imagine your phone, laptop, printer, and smart TV are all connected to the same 
 The three most common private IPv4 ranges are:
 
 ```bash
-10.0.x.x
+10.x.x.x
 172.16.x.x
 192.168.x.x
 ```
