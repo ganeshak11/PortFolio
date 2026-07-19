@@ -4,15 +4,21 @@ let clientInstance: ReturnType<typeof createClient> | null = null;
 
 function getClient() {
     if (!clientInstance) {
-        const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^"|"$/g, '').trim();
-        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.replace(/^"|"$/g, '').trim();
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^["']|["']$/g, '').trim();
+        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.replace(/^["']|["']$/g, '').trim();
         
-        if (!url || !key) {
-            // Throw a detailed error only when code attempts to execute database queries without configuration
+        if (!url || !key || url === 'undefined' || key === 'undefined') {
             throw new Error(
-                "Supabase client initialization failed: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY must be defined."
+                `Supabase client initialization failed: Missing env vars. URL: "${url}", Key: "${key ? '[REDACTED]' : 'missing'}"`
             );
         }
+
+        try {
+            new URL(url);
+        } catch (e) {
+            throw new Error(`Supabase client initialization failed: NEXT_PUBLIC_SUPABASE_URL is not a valid URL. You provided: "${url}". Make sure it starts with https://`);
+        }
+
         clientInstance = createClient(url, key);
     }
     return clientInstance;
