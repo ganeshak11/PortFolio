@@ -24,7 +24,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
 
         // 2. Fallback: generate a random UUID server-side if none was provided
         if (!visitorId) {
-            visitorId = globalThis.crypto.randomUUID();
+            const { randomUUID } = require('crypto');
+            visitorId = randomUUID();
         }
 
         // 3. Extract the raw IP address for metadata (abuse detection / geo-analytics)
@@ -62,7 +63,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ slu
         return NextResponse.json({ count });
 
     } catch (e: any) {
-        return NextResponse.json({ error: e.message }, { status: 500 });
+        console.error("[POST views error]", e);
+        return NextResponse.json({ error: e.message || "Internal Error" }, { status: 500 });
     }
 }
 
@@ -77,6 +79,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 
         return NextResponse.json({ count: viewData ? viewData.view_count : 0 });
     } catch (e: any) {
+        console.error("[GET views error]", e);
         return NextResponse.json({ count: 0 }, { status: 500 });
     }
 }
