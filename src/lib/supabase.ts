@@ -4,8 +4,8 @@ let clientInstance: ReturnType<typeof createClient> | null = null;
 
 function getClient() {
     if (!clientInstance) {
-        const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/^"|"$/g, '').trim();
+        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.replace(/^"|"$/g, '').trim();
         
         if (!url || !key) {
             // Throw a detailed error only when code attempts to execute database queries without configuration
