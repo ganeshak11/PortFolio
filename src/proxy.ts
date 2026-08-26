@@ -39,9 +39,10 @@ function buildCard(): string {
         "",
         `  ${GREEN}${B}Projects${R}`,
         `  ${DIM}────────────────────────────────────────────${R}`,
+        `  ${YELLOW}CI/CD Sentinel${R}  Graph-Native AI SRE Platform`,
         `  ${YELLOW}Fortis-CI${R}   Graph-native deployment observability (Neo4j)`,
+        `  ${YELLOW}Fortis Ecosystem${R}  Unified privacy-first security platform`,
         `  ${YELLOW}MY(suru) BUS${R}  Real-time KSRTC bus tracking, React Native`,
-        `  ${YELLOW}TicketFlow${R}  Event ticketing platform, microservices`,
         "",
         `  ${DIM}────────────────────────────────────────────${R}`,
         `  ${DIM}Portfolio v2.3.1${R}`,
@@ -68,8 +69,9 @@ export function proxy(req: NextRequest) {
     const isCurl = ua.toLowerCase().startsWith("curl");
 
     // Enforce HTTPS
-    if (req.headers.get("x-forwarded-proto") === "http" && process.env.NODE_ENV === "production") {
+    if (req.headers.get("x-forwarded-proto") === "http" && process.env.NODE_ENV === "production" && process.env.DISABLE_HTTPS_REDIRECT !== "true") {
         const url = req.nextUrl.clone();
+        url.host = req.headers.get("host") || url.host;
         url.protocol = "https:";
         return NextResponse.redirect(url, { status: 301 });
     }

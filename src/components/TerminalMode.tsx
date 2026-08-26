@@ -8,7 +8,7 @@ import { useTheme } from "@/components/ThemeProvider";
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "github", "thinking", "contact", "README.md"],
     "/about": ["info.txt"],
-    "/projects": ["mysuru-bus", "autoops", "cyber-kavach", "fortis-ci"],
+    "/projects": ["cicd-sentinel", "fortis-ci", "fortis-ecosystem", "fortis-tools", "mysuru-bus", "portfolio-infra"],
     "/stack": ["tools.txt"],
     "/github": ["stats.txt"],
     "/thinking": ["principles.txt"],
@@ -46,19 +46,19 @@ CORE PRINCIPLES:
 ▸ Designing robust failover and self-healing environments
 ▸ Enforcing security boundaries and minimizing attack surfaces`,
 
-    "/projects/mysuru-bus": `MY(suru) BUS - Smart Transit Platform
+    "/projects/cicd-sentinel": `CI/CD Sentinel - Graph-Native AI SRE Platform
 
-A city-scale public transportation platform tracking buses in real-time.
+A self-hosted, open-source intelligent deployment observability platform powered by Neo4j.
 
-ARCHITECTURE:
-- Passenger Interface: React Native (Expo)
-- Fleet Tracking App: React Native (Driver client)
-- Operations Dashboard: Next.js + Tailwind
-- Database Backend: Supabase (Auth, RLS, WebSockets)
+STACK:
+- Database: Neo4j
+- API Core: Node.js
+- Frontend: Next.js
+- Integration: GitHub Actions
 
-DESIGN HIGHLIGHTS:
-▸ Offline-first queuing system synchronizes driver GPS buffers
-▸ Database-level security policies enforce role-based access`,
+KEY CAPABILITY:
+Models the entire deployment lifecycle as a connected graph to calculate
+failure blast radius instantly and automate incident triage.`,
 
     "/projects/fortis-ci": `Fortis-CI - Graph-Native CI/CD Observer
 
@@ -74,24 +74,53 @@ KEY CAPABILITY:
 Map pipelines, commits, configuration changes, and test failures into
 a dependency graph to locate single points of failure automatically.`,
 
-    "/projects/autoops": `AUTOops - Cloud Provisioner (Hackathon)
+    "/projects/fortis-ecosystem": `Fortis Ecosystem - Unified Security Platform
 
-An AI-driven AWS provisioning platform provisioning containers dynamically.
-Awarded 1st place in DevOps and local development tracks.
+A privacy-first security platform featuring password management, biometric sudo,
+and encrypted backup systems.
+
+STACK:
+- Core Daemon: Rust (fortis-agent)
+- Desktop App: Tauri (TypeScript/Rust)
+- Mobile App: Kotlin (Jetpack Compose)
+- Encryption: AES-256 (SQLCipher), Ed25519
+
+KEY CAPABILITY:
+Zero-trust architecture utilizing Ed25519 signatures, zeroizing memory, and
+a unified RPC background daemon.`,
+
+    "/projects/fortis-tools": `Fortis-Tools - Infrastructure Utilities
+
+Operational utilities and infrastructure automation scripts for Fortis.
+
+STACK:
+- Python
+- Shell Scripting
+- Go`,
+
+    "/projects/mysuru-bus": `MY(suru) BUS - Smart Transit Platform
+
+A city-scale public transportation platform tracking buses in real-time.
 
 ARCHITECTURE:
-- LLM Scheduler: Python Agent Planner
-- Provisioner API: Node.js API Gateway
-- Deployment: Docker Containers & AWS EC2`,
+- Passenger Interface: React Native (Expo)
+- Fleet Tracking App: React Native (Driver client)
+- Operations Dashboard: Next.js + Tailwind
+- Database Backend: Supabase (Auth, RLS, WebSockets)
 
-    "/projects/cyber-kavach": `Cyber Kavach - DevSecOps Intrusion Detection
+DESIGN HIGHLIGHTS:
+▸ Offline-first queuing system synchronizes driver GPS buffers
+▸ Database-level security policies enforce role-based access`,
 
-A real-time network anomaly detector built for a secure hackathon.
+    "/projects/portfolio-infra": `Portfolio Infrastructure - DevOps Setup
 
-ARCHITECTURE:
-- ML Ingestion Client: Scikit-Learn Python Daemon
-- Realtime Gateway: FastAPI (WebSockets)
-- Edge Server: Nginx Web Server`,
+Zero-to-production automated infrastructure provisioning and deployment.
+
+STACK:
+- IaC: Terraform
+- Containers: Docker, Kubernetes (Minikube)
+- Cloud: AWS EC2
+- CI/CD: GitHub Actions`,
 
     "/stack/tools.txt": `DEVOPS STACK & SKILLS:
 
@@ -405,10 +434,10 @@ Location: Mysuru, Karnataka, India
 ▸ 1st Place - MCP-Based Systems Engineering Hackathon
 
 [TOP PROJECTS]
-▸ Infra Sentinel - Graph-Native AI SRE Platform
-▸ Portfolio Infrastructure - Zero-to-Production DevOps
+▸ CI/CD Sentinel - Graph-Native AI SRE Platform
+▸ Fortis Ecosystem - Unified Privacy Platform
 ▸ MY(suru) BUS - Real-Time Smart Bus Tracking
-▸ CI/CD Sentinel - Centralized Deployment Observability
+▸ Portfolio Infrastructure - Zero-to-Production DevOps
 
 To view the full resume, close the terminal and click 'View Resume', 
 or go directly to /resume.html
