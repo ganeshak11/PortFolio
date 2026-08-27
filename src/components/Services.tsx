@@ -105,7 +105,7 @@ export default function Services() {
 
     return (
         <section ref={ref} id="services" className="section-pad" style={{ padding: "100px 24px" }}>
-            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <div style={{ maxWidth: 1536, margin: "0 auto" }}>
                 <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={inView ? { opacity: 1, y: 0 } : {}}

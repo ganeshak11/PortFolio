@@ -504,7 +504,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
 
             <BlogNavbar />
             <main style={{ minHeight: "100vh", paddingTop: 70, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
-                <article style={{ maxWidth: 660, margin: "0 auto", position: "relative" }}>
+                <article style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                     {/* Glowing Orb Background */}
                     <div style={{
                         position: "absolute",
@@ -908,7 +908,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
 
             {/* Comments — fully separated from article */}
             <section style={{ borderTop: "1px solid var(--border)", padding: "60px 20px 80px", background: "var(--card-bg)" }}>
-                <div style={{ maxWidth: 620, margin: "0 auto" }}>
+                <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                     <BlogComments slug={slug} />
                 </div>
             </section>

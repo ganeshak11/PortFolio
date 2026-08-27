@@ -156,7 +156,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             `}</style>
             <Navbar />
             <main style={{ minHeight: "100vh", padding: "120px 24px 80px" }}>
-                <div style={{ maxWidth: 860, margin: "0 auto" }}>
+                <div style={{ maxWidth: 1536, margin: "0 auto" }}>
 
                     {/* Header */}
                     <div style={{ marginBottom: 56 }}>

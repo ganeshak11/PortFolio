@@ -100,7 +100,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                         color: "var(--accent)",
                         letterSpacing: "0.05em",
                         marginBottom: 32,
-                        maxWidth: 1100,
+                        maxWidth: 1536,
                         margin: "0 auto 32px",
                         width: "100%",
                     }}
@@ -115,7 +115,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                     onMouseLeave={!isMobile ? onMouseLeave : undefined}
                     style={{
                         position: "relative",
-                        maxWidth: 1100,
+                        maxWidth: 1536,
                         margin: "0 auto",
                         width: "100%",
                         cursor: isMobile ? "default" : "crosshair",
@@ -185,7 +185,7 @@ export function HeroContent({ isMobile }: { isMobile: boolean }) {
                     transition={{ delay: 0.6 }}
                     style={{
                         marginTop: 48,
-                        maxWidth: 1100,
+                        maxWidth: 1536,
                         margin: "48px auto 0",
                         width: "100%",
                         fontFamily: "monospace",
