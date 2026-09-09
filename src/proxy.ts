@@ -129,9 +129,43 @@ export function proxy(req: NextRequest) {
         }
     }
 
+    // 4. Stealth Story Protection & Cookie Handling
+    if (pathname.startsWith("/stories/")) {
+        const validSecret = (process.env.STORY_ACCESS_SECRET || "").trim().toLowerCase();
+        if (!validSecret) {
+            const url = req.nextUrl.clone();
+            url.pathname = "/not-found";
+            return NextResponse.rewrite(url, { status: 404 });
+        }
+
+        const refParam = req.nextUrl.searchParams.get("ref") || req.nextUrl.searchParams.get("access") || req.nextUrl.searchParams.get("key");
+        const existingCookie = req.cookies.get("__story_session")?.value;
+
+        const isAuthorized = (existingCookie && existingCookie.trim().toLowerCase() === validSecret) ||
+                             (refParam && refParam.trim().toLowerCase() === validSecret);
+
+        if (!isAuthorized) {
+            const url = req.nextUrl.clone();
+            url.pathname = "/not-found";
+            return NextResponse.rewrite(url, { status: 404 });
+        }
+
+        const response = NextResponse.next();
+        if (refParam && refParam.trim().toLowerCase() === validSecret && (!existingCookie || existingCookie !== validSecret)) {
+            response.cookies.set("__story_session", validSecret, {
+                path: "/",
+                httpOnly: false,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 60 * 60 * 24 * 365,
+            });
+        }
+        return response;
+    }
+
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ["/", "/version", "/health", "/blog/:slug*"],
+    matcher: ["/", "/version", "/health", "/blog/:slug*", "/stories/:slug*"],
 };

@@ -43,3 +43,6 @@ next-env.d.ts
 #audit reports
 audit_reports
 
+# Private stories (raw markdown stays local; only encrypted .enc files are committed)
+content/story/*.md
+

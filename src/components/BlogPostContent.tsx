@@ -254,7 +254,7 @@ function BrowserDataReveal() {
     );
 }
 
-function BlogNavbar() {
+function BlogNavbar({ isStory }: { isStory?: boolean }) {
     const [visible, setVisible] = useState(true);
     const [lastY, setLastY] = useState(0);
     const { theme, toggle } = useTheme();
@@ -291,8 +291,8 @@ function BlogNavbar() {
                 ~/ganesh
             </Link>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <Link href="/blog" className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
-                    ← all posts
+                <Link href={isStory ? "/" : "/blog"} className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
+                    {isStory ? "← home" : "← all posts"}
                 </Link>
                 <button
                     onClick={toggle}
@@ -357,7 +357,7 @@ const stripFirstH1 = (markdown: string) => {
     return markdown;
 };
 
-export default function BlogPostContent({ post, slug }: { post: Post; slug: string }) {
+export default function BlogPostContent({ post, slug, isStory }: { post: Post; slug: string; isStory?: boolean }) {
     const [scrollProgress, setScrollProgress] = useState(0);
     const [views, setViews] = useState<number | null>(null);
     const [survivalMessage, setSurvivalMessage] = useState<{ title: string, body: string } | null>(null);
@@ -371,11 +371,13 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         setIsAnimatingReaction(id);
         setTimeout(() => setIsAnimatingReaction(null), 300);
 
-        // Record the reaction as a 'like' in Supabase
-        try {
-            await fetch(`/api/likes/${slug}`, { method: "POST" });
-        } catch (err) {
-            console.error("Failed to record reaction", err);
+        // Record the reaction as a 'like' in Supabase (skip for private stories)
+        if (!isStory) {
+            try {
+                await fetch(`/api/likes/${slug}`, { method: "POST" });
+            } catch (err) {
+                console.error("Failed to record reaction", err);
+            }
         }
     };
 
@@ -387,8 +389,8 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
         // Pick a random survival message after mount to prevent hydration mismatch
         setSurvivalMessage(SURVIVAL_MESSAGES[Math.floor(Math.random() * SURVIVAL_MESSAGES.length)]);
 
-        // Record and fetch views — guard prevents double-fire from React Strict Mode
-        if (!hasTrackedView.current) {
+        // Record and fetch views — guard prevents double-fire from React Strict Mode (skip for private stories)
+        if (!hasTrackedView.current && !isStory) {
             hasTrackedView.current = true;
             const recordView = async () => {
                 try {
@@ -502,7 +504,7 @@ export default function BlogPostContent({ post, slug }: { post: Post; slug: stri
                 }} />
             </div>
 
-            <BlogNavbar />
+            <BlogNavbar isStory={isStory} />
             <main style={{ minHeight: "100vh", paddingTop: 70, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
                 <article style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
                     {/* Glowing Orb Background */}
