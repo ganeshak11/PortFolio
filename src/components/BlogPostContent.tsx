@@ -402,9 +402,14 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ visitorId }),
                     });
-                    const data = await res.json();
-                    if (data.count !== undefined) {
-                        setViews(data.count);
+                    if (res.ok) {
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.includes("application/json")) {
+                            const data = await res.json();
+                            if (data.count !== undefined) {
+                                setViews(data.count);
+                            }
+                        }
                     }
 
                     // Send telemetry to Fortis Observe
