@@ -249,13 +249,13 @@ Yes, I was personally acting as a human GitHub Actions runner. But hey, it worke
 
 For a few days, this scotch-taped pipeline ran smoothly.
 
-Then came the inevitable Friday evening. 
+Then came the inevitable evening. 
 
 I was out with my friends, enjoying life, nowhere near my desk. Suddenly, my phone buzzed with an urgent message:
 
-> **"Deploy NOW. Hotfix needed in production."**
+> **"Deploy NOW"**
 
-Immediate cold sweat. Pure developer panic. My laptop was miles away, sitting closed on my desk at home. How was I supposed to run a manual 5-step Git rebase and force-push pipeline from a coffee shop?
+Immediate cold sweat. Pure developer panic. My laptop was miles away, sitting closed on my desk at home. How was I supposed to run a manual 5-step Git rebase and force-push pipeline from a cricket ground?
 
 Then, the realization hit me:
 
@@ -268,13 +268,13 @@ While everyone else was talking, I calmly pulled out my phone, opened Termux, co
 ```bash
 cd ~/projects/<repo>
 git pull origin experiment
-git commit --allow-empty -m "Deploy hotfix"
+git commit --allow-empty -m "Empty commit to trigger redeploy"
 git push myfork experiment
 ```
 
 I watched the Vercel webhook fire, waited for the build to pass, ran the `git reset`, and force-pushed.
 
-*Boom.* Production was updated. The hotfix was live. The team was saved. 
+*Boom.* Production was updated. The changes were live. 
 
 I slipped my phone back into my pocket and went right back to my conversation. Nobody around me had any idea I had just deployed a production release from the palm of my hand to a machine sleeping five miles away.
 
