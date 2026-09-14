@@ -8,6 +8,8 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye, Sun, Moon } from "lucide-react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
 import { useTheme } from "@/components/ThemeProvider";
+import katex from "katex";
+import "katex/dist/katex.min.css";
 
 interface Post {
     title: string;
@@ -17,6 +19,180 @@ interface Post {
     slug: string;
     readingTime?: number;
     hook?: string;
+    author?: string;
+}
+
+function MathEquation({ math, displayMode = false }: { math: string; displayMode?: boolean }) {
+    const html = useMemo(() => {
+        try {
+            return katex.renderToString(math.trim(), {
+                displayMode,
+                throwOnError: false,
+            });
+        } catch (e) {
+            console.error("KaTeX render error:", e);
+            return null;
+        }
+    }, [math, displayMode]);
+
+    if (!html) {
+        return <code style={{ fontFamily: "monospace" }}>{math}</code>;
+    }
+
+    if (displayMode) {
+        return (
+            <div
+                className="math-display-card"
+                style={{
+                    margin: "28px auto",
+                    maxWidth: "540px",
+                    width: "100%",
+                    padding: "24px 28px",
+                    borderRadius: "14px",
+                    background: "color-mix(in srgb, var(--card-bg) 80%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--accent) 30%, var(--border))",
+                    boxShadow: "0 8px 30px -6px rgba(0, 0, 0, 0.08)",
+                    backdropFilter: "blur(10px)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "relative",
+                    overflowX: "auto",
+                }}
+            >
+                <div
+                    style={{
+                        position: "absolute",
+                        top: 10,
+                        right: 14,
+                        fontSize: "9.5px",
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        fontWeight: 700,
+                        color: "var(--accent)",
+                        opacity: 0.85,
+                        userSelect: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 5,
+                    }}
+                >
+                    <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                    Blackboard Formula
+                </div>
+                <div
+                    style={{
+                        fontSize: "1.6rem",
+                        color: "var(--fg)",
+                        paddingTop: 12,
+                        paddingBottom: 4,
+                        letterSpacing: "0.02em",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: html }}
+                />
+            </div>
+        );
+    }
+
+    return (
+        <span
+            style={{
+                fontSize: "1.08em",
+                color: "var(--fg)",
+                padding: "0 3px",
+                display: "inline-block",
+                verticalAlign: "baseline",
+            }}
+            dangerouslySetInnerHTML={{ __html: html }}
+        />
+    );
+}
+
+function extractMathBlock(children: React.ReactNode): string | null {
+    if (typeof children === "string") {
+        const trimmed = children.trim();
+        if (trimmed.startsWith("$$") && trimmed.endsWith("$$") && trimmed.length >= 4) {
+            return trimmed.slice(2, -2).trim();
+        }
+    }
+    if (Array.isArray(children)) {
+        if (children.length === 1 && typeof children[0] === "string") {
+            const trimmed = children[0].trim();
+            if (trimmed.startsWith("$$") && trimmed.endsWith("$$") && trimmed.length >= 4) {
+                return trimmed.slice(2, -2).trim();
+            }
+        }
+        const allStrings = children.every(c => typeof c === "string");
+        if (allStrings) {
+            const joined = children.join("").trim();
+            if (joined.startsWith("$$") && joined.endsWith("$$") && joined.length >= 4) {
+                return joined.slice(2, -2).trim();
+            }
+        }
+    }
+    return null;
+}
+
+function renderFormattedStoryText(text: string): React.ReactNode[] {
+    const tokenRegex = /(\$\$[\s\S]+?\$\$|\$(?:\\.|[^\$\n])+\$|["“][^"”\n]+["”])/g;
+    const parts = text.split(tokenRegex);
+    return parts.map((part, i) => {
+        if (!part) return null;
+        if (part.startsWith("$$") && part.endsWith("$$") && part.length >= 4) {
+            return <MathEquation key={i} math={part.slice(2, -2)} displayMode={true} />;
+        }
+        if (part.startsWith("$") && part.endsWith("$") && part.length >= 2 && !part.startsWith("$$")) {
+            return <MathEquation key={i} math={part.slice(1, -1)} displayMode={false} />;
+        }
+        if (part.startsWith('"') || part.startsWith('“')) {
+            return (
+                <span
+                    key={i}
+                    style={{
+                        color: "var(--story-dialogue)",
+                        fontWeight: 600,
+                        letterSpacing: "0.008em",
+                    }}
+                >
+                    {part}
+                </span>
+            );
+        }
+        return part;
+    });
+}
+
+function processStoryNodes(children: React.ReactNode): React.ReactNode {
+    if (typeof children === "string") {
+        return renderFormattedStoryText(children);
+    }
+    if (Array.isArray(children)) {
+        return children.map((child, idx) => {
+            if (typeof child === "string") {
+                return <span key={idx}>{renderFormattedStoryText(child)}</span>;
+            }
+            return child;
+        });
+    }
+    return children;
+}
+
+function isDialogueStart(children: React.ReactNode): boolean {
+    if (typeof children === "string") {
+        const trimmed = children.trim();
+        return trimmed.startsWith('"') || trimmed.startsWith('“');
+    }
+    if (Array.isArray(children) && children.length > 0) {
+        const first = children[0];
+        if (typeof first === "string") {
+            const trimmed = first.trim();
+            return trimmed.startsWith('"') || trimmed.startsWith('“');
+        }
+    }
+    return false;
 }
 
 function CodeBlock({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -511,7 +687,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
 
             <BlogNavbar isStory={isStory} />
             <main style={{ minHeight: "100vh", paddingTop: 70, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
-                <article style={{ maxWidth: 1200, margin: "0 auto", position: "relative" }}>
+                <article style={{ maxWidth: isStory ? 900 : 1200, margin: "0 auto", position: "relative" }}>
                     {/* Glowing Orb Background */}
                     <div style={{
                         position: "absolute",
@@ -536,8 +712,18 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                             />
                             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                                 <span style={{ fontSize: 13, fontWeight: 600, color: "var(--fg)", display: "flex", alignItems: "center", gap: 6 }}>
-                                    By Ganesh Angadi
-                                    <span style={{ fontSize: 9, padding: "1px 5px", background: "var(--accent)", color: "var(--bg)", borderRadius: 10, fontWeight: 800 }}>DEV</span>
+                                    By {post.author || "Ganesh Angadi"}
+                                    <span style={{
+                                        fontSize: 9,
+                                        padding: "1px 6px",
+                                        background: isStory ? "linear-gradient(135deg, var(--accent), var(--accent-2))" : "var(--accent)",
+                                        color: "var(--bg)",
+                                        borderRadius: 10,
+                                        fontWeight: 800,
+                                        letterSpacing: "0.04em"
+                                    }}>
+                                        {isStory ? "STORY" : "DEV"}
+                                    </span>
                                 </span>
                                 <time dateTime={new Date(post.date).toISOString()} style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", display: "flex", gap: 6 }}>
                                     <span>Published {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
@@ -583,6 +769,23 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                 </span>
                             ))}
                         </div>
+
+                        {/* Story Hook / Excerpt Card */}
+                        {isStory && post.hook && (
+                            <div style={{
+                                margin: "16px 0 24px",
+                                padding: "16px 22px",
+                                borderRadius: 8,
+                                background: "color-mix(in srgb, var(--accent) 6%, transparent)",
+                                borderLeft: "3.5px solid var(--accent)",
+                                fontStyle: "italic",
+                                fontSize: 16.5,
+                                lineHeight: 1.65,
+                                color: "color-mix(in srgb, var(--fg) 88%, transparent)",
+                            }}>
+                                &ldquo;{post.hook}&rdquo;
+                            </div>
+                        )}
 
                         {/* Separator */}
                         <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.2, margin: "20px 0" }} />
@@ -648,15 +851,107 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         {children}
                                     </h2>
                                 ),
-                                h3: ({ children }) => (
-                                    <h3 style={{ fontSize: 17, fontWeight: 800, color: "var(--fg)", marginTop: 28, marginBottom: 10 }}>
-                                        {children}
-                                    </h3>
-                                ),
+                                h3: ({ children }) => {
+                                    const text = Array.isArray(children) ? children.join("") : String(children || "");
+                                    const chapterMatch = text.match(/^Chapter\s+(\d+)[:\s]*(.*)$/i);
+
+                                    if (isStory && chapterMatch) {
+                                        const chapterNum = chapterMatch[1];
+                                        const chapterTitle = chapterMatch[2];
+                                        return (
+                                            <div style={{ marginTop: 52, marginBottom: 24 }}>
+                                                <div style={{
+                                                    display: "inline-flex",
+                                                    alignItems: "center",
+                                                    gap: 6,
+                                                    padding: "3px 12px",
+                                                    borderRadius: 20,
+                                                    background: "color-mix(in srgb, var(--accent) 15%, transparent)",
+                                                    border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
+                                                    color: "var(--accent)",
+                                                    fontSize: 11,
+                                                    fontWeight: 800,
+                                                    letterSpacing: "0.08em",
+                                                    textTransform: "uppercase",
+                                                    fontFamily: "var(--font-mono), monospace",
+                                                    marginBottom: 8
+                                                }}>
+                                                    <span>✦</span>
+                                                    <span>CHAPTER {chapterNum}</span>
+                                                </div>
+                                                <h3 style={{
+                                                    fontSize: "clamp(22px, 3vw, 26px)",
+                                                    fontWeight: 800,
+                                                    color: "var(--fg)",
+                                                    letterSpacing: "-0.02em",
+                                                    lineHeight: 1.3,
+                                                    margin: "4px 0 10px"
+                                                }}>
+                                                    {chapterTitle}
+                                                </h3>
+                                                <div style={{
+                                                    width: 48,
+                                                    height: 3,
+                                                    borderRadius: 2,
+                                                    background: "linear-gradient(90deg, var(--accent), transparent)",
+                                                }} />
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <h3 style={{ fontSize: 17, fontWeight: 800, color: "var(--fg)", marginTop: 28, marginBottom: 10 }}>
+                                            {children}
+                                        </h3>
+                                    );
+                                },
                                 p: ({ children }) => {
                                     if (children === "[WHAT_YOUR_BROWSER_TOLD_ME]" || (Array.isArray(children) && children[0] === "[WHAT_YOUR_BROWSER_TOLD_ME]")) {
                                         return <BrowserDataReveal />;
                                     }
+
+                                    const mathBlock = extractMathBlock(children);
+                                    if (mathBlock) {
+                                        return <MathEquation math={mathBlock} displayMode={true} />;
+                                    }
+
+                                    if (isStory) {
+                                        const isDialogue = isDialogueStart(children);
+                                        const content = processStoryNodes(children);
+
+                                        if (isDialogue) {
+                                            return (
+                                                <p style={{
+                                                    marginBottom: 20,
+                                                    lineHeight: 1.85,
+                                                    fontSize: 17.5,
+                                                    paddingLeft: 14,
+                                                    borderLeft: "2.5px solid color-mix(in srgb, var(--story-dialogue) 45%, transparent)",
+                                                    borderRadius: 1,
+                                                    color: "color-mix(in srgb, var(--fg) 92%, transparent)",
+                                                    background: "color-mix(in srgb, var(--story-dialogue) 3%, transparent)",
+                                                    paddingTop: 4,
+                                                    paddingBottom: 4,
+                                                    paddingRight: 8,
+                                                    transition: "border-color 0.2s ease",
+                                                }}>
+                                                    {content}
+                                                </p>
+                                            );
+                                        }
+
+                                        return (
+                                            <p style={{
+                                                marginBottom: 24,
+                                                lineHeight: 1.85,
+                                                fontSize: 17.5,
+                                                color: "color-mix(in srgb, var(--fg) 88%, transparent)",
+                                            }}>
+                                                {content}
+                                            </p>
+                                        );
+                                    }
+
                                     return <p style={{ marginBottom: 20, lineHeight: 1.8, color: "color-mix(in srgb, var(--fg) 92%, transparent)", fontSize: 17 }}>{children}</p>;
                                 },
                                 a: ({ href, children }) => (
@@ -720,6 +1015,15 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         {children}
                                     </li>
                                 ),
+                                em: ({ children }) => (
+                                    <em style={{
+                                        fontStyle: "italic",
+                                        color: isStory ? "var(--story-thought)" : "inherit",
+                                        fontWeight: isStory ? 500 : "inherit",
+                                    }}>
+                                        {children}
+                                    </em>
+                                ),
                                 blockquote: ({ children }) => (
                                     <blockquote style={{
                                         padding: "16px 24px",
@@ -736,16 +1040,23 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                     </blockquote>
                                 ),
                                 hr: () => (
-                                    <div style={{ margin: "56px 0", display: "flex", justifyContent: "center", gap: 12, opacity: 0.5 }}>
-                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
-                                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                                    <div style={{
+                                        margin: isStory ? "48px 0" : "56px 0",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: 16,
+                                        opacity: 0.7
+                                    }}>
+                                        <div style={{ height: 1, width: 80, background: "linear-gradient(90deg, transparent, var(--border))" }} />
+                                        <span style={{ color: "var(--accent)", fontSize: 12, letterSpacing: 6 }}>✦ ✦ ✦</span>
+                                        <div style={{ height: 1, width: 80, background: "linear-gradient(90deg, var(--border), transparent)" }} />
                                     </div>
                                 ),
                                 strong: ({ children }) => (
                                     <strong style={{ color: "var(--fg)", fontWeight: 700 }}>{children}</strong>
                                 ),
-                            }), [post.title])}
+                            }), [post.title, isStory])}
                         >
                             {stripFirstH1(post.content)}
                         </ReactMarkdown>

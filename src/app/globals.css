@@ -38,6 +38,8 @@
   --status-ok: #16A34A;
   --status-warn: #D97706;
   --status-err: #DC2626;
+  --story-dialogue: #0284C7;
+  --story-thought: #7C3AED;
 }
 
 .dark {
@@ -52,6 +54,8 @@
   --status-ok: #22C55E;
   --status-warn: #F59E0B;
   --status-err: #C62828;
+  --story-dialogue: #38BDF8;
+  --story-thought: #C084FC;
 }
 
 @theme inline {
