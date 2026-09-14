@@ -80,7 +80,7 @@ async function main() {
         process.exit(1);
     }
 
-    const files = fs.readdirSync(storyDir).filter((f) => f.endsWith(".md"));
+    const files = fs.readdirSync(storyDir).filter((f) => f.endsWith(".md") && !f.startsWith("."));
     if (files.length === 0) {
         console.log("No markdown (.md) stories found in content/story/");
         return;

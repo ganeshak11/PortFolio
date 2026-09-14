@@ -517,6 +517,50 @@ const REACTIONS = [
     { id: 'loved', emoji: '🔥', label: 'Loved it' }
 ];
 
+interface SeriesPart {
+    part: number;
+    title: string;
+    subtitle: string;
+    slug: string;
+}
+
+const STORY_SERIES: Record<string, { name: string; parts: SeriesPart[] }> = {
+    "the-asymptote": {
+        name: "The Asymptote",
+        parts: [
+            {
+                part: 1,
+                title: "Part 1",
+                subtitle: "First Semesters and Forgotten Coordinates",
+                slug: "the-asymptote-part-1",
+            },
+            {
+                part: 2,
+                title: "Part 2",
+                subtitle: "Nested Logic and the Flight of Stairs",
+                slug: "the-asymptote-part-2",
+            },
+        ],
+    },
+};
+
+function getSeriesInfo(slug: string) {
+    for (const [_, series] of Object.entries(STORY_SERIES)) {
+        const foundIndex = series.parts.findIndex(p => p.slug === slug);
+        if (foundIndex !== -1) {
+            return {
+                seriesName: series.name,
+                parts: series.parts,
+                currentIndex: foundIndex,
+                currentPart: series.parts[foundIndex],
+                prevPart: foundIndex > 0 ? series.parts[foundIndex - 1] : null,
+                nextPart: foundIndex < series.parts.length - 1 ? series.parts[foundIndex + 1] : null,
+            };
+        }
+    }
+    return null;
+}
+
 const stripFirstH1 = (markdown: string) => {
     if (!markdown) return "";
     const lines = markdown.split("\n");
@@ -540,6 +584,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
     const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
     const [isAnimatingReaction, setIsAnimatingReaction] = useState<string | null>(null);
     const [copiedUrl, setCopiedUrl] = useState(false);
+    const seriesInfo = useMemo(() => isStory ? getSeriesInfo(slug) : null, [isStory, slug]);
 
     const handleReaction = async (id: string) => {
         if (selectedReaction) return; // Prevent spamming
@@ -738,6 +783,43 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                 </time>
                             </div>
                         </div>
+
+                        {/* Series Breadcrumb (if story belongs to a series) */}
+                        {seriesInfo && (
+                            <div style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: 8,
+                                padding: "6px 14px",
+                                borderRadius: 20,
+                                background: "color-mix(in srgb, var(--accent) 12%, transparent)",
+                                border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)",
+                                marginBottom: 16,
+                                fontSize: 12.5,
+                                fontWeight: 600,
+                                color: "var(--accent)",
+                            }}>
+                                <span>✦</span>
+                                <span>{seriesInfo.seriesName} • Part {seriesInfo.currentPart.part} of {seriesInfo.parts.length}</span>
+                                {seriesInfo.prevPart && (
+                                    <>
+                                        <span style={{ opacity: 0.4 }}>•</span>
+                                        <Link
+                                            href={`/stories/${seriesInfo.prevPart.slug}`}
+                                            style={{
+                                                color: "var(--fg)",
+                                                textDecoration: "underline",
+                                                textUnderlineOffset: 3,
+                                                fontWeight: 600,
+                                                fontSize: 12,
+                                            }}
+                                        >
+                                            ← Read Part {seriesInfo.prevPart.part}
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
+                        )}
 
                         {/* Title */}
                         <h1 style={{
@@ -1061,6 +1143,206 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                             {stripFirstH1(post.content)}
                         </ReactMarkdown>
                     </div>
+
+                    {/* Story Series Pagination & Navigation */}
+                    {seriesInfo && (
+                        <div
+                            className="story-series-pagination"
+                            style={{
+                                marginTop: 44,
+                                marginBottom: 28,
+                                padding: "26px 24px",
+                                borderRadius: 16,
+                                background: "color-mix(in srgb, var(--card-bg) 80%, transparent)",
+                                border: "1px solid color-mix(in srgb, var(--accent) 30%, var(--border))",
+                                boxShadow: "0 8px 30px -6px rgba(0, 0, 0, 0.08)",
+                                backdropFilter: "blur(10px)",
+                            }}
+                        >
+                            {/* Series Header */}
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 18, borderBottom: "1px solid var(--border)", paddingBottom: 14 }}>
+                                <div>
+                                    <span style={{ fontSize: 10.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", display: "flex", alignItems: "center", gap: 5 }}>
+                                        <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)" }} />
+                                        STORY SERIES
+                                    </span>
+                                    <h4 style={{ margin: "4px 0 0 0", fontSize: 19, fontWeight: 800, color: "var(--fg)" }}>
+                                        {seriesInfo.seriesName}
+                                    </h4>
+                                </div>
+                                <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 600, background: "color-mix(in srgb, var(--fg) 5%, transparent)", padding: "3px 10px", borderRadius: 12 }}>
+                                    Part {seriesInfo.currentPart.part} of {seriesInfo.parts.length}
+                                </span>
+                            </div>
+
+                            {/* Page / Part Number Selector */}
+                            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+                                <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: "0.06em", color: "var(--muted)", textTransform: "uppercase" }}>
+                                    Story Parts (Pages):
+                                </span>
+                                <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+                                    {seriesInfo.parts.map((p) => {
+                                        const isCurrent = p.part === seriesInfo.currentPart.part;
+                                        if (isCurrent) {
+                                            return (
+                                                <div
+                                                    key={p.part}
+                                                    style={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: 8,
+                                                        padding: "8px 16px",
+                                                        borderRadius: 10,
+                                                        background: "var(--accent)",
+                                                        color: "var(--bg)",
+                                                        fontWeight: 700,
+                                                        fontSize: 13.5,
+                                                        boxShadow: "0 2px 10px rgba(0,0,0,0.12)",
+                                                    }}
+                                                >
+                                                    <span style={{
+                                                        display: "inline-flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        width: 22,
+                                                        height: 22,
+                                                        borderRadius: "50%",
+                                                        background: "var(--bg)",
+                                                        color: "var(--accent)",
+                                                        fontSize: 12,
+                                                        fontWeight: 800,
+                                                    }}>
+                                                        {p.part}
+                                                    </span>
+                                                    <span>Part {p.part} (Current)</span>
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <Link
+                                                key={p.part}
+                                                href={`/stories/${p.slug}`}
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: 8,
+                                                    padding: "8px 16px",
+                                                    borderRadius: 10,
+                                                    border: "1px solid var(--border)",
+                                                    background: "color-mix(in srgb, var(--card-bg) 90%, transparent)",
+                                                    color: "var(--fg)",
+                                                    textDecoration: "none",
+                                                    fontWeight: 600,
+                                                    fontSize: 13.5,
+                                                    transition: "all 0.2s ease",
+                                                }}
+                                                onMouseOver={(e) => {
+                                                    e.currentTarget.style.borderColor = "var(--accent)";
+                                                    e.currentTarget.style.transform = "translateY(-2px)";
+                                                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
+                                                }}
+                                                onMouseOut={(e) => {
+                                                    e.currentTarget.style.borderColor = "var(--border)";
+                                                    e.currentTarget.style.transform = "none";
+                                                    e.currentTarget.style.boxShadow = "none";
+                                                }}
+                                            >
+                                                <span style={{
+                                                    display: "inline-flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    width: 22,
+                                                    height: 22,
+                                                    borderRadius: "50%",
+                                                    background: "color-mix(in srgb, var(--fg) 8%, transparent)",
+                                                    color: "var(--fg)",
+                                                    fontSize: 12,
+                                                    fontWeight: 700,
+                                                }}>
+                                                    {p.part}
+                                                </span>
+                                                <span>Part {p.part}: {p.subtitle}</span>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* Next / Previous Story Links */}
+                            <div style={{
+                                display: "grid",
+                                gridTemplateColumns: seriesInfo.prevPart && seriesInfo.nextPart ? "repeat(auto-fit, minmax(240px, 1fr))" : "1fr",
+                                gap: 12,
+                                marginTop: 8,
+                            }}>
+                                {seriesInfo.prevPart && (
+                                    <Link
+                                        href={`/stories/${seriesInfo.prevPart.slug}`}
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: 4,
+                                            padding: "14px 18px",
+                                            borderRadius: 12,
+                                            border: "1px solid var(--border)",
+                                            background: "color-mix(in srgb, var(--fg) 2%, transparent)",
+                                            textDecoration: "none",
+                                            transition: "all 0.2s ease",
+                                        }}
+                                        onMouseOver={(e) => {
+                                            e.currentTarget.style.borderColor = "var(--accent)";
+                                            e.currentTarget.style.background = "color-mix(in srgb, var(--accent) 5%, transparent)";
+                                        }}
+                                        onMouseOut={(e) => {
+                                            e.currentTarget.style.borderColor = "var(--border)";
+                                            e.currentTarget.style.background = "color-mix(in srgb, var(--fg) 2%, transparent)";
+                                        }}
+                                    >
+                                        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: "var(--muted)", textTransform: "uppercase" }}>
+                                            ← Previous Part
+                                        </span>
+                                        <span style={{ fontSize: 14.5, fontWeight: 700, color: "var(--fg)" }}>
+                                            Part {seriesInfo.prevPart.part}: {seriesInfo.prevPart.subtitle}
+                                        </span>
+                                    </Link>
+                                )}
+
+                                {seriesInfo.nextPart && (
+                                    <Link
+                                        href={`/stories/${seriesInfo.nextPart.slug}`}
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            gap: 4,
+                                            padding: "14px 18px",
+                                            borderRadius: 12,
+                                            border: "1px solid color-mix(in srgb, var(--accent) 45%, var(--border))",
+                                            background: "color-mix(in srgb, var(--accent) 8%, transparent)",
+                                            textDecoration: "none",
+                                            textAlign: seriesInfo.prevPart ? "right" : "left",
+                                            transition: "all 0.2s ease",
+                                        }}
+                                        onMouseOver={(e) => {
+                                            e.currentTarget.style.borderColor = "var(--accent)";
+                                            e.currentTarget.style.background = "color-mix(in srgb, var(--accent) 15%, transparent)";
+                                        }}
+                                        onMouseOut={(e) => {
+                                            e.currentTarget.style.borderColor = "color-mix(in srgb, var(--accent) 45%, var(--border))";
+                                            e.currentTarget.style.background = "color-mix(in srgb, var(--accent) 8%, transparent)";
+                                        }}
+                                    >
+                                        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", color: "var(--accent)", textTransform: "uppercase" }}>
+                                            Next Part →
+                                        </span>
+                                        <span style={{ fontSize: 14.5, fontWeight: 700, color: "var(--fg)" }}>
+                                            Part {seriesInfo.nextPart.part}: {seriesInfo.nextPart.subtitle}
+                                        </span>
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Survival Sign-off */}
                     {survivalMessage && (
