@@ -540,6 +540,12 @@ const STORY_SERIES: Record<string, { name: string; parts: SeriesPart[] }> = {
                 subtitle: "Nested Logic and the Flight of Stairs",
                 slug: "the-asymptote-part-2",
             },
+            {
+                part: 3,
+                title: "Part 3",
+                subtitle: "Ordinary Sundays and the Quiet Horizon",
+                slug: "the-asymptote-part-3",
+            },
         ],
     },
 };
