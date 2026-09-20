@@ -888,27 +888,56 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         cleanSrc = "/" + cleanSrc;
                                     }
                                     return (
-                                        <img
-                                            src={cleanSrc}
-                                            alt={alt}
-                                            className="glass-card"
+                                        <span
                                             style={{
+                                                margin: "28px auto",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                alignItems: "center",
+                                                justifyContent: "center",
                                                 width: "100%",
-                                                height: "auto",
-                                                borderRadius: 12,
-                                                margin: "24px 0",
-                                                boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
-                                                transition: "transform 0.3s ease, box-shadow 0.3s ease",
                                             }}
-                                            onMouseOver={(e) => {
-                                                (e.target as HTMLImageElement).style.transform = "translateY(-4px)";
-                                                (e.target as HTMLImageElement).style.boxShadow = "0 12px 40px rgba(0, 229, 255, 0.15)";
-                                            }}
-                                            onMouseOut={(e) => {
-                                                (e.target as HTMLImageElement).style.transform = "translateY(0)";
-                                                (e.target as HTMLImageElement).style.boxShadow = "0 8px 30px rgba(0, 0, 0, 0.2)";
-                                            }}
-                                        />
+                                        >
+                                            <img
+                                                src={cleanSrc}
+                                                alt={alt}
+                                                className="glass-card"
+                                                style={{
+                                                    maxWidth: "100%",
+                                                    maxHeight: "440px",
+                                                    width: "auto",
+                                                    height: "auto",
+                                                    objectFit: "contain",
+                                                    borderRadius: 12,
+                                                    boxShadow: "0 8px 30px rgba(0, 0, 0, 0.25)",
+                                                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                                                    display: "block",
+                                                }}
+                                                onMouseOver={(e) => {
+                                                    (e.target as HTMLImageElement).style.transform = "translateY(-4px)";
+                                                    (e.target as HTMLImageElement).style.boxShadow = "0 12px 40px rgba(0, 229, 255, 0.15)";
+                                                }}
+                                                onMouseOut={(e) => {
+                                                    (e.target as HTMLImageElement).style.transform = "translateY(0)";
+                                                    (e.target as HTMLImageElement).style.boxShadow = "0 8px 30px rgba(0, 0, 0, 0.25)";
+                                                }}
+                                            />
+                                            {alt && (
+                                                <span
+                                                    style={{
+                                                        display: "block",
+                                                        marginTop: 10,
+                                                        fontSize: "0.85rem",
+                                                        color: "color-mix(in srgb, var(--foreground) 60%, transparent)",
+                                                        textAlign: "center",
+                                                        fontStyle: "italic",
+                                                        letterSpacing: "0.01em",
+                                                    }}
+                                                >
+                                                    {alt}
+                                                </span>
+                                            )}
+                                        </span>
                                     );
                                 },
                                 h1: ({ children }) => {
@@ -987,7 +1016,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         </h3>
                                     );
                                 },
-                                p: ({ children }) => {
+                                p: ({ node, children }: any) => {
                                     if (children === "[WHAT_YOUR_BROWSER_TOLD_ME]" || (Array.isArray(children) && children[0] === "[WHAT_YOUR_BROWSER_TOLD_ME]")) {
                                         return <BrowserDataReveal />;
                                     }
@@ -995,6 +1024,11 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                     const mathBlock = extractMathBlock(children);
                                     if (mathBlock) {
                                         return <MathEquation math={mathBlock} displayMode={true} />;
+                                    }
+
+                                    const hasImage = node?.children?.some((child: any) => child?.tagName === "img");
+                                    if (hasImage) {
+                                        return <div style={{ margin: "24px 0" }}>{children}</div>;
                                     }
 
                                     if (isStory) {
