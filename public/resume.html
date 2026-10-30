@@ -360,11 +360,10 @@
         <section class="section">
             <h2 class="section-title">Professional Summary</h2>
             <p class="summary-text">
-                DevOps-focused Computer Science student with hands-on experience building observability, deployment
-                automation, and real-time backend systems. Designed graph-based infrastructure monitoring platforms
-                using Neo4j, GitHub Actions, Docker, and Terraform, with a focus on reliability engineering, fault
-                isolation, and infrastructure automation. First-place winner in an MCP-based systems engineering
-                hackathon.
+                DevOps and Systems-focused Computer Science engineer with production experience designing CI/CD pipelines,
+                infrastructure observability, and scalable backend platforms. Proven track record maintaining cloud deployments
+                across GCP (Compute Engine, Nginx, PM2) and Vercel for live commercial SaaS products. Skilled in Linux systems
+                administration, Docker, Terraform, automated release engineering, and graph-based deployment telemetry.
             </p>
         </section>
 
@@ -374,19 +373,19 @@
             <table class="skills-table">
                 <tr>
                     <td class="cat">Systems & Cloud</td>
-                    <td class="val">Linux, AWS EC2, Familiar with Kubernetes fundamentals</td>
+                    <td class="val">Linux (Ubuntu/Debian, Systemd, Nginx, SSH), GCP (Compute Engine, Cloud Run), AWS (EC2), Kubernetes (Minikube)</td>
                 </tr>
                 <tr>
                     <td class="cat">Containers & IaC</td>
-                    <td class="val">Docker, Terraform</td>
+                    <td class="val">Docker, Docker Compose, Terraform</td>
                 </tr>
                 <tr>
-                    <td class="cat">CI/CD & Automation</td>
-                    <td class="val">GitHub Actions, Git, Bash / Shell scripting</td>
+                    <td class="cat">CI/CD & Release</td>
+                    <td class="val">GitHub Actions, Vercel CLI & Automated Deployments, Advanced Git (Cherry-pick, Rebasing, Submodules, Release Tags), Bash / Shell Scripting</td>
                 </tr>
                 <tr>
-                    <td class="cat">Backend & Databases</td>
-                    <td class="val">Node.js, PostgreSQL, Neo4j, Redis, WebSockets, Model Context Protocol (MCP)</td>
+                    <td class="cat">Backend & Telemetry</td>
+                    <td class="val">Node.js, Express, PM2 Daemon Management, PostgreSQL, Redis, Neo4j, WebSockets (Socket.IO), Model Context Protocol (MCP)</td>
                 </tr>
             </table>
         </section>
@@ -402,15 +401,14 @@
             <h2 class="section-title">Experience & Achievements</h2>
 
             <div class="project">
-                <div class="project-name">Software Engineering Intern</div>
-                <div class="project-tech">Kridtech | July 2026 – Present</div>
+                <div class="project-name">Software Engineering & DevOps Intern — Founding SDE & DevOps Intern</div>
+                <div class="project-tech">Kridtech Corp. | July 2026 – October 2026</div>
                 <ul>
-                    <li>Developing the Vaniger calling subsystem, a production-grade telephony architecture integrating
-                        Telnyx, Socket.IO, and backend microservices.</li>
-                    <li>Architected an agent presence state machine and managed real-time call lifecycle data
-                        synchronization using Telnyx webhooks.</li>
-                    <li>Implemented business logic for call routing, billing pipelines, and live transcript streaming
-                        workflows.</li>
+                    <li>Maintained 2+ months of continuous production deployment for <strong>Vaniger</strong> across a GCP VM (Node.js/Express, Nginx reverse proxy, PM2 daemon) and Vercel (Next.js).</li>
+                    <li>Engineered automated GitHub Actions CI/CD pipelines deploying to GCP via automated SSH key authentication, production dependency verification, and zero-downtime PM2 restarts.</li>
+                    <li>Designed an innovative Vercel CLI workflow with prebuilt artifact generation and automated git author-matching, successfully bypassing Vercel Hobby-tier team contributor deployment blocks.</li>
+                    <li>Managed release engineering using advanced Git workflows (cherry-picking, branch rebasing, patch isolation for hotfixes), and authored the master 12-part architecture and deployment handover suite.</li>
+                    <li>Architected core telephony and billing subsystems using Telnyx WebRTC, Socket.IO presence routing, Deepgram dual-channel streaming, and atomic PostgreSQL stored procedures.</li>
                 </ul>
             </div>
 
@@ -441,14 +439,12 @@
 
             <div class="project">
                 <div class="project-name"><a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank"
-                        style="color:var(--fg);">Fortis-CI</a></div>
+                        style="color:var(--fg);">Fortis-CI</a> <span style="font-size:11.5px;font-weight:600;color:var(--muted);font-style:italic;">[In Active Development]</span></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Node.js, Neo4j, Redis, Next.js, GitHub Actions</li>
-                    <li>Designed a centralized deployment observability platform to track CI/CD execution across
-                        repositories.</li>
-                    <li>Implemented graph-based dependency modeling to support deployment tracing and failure analysis.
-                    </li>
-                    <li>Developed GitHub webhook ingestion for reliable collection of deployment metadata.</li>
+                    <li><strong>Technologies:</strong> Node.js, Neo4j, Redis, Next.js, GitHub Actions, Webhooks</li>
+                    <li>Architected a centralized CI/CD observability platform capturing deployment metrics and pipeline lifecycles across distributed repositories.</li>
+                    <li>Modeled multi-stage build and deployment dependency graphs in Neo4j to accelerate root-cause fault isolation and failure analysis.</li>
+                    <li>Built resilient GitHub webhook ingestion with Redis caching for real-time deployment telemetry processing.</li>
                 </ul>
             </div>
 
@@ -456,13 +452,10 @@
                 <div class="project-name"><a href="https://github.com/Fortis-Ecosystem" target="_blank"
                         style="color:var(--fg);">Fortis Ecosystem</a></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Rust, TypeScript, Tauri, Kotlin, Bash, C</li>
-                    <li>Developed a comprehensive privacy-first security suite including mobile, desktop, CLI, and
-                        backend components, alongside dedicated lock, backup, and observability services.</li>
-                    <li>Implemented a unified Rust daemon (fortis-agent) exposing REST, Unix IPC, and gRPC for
-                        cross-platform integration.</li>
-                    <li>Secured with AES-256 vault encryption via SQLCipher, Ed25519 signatures, and zero-trust local
-                        pairing.</li>
+                    <li><strong>Technologies:</strong> Rust, TypeScript, Tauri, Kotlin, Bash, C, Tailscale</li>
+                    <li>Developed a distributed, privacy-first systems suite integrating mobile, desktop, and Linux workstations into a unified mesh network.</li>
+                    <li>Built a high-performance Rust systems daemon (<code>fortis-agent</code>) exposing Unix Domain Sockets and IPC for zero-latency cross-process communication.</li>
+                    <li>Enforced zero-trust device pairing with Ed25519 cryptographic signatures and hardware-backed AES-256 encrypted vaults.</li>
                 </ul>
             </div>
 
@@ -470,8 +463,9 @@
                 <div class="project-name"><a href="https://github.com/Fortis-Tools" target="_blank"
                         style="color:var(--fg);">Fortis-Tools</a></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Python, Shell, Go</li>
-                    <li>Built operational utilities and infrastructure automation scripts for the Fortis Ecosystem.</li>
+                    <li><strong>Technologies:</strong> Python, Bash, Shell Scripting, Linux Systemd, Go</li>
+                    <li>Engineered automated infrastructure maintenance utilities, cron orchestration, and backup/restore daemons for distributed Linux nodes.</li>
+                    <li>Implemented real-time host resource monitors and secure credential synchronization across multi-device developer environments.</li>
                 </ul>
             </div>
 
@@ -480,8 +474,8 @@
                         style="color:var(--fg);">MY(suru) BUS</a></div>
                 <ul>
                     <li><strong>Technologies:</strong> Node.js, PostgreSQL, React Native, Next.js, WebSockets</li>
-                    <li>Built a real-time GPS tracking platform with <2s latency using Node.js and WebSockets.</li>
-                    <li>Designed robust PostgreSQL schemas and implemented geofence-based stop detection.</li>
+                    <li>Built a real-time transit telemetry platform streaming live vehicle coordinates with sub-2-second latency over persistent WebSockets.</li>
+                    <li>Designed normalized relational schemas with spatial indexing in PostgreSQL for geofence-triggered transit stop detection.</li>
                 </ul>
             </div>
 
@@ -489,14 +483,43 @@
                 <div class="project-name"><a href="https://github.com/ganeshak11/ganeshak11.github.io" target="_blank"
                         style="color:var(--fg);">Portfolio Infrastructure</a></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Docker, Terraform, AWS EC2, GitHub Actions, Kubernetes (Minikube)
-                    </li>
-                    <li>Automated infrastructure provisioning using Terraform and containerized application deployment
-                        with Docker.</li>
-                    <li>Built GitHub Actions workflows to automate build, test, and deployment of a Next.js application.
-                    </li>
-                    <li>Configured Kubernetes (Minikube) to validate container orchestration concepts in a
-                        production-like environment.</li>
+                    <li><strong>Technologies:</strong> Terraform, Docker, AWS EC2, GitHub Actions, Kubernetes (Minikube)</li>
+                    <li>Provisioned declarative cloud infrastructure on AWS EC2 using modular Terraform configurations with remote state management.</li>
+                    <li>Implemented end-to-end GitHub Actions automated pipelines for container builds, linting, and automated zero-downtime rolling deployments.</li>
+                    <li>Validated cloud-native orchestration with Kubernetes (Minikube), defining Deployments, Services, and Ingress routing rules.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Technical Publications -->
+        <section class="section">
+            <h2 class="section-title">Technical Publications</h2>
+
+            <div class="project">
+                <div class="project-name">
+                    <a href="https://ganeshangadi.online/blog/fortis-pseudo-os" target="_blank" style="color:var(--fg);">
+                        One User, Many Machines: The Question That Ruined My Sleep
+                    </a>
+                </div>
+                <div class="project-tech">
+                    <a href="https://ganeshangadi.online/blog/fortis-pseudo-os" target="_blank">ganeshangadi.online/blog/fortis-pseudo-os</a> | Distributed Systems & Linux Architecture
+                </div>
+                <ul>
+                    <li>Authored an architectural deep dive on distributed operating systems, cross-device execution consistency, automated snapshotting, and fault recovery in decentralized computing environments.</li>
+                </ul>
+            </div>
+
+            <div class="project">
+                <div class="project-name">
+                    <a href="https://ganeshangadi.online/blog/fortis-ecosystem" target="_blank" style="color:var(--fg);">
+                        The Journey from Remote Shutdown Scripts to a Personal Ecosystem
+                    </a>
+                </div>
+                <div class="project-tech">
+                    <a href="https://ganeshangadi.online/blog/fortis-ecosystem" target="_blank">ganeshangadi.online/blog/fortis-ecosystem</a> | Systems Automation & Networking
+                </div>
+                <ul>
+                    <li>Documented designing a zero-touch distributed automation network across Linux and mobile utilizing Tailscale mesh VPN, SSH protocol automation, and Unix IPC.</li>
                 </ul>
             </div>
         </section>
