@@ -6,6 +6,16 @@ import { Trophy, Briefcase } from "lucide-react";
 
 const ITEMS = [
     {
+        type: "experience",
+        Icon: Briefcase,
+        badge: "FOUNDING SDE",
+        title: "Software Engineering & DevOps Intern — Founding SDE & DevOps Intern",
+        org: "Kridtech Corp. | July 2026 – October 2026",
+        desc: "Founding SDE & DevOps Intern for Vaniger (production conversational sales & telephony platform). Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with dual-channel Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.",
+        tags: ["WebRTC", "Telnyx", "Deepgram", "Node.js", "PostgreSQL", "CI/CD", "Next.js"],
+        meta: "July 2026 – October 2026",
+    },
+    {
         type: "award",
         Icon: Trophy,
         badge: "1ST PLACE",

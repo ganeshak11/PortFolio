@@ -277,15 +277,23 @@ export default function AboutPage() {
                         {/* Timeline / Achievements */}
                         <section style={{ marginBottom: 20 }}>
                             <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 16, fontFamily: "'Inter', sans-serif" }}>
-                                Achievements & History
+                                Experience & Milestones
                             </h2>
                             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                                    <div>
+                                        <strong style={{ display: "block", fontSize: 15 }}>Software Engineering & DevOps Intern — Founding SDE & DevOps Intern</strong>
+                                        <p style={{ fontSize: 13, color: "var(--accent)", margin: "2px 0 4px 0", fontFamily: "monospace" }}>Kridtech Corp. | July 2026 – October 2026</p>
+                                        <span style={{ fontSize: 14, color: "var(--muted)" }}>Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.</span>
+                                    </div>
+                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Jul – Oct 2026</span>
+                                </div>
                                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                                     <div>
                                         <strong style={{ display: "block", fontSize: 15 }}>1st Place — Model Context Protocol (MCP) Server Hackathon</strong>
                                         <span style={{ fontSize: 14, color: "var(--muted)" }}>Developed custom integrations and advanced protocol servers</span>
                                     </div>
-                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>2026</span>
+                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Apr 2026</span>
                                 </div>
                                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                                     <div>

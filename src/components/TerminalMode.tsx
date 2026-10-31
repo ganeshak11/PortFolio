@@ -430,6 +430,7 @@ Role: DevOps Engineer & System Architect
 Location: Mysuru, Karnataka, India
 
 [EXPERIENCE & ACHIEVEMENTS]
+▸ Software Engineering & DevOps Intern — Founding SDE & DevOps Intern @ Kridtech Corp.
 ▸ AI & Machine Learning Intern @ Artsy Technologies
 ▸ 1st Place - MCP-Based Systems Engineering Hackathon
 
