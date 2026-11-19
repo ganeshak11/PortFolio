@@ -302,6 +302,11 @@
                 page-break-inside: avoid;
             }
 
+            .section-title {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+
             a {
                 color: var(--fg-2) !important;
             }
@@ -338,7 +343,7 @@
         <!-- Header -->
         <header class="resume-header">
             <h1>Ganesh Angadi</h1>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:8px;letter-spacing:0.03em;">DevOps Engineer</p>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:8px;letter-spacing:0.03em;">Systems Engineer · Distributed Systems, Cloud &amp; DevOps</p>
             <div class="contact-row">
                 <span>Haveri, Karnataka, India 581108</span>
                 <span class="sep">|</span>
@@ -360,10 +365,11 @@
         <section class="section">
             <h2 class="section-title">Professional Summary</h2>
             <p class="summary-text">
-                DevOps and Systems-focused Computer Science engineer with production experience designing CI/CD pipelines,
-                infrastructure observability, and scalable backend platforms. Proven track record maintaining cloud deployments
-                across GCP (Compute Engine, Nginx, PM2) and Vercel for live commercial SaaS products. Skilled in Linux systems
-                administration, Docker, Terraform, automated release engineering, and graph-based deployment telemetry.
+                Computer Science engineer focused on systems, distributed systems, cloud, networking and DevOps/SRE.
+                Builder of <strong>Fortis Ecosystem</strong>, a spec-first Rust and Kotlin platform that links an Android phone
+                and Linux laptops over Tailscale: an encrypted vault with autofill, fingerprint-approved sudo through a custom
+                PAM module, laptop remote control and encrypted backups. Production experience maintaining CI/CD and deployments
+                for a live SaaS product across GCP (Compute Engine, Nginx, PM2) and Vercel.
             </p>
         </section>
 
@@ -371,6 +377,10 @@
         <section class="section">
             <h2 class="section-title">Technical Skills</h2>
             <table class="skills-table">
+                <tr>
+                    <td class="cat">Systems & Security</td>
+                    <td class="val">Rust, Linux PAM, systemd, Unix sockets / IPC, Tailscale (WireGuard), SQLCipher, Argon2id, XChaCha20-Poly1305, ECDSA P-256 (Android Keystore)</td>
+                </tr>
                 <tr>
                     <td class="cat">Systems & Cloud</td>
                     <td class="val">Linux (Ubuntu/Debian, Systemd, Nginx, SSH), GCP (Compute Engine, Cloud Run), AWS (EC2), Kubernetes (Minikube)</td>
@@ -393,7 +403,7 @@
         <!-- Programming Languages -->
         <section class="section">
             <h2 class="section-title">Programming Languages</h2>
-            <p class="lang-text">JavaScript, Python, C, C++, Java, TypeScript</p>
+            <p class="lang-text">Rust, Kotlin, TypeScript, JavaScript, Python, Bash, C, C++, Java</p>
         </section>
 
         <!-- Experience & Achievements -->
@@ -438,24 +448,21 @@
             <h2 class="section-title">Projects</h2>
 
             <div class="project">
-                <div class="project-name"><a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank"
-                        style="color:var(--fg);">Fortis-CI</a> <span style="font-size:11.5px;font-weight:600;color:var(--muted);font-style:italic;">[In Active Development]</span></div>
+                <div class="project-name"><a href="https://github.com/Fortis-OS/fortis-ecosystem" target="_blank"
+                        style="color:var(--fg);">Fortis Ecosystem</a> <span style="font-size:11.5px;font-weight:600;color:var(--muted);font-style:italic;">[Flagship · Open Source]</span></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Node.js, Neo4j, Redis, Next.js, GitHub Actions, Webhooks</li>
-                    <li>Architected a centralized CI/CD observability platform capturing deployment metrics and pipeline lifecycles across distributed repositories.</li>
-                    <li>Modeled multi-stage build and deployment dependency graphs in Neo4j to accelerate root-cause fault isolation and failure analysis.</li>
-                    <li>Built resilient GitHub webhook ingestion with Redis caching for real-time deployment telemetry processing.</li>
+                    <li><strong>Technologies:</strong> Rust, Kotlin (Jetpack Compose), Tauri, UniFFI, Linux PAM, SQLCipher, Tailscale, systemd</li>
+                    <li>Built a privacy-first system joining an Android phone and Linux laptops over Tailscale with no cloud service: encrypted password vault with autofill on both devices, TOTP, laptop remote control, phone-as-webcam and encrypted backups (~13k lines of Rust, ~9.7k lines of Kotlin, 9 components).</li>
+                    <li>Wrote the specification first (threat model, cryptography, API); the code must follow it. Vault keys from Argon2id + HKDF, SQLCipher at rest, per-entry XChaCha20-Poly1305; every phone request signed with a hardware-backed ECDSA P-256 key, with nonces and timestamps against replay.</li>
+                    <li>Implemented fingerprint-approved <code>sudo</code> as a Rust PAM module that verifies the phone's signature against a root-owned key, and falls back to the password prompt on any failure so a fault can never lock the user out.</li>
                 </ul>
             </div>
 
             <div class="project">
-                <div class="project-name"><a href="https://github.com/Fortis-Ecosystem" target="_blank"
-                        style="color:var(--fg);">Fortis Ecosystem</a></div>
+                <div class="project-name">FortisOS <span style="font-size:11.5px;font-weight:600;color:var(--muted);font-style:italic;">[In Design]</span></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Rust, TypeScript, Tauri, Kotlin, Bash, C, Tailscale</li>
-                    <li>Developed a distributed, privacy-first systems suite integrating mobile, desktop, and Linux workstations into a unified mesh network.</li>
-                    <li>Built a high-performance Rust systems daemon (<code>fortis-agent</code>) exposing Unix Domain Sockets and IPC for zero-latency cross-process communication.</li>
-                    <li>Enforced zero-trust device pairing with Ed25519 cryptographic signatures and hardware-backed AES-256 encrypted vaults.</li>
+                    <li><strong>Technologies:</strong> Rust</li>
+                    <li>Designing a personal distributed OS layer (one user, many machines): an op-log metadata engine and an encrypted chunk store, tested with a deterministic fault simulator (network faults, clock skew, crashes), power-cut crash tests and mutation testing.</li>
                 </ul>
             </div>
 
@@ -463,9 +470,9 @@
                 <div class="project-name"><a href="https://github.com/Fortis-Tools" target="_blank"
                         style="color:var(--fg);">Fortis-Tools</a></div>
                 <ul>
-                    <li><strong>Technologies:</strong> Python, Bash, Shell Scripting, Linux Systemd, Go</li>
-                    <li>Engineered automated infrastructure maintenance utilities, cron orchestration, and backup/restore daemons for distributed Linux nodes.</li>
-                    <li>Implemented real-time host resource monitors and secure credential synchronization across multi-device developer environments.</li>
+                    <li><strong>Technologies:</strong> TypeScript, Node.js, Python, rsync, Tailscale</li>
+                    <li><strong>fortis-share</strong> (npm): one-command file, screenshot and clipboard transfer from Linux to Android over Tailscale + Termux sshd, with a one-time QR link fallback.</li>
+                    <li><strong>healthcheck</strong> (<code>npx @fortis-tools/healthcheck</code>): domain diagnostics CLI covering DNS, SSL, HTTP/2 via ALPN, security headers, port exposure and SPF/DMARC, with JSON output and exit codes for CI/CD.</li>
                 </ul>
             </div>
 
@@ -486,7 +493,6 @@
                     <li><strong>Technologies:</strong> Terraform, Docker, AWS EC2, GitHub Actions, Kubernetes (Minikube)</li>
                     <li>Provisioned declarative cloud infrastructure on AWS EC2 using modular Terraform configurations with remote state management.</li>
                     <li>Implemented end-to-end GitHub Actions automated pipelines for container builds, linting, and automated zero-downtime rolling deployments.</li>
-                    <li>Validated cloud-native orchestration with Kubernetes (Minikube), defining Deployments, Services, and Ingress routing rules.</li>
                 </ul>
             </div>
         </section>
@@ -504,9 +510,6 @@
                 <div class="project-tech">
                     <a href="https://ganeshangadi.online/blog/fortis-pseudo-os" target="_blank">ganeshangadi.online/blog/fortis-pseudo-os</a> | Distributed Systems & Linux Architecture
                 </div>
-                <ul>
-                    <li>Authored an architectural deep dive on distributed operating systems, cross-device execution consistency, automated snapshotting, and fault recovery in decentralized computing environments.</li>
-                </ul>
             </div>
 
             <div class="project">
@@ -518,9 +521,6 @@
                 <div class="project-tech">
                     <a href="https://ganeshangadi.online/blog/fortis-ecosystem" target="_blank">ganeshangadi.online/blog/fortis-ecosystem</a> | Systems Automation & Networking
                 </div>
-                <ul>
-                    <li>Documented designing a zero-touch distributed automation network across Linux and mobile utilizing Tailscale mesh VPN, SSH protocol automation, and Unix IPC.</li>
-                </ul>
             </div>
         </section>
 
