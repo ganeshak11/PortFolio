@@ -30,7 +30,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(!t){
 export const metadata: Metadata = {
   title: "Ganesh Angadi | DevOps Engineer | AWS • Kubernetes • Terraform • CI/CD",
   description:
-    "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP hackathon winner.",
+    "Builder of Fortis Ecosystem, a privacy-first phone + Linux laptop platform: encrypted vault, autofill, fingerprint sudo and laptop remote over Tailscale, with no cloud. DevOps engineer focused on Linux, AWS, Kubernetes, Terraform and CI/CD. 1st place MCP hackathon winner.",
   keywords: [
     "Ganesh Angadi",
     "ganesh angadi",
@@ -43,10 +43,12 @@ export const metadata: Metadata = {
     "kubernetes portfolio",
     "terraform portfolio",
     "devops engineer portfolio india",
-    "Fortis-CI",
-    "graph native observability",
-    "deployment observability",
-    "neo4j observability",
+    "Fortis Ecosystem",
+    "Fortis-OS",
+    "privacy-first password manager",
+    "fingerprint sudo",
+    "Tailscale",
+    "Rust",
     "Docker",
     "Kubernetes",
     "AWS",
@@ -67,8 +69,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Ganesh Angadi" }],
   creator: "Ganesh Angadi",
   openGraph: {
-    title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
-    description: "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD. 1st place MCP hackathon winner.",
+    title: "Ganesh Angadi | DevOps Engineer | Building Fortis Ecosystem",
+    description: "Builder of Fortis Ecosystem: a privacy-first vault, autofill, fingerprint sudo and laptop remote for your Android phone and Linux laptops, over Tailscale with no cloud. DevOps engineer | 1st place MCP hackathon winner.",
     type: "website",
     url: "https://ganeshangadi.online",
     siteName: "Ganesh Angadi Portfolio",
@@ -83,8 +85,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ganesh Angadi | DevOps Engineer | Creator of Fortis-CI",
-    description: "Creator of Fortis-CI — graph-native deployment observability. DevOps engineer | AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
+    title: "Ganesh Angadi | DevOps Engineer | Building Fortis Ecosystem",
+    description: "Building Fortis Ecosystem — privacy-first phone + Linux laptop platform over Tailscale. DevOps engineer | Linux • AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
     images: ["https://ganeshangadi.online/og-profile.jpg"],
     creator: "@ganeshak11",
   },
@@ -106,7 +108,7 @@ export default function RootLayout({
     image: "https://ganeshangadi.online/profile.png",
     jobTitle: "DevOps Engineer",
     description:
-      "Creator of Fortis-CI, an open-source graph-native deployment observability platform. DevOps engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP server hackathon winner.",
+      "Builder of Fortis Ecosystem, an open-source privacy-first platform joining an Android phone and Linux laptops over Tailscale. DevOps engineer focused on Linux, AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP server hackathon winner.",
     knowsAbout: [
       "Docker",
       "Kubernetes",
@@ -116,9 +118,10 @@ export default function RootLayout({
       "CI/CD Pipelines",
       "GitHub Actions",
       "System Design",
-      "Deployment Observability",
-      "Graph Databases",
-      "Neo4j",
+      "Applied Cryptography",
+      "Rust",
+      "Android",
+      "Linux PAM",
       "Model Context Protocol (MCP)",
       "Node.js",
       "PostgreSQL",
@@ -143,7 +146,7 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "Ganesh Angadi Portfolio",
     url: "https://ganeshangadi.online",
-    description: "Portfolio and blog of Ganesh Angadi — DevOps engineer and creator of Fortis-CI.",
+    description: "Portfolio and blog of Ganesh Angadi — DevOps engineer and builder of Fortis Ecosystem.",
     author: { "@type": "Person", name: "Ganesh Angadi" },
     potentialAction: {
       "@type": "SearchAction",
@@ -155,20 +158,20 @@ export default function RootLayout({
     },
   };
 
-  const fortisCISchema = {
+  const fortisSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Fortis-CI",
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Linux, macOS, Windows",
+    name: "Fortis Ecosystem",
+    applicationCategory: "SecurityApplication",
+    operatingSystem: "Linux, Android",
     description:
-      "An open-source graph-native deployment observability platform built on Neo4j. Tracks deployment pipelines as a graph, enabling real-time observability and dependency mapping for CI/CD workflows.",
+      "A privacy-first system for an Android phone and Linux laptops: encrypted password vault with autofill, TOTP codes, fingerprint-approved sudo, laptop remote control, phone-as-webcam and encrypted backups, joined over Tailscale with no cloud service in between.",
     author: { "@type": "Person", name: "Ganesh Angadi", url: "https://ganeshangadi.online" },
-    url: "https://github.com/Fortis-CI/Fortis-CI",
-    keywords: "deployment observability, graph-native, Neo4j, CI/CD, DevOps",
+    url: "https://github.com/Fortis-OS/fortis-ecosystem",
+    keywords: "password manager, fingerprint sudo, PAM, Tailscale, Rust, Android, privacy",
   };
 
-  const jsonLd = [personSchema, websiteSchema, fortisCISchema];
+  const jsonLd = [personSchema, websiteSchema, fortisSchema];
 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} ${rufscript.variable}`}>

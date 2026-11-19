@@ -8,7 +8,7 @@ import { useTheme } from "@/components/ThemeProvider";
 const FILE_SYSTEM = {
     "/": ["about", "projects", "stack", "github", "thinking", "contact", "README.md"],
     "/about": ["info.txt"],
-    "/projects": ["cicd-sentinel", "fortis-ci", "fortis-ecosystem", "fortis-tools", "mysuru-bus", "portfolio-infra"],
+    "/projects": ["fortis-ecosystem", "fortis-os", "fortis-share", "fortis-tools", "mysuru-bus", "frost", "devcard", "mechkeys", "portfolio-infra", "fortis-observe", "cicd-sentinel"],
     "/stack": ["tools.txt"],
     "/github": ["stats.txt"],
     "/thinking": ["principles.txt"],
@@ -46,7 +46,7 @@ CORE PRINCIPLES:
 ▸ Designing robust failover and self-healing environments
 ▸ Enforcing security boundaries and minimizing attack surfaces`,
 
-    "/projects/cicd-sentinel": `CI/CD Sentinel - Graph-Native AI SRE Platform
+    "/projects/cicd-sentinel": `CI/CD Sentinel - Graph-Native AI SRE Platform (college project)
 
 A self-hosted, open-source intelligent deployment observability platform powered by Neo4j.
 
@@ -60,43 +60,76 @@ KEY CAPABILITY:
 Models the entire deployment lifecycle as a connected graph to calculate
 failure blast radius instantly and automate incident triage.`,
 
-    "/projects/fortis-ci": `Fortis-CI - Graph-Native CI/CD Observer
+    "/projects/fortis-ecosystem": `Fortis Ecosystem - my flagship  ★
 
-An open-source observability layer designed to audit deployment graphs.
-
-STACK:
-- Graph Database: Neo4j
-- API Core: Node.js (Express)
-- Event Broker: Redis
-- Visual UI: Next.js (TypeScript)
-
-KEY CAPABILITY:
-Map pipelines, commits, configuration changes, and test failures into
-a dependency graph to locate single points of failure automatically.`,
-
-    "/projects/fortis-ecosystem": `Fortis Ecosystem - Unified Security Platform
-
-A privacy-first security platform featuring password management, biometric sudo,
-and encrypted backup systems.
+A privacy-first system for an Android phone and Linux laptops: encrypted
+password vault with autofill, TOTP, fingerprint-approved sudo, laptop remote
+control, phone-as-webcam and encrypted backups. Joined over Tailscale,
+with no cloud service in between. The docs are the specification.
 
 STACK:
-- Core Daemon: Rust (fortis-agent)
-- Desktop App: Tauri (TypeScript/Rust)
-- Mobile App: Kotlin (Jetpack Compose)
-- Encryption: AES-256 (SQLCipher), Ed25519
+- Laptop daemon + crypto core: Rust (fortis-agent, fortis-core)
+- sudo: Rust PAM module (pam_fortis) that verifies the phone's signature
+- Desktop: Tauri  |  CLI: Rust  |  Browser: extension + native host
+- Phone: Kotlin / Compose, Rust via UniFFI, Android Keystore
+- Crypto: Argon2id, SQLCipher 4, XChaCha20-Poly1305, ECDSA P-256
 
-KEY CAPABILITY:
-Zero-trust architecture utilizing Ed25519 signatures, zeroizing memory, and
-a unified RPC background daemon.`,
+SCALE: ~13.2k lines Rust, ~9.7k lines Kotlin, 9 components
+REPO:  https://github.com/Fortis-OS/fortis-ecosystem`,
 
-    "/projects/fortis-tools": `Fortis-Tools - Infrastructure Utilities
+    "/projects/fortis-os": `FortisOS - the dream
 
-Operational utilities and infrastructure automation scripts for Fortis.
+One OS layer, one user, many machines: every device I own as one
+logical computer.
 
-STACK:
-- Python
-- Shell Scripting
-- Go`,
+STATUS: M0 skeleton, M1 metadata engine, M2 encrypted chunk store done.
+TESTED WITH: a deterministic simulator (network faults, clock skew,
+crashes), power-cut-after-every-write crash tests, mutation testing.
+STACK: Rust
+REPO: private while the design settles`,
+
+    "/projects/fortis-share": `fortis-share - AirDrop for Linux -> Android
+
+Send files, screenshots and the clipboard to your phone in one command
+or one right-click, over Tailscale + Termux sshd. One-time QR link
+fallback when the phone isn't reachable. No cloud.
+
+INSTALL: npm install -g fortis-share
+REPO: https://github.com/Fortis-Tools/fortis-share`,
+
+    "/projects/fortis-tools": `Fortis-Tools - healthcheck
+
+npx @fortis-tools/healthcheck <domain>
+DNS, SSL, HTTP/2 (ALPN), security headers, port exposure, SPF/DMARC and
+a sitemap spider, rolled into a health score. --json + exit codes for CI.
+
+STACK: TypeScript, Node.js native dns/tls/https
+REPO: https://github.com/Fortis-Tools/healthcheck`,
+
+    "/projects/frost": `Frost - my custom KDE Plasma 6 theme
+
+Dark glassmorphic desktop generated from one palette (accent #F21D43):
+Plasma theme, Kvantum, widgets, dock, Dynamic Island, SDDM, Plymouth,
+GRUB, cursors, ~1,400 icons, GTK, VS Code, Firefox, Kitty.
+This portfolio is styled after it.
+
+REPO: https://github.com/ganeshak11/frost`,
+
+    "/projects/devcard": `DevCard - npx ganeshak11
+
+An interactive terminal business card: bio, skills, links, QR code.
+STACK: TypeScript, Inquirer, Boxen, Chalk`,
+
+    "/projects/mechkeys": `mechkeys - mechanical keyboard sounds
+
+Rust daemon reading every keyboard via evdev and playing switch sounds
+from 26 packs, controlled over a Unix socket and a TUI.
+REPO: https://github.com/ganeshak11/mechkeys`,
+
+    "/projects/fortis-observe": `FortisObserve - telemetry for this portfolio (college project)
+
+Decoupled visitor analytics: Next.js, Supabase, WebGL globe, TOTP-gated.
+REPO: https://github.com/ganeshak11/FortisObserve`,
 
     "/projects/mysuru-bus": `MY(suru) BUS - Smart Transit Platform
 
@@ -106,7 +139,7 @@ ARCHITECTURE:
 - Passenger Interface: React Native (Expo)
 - Fleet Tracking App: React Native (Driver client)
 - Operations Dashboard: Next.js + Tailwind
-- Database Backend: Supabase (Auth, RLS, WebSockets)
+- Backend: Node.js, Express, Socket.io, JWT, PostgreSQL
 
 DESIGN HIGHLIGHTS:
 ▸ Offline-first queuing system synchronizes driver GPS buffers
@@ -387,7 +420,7 @@ Ganesh Angadi — DevOps Engineer & Observability Specialist
                     "Shell     : /bin/bash",
                     "IDE       : VS Code, Vim",
                     "Languages : TypeScript, Python, Shell, C",
-                    "Building  : Fortis Ecosystem (Fortis-CI, Observe)",
+                    "Building  : Fortis Ecosystem, FortisOS",
                     "Telemetry : S1 (8-Puzzle: 3s) | S2 (Rubik: 48s) | S3 (Sudoku: 52s)"
                 ];
 
@@ -435,10 +468,10 @@ Location: Mysuru, Karnataka, India
 ▸ 1st Place - MCP-Based Systems Engineering Hackathon
 
 [TOP PROJECTS]
-▸ CI/CD Sentinel - Graph-Native AI SRE Platform
-▸ Fortis Ecosystem - Unified Privacy Platform
+▸ Fortis Ecosystem - privacy-first phone + Linux laptop platform (flagship)
 ▸ MY(suru) BUS - Real-Time Smart Bus Tracking
-▸ Portfolio Infrastructure - Zero-to-Production DevOps
+▸ Frost - custom KDE Plasma 6 theme
+▸ fortis-share / healthcheck - Fortis-Tools
 
 To view the full resume, close the terminal and click 'View Resume', 
 or go directly to /resume.html

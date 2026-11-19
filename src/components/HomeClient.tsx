@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TerminalMode from "@/components/TerminalMode";
 import FAB from "@/components/FAB";
-import CurrentlyBuilding from "@/components/CurrentlyBuilding";
+import FortisEcosystem from "@/components/FortisEcosystem";
 import LatestBlogs from "@/components/LatestBlogs";
 import { BlogPost } from "@/lib/blog";
 
@@ -121,11 +121,11 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
 
         <About />
 
+        <FortisEcosystem />
+
         <Achievements />
 
         <Projects />
-
-        <CurrentlyBuilding />
 
         <DevOpsStack />
 

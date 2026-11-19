@@ -1,13 +1,116 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import Image from "next/image";
 import { m, AnimatePresence } from "framer-motion";
 import { Plus, Minus, ArrowUpRight } from "lucide-react";
 import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
-const PROJECTS = [
+type ProjectData = {
+    num: string;
+    name: string;
+    github: string;
+    tagline: string;
+    status: string;
+    statusColor: string;
+    stack: string[];
+    intro: string;
+    highlights: { title: string; desc: string }[];
+    limitations: string[];
+    progress?: { label: string; pct: number }[];
+    group?: "main" | "earlier";
+    badge?: string;
+    image?: string;
+    live?: string;
+};
+
+const PROJECTS: ProjectData[] = [
     {
-        num: "00",
+        num: "01",
+        name: "MY(suru) BUS",
+        github: "https://github.com/ganeshak11/MY-suru-BUS",
+        live: "https://my-suru-bus.vercel.app",
+        badge: "largest by scale",
+        tagline: "Real-Time Bus Tracking & Fleet Management",
+        status: "Live",
+        statusColor: "var(--status-ok)",
+        stack: ["Node.js", "Express", "Socket.io", "PostgreSQL", "Next.js", "React Native", "Expo", "JWT"],
+        intro: "A city-scale public transport platform for Mysuru, built from scratch as a multi-app monorepo: a Node.js backend, a Next.js admin dashboard, and Expo driver and passenger apps, all fed by live GPS over WebSockets.",
+        highlights: [
+            { title: "Four apps, one backend", desc: "Admin dashboard (fleet, routes, trips, drivers), driver app, passenger app and a REST + Socket.io API" },
+            { title: "Real-time rooms", desc: "Socket.io rooms per bus and per trip; only authenticated drivers can emit location" },
+            { title: "Offline-first driver app", desc: "Background GPS with an ordered offline queue that auto-syncs, plus geofence-based stop detection" },
+            { title: "Search that scales", desc: "Route search by source/destination backed by PostgreSQL GIN trigram indexes" },
+            { title: "Production-hardened API", desc: "Role-based access, JWT + bcrypt, per-IP rate limits, GPS bounds validation, 14/14 backend tests" },
+        ],
+        limitations: [
+            "Driver phone dependency – single point of failure",
+            "GPS precision limits – urban canyon effects",
+            "No traffic prediction yet – ETA is distance-based only",
+        ],
+    },
+    {
+        num: "02",
+        name: "Frost",
+        github: "https://github.com/ganeshak11/frost",
+        image: "/projects/frost-preview.jpg",
+        badge: "this site's look",
+        tagline: "My first fully custom KDE Plasma 6 theme",
+        status: "Daily driver",
+        statusColor: "var(--status-ok)",
+        stack: ["KDE Plasma 6", "QML", "Python", "Kvantum", "SDDM", "Bash"],
+        intro: "A dark, glassmorphic look for my whole desktop, generated from one palette (red accent #F21D43). It goes far past a colour scheme: native Plasma widgets, a Mac-style dock, a Dynamic Island, and themes for everything from the boot screen to the code editor. This portfolio is styled after it.",
+        highlights: [
+            { title: "Generated, not hand-edited", desc: "build.py produces the colour scheme, Plasma theme, Kvantum styles, window decorations and global themes" },
+            { title: "Obsidian Glass widgets", desc: "QML plasmoids with shared design tokens: clock, system observatory, calendar, weather, focus timer, controls" },
+            { title: "Boot to editor", desc: "GRUB, Plymouth, SDDM login, splash, 23 cursors, ~1,400 recoloured icons, GTK 3/4, Firefox, Kitty, VS Code" },
+            { title: "Safe to try", desc: "install.sh backs up your previous look; revert.sh and --undo flags put everything back" },
+        ],
+        limitations: [
+            "Dark only, and built for Plasma 6 on Wayland",
+            "Boot splash and login theme need sudo",
+        ],
+    },
+    {
+        num: "03",
+        name: "DevCard",
+        github: "https://github.com/ganeshak11/devcard-ganeshak11",
+        tagline: "npx ganeshak11 — my CLI business card",
+        status: "Published on npm",
+        statusColor: "var(--status-ok)",
+        stack: ["TypeScript", "Node.js", "Inquirer", "Boxen", "Chalk"],
+        intro: "A developer visiting card for the terminal. Run npx ganeshak11 and get my bio, skills and links in an animated boxen layout with an interactive command palette and a scannable QR code.",
+        highlights: [
+            { title: "Zero install", desc: "Published to npm, runs anywhere with npx" },
+            { title: "Interactive palette", desc: "Arrow-key navigation through sections via Inquirer" },
+            { title: "QR + easter egg", desc: "Terminal QR code to the portfolio, and a “Summon the Duck” animation" },
+        ],
+        limitations: [
+            "Needs Node.js and a terminal with colour support",
+        ],
+    },
+    {
+        num: "04",
+        name: "mechkeys",
+        github: "https://github.com/ganeshak11/mechkeys",
+        tagline: "Mechanical keyboard sounds for any keyboard",
+        status: "Hobby",
+        statusColor: "var(--accent)",
+        stack: ["Rust", "evdev", "rodio", "Unix sockets", "Python"],
+        intro: "A small Rust daemon that listens to every keyboard on the system through evdev and plays a switch sound on each key press: Cherry MX, Kailh Box, NK Cream, typewriters and more, from 26 sound packs.",
+        highlights: [
+            { title: "Low-latency playback", desc: "Samples are decoded once and mixed in memory, so a click plays the moment the key goes down" },
+            { title: "Per-key mappings", desc: "Sound packs map individual keys (space, enter, backspace) to their own samples" },
+            { title: "Daemon + control", desc: "A Unix-socket IPC (set / toggle / status / list) driven by a terminal UI and a Python menu" },
+            { title: "Survives audio hiccups", desc: "Reopens the audio output with back-off when the stream breaks" },
+        ],
+        limitations: [
+            "Linux only: reads /dev/input, so the user needs input-group access",
+        ],
+    },
+    {
+        group: "earlier",
+        num: "05",
         name: "Portfolio Infrastructure",
         github: "https://github.com/ganeshak11/PortFolio/tree/dev",
         tagline: "Zero-to-Production DevOps Pipeline",
@@ -27,64 +130,8 @@ const PROJECTS = [
         ],
     },
     {
-        num: "01",
-        name: "MY(suru) BUS",
-        github: "https://github.com/ganeshak11/MY-suru-BUS",
-        tagline: "Real-Time Bus Tracking System",
-        status: "Deployed",
-        statusColor: "var(--status-ok)",
-        stack: ["Next.js", "React Native", "Supabase", "PostgreSQL", "Leaflet"],
-        intro: "City-scale real-time bus tracking and management platform. Built with reliability over UI as the core principle — database as single source of truth, RLS enforced at DB level, offline-first with queue + auto-sync.",
-        highlights: [
-            { title: "Separation of static schedules vs dynamic trips", desc: "Postgres relational schema for consistency" },
-            { title: "Row-Level Security policies", desc: "Enforced at database level, not application" },
-            { title: "Realtime event subscriptions", desc: "WebSocket-based live updates" },
-            { title: "Avoided NoSQL overengineering", desc: "Relational model fits the domain" },
-        ],
-        limitations: [
-            "Driver phone dependency – single point of failure",
-            "GPS precision limits – urban canyon effects",
-            "No traffic prediction yet – ETA is distance-based only",
-        ],
-    },
-    {
-        num: "02",
-        name: "AUTOops",
-        github: "https://github.com/keerthi-180205/autoops-ai",
-        tagline: "AWS Infrastructure Orchestrator",
-        status: "Hackathon",
-        statusColor: "var(--accent)",
-        stack: ["Docker", "Node.js", "Python", "AWS EC2", "React"],
-        intro: "DevOps and infrastructure layer for an AI-driven cloud provisioning platform. Architected containerization and local deployment environment for a 4-person team.",
-        highlights: [
-            { title: "Network Isolation", desc: "Backend reaches internal agents without exposing ports externally" },
-            { title: "Model Context Protocol", desc: "Wrapped the orchestration suite as an MCP server" },
-        ],
-        limitations: [
-            "Heavy Docker reliance limits deployment to container-friendly hosts",
-            "Hot-reloading required volume mapping, complicating Dockerfiles",
-        ],
-    },
-    {
-        num: "03",
-        name: "Cyber Kavach",
-        github: "https://github.com/ganeshak11/Infra-Sentinel",
-        tagline: "Cyber Security Platform Infrastructure",
-        status: "Hackathon",
-        statusColor: "var(--accent)",
-        stack: ["Docker", "FastAPI", "Python", "Scikit-Learn", "Nginx"],
-        intro: "Infrastructure and deployment track for a real-time intrusion detection platform. Multi-container orchestration with strict dependency ordering and minimal attack surfaces.",
-        highlights: [
-            { title: "Host Network Integration", desc: "Configured agent with network_mode: host to access /var/log/auth.log" },
-            { title: "Unified Docker Compose", desc: "Wired React, FastAPI, and ML agent together sequentially" },
-        ],
-        limitations: [
-            "Host network mode breaks Docker isolation by design",
-            "Combining ML models and web servers increased memory footprint",
-        ],
-    },
-    {
-        num: "04",
+        group: "earlier",
+        num: "06",
         name: "FortisObserve",
         github: "https://github.com/ganeshak11/FortisObserve",
         tagline: "Telemetry & Command Center",
@@ -102,28 +149,12 @@ const PROJECTS = [
         ],
     },
     {
-        num: "05",
-        name: "DevCard",
-        github: "https://github.com/ganeshak11/devcard-ganeshak11",
-        tagline: "Dynamic CLI Dashboard",
-        status: "Deployed",
-        statusColor: "var(--status-ok)",
-        stack: ["Markdown", "GitHub APIs", "Github Stats"],
-        intro: "A highly customized and dynamic GitHub profile README showcasing live metrics, system design philosophy, and technical stacks.",
-        highlights: [
-            { title: "Live Metrics", desc: "Dynamic integration of GitHub stats, language breakdowns, and activity graphs." },
-            { title: "System Thinker Aesthetic", desc: "Terminal-styled themes and formatting that matches a DevOps mentality." }
-        ],
-        limitations: [
-            "Relies heavily on external APIs for dynamic badge generation."
-        ],
-    },
-    {
-        num: "WIP",
+        group: "earlier",
+        num: "07",
         name: "CI/CD Sentinel",
         github: "https://github.com/ganeshak11/CI-CD_Sentinel",
         tagline: "Deployment Observability & Recovery Layer",
-        status: "~80% Complete",
+        status: "College project · ~80%",
         statusColor: "var(--status-warn)",
         stack: ["Next.js", "Supabase", "Webhooks", "CI/CD", "Polling"],
         intro: "Centralized observability and recovery layer for software deployments. Tracks deployment history, monitors health via polling, and provides one-click recovery — all from a single dashboard.",
@@ -147,7 +178,7 @@ const PROJECTS = [
     },
 ];
 
-type Project = (typeof PROJECTS)[number];
+type Project = ProjectData;
 
 function Detail({ project }: { project: Project }) {
     return (
@@ -164,9 +195,16 @@ function Detail({ project }: { project: Project }) {
                     <p className="label" style={{ marginBottom: 6 }}>{project.num} / {project.tagline}</p>
                     <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(28px, 4vw, 40px)", lineHeight: 1.05 }}>{project.name}</h3>
                 </div>
-                <a href={project.github} target="_blank" rel="me noopener noreferrer" className="btn sm">
-                    View on GitHub <ArrowUpRight size={13} />
-                </a>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    {project.live && (
+                        <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn sm primary">
+                            Live site <ArrowUpRight size={13} />
+                        </a>
+                    )}
+                    <a href={project.github} target="_blank" rel="me noopener noreferrer" className="btn sm">
+                        View on GitHub <ArrowUpRight size={13} />
+                    </a>
+                </div>
             </div>
 
             <div className="row-wrap" style={{ marginTop: 16 }}>
@@ -211,56 +249,74 @@ function Detail({ project }: { project: Project }) {
     );
 }
 
+function ProjectGrid({ items, openKey, setOpenKey }: { items: Project[]; openKey: string | null; setOpenKey: (k: string | null) => void }) {
+    return (
+        <div className="proj-grid" style={{ gridAutoFlow: "row dense" }}>
+            {items.map((p, i) => {
+                const open = openKey === p.num;
+                return (
+                    <Fragment key={p.num}>
+                        <Reveal delay={(i % 3) * 0.05} style={{ display: "flex" }}>
+                            <button
+                                className={`panel hover proj${open ? " open" : ""}`}
+                                onClick={() => setOpenKey(open ? null : p.num)}
+                                aria-expanded={open}
+                            >
+                                <div className="panel-bar" style={{ width: "100%" }}>
+                                    <span className="title">/opt/projects/{p.num}</span>
+                                    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: p.statusColor, whiteSpace: "nowrap" }}>
+                                        <span className="dot" />
+                                        {p.status}
+                                    </span>
+                                </div>
+                                {p.image && (
+                                    <div className="proj-media">
+                                        <Image src={p.image} alt={`${p.name} preview`} fill sizes="(max-width: 760px) 100vw, 400px" />
+                                    </div>
+                                )}
+                                <div className="proj-body">
+                                    {p.badge && <span className="chip solid" style={{ alignSelf: "flex-start" }}>{p.badge}</span>}
+                                    <h3 className="proj-name">{p.name}</h3>
+                                    <p className="proj-tag">{p.tagline}</p>
+                                    <p className="proj-intro">{p.intro}</p>
+                                </div>
+                                <div className="proj-foot" style={{ width: "100%" }}>
+                                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
+                                        {p.stack.slice(0, 3).join(" · ")}{p.stack.length > 3 ? ` +${p.stack.length - 3}` : ""}
+                                    </span>
+                                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "var(--accent)", flexShrink: 0 }}>
+                                        {open ? <Minus size={13} /> : <Plus size={13} />} {open ? "close" : "details"}
+                                    </span>
+                                </div>
+                            </button>
+                        </Reveal>
+                        <AnimatePresence>{open && <Detail key={`d-${p.num}`} project={p} />}</AnimatePresence>
+                    </Fragment>
+                );
+            })}
+        </div>
+    );
+}
+
 export default function Projects() {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [openKey, setOpenKey] = useState<string | null>(null);
+    const main = PROJECTS.filter((p) => p.group !== "earlier");
+    const earlier = PROJECTS.filter((p) => p.group === "earlier");
 
     return (
         <section id="projects" className="section">
             <div className="wrap">
                 <SectionHead
-                    index="03"
+                    index="04"
                     cmd="ls -lh /opt/projects"
                     title={<>Things I&apos;ve <em>built</em></>}
-                    lede="Each one with the trade-offs and the parts that still break. Open a card for highlights and known limitations."
+                    lede="Besides Fortis: the biggest thing I've shipped, the desktop I live in, and the small tools I build for fun. Open a card for highlights and known limitations."
                 />
+                <ProjectGrid items={main} openKey={openKey} setOpenKey={setOpenKey} />
 
-                <div className="proj-grid" style={{ gridAutoFlow: "row dense" }}>
-                    {PROJECTS.map((p, i) => {
-                        const open = openIndex === i;
-                        return (
-                            <Fragment key={p.num}>
-                                <Reveal delay={(i % 3) * 0.05} style={{ display: "flex" }}>
-                                    <button
-                                        className={`panel hover proj${open ? " open" : ""}`}
-                                        onClick={() => setOpenIndex(open ? null : i)}
-                                        aria-expanded={open}
-                                    >
-                                        <div className="panel-bar" style={{ width: "100%" }}>
-                                            <span className="title">/opt/projects/{p.num}</span>
-                                            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: p.statusColor }}>
-                                                <span className="dot" />
-                                                {p.status}
-                                            </span>
-                                        </div>
-                                        <div className="proj-body">
-                                            <h3 className="proj-name">{p.name}</h3>
-                                            <p className="proj-tag">{p.tagline}</p>
-                                            <p className="proj-intro">{p.intro}</p>
-                                        </div>
-                                        <div className="proj-foot" style={{ width: "100%" }}>
-                                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
-                                                {p.stack.slice(0, 3).join(" · ")}{p.stack.length > 3 ? ` +${p.stack.length - 3}` : ""}
-                                            </span>
-                                            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "var(--accent)", flexShrink: 0 }}>
-                                                {open ? <Minus size={13} /> : <Plus size={13} />} {open ? "close" : "details"}
-                                            </span>
-                                        </div>
-                                    </button>
-                                </Reveal>
-                                <AnimatePresence>{open && <Detail key={`d-${p.num}`} project={p} />}</AnimatePresence>
-                            </Fragment>
-                        );
-                    })}
+                <div className="proj-group">
+                    <p className="eyebrow" style={{ marginBottom: 16 }}><span className="idx">04.1</span><span className="rule" /><span>college &amp; earlier work</span></p>
+                    <ProjectGrid items={earlier} openKey={openKey} setOpenKey={setOpenKey} />
                 </div>
             </div>
         </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { FaLinkedin, FaGithub, FaInstagram, FaDiscord } from "react-icons/fa";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
@@ -10,16 +11,6 @@ const SOCIALS = [
     { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22", label: "Instagram" },
     { icon: FaDiscord, href: "https://discord.com", label: "Discord" },
 ];
-
-const LOGO = [
-    "   ▄██████▄  ",
-    "  ██▀    ▀██ ",
-    "  ██         ",
-    "  ██   ▄▄▄▄▄ ",
-    "  ██    ▀▀██ ",
-    "  ▀██▄▄▄▄██▀ ",
-    "    ▀▀▀▀▀▀   ",
-].join("\n");
 
 const INFO: [string, string][] = [
     ["role", "DevOps Engineer · Systems"],
@@ -43,7 +34,9 @@ export default function About() {
                             <span className="title">ganesh@frost: ~ — neofetch</span>
                         </div>
                         <div className="neofetch">
-                            <pre className="neofetch-logo" aria-hidden="true">{LOGO}</pre>
+                            <div className="neofetch-img">
+                                <Image src="/portrait-dark.jpg" alt="Ganesh Angadi portrait" fill sizes="132px" style={{ objectFit: "cover" }} />
+                            </div>
                             <dl>
                                 <div className="head"><b>ganesh</b>@<b>angadi</b></div>
                                 <div className="sep">-------------------</div>

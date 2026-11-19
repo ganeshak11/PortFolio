@@ -94,7 +94,7 @@ export function HeroContent({ isMobile, onTerminalOpen }: { isMobile: boolean; o
                     <m.div className="hero-meta" {...fade(0.42)}>
                         <span className="chip">Founding SDE @ Kridtech</span>
                         <span className="chip">1st place · MCP hackathon</span>
-                        <span className="chip">creator of Fortis-CI</span>
+                        <a href="#fortis" className="chip accent" style={{ textDecoration: "none" }}>building Fortis Ecosystem →</a>
                     </m.div>
                 </div>
 

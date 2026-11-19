@@ -8,7 +8,7 @@ import { Sun, Moon, Menu, X, FileText } from "lucide-react";
 import { NAV_LINKS } from "./navbar/navData";
 import { useTheme } from "@/components/ThemeProvider";
 
-const SECTION_IDS = ["hero", "about", "achievements", "projects", "stack", "github-metrics", "latest-blogs", "thinking", "services", "contact"];
+const SECTION_IDS = ["hero", "about", "fortis", "achievements", "projects", "stack", "github-metrics", "latest-blogs", "thinking", "services", "contact"];
 
 export default function Navbar() {
     const [active, setActive] = useState<string>("");

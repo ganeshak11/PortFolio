@@ -62,7 +62,7 @@ export default function Achievements() {
         <section id="achievements" className="section">
             <div className="wrap">
                 <SectionHead
-                    index="02"
+                    index="03"
                     cmd={'history | grep "milestones"'}
                     title={<>Recognition &amp; <em>experience</em></>}
                 />

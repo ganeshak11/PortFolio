@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         "DevOps Engineer",
         "Backend Engineer",
         "Platform Engineering",
-        "Fortis-CI",
+        "Fortis Ecosystem",
         "System Thinker",
         "About Ganesh Angadi"
     ],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "About Ganesh Angadi | DevOps Engineer",
         description:
-            "Systems-first DevOps portfolio of Ganesh Angadi. Creator of Fortis-CI, hackathon winner, platform engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation.",
+            "Systems-first DevOps portfolio of Ganesh Angadi. Builder of Fortis Ecosystem, hackathon winner, platform engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation.",
         type: "profile",
         url: `${DOMAIN}/about`,
         siteName: "Ganesh Angadi Portfolio",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "About Ganesh Angadi | DevOps Engineer",
         description:
-            "Systems-first DevOps portfolio. Creator of Fortis-CI — graph-native deployment observability. AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
+            "Systems-first DevOps portfolio. Building Fortis Ecosystem — privacy-first phone + Linux laptop platform over Tailscale. AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
         images: [`${DOMAIN}/og-profile.jpg`],
         creator: "@ganeshak11",
     },
@@ -60,7 +60,7 @@ export default function AboutPage() {
         image: `${DOMAIN}/profile.png`,
         jobTitle: "DevOps Engineer",
         description:
-            "DevOps and Backend Engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. Creator of Fortis-CI, an open-source graph-native deployment observability platform. 1st place MCP hackathon winner.",
+            "DevOps and Backend Engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. Builder of Fortis Ecosystem, an open-source privacy-first platform joining an Android phone and Linux laptops over Tailscale. 1st place MCP hackathon winner.",
         knowsAbout: [
             "Docker",
             "Kubernetes",
@@ -70,9 +70,9 @@ export default function AboutPage() {
             "CI/CD Pipelines",
             "GitHub Actions",
             "System Design",
-            "Deployment Observability",
-            "Graph Databases",
-            "Neo4j",
+            "Applied Cryptography",
+            "Rust",
+            "Android",
             "Model Context Protocol (MCP)",
             "Node.js",
             "PostgreSQL",
@@ -99,9 +99,11 @@ export default function AboutPage() {
     ];
 
     const projects = [
-        { name: "Fortis-CI", href: "https://github.com/Fortis-CI/Fortis-CI", desc: "Graph-native deployment observability platform. Built on Neo4j.", link: "Fortis-CI Repository" },
-        { name: "Fortis-Tools", href: "https://github.com/Fortis-Tools", desc: "Open-source developer tools, CLI utilities, and DevOps automation.", link: "Fortis-Tools Organization" },
+        { name: "Fortis Ecosystem", href: "https://github.com/Fortis-OS/fortis-ecosystem", desc: "My flagship: a privacy-first system for an Android phone and Linux laptops. Encrypted vault with autofill, TOTP, fingerprint-approved sudo, laptop remote, phone-as-webcam and encrypted backups, over Tailscale with no cloud. Rust + Kotlin, spec-first.", link: "Fortis Ecosystem Repository" },
+        { name: "FortisOS", href: "", desc: "The long-term goal: one OS layer, one user, many machines. A Rust distributed metadata engine and encrypted chunk store, tested with a deterministic fault simulator and crash tests. Private while in design.", link: "" },
+        { name: "Fortis-Tools", href: "https://github.com/Fortis-Tools", desc: "Small tools around Fortis: fortis-share (AirDrop for Linux → Android) and healthcheck (an SRE-style domain diagnostics CLI).", link: "Fortis-Tools Organization" },
         { name: "MY(suru) BUS", href: "https://github.com/ganeshak11/MY-suru-BUS", desc: "Real-time city transportation platform with live GPS tracking.", link: "MY(suru) BUS Repository" },
+        { name: "Frost", href: "https://github.com/ganeshak11/frost", desc: "My fully custom KDE Plasma 6 theme, from boot screen to code editor. This site is styled after it.", link: "Frost Repository" },
     ];
 
     const skills = [
@@ -174,10 +176,10 @@ export default function AboutPage() {
                                     {projects.map((p) => (
                                         <div key={p.name} className="panel hover" style={{ padding: "18px 20px" }}>
                                             <h3 style={{ fontSize: 17, fontWeight: 650, marginBottom: 4 }}>
-                                                <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>{p.name}</a>
+                                                {p.href ? <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>{p.name}</a> : p.name}
                                             </h3>
                                             <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "0 0 8px" }}>{p.desc}</p>
-                                            <a href={p.href} target="_blank" rel="noopener noreferrer" className="link">{p.link} ↗</a>
+                                            {p.href ? <a href={p.href} target="_blank" rel="noopener noreferrer" className="link">{p.link} ↗</a> : <span className="mono" style={{ fontSize: 12, color: "var(--faint)" }}>private repo · in design</span>}
                                         </div>
                                     ))}
                                 </div>
@@ -220,10 +222,10 @@ export default function AboutPage() {
                                     </div>
                                     <div className="panel" style={{ padding: 20 }}>
                                         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
-                                            <strong style={{ fontSize: 16 }}>Fortis Ecosystem Core Maintainer</strong>
+                                            <strong style={{ fontSize: 16 }}>Fortis Ecosystem — Creator &amp; Maintainer</strong>
                                             <span className="chip" style={{ color: "var(--status-ok)" }}><span className="dot live" /> Active</span>
                                         </div>
-                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Architected deployment graphs and observability platform</p>
+                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Designed and built a privacy-first phone + Linux laptop platform: Rust agent, PAM module and crypto core, Kotlin Android app, and a written security specification</p>
                                     </div>
                                 </div>
                             </section>
