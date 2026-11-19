@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ClientProviders } from "@/components/ClientProviders";
-import CustomCursor from "@/components/CustomCursor";
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
@@ -28,14 +27,15 @@ const rufscript = localFont({
 const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}if(t==="dark")document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}})();`;
 
 export const metadata: Metadata = {
-  title: "Ganesh Angadi | DevOps Engineer | AWS • Kubernetes • Terraform • CI/CD",
+  title: "Ganesh Angadi | Systems Engineer | Rust • Linux • Security • Infrastructure",
   description:
-    "Builder of Fortis Ecosystem, a privacy-first phone + Linux laptop platform: encrypted vault, autofill, fingerprint sudo and laptop remote over Tailscale, with no cloud. DevOps engineer focused on Linux, AWS, Kubernetes, Terraform and CI/CD. 1st place MCP hackathon winner.",
+    "Systems engineer building Fortis Ecosystem: a privacy-first vault, autofill, fingerprint sudo and laptop remote for an Android phone and Linux laptops, over Tailscale with no cloud. Rust, Linux, security and infrastructure (Docker, CI/CD, Terraform, AWS). 1st place MCP hackathon.",
   keywords: [
     "Ganesh Angadi",
     "ganesh angadi",
     "ganeshak11",
     "Ganesh Raju Angadi",
+    "Systems Engineer",
     "DevOps Engineer",
     "DevOps portfolio",
     "student devops portfolio",
@@ -69,8 +69,8 @@ export const metadata: Metadata = {
   authors: [{ name: "Ganesh Angadi" }],
   creator: "Ganesh Angadi",
   openGraph: {
-    title: "Ganesh Angadi | DevOps Engineer | Building Fortis Ecosystem",
-    description: "Builder of Fortis Ecosystem: a privacy-first vault, autofill, fingerprint sudo and laptop remote for your Android phone and Linux laptops, over Tailscale with no cloud. DevOps engineer | 1st place MCP hackathon winner.",
+    title: "Ganesh Angadi | Systems Engineer | Building Fortis Ecosystem",
+    description: "Systems engineer building Fortis Ecosystem: a privacy-first vault, autofill, fingerprint sudo and laptop remote for an Android phone and Linux laptops, over Tailscale with no cloud. Rust, Linux, security and infrastructure (Docker, CI/CD, Terraform, AWS). 1st place MCP hackathon.",
     type: "website",
     url: "https://ganeshangadi.online",
     siteName: "Ganesh Angadi Portfolio",
@@ -79,14 +79,14 @@ export const metadata: Metadata = {
         url: "https://ganeshangadi.online/og-profile.jpg",
         width: 800,
         height: 800,
-        alt: "Ganesh Angadi - DevOps Engineer",
+        alt: "Ganesh Angadi - Systems Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ganesh Angadi | DevOps Engineer | Building Fortis Ecosystem",
-    description: "Building Fortis Ecosystem — privacy-first phone + Linux laptop platform over Tailscale. DevOps engineer | Linux • AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
+    title: "Ganesh Angadi | Systems Engineer | Building Fortis Ecosystem",
+    description: "Systems engineer building Fortis Ecosystem, a privacy-first phone + Linux laptop platform over Tailscale. Rust • Linux • Security • Infrastructure | 1st place MCP hackathon",
     images: ["https://ganeshangadi.online/og-profile.jpg"],
     creator: "@ganeshak11",
   },
@@ -106,9 +106,9 @@ export default function RootLayout({
     alternateName: "ganeshak11",
     url: "https://ganeshangadi.online",
     image: "https://ganeshangadi.online/profile.png",
-    jobTitle: "DevOps Engineer",
+    jobTitle: "Systems Engineer",
     description:
-      "Builder of Fortis Ecosystem, an open-source privacy-first platform joining an Android phone and Linux laptops over Tailscale. DevOps engineer focused on Linux, AWS, Kubernetes, Terraform, and CI/CD automation. 1st place MCP server hackathon winner.",
+      "Systems engineer building Fortis Ecosystem: a privacy-first vault, autofill, fingerprint sudo and laptop remote for an Android phone and Linux laptops, over Tailscale with no cloud. Rust, Linux, security and infrastructure (Docker, CI/CD, Terraform, AWS). 1st place MCP hackathon.",
     knowsAbout: [
       "Docker",
       "Kubernetes",
@@ -146,7 +146,7 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "Ganesh Angadi Portfolio",
     url: "https://ganeshangadi.online",
-    description: "Portfolio and blog of Ganesh Angadi — DevOps engineer and builder of Fortis Ecosystem.",
+    description: "Portfolio and blog of Ganesh Angadi, systems engineer and builder of Fortis Ecosystem.",
     author: { "@type": "Person", name: "Ganesh Angadi" },
     potentialAction: {
       "@type": "SearchAction",
@@ -189,7 +189,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className="antialiased">
-        <CustomCursor />
         <ThemeProvider>
           <ClientProviders>
             {children}

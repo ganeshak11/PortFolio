@@ -77,9 +77,9 @@ export default function FortisEcosystem() {
             <div className="wrap">
                 <SectionHead
                     index="02"
-                    cmd="cat /opt/fortis/README.md"
+                    cmd="flagship"
                     title={<>Fortis <em>Ecosystem</em></>}
-                    lede="My flagship. A privacy-first system that turns my Android phone and my Linux laptops into one trusted machine: joined over Tailscale, with no cloud service in between. The docs are the specification; the code follows them."
+                    lede="My main project since July 2026. The docs are the specification: the code has to follow them, and a broken MUST rule blocks a release."
                 />
 
                 {/* Hero panel */}
@@ -91,7 +91,7 @@ export default function FortisEcosystem() {
                     </div>
                     <div className="fx-hero-body">
                         <div className="fx-pitch">
-                            <p className="fx-quote">Your phone is the key. Your laptop is the vault. Nothing in between but WireGuard.</p>
+                            <p className="fx-quote">A password vault, autofill, fingerprint sudo and laptop remote for my Android phone and Linux laptops. Over Tailscale, no cloud.</p>
                             <div className="row-wrap">
                                 {["Rust", "Kotlin / Compose", "Tauri", "UniFFI", "PAM", "SQLCipher", "Tailscale", "systemd"].map((t) => (
                                     <span key={t} className="chip">{t}</span>

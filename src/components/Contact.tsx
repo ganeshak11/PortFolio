@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
 import { FaInstagram, FaDiscord, FaWhatsapp } from "react-icons/fa";
 import { ArrowUpRight } from "lucide-react";
-import { Reveal } from "@/components/ui/SectionHead";
-
-const FULL_TEXT = "Let's build something great.";
+import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 const LINKS = [
     { label: "GitHub", sub: "github.com/ganeshak11", href: "https://github.com/ganeshak11" },
@@ -21,37 +17,10 @@ const SOCIALS = [
 ];
 
 export default function Contact() {
-    const ref = useRef<HTMLHeadingElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
-    const [typed, setTyped] = useState("");
-    const started = useRef(false);
-
-    useEffect(() => {
-        if (!inView || started.current) return;
-        started.current = true;
-        let i = 0;
-        const iv = setInterval(() => {
-            i++;
-            setTyped(FULL_TEXT.slice(0, i));
-            if (i >= FULL_TEXT.length) clearInterval(iv);
-        }, 45);
-        return () => clearInterval(iv);
-    }, [inView]);
-
     return (
         <section id="contact" className="section">
             <div className="wrap">
-                <header className="section-head">
-                    <span className="eyebrow">
-                        <span className="idx">10</span>
-                        <span className="rule" />
-                        <span>$ ping -c 4 ganesh.online</span>
-                    </span>
-                    <h2 ref={ref} className="section-title" aria-label={FULL_TEXT} style={{ minHeight: "1.1em" }}>
-                        {typed}
-                        <span className="caret" aria-hidden="true" style={{ display: "inline-block", width: 3, height: "0.8em", background: "var(--accent)", marginLeft: 4, animation: "blink 1s step-end infinite" }} />
-                    </h2>
-                </header>
+                <SectionHead index="06" cmd="contact" title="Get in touch" />
 
                 <div className="contact-grid">
                     <Reveal>
@@ -83,20 +52,16 @@ export default function Contact() {
                     </Reveal>
 
                     <Reveal delay={0.08} className="panel letter">
-                        <p className="label">What I believe</p>
+                        <p className="label">Status</p>
                         <p style={{ color: "var(--fg)", fontSize: 16 }}>
-                            Infrastructure is not magic — it is decisions with trade-offs.
-                            I make those decisions explicit.
+                            I&apos;m open to opportunities. Email is the fastest way to reach me, and my resume has the full details.
                         </p>
-                        <p>
-                            I&apos;m still learning. Still breaking things on purpose to understand them.
-                            Still questioning every abstraction I reach for.
-                        </p>
-                        <p>
-                            If you&apos;re building something that needs to be reliable, observable, and honest about its failure modes — let&apos;s talk.
-                        </p>
-                        <p className="sig">— Ganesh Angadi</p>
-                        <p className="mono" style={{ fontSize: 12, color: "var(--muted)", margin: "8px 0 0" }}>DevOps Engineer · System Thinker · Mysuru, India</p>
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8 }}>
+                            <a href="mailto:ganeshangadi13012006@gmail.com" className="btn primary">Email me</a>
+                            <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn">Resume ↗</a>
+                        </div>
+                        <p className="sig">Ganesh</p>
+                        <p className="mono" style={{ fontSize: 12, color: "var(--muted)", margin: "8px 0 0" }}>Mysuru, India</p>
                     </Reveal>
                 </div>
             </div>

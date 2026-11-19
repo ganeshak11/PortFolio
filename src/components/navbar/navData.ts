@@ -9,11 +9,7 @@ export const NAV_LINKS: NavLink[] = [
     { href: "#fortis", label: "Fortis" },
     { href: "#achievements", label: "Experience" },
     { href: "#projects", label: "Projects" },
-    { href: "#stack", label: "Stack" },
-    { href: "#github-metrics", label: "Stats" },
     { href: "#latest-blogs", label: "Writing" },
-    { href: "#thinking", label: "Thinking" },
-    { href: "#services", label: "Services" },
     { href: "#contact", label: "Contact" },
     { href: "/blog", label: "Blog" },
 ];

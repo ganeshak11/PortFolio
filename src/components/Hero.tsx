@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BootSequence } from "./hero/BootSequence";
 import { HeroContent } from "./hero/HeroContent";
 
 export default function Hero({ onTerminalOpen }: { onTerminalOpen?: () => void }) {
-    const [bootDone, setBootDone] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -15,10 +13,5 @@ export default function Hero({ onTerminalOpen }: { onTerminalOpen?: () => void }
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    return (
-        <>
-            {!bootDone && <BootSequence setBootDone={setBootDone} />}
-            <HeroContent isMobile={isMobile} onTerminalOpen={onTerminalOpen} />
-        </>
-    );
+    return <HeroContent isMobile={isMobile} onTerminalOpen={onTerminalOpen} />;
 }

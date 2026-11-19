@@ -1423,7 +1423,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                             Written by Ganesh Angadi
                         </p>
                         <p style={{ margin: "0 0 16px 0", fontSize: 14, color: "var(--muted)" }}>
-                            DevOps Engineer • Backend Engineer • Platform Engineering
+                            Systems engineer · Rust, Linux, security & infrastructure
                         </p>
                         <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", fontSize: 13, fontWeight: 600 }}>
                             <Link href="/" style={{ color: "var(--accent)", textDecoration: "none" }} className="nav-underline">

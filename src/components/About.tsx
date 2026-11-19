@@ -13,11 +13,11 @@ const SOCIALS = [
 ];
 
 const INFO: [string, string][] = [
-    ["role", "DevOps Engineer · Systems"],
+    ["role", "Systems engineer"],
     ["host", "Mysuru, Karnataka, India"],
-    ["focus", "Linux internals, Kubernetes, IaC"],
-    ["shell", "bash · terraform · kubectl"],
-    ["uptime", "always learning"],
+    ["building", "Fortis Ecosystem"],
+    ["desktop", "KDE Plasma 6 + Frost"],
+    ["langs", "Rust, Kotlin, TypeScript, Python, Bash"],
     ["status", "open to opportunities"],
 ];
 
@@ -25,7 +25,7 @@ export default function About() {
     return (
         <section id="about" className="section">
             <div className="wrap">
-                <SectionHead index="01" cmd="man ganesh" title={<>System <em>thinker</em>.</>} />
+                <SectionHead index="01" cmd="about" title="About me" />
 
                 <div className="about-grid">
                     <Reveal className="panel">
@@ -58,8 +58,13 @@ export default function About() {
                     <Reveal className="panel about-copy" delay={0.08}>
                         <p className="big">Hi, I&apos;m Ganesh Angadi.</p>
                         <p>
-                            Welcome to my DevOps portfolio. I don&apos;t build features; I design observable systems that fail gracefully.
-                            Focused on Linux internals, Kubernetes orchestration, and declarative infrastructure automation.
+                            Most of my time goes into Fortis: a Rust agent and PAM module on the laptop, a Kotlin app on the phone,
+                            and a written security spec the code has to follow. Before that I built a city bus-tracking platform,
+                            and on the side I made my own KDE theme and a few small CLI tools.
+                        </p>
+                        <p className="mono" style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.8 }}>
+                            Day to day: Rust · Kotlin · TypeScript · Python · Bash · Linux · systemd · PAM · Tailscale ·
+                            PostgreSQL · SQLCipher · Docker · GitHub Actions · Terraform · AWS
                         </p>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                             <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn primary">

@@ -7,15 +7,10 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Achievements from "@/components/Achievements";
 import Projects from "@/components/Projects";
-import DevOpsStack from "@/components/DevOpsStack";
-import GithubMetrics from "@/components/GithubMetrics";
-import SystemThinking from "@/components/SystemThinking";
-import Services from "@/components/Services";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import TerminalMode from "@/components/TerminalMode";
-import FAB from "@/components/FAB";
 import FortisEcosystem from "@/components/FortisEcosystem";
 import LatestBlogs from "@/components/LatestBlogs";
 import { BlogPost } from "@/lib/blog";
@@ -110,10 +105,8 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
         {terminalOpen && <TerminalMode onExit={() => setTerminalOpen(false)} />}
       </AnimatePresence>
 
-      <FAB onTerminalOpen={() => setTerminalOpen(true)} />
-
       <main>
-        <h1 className="sr-only">Ganesh Angadi | DevOps Engineer Portfolio | Systems &amp; Infrastructure</h1>
+        <h1 className="sr-only">Ganesh Angadi | Systems Engineer | Rust, Linux, Security &amp; Infrastructure</h1>
 
         <section id="hero" aria-label="Introduction">
           <Hero onTerminalOpen={() => setTerminalOpen(true)} />
@@ -127,15 +120,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
 
         <Projects />
 
-        <DevOpsStack />
-
-        <GithubMetrics />
-
         <LatestBlogs posts={posts} />
-
-        <SystemThinking />
-
-        <Services />
 
         <Contact />
       </main>

@@ -1,38 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { m } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Terminal } from "lucide-react";
 
-const HERO_DEFAULT = "I build reliable systems.";
-const HERO_REVEAL = "I question fragile architecture.";
-const SUBLINE = "Infrastructure is not magic — it is decisions with trade-offs. I make those decisions explicit.";
-
-export function HeroContent({ isMobile, onTerminalOpen }: { isMobile: boolean; onTerminalOpen?: () => void }) {
-    const [typed, setTyped] = useState("");
-    const [flip, setFlip] = useState(false);
-    const startedRef = useRef(false);
-
-    useEffect(() => {
-        if (startedRef.current) return;
-        startedRef.current = true;
-        let iv: ReturnType<typeof setInterval> | undefined;
-        const t = setTimeout(() => {
-            let i = 0;
-            iv = setInterval(() => {
-                i++;
-                setTyped(SUBLINE.slice(0, i));
-                if (i >= SUBLINE.length && iv) clearInterval(iv);
-            }, 22);
-        }, 700);
-        return () => { clearTimeout(t); if (iv) clearInterval(iv); };
-    }, []);
-
+export function HeroContent({ onTerminalOpen }: { isMobile?: boolean; onTerminalOpen?: () => void }) {
     const fade = (delay: number) => ({
-        initial: { opacity: 0, y: 14 },
+        initial: { opacity: 0, y: 12 },
         animate: { opacity: 1, y: 0 },
-        transition: { delay, duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+        transition: { delay, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
     });
 
     return (
@@ -40,86 +16,56 @@ export function HeroContent({ isMobile, onTerminalOpen }: { isMobile: boolean; o
             <div className="wrap hero-grid">
                 <div>
                     <m.span className="chip accent" {...fade(0.05)}>
-                        <span className="dot live" style={{ color: "var(--status-ok)" }} />
-                        open to opportunities · Mysuru, IN
+                        <span className="dot" style={{ color: "var(--status-ok)" }} />
+                        open to opportunities · Mysuru, India
                     </m.span>
 
-                    <m.p className="hero-name" {...fade(0.12)} aria-hidden="true">
+                    <m.p className="hero-name" {...fade(0.1)} aria-hidden="true">
                         Ganesh
                         <span className="last">Angadi</span>
                     </m.p>
 
-                    <m.p className="hero-role" {...fade(0.2)}>
-                        $ whoami → DevOps engineer &amp; systems builder
+                    <m.p className="hero-role" {...fade(0.16)}>
+                        Systems engineer · Rust, Linux, security &amp; infrastructure
                     </m.p>
 
-                    <m.p
-                        {...fade(0.26)}
-                        onMouseEnter={() => !isMobile && setFlip(true)}
-                        onMouseLeave={() => setFlip(false)}
-                        onClick={() => isMobile && setFlip((f) => !f)}
-                        style={{
-                            fontFamily: "var(--font-display)",
-                            fontSize: "clamp(26px, 3.4vw, 40px)",
-                            lineHeight: 1.15,
-                            marginBottom: 14,
-                            color: flip ? "var(--accent)" : "var(--fg)",
-                            cursor: "default",
-                            transition: "color 0.2s ease",
-                        }}
-                        title="hover me"
-                    >
-                        {flip ? HERO_REVEAL : HERO_DEFAULT}
+                    <m.p className="hero-tagline" {...fade(0.22)}>
+                        I&apos;m building <a href="#fortis" className="hero-link">Fortis</a>, a privacy-first system that links my
+                        Android phone and Linux laptops: an encrypted vault, fingerprint-approved sudo and laptop remote control,
+                        with no cloud in between. Most recently I was the founding software engineer intern at Kridtech.
                     </m.p>
 
-                    <p className="hero-tagline">
-                        {typed}
-                        <span className="caret" aria-hidden="true" />
-                    </p>
-
-                    <m.div className="hero-ctas" {...fade(0.34)}>
-                        <a href="#projects" className="btn primary">
-                            See my work <ArrowDown size={14} />
+                    <m.div className="hero-ctas" {...fade(0.28)}>
+                        <a href="#fortis" className="btn primary">
+                            See Fortis <ArrowDown size={14} />
                         </a>
                         <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn">
                             Resume <ArrowUpRight size={14} />
                         </a>
                         {onTerminalOpen && (
-                            <button className="btn" onClick={onTerminalOpen}>
-                                <Terminal size={14} /> terminal mode
+                            <button className="btn" onClick={onTerminalOpen} title="A terminal version of this site">
+                                <Terminal size={14} /> terminal
                             </button>
                         )}
-                    </m.div>
-
-                    <m.div className="hero-meta" {...fade(0.42)}>
-                        <span className="chip">Founding SDE @ Kridtech</span>
-                        <span className="chip">1st place · MCP hackathon</span>
-                        <a href="#fortis" className="chip accent" style={{ textDecoration: "none" }}>building Fortis Ecosystem →</a>
                     </m.div>
                 </div>
 
                 <m.figure
                     className="portrait"
-                    initial={{ opacity: 0, scale: 0.97 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <Image
                         src="/profile.png"
-                        alt="Ganesh Angadi - DevOps Engineer Portfolio"
+                        alt="Ganesh Angadi"
                         fill
                         priority
                         sizes="(max-width: 860px) 300px, 420px"
                         style={{ objectFit: "cover", objectPosition: "center 30%" }}
                     />
-                    <figcaption className="portrait-cap">
-                        <span>~/ganesh/profile.png</span>
-                        <span style={{ color: "var(--accent-2)" }}>● live</span>
-                    </figcaption>
                 </m.figure>
             </div>
-
-            <a href="#about" className="scroll-hint">scroll ↓</a>
         </div>
     );
 }

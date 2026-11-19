@@ -27,7 +27,7 @@ export function SectionHead({
             <span className="eyebrow">
                 <span className="idx">{index}</span>
                 <span className="rule" />
-                <span>$ {cmd}</span>
+                <span>{cmd}</span>
             </span>
             <h2 className="section-title" id={id}>{title}</h2>
             {lede && <p className="section-lede">{lede}</p>}

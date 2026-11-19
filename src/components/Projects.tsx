@@ -59,7 +59,7 @@ const PROJECTS: ProjectData[] = [
         status: "Daily driver",
         statusColor: "var(--status-ok)",
         stack: ["KDE Plasma 6", "QML", "Python", "Kvantum", "SDDM", "Bash"],
-        intro: "A dark, glassmorphic look for my whole desktop, generated from one palette (red accent #F21D43). It goes far past a colour scheme: native Plasma widgets, a Mac-style dock, a Dynamic Island, and themes for everything from the boot screen to the code editor. This portfolio is styled after it.",
+        intro: "A dark, glassmorphic theme for my whole desktop, generated from one palette (accent #F21D43): native Plasma widgets, a dock, a Dynamic Island, and matching themes from the boot screen to the code editor. This site uses the same palette.",
         highlights: [
             { title: "Generated, not hand-edited", desc: "build.py produces the colour scheme, Plasma theme, Kvantum styles, window decorations and global themes" },
             { title: "Obsidian Glass widgets", desc: "QML plasmoids with shared design tokens: clock, system observatory, calendar, weather, focus timer, controls" },
@@ -308,9 +308,9 @@ export default function Projects() {
             <div className="wrap">
                 <SectionHead
                     index="04"
-                    cmd="ls -lh /opt/projects"
-                    title={<>Things I&apos;ve <em>built</em></>}
-                    lede="Besides Fortis: the biggest thing I've shipped, the desktop I live in, and the small tools I build for fun. Open a card for highlights and known limitations."
+                    cmd="projects"
+                    title="Other projects"
+                    lede="Open a card for highlights and known limitations."
                 />
                 <ProjectGrid items={main} openKey={openKey} setOpenKey={setOpenKey} />
 

@@ -16,9 +16,9 @@ const FILE_SYSTEM = {
 };
 
 const FILE_CONTENTS: Record<string, string> = {
-    "README.md": `# Ganesh Angadi - DevOps Engineer
+    "README.md": `# Ganesh Angadi - Systems Engineer
 
-Focusing on AWS, Kubernetes, Terraform, and CI/CD automation.
+Rust, Linux, security and infrastructure. Building Fortis Ecosystem.
 
 Available commands:
   ls              - list directory contents
@@ -35,7 +35,7 @@ Available commands:
   clear           - clear terminal screen
   exit            - close terminal simulator`,
 
-    "/about/info.txt": `Ganesh Angadi - DevOps Engineer & Observer
+    "/about/info.txt": `Ganesh Angadi - Systems Engineer
 
 I don't just write scripts. I design systems. My focus lies at the
 intersection of DevOps, Kubernetes infrastructure, and observability.
@@ -403,7 +403,7 @@ Closing terminal and scrolling to stats section...
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝
 `, "1"),
                     makeEntry("output", `
-Ganesh Angadi — DevOps Engineer & Observability Specialist
+Ganesh Angadi — Systems Engineer (Rust, Linux, security, infrastructure)
 `),
                 ]);
                 break;
@@ -459,7 +459,7 @@ Ganesh Angadi — DevOps Engineer & Observability Specialist
 =========================================
       GANESH ANGADI - RESUME SUMMARY
 =========================================
-Role: DevOps Engineer & System Architect
+Role: Systems Engineer
 Location: Mysuru, Karnataka, India
 
 [EXPERIENCE & ACHIEVEMENTS]

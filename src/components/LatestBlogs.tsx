@@ -26,7 +26,7 @@ export default function LatestBlogs({ posts }: { posts: BlogPost[] }) {
     return (
         <section id="latest-blogs" className="section">
             <div className="wrap">
-                <SectionHead index="07" cmd="cat /var/log/latest_entries" title={<>Recent <em>writing</em></>} />
+                <SectionHead index="05" cmd="writing" title="Writing" />
 
                 <Reveal className="post-list">
                     {latestPosts.map((post) => (
@@ -43,7 +43,7 @@ export default function LatestBlogs({ posts }: { posts: BlogPost[] }) {
 
                 <div style={{ marginTop: 28 }}>
                     <Link href="/blog" className="btn">
-                        $ cd /blog <ArrowRight size={14} />
+                        All posts <ArrowRight size={14} />
                     </Link>
                 </div>
             </div>

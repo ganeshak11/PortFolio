@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 const DOMAIN = "https://ganeshangadi.online";
 
 export const metadata: Metadata = {
-    title: "About Ganesh Angadi | DevOps Engineer Portfolio",
+    title: "About Ganesh Angadi | Systems Engineer Portfolio",
     description:
         "Welcome to the official systems-first DevOps portfolio of Ganesh Angadi, detailing platform engineering projects, systems thinking, and custom architectures.",
     keywords: [
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
         "Backend Engineer",
         "Platform Engineering",
         "Fortis Ecosystem",
-        "System Thinker",
+        "Systems Engineer",
         "About Ganesh Angadi"
     ],
     authors: [{ name: "Ganesh Angadi", url: DOMAIN }],
     creator: "Ganesh Angadi",
     openGraph: {
-        title: "About Ganesh Angadi | DevOps Engineer",
+        title: "About Ganesh Angadi | Systems Engineer",
         description:
             "Systems-first DevOps portfolio of Ganesh Angadi. Builder of Fortis Ecosystem, hackathon winner, platform engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation.",
         type: "profile",
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
                 url: `${DOMAIN}/og-profile.jpg`,
                 width: 800,
                 height: 800,
-                alt: "Ganesh Angadi - DevOps Engineer",
+                alt: "Ganesh Angadi - Systems Engineer",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "About Ganesh Angadi | DevOps Engineer",
+        title: "About Ganesh Angadi | Systems Engineer",
         description:
             "Systems-first DevOps portfolio. Building Fortis Ecosystem — privacy-first phone + Linux laptop platform over Tailscale. AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
         images: [`${DOMAIN}/og-profile.jpg`],
@@ -58,7 +58,7 @@ export default function AboutPage() {
         alternateName: "ganeshak11",
         url: DOMAIN,
         image: `${DOMAIN}/profile.png`,
-        jobTitle: "DevOps Engineer",
+        jobTitle: "Systems Engineer",
         description:
             "DevOps and Backend Engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. Builder of Fortis Ecosystem, an open-source privacy-first platform joining an Android phone and Linux laptops over Tailscale. 1st place MCP hackathon winner.",
         knowsAbout: [
@@ -107,9 +107,9 @@ export default function AboutPage() {
     ];
 
     const skills = [
-        { title: "Systems & Cloud", items: "Linux, AWS, Kubernetes, Terraform, Docker, Bash, Networking" },
-        { title: "Backend & Query", items: "Node.js, Express, PostgreSQL, Neo4j, Redis, Supabase, Git" },
-        { title: "Programming", items: "TypeScript, JavaScript, Python, C, Shell Scripting" },
+        { title: "Systems & Security", items: "Rust, Linux, systemd, PAM, Tailscale / WireGuard, SQLCipher, Argon2id, XChaCha20-Poly1305, ECDSA P-256" },
+        { title: "Infrastructure", items: "Docker, GitHub Actions, Terraform, AWS, Kubernetes, Nginx, PM2, Bash" },
+        { title: "Apps & Data", items: "Kotlin / Compose, TypeScript, Node.js, Next.js, React Native, PostgreSQL, Neo4j, Python, C" },
     ];
 
     const kridtechDocs = [
@@ -128,9 +128,9 @@ export default function AboutPage() {
             <main>
                 <header className="page-head">
                     <div className="wrap">
-                        <span className="eyebrow"><span className="idx">~/about</span><span className="rule" /><span>$ man ganesh</span></span>
+                        <span className="eyebrow"><span className="idx">~/about</span><span className="rule" /><span>about</span></span>
                         <h1>Ganesh Angadi</h1>
-                        <p className="mono" style={{ fontSize: 14, color: "var(--fg-2)" }}>DevOps Engineer • Backend Engineer • Platform Engineering</p>
+                        <p className="mono" style={{ fontSize: 14, color: "var(--fg-2)" }}>Systems engineer · Rust, Linux, security &amp; infrastructure</p>
                     </div>
                 </header>
 
@@ -148,17 +148,20 @@ export default function AboutPage() {
                             <section id="identity">
                                 <h2>Identity &amp; Focus</h2>
                                 <p>
-                                    Welcome to my DevOps portfolio. I design and build reliable, observable software infrastructures that fail gracefully. My work is focused on the intersection of Linux internals, container orchestration, declarative infrastructure, and real-time observability.
+                                    I&apos;m Ganesh Angadi, a systems engineer from Mysuru, India. My main project is Fortis Ecosystem:
+                                    a privacy-first system that links my Android phone and Linux laptops with an encrypted vault,
+                                    fingerprint-approved sudo, laptop remote control and encrypted backups, over Tailscale with no cloud.
                                 </p>
                                 <p>
-                                    I believe infrastructure decisions must be explicit, measurable, and documented. Instead of building superficial features, I architect the underlying platforms that keep applications running smoothly.
+                                    Most recently I was the founding software engineer intern at Kridtech, working on Vaniger&apos;s calling
+                                    platform and its CI/CD. I won 1st place at an MCP systems engineering hackathon in April 2026.
                                 </p>
                             </section>
 
                             <section id="profiles">
                                 <h2>Official Identity Profiles</h2>
                                 <p>
-                                    These are the primary accounts that construct my entity graph. Search engines can index my work through these plain-text links:
+                                    Where to find me online:
                                 </p>
                                 <dl className="panel kv">
                                     {profiles.map(([label, url]) => (

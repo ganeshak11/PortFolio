@@ -63,8 +63,8 @@ export default function Achievements() {
             <div className="wrap">
                 <SectionHead
                     index="03"
-                    cmd={'history | grep "milestones"'}
-                    title={<>Recognition &amp; <em>experience</em></>}
+                    cmd="experience"
+                    title="Experience"
                 />
 
                 <div className="timeline">

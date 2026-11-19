@@ -6,7 +6,7 @@ export default function Footer() {
     return (
         <footer className="footer">
             <div className="wrap footer-inner">
-                <span>$ echo &quot;Built to last, not to impress.&quot;</span>
+                <span>styled after <a href="https://github.com/ganeshak11/frost" target="_blank" rel="noopener noreferrer">Frost</a>, my KDE theme</span>
                 <span style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
                     <Link href="/">home</Link>
                     <Link href="/about">about</Link>
