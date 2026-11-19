@@ -2,18 +2,39 @@
 
 import { useRef } from "react";
 import { m, useInView } from "framer-motion";
-import { Trophy, Briefcase } from "lucide-react";
+import { Trophy, Briefcase, FileText } from "lucide-react";
 
-const ITEMS = [
+type Item = {
+    type: string;
+    Icon: typeof Briefcase;
+    badge: string;
+    title: string;
+    org: string;
+    desc: string;
+    tags: string[];
+    meta: string;
+    quote?: string;
+    quoteBy?: string;
+    docs?: { label: string; href: string }[];
+};
+
+const ITEMS: Item[] = [
     {
         type: "experience",
         Icon: Briefcase,
         badge: "FOUNDING SDE",
-        title: "Software Engineering & DevOps Intern — Founding SDE & DevOps Intern",
-        org: "Kridtech Corp. | July 2026 – October 2026",
+        title: "Founding Software Engineer (Intern) — Vaniger",
+        org: "Kridtech Corp. | 27 July 2026 – 27 October 2026",
         desc: "Founding SDE & DevOps Intern for Vaniger (production conversational sales & telephony platform). Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with dual-channel Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.",
         tags: ["WebRTC", "Telnyx", "Deepgram", "Node.js", "PostgreSQL", "CI/CD", "Next.js"],
-        meta: "July 2026 – October 2026",
+        meta: "Verified · KT-INT-005",
+        quote: "If circumstances permitted, I would gladly retain Ganesh as a full-time member of our engineering team.",
+        quoteBy: "Rananjay Kandamwar, Co-Founder & CEO, Kridtech",
+        docs: [
+            { label: "Certificate", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Internship_Certificate.pdf" },
+            { label: "Experience Letter", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Experience.pdf" },
+            { label: "Recommendation", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Recommendation.pdf" },
+        ],
     },
     {
         type: "award",
@@ -107,6 +128,41 @@ export default function Achievements() {
                                 <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7, maxWidth: 480 }}>
                                     {item.desc}
                                 </p>
+                                {item.quote && (
+                                    <blockquote style={{
+                                        margin: "12px 0 0 0", paddingLeft: 12,
+                                        borderLeft: "2px solid var(--accent)",
+                                        fontSize: 13, color: "var(--fg)", fontStyle: "italic", lineHeight: 1.6, maxWidth: 480,
+                                    }}>
+                                        &ldquo;{item.quote}&rdquo;
+                                        {item.quoteBy && (
+                                            <span style={{ display: "block", marginTop: 4, fontSize: 11, fontStyle: "normal", fontFamily: "monospace", color: "var(--muted)" }}>
+                                                — {item.quoteBy}
+                                            </span>
+                                        )}
+                                    </blockquote>
+                                )}
+                                {item.docs && (
+                                    <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+                                        {item.docs.map(doc => (
+                                            <a
+                                                key={doc.href}
+                                                href={doc.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                style={{
+                                                    display: "inline-flex", alignItems: "center", gap: 6,
+                                                    fontSize: 11, fontFamily: "monospace",
+                                                    color: "var(--accent)", border: "1px solid var(--border)",
+                                                    padding: "4px 10px", borderRadius: 4, textDecoration: "none",
+                                                }}
+                                            >
+                                                <FileText size={12} strokeWidth={1.5} />
+                                                {doc.label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Right side — tags + meta */}

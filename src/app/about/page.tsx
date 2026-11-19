@@ -282,9 +282,14 @@ export default function AboutPage() {
                             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
                                     <div>
-                                        <strong style={{ display: "block", fontSize: 15 }}>Software Engineering & DevOps Intern — Founding SDE & DevOps Intern</strong>
-                                        <p style={{ fontSize: 13, color: "var(--accent)", margin: "2px 0 4px 0", fontFamily: "monospace" }}>Kridtech Corp. | July 2026 – October 2026</p>
+                                        <strong style={{ display: "block", fontSize: 15 }}>Founding Software Engineer (Intern) — Vaniger</strong>
+                                        <p style={{ fontSize: 13, color: "var(--accent)", margin: "2px 0 4px 0", fontFamily: "monospace" }}>Kridtech Corp. | 27 July 2026 – 27 October 2026</p>
                                         <span style={{ fontSize: 14, color: "var(--muted)" }}>Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.</span>
+                                        <span style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 6, fontSize: 12, fontFamily: "monospace" }}>
+                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Internship_Certificate.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Certificate ↗</a>
+                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Experience.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Experience Letter ↗</a>
+                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Recommendation.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Recommendation ↗</a>
+                                        </span>
                                     </div>
                                     <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Jul – Oct 2026</span>
                                 </div>
