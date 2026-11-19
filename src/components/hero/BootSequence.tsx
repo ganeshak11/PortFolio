@@ -83,8 +83,8 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                 flexDirection: "column",
                 justifyContent: "center",
                 padding: "80px 24px 40px",
-                background: "#0a0a0f",
-                color: "#39ff14",
+                background: "#0D0E11",
+                color: "#ECECF1",
                 position: "fixed",
                 inset: 0,
                 width: "100%",
@@ -99,16 +99,16 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                     top: 24,
                     right: 24,
                     background: "transparent",
-                    border: "1px solid #39ff14",
-                    color: "#39ff14",
-                    fontFamily: "monospace",
+                    border: "1px solid #34353D",
+                    color: "#ECECF1",
+                    fontFamily: "var(--font-mono)",
                     fontSize: 11,
                     padding: "6px 12px",
                     borderRadius: 4,
                     cursor: "pointer",
                     transition: "all 0.2s ease-in-out",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(57, 255, 20, 0.12)"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(242, 29, 67, 0.15)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
             >
                 [Skip Sequence]
@@ -119,7 +119,7 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                     maxWidth: 640,
                     margin: "0 auto",
                     width: "100%",
-                    fontFamily: "monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "clamp(12px, 1.5vw, 14px)",
                     lineHeight: 1.8,
                 }}
@@ -131,9 +131,9 @@ export function BootSequence({ setBootDone }: { setBootDone: (done: boolean) => 
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.2 }}
                         style={{
-                            color: line.startsWith("[  OK  ]") ? "#39ff14"
-                                : line.startsWith("Starting") ? "#facc15"
-                                    : "#ccc",
+                            color: line.startsWith("[  OK  ]") ? "#34C759"
+                                : line.startsWith("Starting") ? "#F21D43"
+                                    : "#9698A2",
                         }}
                     >
                         {line}

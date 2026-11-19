@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ClientProviders } from "@/components/ClientProviders";
@@ -12,11 +13,19 @@ const inter = Inter({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-jetbrains",
   display: "swap",
 });
+
+const rufscript = localFont({
+  src: "./fonts/Rufscript.ttf",
+  variable: "--font-rufscript",
+  display: "swap",
+});
+
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}if(t==="dark")document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}})();`;
 
 export const metadata: Metadata = {
   title: "Ganesh Angadi | DevOps Engineer | AWS • Kubernetes • Terraform • CI/CD",
@@ -162,8 +171,9 @@ export default function RootLayout({
   const jsonLd = [personSchema, websiteSchema, fortisCISchema];
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} ${rufscript.variable}`}>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -175,8 +185,7 @@ export default function RootLayout({
         <link rel="me" href="https://x.com/Ganeshangadi16" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} antialiased`}>
-        <div className="noise" />
+      <body className="antialiased">
         <CustomCursor />
         <ThemeProvider>
           <ClientProviders>

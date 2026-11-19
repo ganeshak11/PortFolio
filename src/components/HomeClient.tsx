@@ -116,7 +116,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
         <h1 className="sr-only">Ganesh Angadi | DevOps Engineer Portfolio | Systems &amp; Infrastructure</h1>
 
         <section id="hero" aria-label="Introduction">
-          <Hero />
+          <Hero onTerminalOpen={() => setTerminalOpen(true)} />
         </section>
 
         <About />
@@ -125,10 +125,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
 
         <Projects />
 
-        <section id="currently-building" aria-labelledby="currently-building-heading">
-          <h2 id="currently-building-heading" className="sr-only">Currently Building</h2>
-          <CurrentlyBuilding />
-        </section>
+        <CurrentlyBuilding />
 
         <DevOpsStack />
 

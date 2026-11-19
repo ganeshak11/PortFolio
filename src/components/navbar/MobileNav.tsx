@@ -103,7 +103,7 @@ export function MobileNav({
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.05 + i * 0.07, duration: 0.3 }}
                                 style={{
-                                    fontFamily: "monospace",
+                                    fontFamily: "var(--font-mono)",
                                     fontSize: 14,
                                     fontWeight: 500,
                                     letterSpacing: "0.05em",
@@ -131,7 +131,7 @@ export function MobileNav({
                                 setMobileMenuOpen(false);
                             }}
                             style={{
-                                fontFamily: "monospace",
+                                fontFamily: "var(--font-mono)",
                                 fontSize: 12,
                                 fontWeight: 600,
                                 letterSpacing: "0.08em",
@@ -155,7 +155,7 @@ export function MobileNav({
                                     setMobileMenuOpen(false);
                                 }}
                                 style={{
-                                    fontFamily: "monospace",
+                                    fontFamily: "var(--font-mono)",
                                     fontSize: 12,
                                     padding: "10px 20px",
                                     border: "1px solid var(--border)",
@@ -175,7 +175,7 @@ export function MobileNav({
                                 setMobileMenuOpen(false);
                             }}
                             style={{
-                                fontFamily: "monospace",
+                                fontFamily: "var(--font-mono)",
                                 fontSize: 12,
                                 padding: "10px 20px",
                                 border: "1px solid var(--border)",

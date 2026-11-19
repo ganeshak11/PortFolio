@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -90,6 +89,33 @@ export default function AboutPage() {
         award: "1st Place - MCP Server Hackathon 2026",
     };
 
+    const profiles: [string, string][] = [
+        ["Portfolio Website", "https://ganeshangadi.online"],
+        ["GitHub Profile", "https://github.com/ganeshak11"],
+        ["LinkedIn Connect", "https://linkedin.com/in/ganeshangadi1301"],
+        ["Dev.to Articles", "https://dev.to/ganeshak11"],
+        ["Reddit Profile", "https://reddit.com/u/ganeshak11"],
+        ["X / Twitter Feed", "https://x.com/Ganeshangadi16"],
+    ];
+
+    const projects = [
+        { name: "Fortis-CI", href: "https://github.com/Fortis-CI/Fortis-CI", desc: "Graph-native deployment observability platform. Built on Neo4j.", link: "Fortis-CI Repository" },
+        { name: "Fortis-Tools", href: "https://github.com/Fortis-Tools", desc: "Open-source developer tools, CLI utilities, and DevOps automation.", link: "Fortis-Tools Organization" },
+        { name: "MY(suru) BUS", href: "https://github.com/ganeshak11/MY-suru-BUS", desc: "Real-time city transportation platform with live GPS tracking.", link: "MY(suru) BUS Repository" },
+    ];
+
+    const skills = [
+        { title: "Systems & Cloud", items: "Linux, AWS, Kubernetes, Terraform, Docker, Bash, Networking" },
+        { title: "Backend & Query", items: "Node.js, Express, PostgreSQL, Neo4j, Redis, Supabase, Git" },
+        { title: "Programming", items: "TypeScript, JavaScript, Python, C, Shell Scripting" },
+    ];
+
+    const kridtechDocs = [
+        { label: "Certificate", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Internship_Certificate.pdf" },
+        { label: "Experience Letter", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Experience.pdf" },
+        { label: "Recommendation", href: "/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Recommendation.pdf" },
+    ];
+
     return (
         <>
             <script
@@ -97,221 +123,113 @@ export default function AboutPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
             />
             <Navbar />
-            <main style={{ minHeight: "100vh", paddingTop: 100, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
-                <article style={{ maxWidth: 760, margin: "0 auto", position: "relative" }}>
-                    {/* Glowing Orb Background */}
-                    <div style={{
-                        position: "absolute",
-                        top: -100, left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "100%", height: 300,
-                        background: "radial-gradient(circle, var(--accent) 0%, transparent 60%)",
-                        opacity: 0.05,
-                        filter: "blur(60px)",
-                        pointerEvents: "none",
-                        zIndex: -1
-                    }} />
-
-                    {/* Header */}
-                    <header style={{ marginBottom: 36, position: "relative", zIndex: 1 }}>
-                        <p style={{ fontFamily: "monospace", fontSize: 13, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                            $ man ganesh
-                        </p>
-                        <h1 style={{
-                            fontSize: "clamp(36px, 6vw, 56px)",
-                            fontWeight: 800,
-                            letterSpacing: "-0.03em",
-                            lineHeight: 1.1,
-                            color: "var(--fg)",
-                            marginBottom: 8,
-                        }}>
-                            Ganesh Angadi
-                        </h1>
-                        <p style={{
-                            fontSize: "clamp(16px, 2.5vw, 19px)",
-                            fontFamily: "monospace",
-                            color: "var(--muted)",
-                            margin: 0,
-                            fontWeight: 600
-                        }}>
-                            DevOps Engineer • Backend Engineer • Platform Engineering
-                        </p>
-                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.2, margin: "24px 0 0 0" }} />
-                    </header>
-
-                    {/* Content Section */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 32, fontSize: 16, lineHeight: 1.75, color: "var(--fg)" }}>
-                        
-                        {/* Biography */}
-                        <section>
-                            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 12, fontFamily: "'Inter', sans-serif" }}>
-                                Identity & Focus
-                            </h2>
-                            <p style={{ marginBottom: 16, color: "color-mix(in srgb, var(--fg) 90%, transparent)" }}>
-                                Welcome to my DevOps portfolio. I design and build reliable, observable software infrastructures that fail gracefully. My work is focused on the intersection of Linux internals, container orchestration, declarative infrastructure, and real-time observability.
-                            </p>
-                            <p style={{ color: "color-mix(in srgb, var(--fg) 90%, transparent)" }}>
-                                I believe infrastructure decisions must be explicit, measurable, and documented. Instead of building superficial features, I architect the underlying platforms that keep applications running smoothly.
-                            </p>
-                        </section>
-
-                        {/* Authoritative Profile Graph */}
-                        <section style={{ padding: "24px", border: "1px solid var(--border)", borderRadius: 8, background: "var(--card-bg)" }}>
-                            <h2 style={{ fontSize: 18, fontWeight: 800, color: "var(--fg)", marginBottom: 12, fontFamily: "'Inter', sans-serif" }}>
-                                Official Identity Profiles
-                            </h2>
-                            <p style={{ fontSize: 14, color: "var(--muted)", marginBottom: 16 }}>
-                                These are the primary accounts that construct my entity graph. Search engines can index my work through these plain-text links:
-                            </p>
-                            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>🌐 Portfolio Website:</strong>{" "}
-                                    <a href="https://ganeshangadi.online" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://ganeshangadi.online
-                                    </a>
-                                </li>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>🐙 GitHub Profile:</strong>{" "}
-                                    <a href="https://github.com/ganeshak11" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://github.com/ganeshak11
-                                    </a>
-                                </li>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>💼 LinkedIn Connect:</strong>{" "}
-                                    <a href="https://linkedin.com/in/ganeshangadi1301" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://linkedin.com/in/ganeshangadi1301
-                                    </a>
-                                </li>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>✍️ Dev.to Articles:</strong>{" "}
-                                    <a href="https://dev.to/ganeshak11" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://dev.to/ganeshak11
-                                    </a>
-                                </li>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>💬 Reddit Profile:</strong>{" "}
-                                    <a href="https://reddit.com/u/ganeshak11" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://reddit.com/u/ganeshak11
-                                    </a>
-                                </li>
-                                <li>
-                                    <strong style={{ fontFamily: "monospace", fontSize: 14 }}>🐦 X / Twitter Feed:</strong>{" "}
-                                    <a href="https://x.com/Ganeshangadi16" style={{ color: "var(--accent)", textDecoration: "underline" }}>
-                                        https://x.com/Ganeshangadi16
-                                    </a>
-                                </li>
-                            </ul>
-                        </section>
-
-                        {/* Projects */}
-                        <section>
-                            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 16, fontFamily: "'Inter', sans-serif" }}>
-                                Projects
-                            </h2>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                                <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
-                                    <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
-                                            Fortis-CI
-                                        </a>
-                                    </h3>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
-                                        Graph-native deployment observability platform. Built on Neo4j.
-                                    </p>
-                                    <a href="https://github.com/Fortis-CI/Fortis-CI" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
-                                        Fortis-CI Repository
-                                    </a>
-                                </div>
-
-                                <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
-                                    <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/Fortis-Tools" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
-                                            Fortis-Tools
-                                        </a>
-                                    </h3>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
-                                        Open-source developer tools, CLI utilities, and DevOps automation.
-                                    </p>
-                                    <a href="https://github.com/Fortis-Tools" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
-                                        Fortis-Tools Organization
-                                    </a>
-                                </div>
-
-                                <div style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 16 }}>
-                                    <h3 style={{ fontSize: 17, fontWeight: 700, margin: "0 0 4px 0" }}>
-                                        <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>
-                                            MY(suru) BUS
-                                        </a>
-                                    </h3>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 6px 0" }}>
-                                        Real-time city transportation platform with live GPS tracking.
-                                    </p>
-                                    <a href="https://github.com/ganeshak11/MY-suru-BUS" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "underline" }}>
-                                        MY(suru) BUS Repository
-                                    </a>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Core Skills */}
-                        <section>
-                            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 12, fontFamily: "'Inter', sans-serif" }}>
-                                Core Skills
-                            </h2>
-                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16 }}>
-                                <div>
-                                    <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--accent)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Systems & Cloud</h4>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>Linux, AWS, Kubernetes, Terraform, Docker, Bash, Networking</p>
-                                </div>
-                                <div>
-                                    <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--accent)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Backend & Query</h4>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>Node.js, Express, PostgreSQL, Neo4j, Redis, Supabase, Git</p>
-                                </div>
-                                <div>
-                                    <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--accent)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Programming</h4>
-                                    <p style={{ fontSize: 14, color: "var(--muted)", margin: 0 }}>TypeScript, JavaScript, Python, C, Shell Scripting</p>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Timeline / Achievements */}
-                        <section style={{ marginBottom: 20 }}>
-                            <h2 style={{ fontSize: 20, fontWeight: 800, color: "var(--fg)", marginBottom: 16, fontFamily: "'Inter', sans-serif" }}>
-                                Experience & Milestones
-                            </h2>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                                    <div>
-                                        <strong style={{ display: "block", fontSize: 15 }}>Founding Software Engineer (Intern) — Vaniger</strong>
-                                        <p style={{ fontSize: 13, color: "var(--accent)", margin: "2px 0 4px 0", fontFamily: "monospace" }}>Kridtech Corp. | 27 July 2026 – 27 October 2026</p>
-                                        <span style={{ fontSize: 14, color: "var(--muted)" }}>Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.</span>
-                                        <span style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 6, fontSize: 12, fontFamily: "monospace" }}>
-                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Internship_Certificate.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Certificate ↗</a>
-                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Experience.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Experience Letter ↗</a>
-                                            <a href="/KT_INT_005_Ganesh_Angadi/KT_INT_005_Ganesh_Angadi_Letter_Of_Recommendation.pdf" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent)" }}>Recommendation ↗</a>
-                                        </span>
-                                    </div>
-                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Jul – Oct 2026</span>
-                                </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                                    <div>
-                                        <strong style={{ display: "block", fontSize: 15 }}>1st Place — Model Context Protocol (MCP) Server Hackathon</strong>
-                                        <span style={{ fontSize: 14, color: "var(--muted)" }}>Developed custom integrations and advanced protocol servers</span>
-                                    </div>
-                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Apr 2026</span>
-                                </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                                    <div>
-                                        <strong style={{ display: "block", fontSize: 15 }}>Fortis Ecosystem Core Maintainer</strong>
-                                        <span style={{ fontSize: 14, color: "var(--muted)" }}>Architected deployment graphs and observability platform</span>
-                                    </div>
-                                    <span style={{ fontSize: 13, fontFamily: "monospace", color: "var(--accent)", flexShrink: 0 }}>Active</span>
-                                </div>
-                            </div>
-                        </section>
-
+            <main>
+                <header className="page-head">
+                    <div className="wrap">
+                        <span className="eyebrow"><span className="idx">~/about</span><span className="rule" /><span>$ man ganesh</span></span>
+                        <h1>Ganesh Angadi</h1>
+                        <p className="mono" style={{ fontSize: 14, color: "var(--fg-2)" }}>DevOps Engineer • Backend Engineer • Platform Engineering</p>
                     </div>
-                </article>
+                </header>
+
+                <div className="wrap">
+                    <div className="prose-page">
+                        <nav className="prose-toc" aria-label="On this page">
+                            <a href="#identity">Identity &amp; Focus</a>
+                            <a href="#profiles">Official Profiles</a>
+                            <a href="#projects">Projects</a>
+                            <a href="#skills">Core Skills</a>
+                            <a href="#experience">Experience &amp; Milestones</a>
+                        </nav>
+
+                        <article className="prose-body">
+                            <section id="identity">
+                                <h2>Identity &amp; Focus</h2>
+                                <p>
+                                    Welcome to my DevOps portfolio. I design and build reliable, observable software infrastructures that fail gracefully. My work is focused on the intersection of Linux internals, container orchestration, declarative infrastructure, and real-time observability.
+                                </p>
+                                <p>
+                                    I believe infrastructure decisions must be explicit, measurable, and documented. Instead of building superficial features, I architect the underlying platforms that keep applications running smoothly.
+                                </p>
+                            </section>
+
+                            <section id="profiles">
+                                <h2>Official Identity Profiles</h2>
+                                <p>
+                                    These are the primary accounts that construct my entity graph. Search engines can index my work through these plain-text links:
+                                </p>
+                                <dl className="panel kv">
+                                    {profiles.map(([label, url]) => (
+                                        <div key={url} style={{ display: "contents" }}>
+                                            <dt>{label}</dt>
+                                            <dd><a href={url}>{url}</a></dd>
+                                        </div>
+                                    ))}
+                                </dl>
+                            </section>
+
+                            <section id="projects">
+                                <h2>Projects</h2>
+                                <div style={{ display: "grid", gap: 12 }}>
+                                    {projects.map((p) => (
+                                        <div key={p.name} className="panel hover" style={{ padding: "18px 20px" }}>
+                                            <h3 style={{ fontSize: 17, fontWeight: 650, marginBottom: 4 }}>
+                                                <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ color: "var(--fg)", textDecoration: "none" }}>{p.name}</a>
+                                            </h3>
+                                            <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "0 0 8px" }}>{p.desc}</p>
+                                            <a href={p.href} target="_blank" rel="noopener noreferrer" className="link">{p.link} ↗</a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <section id="skills">
+                                <h2>Core Skills</h2>
+                                <div className="cards-3" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))" }}>
+                                    {skills.map((s) => (
+                                        <div key={s.title} className="panel" style={{ padding: 18 }}>
+                                            <h3 className="label" style={{ color: "var(--accent)", marginBottom: 8 }}>{s.title}</h3>
+                                            <p style={{ fontSize: 14.5, color: "var(--fg-2)", margin: 0 }}>{s.items}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <section id="experience">
+                                <h2>Experience &amp; Milestones</h2>
+                                <div className="timeline">
+                                    <div className="panel" style={{ padding: 20 }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
+                                            <strong style={{ fontSize: 16 }}>Founding Software Engineer (Intern) — Vaniger</strong>
+                                            <span className="chip accent">Jul – Oct 2026</span>
+                                        </div>
+                                        <p className="mono" style={{ fontSize: 12.5, color: "var(--accent)", margin: "6px 0 8px" }}>Kridtech Corp. | 27 July 2026 – 27 October 2026</p>
+                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: 0 }}>Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with Deepgram Nova-2 streaming &amp; real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.</p>
+                                        <div className="row-wrap" style={{ marginTop: 12, gap: 8 }}>
+                                            {kridtechDocs.map((d) => (
+                                                <a key={d.href} href={d.href} target="_blank" rel="noopener noreferrer" className="btn sm">{d.label} ↗</a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="panel" style={{ padding: 20 }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
+                                            <strong style={{ fontSize: 16 }}>1st Place — Model Context Protocol (MCP) Server Hackathon</strong>
+                                            <span className="chip accent">Apr 2026</span>
+                                        </div>
+                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Developed custom integrations and advanced protocol servers</p>
+                                    </div>
+                                    <div className="panel" style={{ padding: 20 }}>
+                                        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
+                                            <strong style={{ fontSize: 16 }}>Fortis Ecosystem Core Maintainer</strong>
+                                            <span className="chip" style={{ color: "var(--status-ok)" }}><span className="dot live" /> Active</span>
+                                        </div>
+                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Architected deployment graphs and observability platform</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </article>
+                    </div>
+                </div>
             </main>
             <Footer />
         </>

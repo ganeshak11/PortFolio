@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { m, useInView } from "framer-motion";
-import { Trophy, Briefcase, FileText } from "lucide-react";
+import { Trophy, Briefcase, FileText, BadgeCheck } from "lucide-react";
+import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 type Item = {
     type: string;
@@ -59,130 +58,57 @@ const ITEMS: Item[] = [
 ];
 
 export default function Achievements() {
-    const ref = useRef<HTMLElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-80px" });
-
     return (
-        <section ref={ref} id="achievements" className="section-pad" style={{ padding: "100px 24px", background: "var(--bg)" }}>
-            <div style={{ maxWidth: 1536, margin: "0 auto" }}>
-                <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5 }}
-                    style={{ marginBottom: 48 }}
-                >
-                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        $ history | grep "milestones"
-                    </p>
-                    <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
-                        Recognition & Experience
-                    </h2>
-                </m.div>
+        <section id="achievements" className="section">
+            <div className="wrap">
+                <SectionHead
+                    index="02"
+                    cmd={'history | grep "milestones"'}
+                    title={<>Recognition &amp; <em>experience</em></>}
+                />
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div className="timeline">
                     {ITEMS.map((item, i) => (
-                        <m.div
-                            key={item.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={inView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                            className="achievement-card"
-                            style={{
-                                padding: "24px 28px",
-                                borderRadius: 8,
-                                background: "var(--card-bg)",
-                                border: "1px solid var(--border)",
-                                display: "grid",
-                                gridTemplateColumns: "auto 1fr auto",
-                                gap: 20,
-                                alignItems: "start",
-                            }}
-                        >
-                            {/* Icon */}
-                            <div className="achievement-icon" style={{
-                                width: 40, height: 40,
-                                borderRadius: 8,
-                                border: "1px solid var(--border)",
-                                display: "flex", alignItems: "center", justifyContent: "center",
-                                color: "var(--accent)",
-                                flexShrink: 0,
-                            }}>
-                                <item.Icon size={18} strokeWidth={1.5} />
+                        <Reveal key={item.title} delay={i * 0.06} className="panel hover tl-item">
+                            <div className="tl-when">
+                                <span className="tl-icon"><item.Icon size={18} strokeWidth={1.6} /></span>
+                                <span className={i === 0 || item.type === "award" ? "chip solid" : "chip accent"}>{item.badge}</span>
+                                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                                    {item.meta.startsWith("Verified") && <BadgeCheck size={13} style={{ color: "var(--status-ok)" }} />}
+                                    {item.meta}
+                                </span>
                             </div>
 
-                            {/* Content */}
-                            <div>
-                                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8, flexWrap: "wrap" }}>
-                                    <span style={{
-                                        fontSize: 10, fontFamily: "monospace", letterSpacing: "0.1em",
-                                        background: "var(--accent)", color: "var(--bg)",
-                                        padding: "3px 10px", borderRadius: 999,
-                                    }}>
-                                        {item.badge}
-                                    </span>
-                                    <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>{item.org}</span>
-                                </div>
-                                <h3 style={{ fontSize: "clamp(15px, 2vw, 17px)", fontWeight: 700, color: "var(--fg)", marginBottom: 8, lineHeight: 1.4 }}>
-                                    {item.title}
-                                </h3>
-                                <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7, maxWidth: 480 }}>
-                                    {item.desc}
-                                </p>
+                            <div style={{ minWidth: 0 }}>
+                                <h3 className="tl-title">{item.title}</h3>
+                                <p className="tl-org">{item.org}</p>
+                                <p className="tl-desc">{item.desc}</p>
+
                                 {item.quote && (
-                                    <blockquote style={{
-                                        margin: "12px 0 0 0", paddingLeft: 12,
-                                        borderLeft: "2px solid var(--accent)",
-                                        fontSize: 13, color: "var(--fg)", fontStyle: "italic", lineHeight: 1.6, maxWidth: 480,
-                                    }}>
-                                        &ldquo;{item.quote}&rdquo;
-                                        {item.quoteBy && (
-                                            <span style={{ display: "block", marginTop: 4, fontSize: 11, fontStyle: "normal", fontFamily: "monospace", color: "var(--muted)" }}>
-                                                — {item.quoteBy}
-                                            </span>
-                                        )}
+                                    <blockquote className="quote">
+                                        <p>&ldquo;{item.quote}&rdquo;</p>
+                                        {item.quoteBy && <cite>— {item.quoteBy}</cite>}
                                     </blockquote>
                                 )}
+
+                                <div className="row-wrap" style={{ marginTop: 16 }}>
+                                    {item.tags.map((tag) => (
+                                        <span key={tag} className="chip">{tag}</span>
+                                    ))}
+                                </div>
+
                                 {item.docs && (
-                                    <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
-                                        {item.docs.map(doc => (
-                                            <a
-                                                key={doc.href}
-                                                href={doc.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                style={{
-                                                    display: "inline-flex", alignItems: "center", gap: 6,
-                                                    fontSize: 11, fontFamily: "monospace",
-                                                    color: "var(--accent)", border: "1px solid var(--border)",
-                                                    padding: "4px 10px", borderRadius: 4, textDecoration: "none",
-                                                }}
-                                            >
-                                                <FileText size={12} strokeWidth={1.5} />
+                                    <div className="row-wrap" style={{ marginTop: 14, gap: 8 }}>
+                                        {item.docs.map((doc) => (
+                                            <a key={doc.href} href={doc.href} target="_blank" rel="noopener noreferrer" className="btn sm">
+                                                <FileText size={13} strokeWidth={1.6} />
                                                 {doc.label}
                                             </a>
                                         ))}
                                     </div>
                                 )}
                             </div>
-
-                            {/* Right side — tags + meta */}
-                            <div className="achievement-right" style={{ display: "flex", gap: 12, flexShrink: 0 }}>
-                                <span style={{ fontSize: 11, fontFamily: "monospace", color: "var(--muted)", whiteSpace: "nowrap" }}>
-                                    {item.meta}
-                                </span>
-                                <div className="achievement-tags" style={{ display: "flex", gap: 6 }}>
-                                    {item.tags.map(tag => (
-                                        <span key={tag} style={{
-                                            fontSize: 10, fontFamily: "monospace",
-                                            color: "var(--accent)", border: "1px solid var(--border)",
-                                            padding: "2px 8px", borderRadius: 4, whiteSpace: "nowrap",
-                                        }}>
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </m.div>
+                        </Reveal>
                     ))}
                 </div>
             </div>

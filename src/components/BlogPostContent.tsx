@@ -36,7 +36,7 @@ function MathEquation({ math, displayMode = false }: { math: string; displayMode
     }, [math, displayMode]);
 
     if (!html) {
-        return <code style={{ fontFamily: "monospace" }}>{math}</code>;
+        return <code style={{ fontFamily: "var(--font-mono)" }}>{math}</code>;
     }
 
     if (displayMode) {
@@ -265,7 +265,7 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
             </div>
             <code style={{
                 display: "block",
-                fontFamily: "var(--font-mono), monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: 13.5,
                 padding: "16px 20px",
                 overflowX: "auto",
@@ -297,7 +297,7 @@ function ClientIpBadge() {
 
     return (
         <code style={{
-            fontFamily: "var(--font-mono), monospace",
+            fontFamily: "var(--font-mono)",
             fontSize: 13.5,
             background: "color-mix(in srgb, #ff4757 15%, transparent)",
             color: "#ff4757",
@@ -405,7 +405,7 @@ function BrowserDataReveal() {
             borderRadius: 12,
             padding: "24px 28px",
             margin: "32px 0",
-            fontFamily: "var(--font-mono), monospace",
+            fontFamily: "var(--font-mono)",
             boxShadow: "0 10px 40px rgba(0,0,0,0.1)"
         }}>
             <div style={{ color: "var(--fg)", fontSize: 18, fontWeight: 800, marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
@@ -446,50 +446,20 @@ function BlogNavbar({ isStory }: { isStory?: boolean }) {
     }, [lastY]);
 
     return (
-        <header style={{
-            position: "fixed",
-            top: 0, left: 0, right: 0,
-            zIndex: 50,
-            background: "color-mix(in srgb, var(--bg) 70%, transparent)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            borderBottom: "1px solid var(--glass-border)",
-            transform: visible ? "translateY(0)" : "translateY(-100%)",
-            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-            padding: "0 24px",
-            height: 54,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
-        }}>
-            <Link href="/" className="btn-slide" style={{ fontSize: 13, fontFamily: "monospace", textDecoration: "none", letterSpacing: "0.05em", padding: "4px 8px", borderRadius: "4px" }}>
-                ~/ganesh
-            </Link>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <Link href={isStory ? "/" : "/blog"} className="nav-underline" style={{ fontSize: 13, fontFamily: "monospace", color: "var(--muted)", textDecoration: "none" }}>
-                    {isStory ? "← home" : "← all posts"}
+        <header className="topbar" style={{ transform: visible ? "translateY(0)" : "translateY(-100%)", transition: "transform 0.3s ease" }}>
+            <div className="wrap topbar-inner">
+                <Link href="/" className="brand" aria-label="Ganesh Angadi — home">
+                    <span className="brand-mark" aria-hidden="true">g</span>
+                    <span className="brand-name">ganesh</span>
                 </Link>
-                <button
-                    onClick={toggle}
-                    style={{
-                        background: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "var(--fg)",
-                        padding: 6,
-                        borderRadius: 6,
-                        transition: "color 0.2s, background-color 0.2s",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--border)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
-                    aria-label="Toggle theme"
-                >
-                    {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-                </button>
+                <div className="topbar-actions" style={{ marginLeft: "auto" }}>
+                    <Link href={isStory ? "/" : "/blog"} className="btn sm">
+                        {isStory ? "← home" : "← all posts"}
+                    </Link>
+                    <button className="icon-btn" onClick={toggle} aria-label="Toggle theme">
+                        {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
+                    </button>
+                </div>
             </div>
         </header>
     );
@@ -731,26 +701,13 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                     height: "100%",
                     width: `${scrollProgress * 100}%`,
                     background: "var(--accent)",
-                    transition: "width 0.1s ease-out",
-                    boxShadow: "0 0 10px var(--accent)"
+                    transition: "width 0.1s ease-out"
                 }} />
             </div>
 
             <BlogNavbar isStory={isStory} />
-            <main style={{ minHeight: "100vh", paddingTop: 70, paddingBottom: 60, paddingLeft: 20, paddingRight: 20 }}>
-                <article style={{ maxWidth: isStory ? 900 : 1200, margin: "0 auto", position: "relative" }}>
-                    {/* Glowing Orb Background */}
-                    <div style={{
-                        position: "absolute",
-                        top: -100, left: "50%",
-                        transform: "translateX(-50%)",
-                        width: "100%", height: 300,
-                        background: "radial-gradient(circle, var(--accent) 0%, transparent 60%)",
-                        opacity: 0.08,
-                        filter: "blur(60px)",
-                        pointerEvents: "none",
-                        zIndex: -1
-                    }} />
+            <main style={{ minHeight: "100vh", paddingTop: 104, paddingBottom: 72, paddingLeft: "var(--gutter)", paddingRight: "var(--gutter)" }}>
+                <article style={{ maxWidth: 780, margin: "0 auto", position: "relative" }}>
 
                     {/* Header */}
                     <header style={{ marginBottom: 28, position: "relative", zIndex: 1 }}>
@@ -767,8 +724,8 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                     <span style={{
                                         fontSize: 9,
                                         padding: "1px 6px",
-                                        background: isStory ? "linear-gradient(135deg, var(--accent), var(--accent-2))" : "var(--accent)",
-                                        color: "var(--bg)",
+                                        background: "var(--accent)",
+                                        color: "#fff",
                                         borderRadius: 10,
                                         fontWeight: 800,
                                         letterSpacing: "0.04em"
@@ -776,7 +733,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         {isStory ? "STORY" : "DEV"}
                                     </span>
                                 </span>
-                                <time dateTime={new Date(post.date).toISOString()} style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", display: "flex", gap: 6 }}>
+                                <time dateTime={new Date(post.date).toISOString()} style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-mono)", display: "flex", gap: 6 }}>
                                     <span>Published {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                                     <span>•</span>
                                     <span>{post.readingTime} min read</span>
@@ -829,12 +786,12 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
 
                         {/* Title */}
                         <h1 style={{
-                            fontSize: "clamp(28px, 4vw, 38px)",
-                            fontWeight: 800,
-                            letterSpacing: "-0.02em",
-                            lineHeight: 1.25,
+                            fontSize: "clamp(30px, 5vw, 46px)",
+                            fontWeight: 750,
+                            letterSpacing: "-0.025em",
+                            lineHeight: 1.15,
                             color: "var(--fg)",
-                            marginBottom: 16,
+                            marginBottom: 18,
                         }}>
                             {post.title}
                         </h1>
@@ -844,7 +801,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                             {post.tags.map(tag => (
                                 <span key={tag} style={{
                                     fontSize: 11,
-                                    fontFamily: "var(--font-mono), monospace",
+                                    fontFamily: "var(--font-mono)",
                                     color: "var(--muted)",
                                     padding: "2px 8px",
                                     borderRadius: 4,
@@ -876,7 +833,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                         )}
 
                         {/* Separator */}
-                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", opacity: 0.2, margin: "20px 0" }} />
+                        <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "24px 0 32px" }} />
                     </header>
 
                     {/* Content */}
@@ -990,7 +947,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                                     fontWeight: 800,
                                                     letterSpacing: "0.08em",
                                                     textTransform: "uppercase",
-                                                    fontFamily: "var(--font-mono), monospace",
+                                                    fontFamily: "var(--font-mono)",
                                                     marginBottom: 8
                                                 }}>
                                                     <span>✦</span>
@@ -1113,7 +1070,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                                         <CodeBlock className={className}>{children}</CodeBlock>
                                     ) : (
                                         <code style={{
-                                            fontFamily: "var(--font-mono), monospace",
+                                            fontFamily: "var(--font-mono)",
                                             fontSize: 13.5,
                                             background: "color-mix(in srgb, var(--fg) 5%, transparent)",
                                             color: "var(--fg)",

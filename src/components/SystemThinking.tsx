@@ -1,8 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { m, useInView } from "framer-motion";
-import { useScramble } from "@/lib/useScramble";
+import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 const PRINCIPLES = [
     {
@@ -37,83 +35,24 @@ const PRINCIPLES = [
     },
 ];
 
-function PrincipleCard({ principle, index, inView }: { principle: typeof PRINCIPLES[0]; index: number; inView: boolean }) {
-    const [hovered, setHovered] = useState(false);
-
-    return (
-        <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 + index * 0.08, duration: 0.4 }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            style={{
-                padding: "24px",
-                borderRadius: 8,
-                background: "var(--card-bg)",
-                border: `1px solid ${hovered ? "var(--accent)" : "var(--border)"}`,
-                cursor: "default",
-                transition: "border-color 0.2s",
-                height: 160,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-            }}
-            className="principle-card"
-        >
-            <h3 style={{ fontSize: 14, fontWeight: 700, color: "var(--fg)", lineHeight: 1.4 }}>
-                {principle.title}
-            </h3>
-
-            <div style={{ position: "relative", flex: 1, margin: "10px 0" }}>
-                <m.p
-                    animate={{ opacity: hovered ? 0 : 1 }}
-                    transition={{ duration: 0.15 }}
-                    style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.7, position: "absolute", inset: 0, overflow: "hidden" }}
-                >
-                    {principle.desc}
-                </m.p>
-                <m.p
-                    animate={{ opacity: hovered ? 1 : 0 }}
-                    transition={{ duration: 0.2, delay: hovered ? 0.1 : 0 }}
-                    style={{ fontSize: 12, color: "var(--fg)", lineHeight: 1.7, fontStyle: "italic", position: "absolute", inset: 0, overflow: "hidden" }}
-                >
-                    {principle.depth}
-                </m.p>
-            </div>
-        </m.div>
-    );
-}
-
 export default function SystemThinking() {
-    const ref = useRef<HTMLElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-80px" });
-    const heading = useScramble("I design systems.", inView, 200);
-
     return (
-        <section ref={ref} id="thinking" className="section-pad" style={{ padding: "100px 24px" }}>
-            <div style={{ maxWidth: 1536, margin: "0 auto" }}>
-                <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5 }}
-                    style={{ marginBottom: 64 }}
-                >
-                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 16 }}>
-                        $ cat /etc/sysctl.conf
-                    </p>
-                    <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)", lineHeight: 1.1, marginBottom: 16 }}>
-                        I don't just build features.<br />
-                        <span style={{ color: "var(--accent)" }}>{heading}</span>
-                    </h2>
-                    <p style={{ fontSize: 14, color: "var(--muted)", maxWidth: 480, lineHeight: 1.8 }}>
-                        Six principles I actually follow. Hover each one to see where it came from.
-                    </p>
-                </m.div>
-
-                <div className="thinking-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
+        <section id="thinking" className="section">
+            <div className="wrap">
+                <SectionHead
+                    index="08"
+                    cmd="cat /etc/sysctl.conf"
+                    title={<>I don&apos;t just build features. <em>I design systems.</em></>}
+                    lede="Six principles I actually follow, and where each one came from."
+                />
+                <div className="cards-3">
                     {PRINCIPLES.map((p, i) => (
-                        <PrincipleCard key={p.title} principle={p} index={i} inView={inView} />
+                        <Reveal key={p.title} delay={(i % 3) * 0.05} className="panel hover flip">
+                            <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                            <h3>{p.title}</h3>
+                            <p className="desc">{p.desc}</p>
+                            <p className="depth">{p.depth}</p>
+                        </Reveal>
                     ))}
                 </div>
             </div>

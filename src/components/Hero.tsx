@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BootSequence } from "./hero/BootSequence";
 import { HeroContent } from "./hero/HeroContent";
 
-export default function Hero() {
+export default function Hero({ onTerminalOpen }: { onTerminalOpen?: () => void }) {
     const [bootDone, setBootDone] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -18,7 +18,7 @@ export default function Hero() {
     return (
         <>
             {!bootDone && <BootSequence setBootDone={setBootDone} />}
-            <HeroContent isMobile={isMobile} />
+            <HeroContent isMobile={isMobile} onTerminalOpen={onTerminalOpen} />
         </>
     );
 }

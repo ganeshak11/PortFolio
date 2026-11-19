@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { m, useInView, AnimatePresence } from "framer-motion";
+import { Fragment, useState } from "react";
+import { m, AnimatePresence } from "framer-motion";
+import { Plus, Minus, ArrowUpRight } from "lucide-react";
+import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 const PROJECTS = [
     {
@@ -145,206 +147,120 @@ const PROJECTS = [
     },
 ];
 
-function ProgressBar({ label, pct, active, delay }: { label: string; pct: number; active: boolean; delay: number }) {
-    return (
-        <div style={{ marginBottom: 12 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", fontFamily: "monospace", fontSize: 11, color: "var(--muted)", marginBottom: 6 }}>
-                <span>{label}</span>
-                <span style={{ color: "var(--accent)" }}>{pct}%</span>
-            </div>
-            <div style={{ height: 3, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
-                <m.div
-                    initial={{ width: 0 }}
-                    animate={active ? { width: `${pct}%` } : { width: 0 }}
-                    transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ height: "100%", background: "var(--accent)", borderRadius: 2 }}
-                />
-            </div>
-        </div>
-    );
-}
+type Project = (typeof PROJECTS)[number];
 
-function ProjectRow({ project, index, inView, openIndex, setOpenIndex }: {
-    project: typeof PROJECTS[0];
-    index: number;
-    inView: boolean;
-    openIndex: number | null;
-    setOpenIndex: (i: number | null) => void;
-}) {
-    const open = openIndex === index;
-
+function Detail({ project }: { project: Project }) {
     return (
         <m.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 + index * 0.08, duration: 0.4 }}
-            style={{ borderTop: "1px solid var(--border)" }}
+            className="panel proj-detail"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            style={{ borderColor: "var(--accent-line)" }}
         >
-            <button
-                onClick={() => setOpenIndex(open ? null : index)}
-                style={{
-                    width: "100%",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "20px 0",
-                    display: "grid",
-                    gridTemplateColumns: "48px 1fr auto",
-                    alignItems: "center",
-                    gap: 16,
-                    textAlign: "left",
-                }}
-                className="project-row-btn"
-            >
-                <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--muted)", letterSpacing: "0.1em" }}>
-                    {project.num}
-                </span>
-
-                <div className="project-inner-grid" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 16, alignItems: "center" }}>
-                    <div>
-                        <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap", marginBottom: 5 }}>
-                            <span style={{ fontSize: "clamp(15px, 2vw, 20px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
-                                {project.name}
-                            </span>
-                            <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>
-                                {project.tagline}
-                            </span>
-                        </div>
-                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-                            <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, fontFamily: "monospace", color: project.statusColor }}>
-                                <span style={{ width: 5, height: 5, borderRadius: "50%", background: project.statusColor, display: "inline-block" }} />
-                                {project.status}
-                            </span>
-                            <span style={{ color: "var(--border)", fontSize: 10 }}>·</span>
-                            {project.stack.slice(0, 3).map(t => (
-                                <span key={t} style={{ fontFamily: "monospace", fontSize: 10, color: "var(--muted)" }}>{t}</span>
-                            ))}
-                            {project.stack.length > 3 && (
-                                <span style={{ fontFamily: "monospace", fontSize: 10, color: "var(--muted)" }}>+{project.stack.length - 3}</span>
-                            )}
-                        </div>
-                    </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                <div style={{ minWidth: 0 }}>
+                    <p className="label" style={{ marginBottom: 6 }}>{project.num} / {project.tagline}</p>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(28px, 4vw, 40px)", lineHeight: 1.05 }}>{project.name}</h3>
                 </div>
+                <a href={project.github} target="_blank" rel="me noopener noreferrer" className="btn sm">
+                    View on GitHub <ArrowUpRight size={13} />
+                </a>
+            </div>
 
-                <span style={{
-                    fontSize: 16, color: "var(--accent)", flexShrink: 0,
-                    transition: "transform 0.25s",
-                    transform: open ? "rotate(45deg)" : "none",
-                    display: "inline-block",
-                    lineHeight: 1,
-                }}>+</span>
-            </button>
+            <div className="row-wrap" style={{ marginTop: 16 }}>
+                {project.stack.map((t) => <span key={t} className="chip accent">{t}</span>)}
+            </div>
 
-            <AnimatePresence>
-                {open && (
-                    <m.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        style={{ overflow: "hidden" }}
-                    >
-                        <div className="project-expanded" style={{ paddingBottom: 36, paddingLeft: 64 }}>
-                            {/* Full stack */}
-                            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-                                {project.stack.map(t => (
-                                    <span key={t} style={{
-                                        fontSize: 11, fontFamily: "monospace",
-                                        color: "var(--accent)", border: "1px solid var(--border)",
-                                        padding: "2px 8px", borderRadius: 4,
-                                    }}>{t}</span>
-                                ))}
+            {"progress" in project && project.progress && (
+                <div style={{ marginTop: 22, maxWidth: 520 }}>
+                    <p className="label">Build progress</p>
+                    {project.progress.map((item, i) => (
+                        <div key={item.label} style={{ marginBottom: 12 }}>
+                            <div className="mono" style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "var(--muted)", marginBottom: 6 }}>
+                                <span>{item.label}</span>
+                                <span style={{ color: "var(--accent)" }}>{item.pct}%</span>
                             </div>
-
-                            <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 600, marginBottom: 32 }}>
-                                {project.intro}
-                            </p>
-
-                            {/* Progress bars for WIP */}
-                            {project.progress && (
-                                <div style={{ marginBottom: 32, maxWidth: 480 }}>
-                                    <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.1em", color: "var(--muted)", marginBottom: 14, textTransform: "uppercase" }}>
-                                        Build Progress
-                                    </p>
-                                    {project.progress.map((item, i) => (
-                                        <ProgressBar key={item.label} label={item.label} pct={item.pct} active={open} delay={i * 0.12} />
-                                    ))}
-                                </div>
-                            )}
-
-                            <div className="project-detail-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 40, marginBottom: 28 }}>
-                                <div>
-                                    <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.1em", color: "var(--muted)", marginBottom: 16, textTransform: "uppercase" }}>
-                                        Technical Highlights
-                                    </p>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                        {project.highlights.map(h => (
-                                            <div key={h.title} style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 12 }}>
-                                                <p style={{ fontSize: 13, fontWeight: 600, color: "var(--fg)", marginBottom: 3 }}>{h.title}</p>
-                                                <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>{h.desc}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.1em", color: "var(--muted)", marginBottom: 16, textTransform: "uppercase" }}>
-                                        Known Limitations
-                                    </p>
-                                    <ul style={{ listStyle: "none", padding: 0 }}>
-                                        {project.limitations.map(l => (
-                                            <li key={l} style={{ fontSize: 13, color: "var(--muted)", padding: "8px 0", borderBottom: "1px solid var(--border)", display: "flex", gap: 10, lineHeight: 1.6 }}>
-                                                <span style={{ color: "var(--status-warn)", flexShrink: 0 }}>△</span>
-                                                {l}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                            <div className="bar">
+                                <m.div initial={{ width: 0 }} animate={{ width: `${item.pct}%` }} transition={{ duration: 1, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }} />
                             </div>
-
-                            <a
-                                href={project.github}
-                                target="_blank"
-                                rel="me noopener noreferrer"
-                                style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
-                            >
-                                View on GitHub →
-                            </a>
                         </div>
-                    </m.div>
-                )}
-            </AnimatePresence>
+                    ))}
+                </div>
+            )}
+
+            <div className="detail-cols">
+                <div>
+                    <p className="label">Technical highlights</p>
+                    {project.highlights.map((h) => (
+                        <div key={h.title} className="hl">
+                            <b>{h.title}</b>
+                            <span>{h.desc}</span>
+                        </div>
+                    ))}
+                </div>
+                <div>
+                    <p className="label">Known limitations</p>
+                    <ul className="lim">
+                        {project.limitations.map((l) => <li key={l}>{l}</li>)}
+                    </ul>
+                </div>
+            </div>
         </m.div>
     );
 }
 
 export default function Projects() {
-    const ref = useRef<HTMLElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-80px" });
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     return (
-        <section ref={ref} id="projects" className="section-pad" style={{ padding: "100px 24px", background: "var(--bg)" }}>
-            <div style={{ maxWidth: 1536, margin: "0 auto" }}>
-                <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5 }}
-                    style={{ marginBottom: 48 }}
-                >
-                    <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.05em", color: "var(--accent)", marginBottom: 12 }}>
-                        $ ls -lh /opt/projects
-                    </p>
-                    <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
-                        Things I've Built
-                    </h2>
-                </m.div>
+        <section id="projects" className="section">
+            <div className="wrap">
+                <SectionHead
+                    index="03"
+                    cmd="ls -lh /opt/projects"
+                    title={<>Things I&apos;ve <em>built</em></>}
+                    lede="Each one with the trade-offs and the parts that still break. Open a card for highlights and known limitations."
+                />
 
-                <div>
-                    {PROJECTS.map((p, i) => (
-                        <ProjectRow key={p.num} project={p} index={i} inView={inView} openIndex={openIndex} setOpenIndex={setOpenIndex} />
-                    ))}
-                    <div style={{ borderTop: "1px solid var(--border)" }} />
+                <div className="proj-grid" style={{ gridAutoFlow: "row dense" }}>
+                    {PROJECTS.map((p, i) => {
+                        const open = openIndex === i;
+                        return (
+                            <Fragment key={p.num}>
+                                <Reveal delay={(i % 3) * 0.05} style={{ display: "flex" }}>
+                                    <button
+                                        className={`panel hover proj${open ? " open" : ""}`}
+                                        onClick={() => setOpenIndex(open ? null : i)}
+                                        aria-expanded={open}
+                                    >
+                                        <div className="panel-bar" style={{ width: "100%" }}>
+                                            <span className="title">/opt/projects/{p.num}</span>
+                                            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, color: p.statusColor }}>
+                                                <span className="dot" />
+                                                {p.status}
+                                            </span>
+                                        </div>
+                                        <div className="proj-body">
+                                            <h3 className="proj-name">{p.name}</h3>
+                                            <p className="proj-tag">{p.tagline}</p>
+                                            <p className="proj-intro">{p.intro}</p>
+                                        </div>
+                                        <div className="proj-foot" style={{ width: "100%" }}>
+                                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
+                                                {p.stack.slice(0, 3).join(" · ")}{p.stack.length > 3 ? ` +${p.stack.length - 3}` : ""}
+                                            </span>
+                                            <span style={{ display: "inline-flex", alignItems: "center", gap: 4, color: "var(--accent)", flexShrink: 0 }}>
+                                                {open ? <Minus size={13} /> : <Plus size={13} />} {open ? "close" : "details"}
+                                            </span>
+                                        </div>
+                                    </button>
+                                </Reveal>
+                                <AnimatePresence>{open && <Detail key={`d-${p.num}`} project={p} />}</AnimatePresence>
+                            </Fragment>
+                        );
+                    })}
                 </div>
             </div>
         </section>

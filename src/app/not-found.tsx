@@ -77,7 +77,7 @@ export default function NotFound() {
           {/* Terminal-style error */}
           <div
             style={{
-              fontFamily: "monospace",
+              fontFamily: "var(--font-mono)",
               marginBottom: 32,
             }}
           >
@@ -118,7 +118,7 @@ export default function NotFound() {
                 fontWeight: 900,
                 color: "var(--fg)",
                 lineHeight: 1,
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
                 marginBottom: 16,
               }}
             >
@@ -157,7 +157,7 @@ export default function NotFound() {
           >
             <p
               style={{
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: 12,
                 color: "var(--fg)",
                 fontWeight: 700,
@@ -193,7 +193,7 @@ export default function NotFound() {
               href="/"
               style={{
                 display: "inline-block",
-                fontFamily: "monospace",
+                fontFamily: "var(--font-mono)",
                 fontSize: 13,
                 padding: "12px 24px",
                 background: "transparent",

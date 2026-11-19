@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { m, useInView, AnimatePresence } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 const WIP_PROJECTS = [
     {
@@ -20,120 +20,31 @@ const WIP_PROJECTS = [
     }
 ];
 
-function WipRow({ project, index, openIndex, setOpenIndex }: { project: any, index: number, openIndex: number | null, setOpenIndex: any }) {
-    const open = openIndex === index;
-    return (
-        <div style={{ borderTop: "1px solid var(--border)" }}>
-            <button
-                onClick={() => setOpenIndex(open ? null : index)}
-                style={{
-                    width: "100%",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "24px 0",
-                    display: "grid",
-                    gridTemplateColumns: "40px 1fr auto",
-                    alignItems: "center",
-                    gap: 20,
-                    textAlign: "left",
-                }}
-            >
-                <span style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", letterSpacing: "0.08em" }}>WIP</span>
-                <div>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
-                        <span style={{ fontSize: "clamp(16px, 2.5vw, 24px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--fg)" }}>
-                            {project.name}
-                        </span>
-                        {project.tags.includes("OPEN SOURCE") && (
-                            <m.span
-                                animate={{ opacity: [1, 0.3, 1] }}
-                                transition={{ repeat: Infinity, duration: 2 }}
-                                style={{ fontFamily: "monospace", fontSize: 12, color: "var(--status-warn)" }}
-                            >
-                                OPEN SOURCE
-                            </m.span>
-                        )}
-                    </div>
-                    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                        {project.tags.filter((t: string) => t !== "OPEN SOURCE").map((t: string) => (
-                            <span key={t} style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)" }}>{t}</span>
-                        ))}
-                    </div>
-                </div>
-                <span style={{
-                    fontSize: 20, color: "var(--accent)", flexShrink: 0,
-                    transition: "transform 0.2s",
-                    transform: open ? "rotate(45deg)" : "none",
-                    display: "inline-block",
-                }}>+</span>
-            </button>
-
-            <AnimatePresence>
-                {open && (
-                    <m.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        style={{ overflow: "hidden" }}
-                    >
-                        <div className="currently-expanded" style={{ paddingBottom: 36, paddingLeft: 60 }}>
-                            <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--muted)", maxWidth: 640, marginBottom: 16 }}>
-                                {project.desc}
-                            </p>
-                            
-                            <p style={{ fontSize: 14, lineHeight: 1.8, color: "var(--accent)", maxWidth: 640, marginBottom: 28, fontStyle: "italic" }}>
-                                {project.note}
-                            </p>
-
-                            <a
-                                href={project.github}
-                                target="_blank"
-                                rel="me noopener noreferrer"
-                                style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}
-                            >
-                                [GitHub / Contribute] →
-                            </a>
-                        </div>
-                    </m.div>
-                )}
-            </AnimatePresence>
-        </div>
-    );
-}
-
 export default function CurrentlyBuilding() {
-    const ref = useRef<HTMLElement>(null);
-    const inView = useInView(ref, { once: true, margin: "-80px" });
-    const [openIndex, setOpenIndex] = useState<number | null>(0); // Keep first open by default
-
     return (
-        <section ref={ref} id="building" style={{ padding: "60px 24px 0" }}>
-            <div style={{ maxWidth: 1536, margin: "0 auto" }}>
-                <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5 }}
-                    style={{ marginBottom: 24 }}
-                >
-                    <h2 style={{ fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800, letterSpacing: "-0.02em", color: "var(--fg)" }}>
-                        Things I'm Building
-                    </h2>
-                </m.div>
-
-                <div>
+        <section id="building" className="section" aria-labelledby="currently-building-heading">
+            <div className="wrap">
+                <SectionHead index="04" cmd="ps aux | grep wip" id="currently-building-heading" title={<>Things I&apos;m <em>building</em></>} />
+                <div className="wip-grid">
                     {WIP_PROJECTS.map((project, i) => (
-                        <WipRow 
-                            key={project.name} 
-                            project={project} 
-                            index={i} 
-                            openIndex={openIndex} 
-                            setOpenIndex={setOpenIndex} 
-                        />
+                        <Reveal key={project.name} delay={i * 0.06} className="panel hover wip">
+                            <div className="row-wrap">
+                                <span className="chip accent"><span className="dot live" /> WIP</span>
+                                {project.tags.map((t) => (
+                                    <span key={t} className={t === "OPEN SOURCE" ? "chip solid" : "chip"}>{t}</span>
+                                ))}
+                            </div>
+                            <h3>{project.name}</h3>
+                            <p>{project.desc}</p>
+                            <p className="note">{project.note}</p>
+                            <div>
+                                <a href={project.github} target="_blank" rel="me noopener noreferrer" className="btn sm">
+                                    GitHub / contribute <ArrowUpRight size={13} />
+                                </a>
+                            </div>
+                        </Reveal>
                     ))}
                 </div>
-                <div style={{ borderTop: "1px solid var(--border)" }} />
             </div>
         </section>
     );

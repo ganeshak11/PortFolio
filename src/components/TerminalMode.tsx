@@ -484,7 +484,7 @@ or go directly to /resume.html
                     gap: 12,
                 }}
             >
-                <span style={{ fontFamily: "monospace", fontSize: 12, color: "var(--accent)" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--accent)" }}>
                     portfolio.sh - Terminal Mode
                 </span>
                 <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -494,17 +494,17 @@ or go directly to /resume.html
                             background: "none",
                             border: "1px solid var(--fg)",
                             color: "var(--fg)",
-                            fontFamily: "monospace",
+                            fontFamily: "var(--font-mono)",
                             fontSize: 12,
                             padding: "4px 12px",
                             cursor: "pointer",
                             transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--fg); color: var(--fg); font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: var(--fg); color: var(--bg);";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--fg); color: var(--fg); font-family: var(--font-mono); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: var(--fg); color: var(--bg);";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--fg); color: var(--fg); font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--fg); color: var(--fg); font-family: var(--font-mono); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                         }}
                     >
                         {showCommands ? "[HIDE COMMANDS]" : "[SHOW COMMANDS]"}
@@ -515,17 +515,17 @@ or go directly to /resume.html
                             background: "none",
                             border: "1px solid var(--accent)",
                             color: "var(--accent)",
-                            fontFamily: "monospace",
+                            fontFamily: "var(--font-mono)",
                             fontSize: 12,
                             padding: "4px 12px",
                             cursor: "pointer",
                             transition: "opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s",
                         }}
                         onMouseEnter={(e) => {
-                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--accent); color: var(--accent); font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: var(--accent); color: var(--bg);";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; background: var(--accent); color: var(--bg);";
                         }}
                         onMouseLeave={(e) => {
-                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--accent); color: var(--accent); font-family: monospace; font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
+                            e.currentTarget.style.cssText = "background: none; border: 1px solid var(--accent); color: var(--accent); font-family: var(--font-mono); font-size: 12px; padding: 4px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s;";
                         }}
                     >
                         [EXIT]
@@ -563,7 +563,7 @@ or go directly to /resume.html
                                     background: "none",
                                     border: "1px solid var(--muted)",
                                     color: "var(--muted)",
-                                    fontFamily: "monospace",
+                                    fontFamily: "var(--font-mono)",
                                     fontSize: 12,
                                     padding: "6px 12px",
                                     cursor: "pointer",
@@ -571,10 +571,10 @@ or go directly to /resume.html
                                     borderRadius: 4,
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.cssText = "background: none; border: 1px solid var(--muted); color: var(--muted); font-family: monospace; font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px; background: var(--muted); color: var(--bg);";
+                                    e.currentTarget.style.cssText = "background: none; border: 1px solid var(--muted); color: var(--muted); font-family: var(--font-mono); font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px; background: var(--muted); color: var(--bg);";
                                 }}
                                 onMouseLeave={(e) => {
-                                    e.currentTarget.style.cssText = "background: none; border: 1px solid var(--muted); color: var(--muted); font-family: monospace; font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px;";
+                                    e.currentTarget.style.cssText = "background: none; border: 1px solid var(--muted); color: var(--muted); font-family: var(--font-mono); font-size: 12px; padding: 6px 12px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, color 0.2s, background-color 0.2s, border-color 0.2s; border-radius: 4px;";
                                 }}
                                 title={qc.desc}
                             >
@@ -593,7 +593,7 @@ or go directly to /resume.html
                     flex: 1,
                     overflow: "auto",
                     padding: "24px",
-                    fontFamily: "monospace",
+                    fontFamily: "var(--font-mono)",
                     fontSize: "clamp(12px, 1.5vw, 14px)",
                     lineHeight: 1.8,
                     color: "#ccc",
@@ -634,7 +634,7 @@ or go directly to /resume.html
                             border: "none",
                             outline: "2px solid transparent", outlineOffset: "2px",
                             color: "var(--accent)",
-                            fontFamily: "monospace",
+                            fontFamily: "var(--font-mono)",
                             fontSize: "clamp(12px, 1.5vw, 14px)",
                             marginLeft: 8,
                         }}
