@@ -60,7 +60,7 @@ export default function About() {
                         <p>
                             Most of my time goes into Fortis: a Rust agent and PAM module on the laptop, a Kotlin app on the phone,
                             and a written security spec the code has to follow. Before that I built a city bus-tracking platform,
-                            and on the side I made my own KDE theme and a few small CLI tools.
+                            and on the side I made my own KDE theme and a few small CLI tools. Mostly, I code for fun.
                         </p>
                         <p className="mono" style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.8 }}>
                             Day to day: Rust · Kotlin · TypeScript · Python · Bash · Linux · systemd · PAM · Tailscale ·

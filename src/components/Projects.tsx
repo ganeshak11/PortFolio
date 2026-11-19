@@ -32,8 +32,8 @@ const PROJECTS: ProjectData[] = [
         live: "https://my-suru-bus.vercel.app",
         badge: "largest by scale",
         tagline: "Real-Time Bus Tracking & Fleet Management",
-        status: "Live",
-        statusColor: "var(--status-ok)",
+        status: "Tested · not in public use",
+        statusColor: "var(--status-warn)",
         stack: ["Node.js", "Express", "Socket.io", "PostgreSQL", "Next.js", "React Native", "Expo", "JWT"],
         intro: "A city-scale public transport platform for Mysuru, built from scratch as a multi-app monorepo: a Node.js backend, a Next.js admin dashboard, and Expo driver and passenger apps, all fed by live GPS over WebSockets.",
         highlights: [
@@ -59,7 +59,7 @@ const PROJECTS: ProjectData[] = [
         status: "Daily driver",
         statusColor: "var(--status-ok)",
         stack: ["KDE Plasma 6", "QML", "Python", "Kvantum", "SDDM", "Bash"],
-        intro: "A dark, glassmorphic theme for my whole desktop, generated from one palette (accent #F21D43): native Plasma widgets, a dock, a Dynamic Island, and matching themes from the boot screen to the code editor. This site uses the same palette.",
+        intro: "I looked at different themes and combined components from several of them, but nothing quite matched, so I built one. A dark, glassmorphic theme for my whole desktop, generated from one palette (accent #F21D43): native Plasma widgets, a dock, a Dynamic Island, and matching themes from the boot screen to the code editor. This site uses the same palette.",
         highlights: [
             { title: "Generated, not hand-edited", desc: "build.py produces the colour scheme, Plasma theme, Kvantum styles, window decorations and global themes" },
             { title: "Obsidian Glass widgets", desc: "QML plasmoids with shared design tokens: clock, system observatory, calendar, weather, focus timer, controls" },
@@ -198,7 +198,7 @@ function Detail({ project }: { project: Project }) {
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {project.live && (
                         <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn sm primary">
-                            Live site <ArrowUpRight size={13} />
+                            Demo site <ArrowUpRight size={13} />
                         </a>
                     )}
                     <a href={project.github} target="_blank" rel="me noopener noreferrer" className="btn sm">

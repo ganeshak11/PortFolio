@@ -106,7 +106,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
       </AnimatePresence>
 
       <main>
-        <h1 className="sr-only">Ganesh Angadi | Systems Engineer | Rust, Linux, Security &amp; Infrastructure</h1>
+        <h1 className="sr-only">Ganesh Angadi | Systems Engineer | Distributed Systems, Cloud, DevOps &amp; SRE</h1>
 
         <section id="hero" aria-label="Introduction">
           <Hero onTerminalOpen={() => setTerminalOpen(true)} />

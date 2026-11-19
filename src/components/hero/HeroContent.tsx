@@ -26,7 +26,7 @@ export function HeroContent({ onTerminalOpen }: { isMobile?: boolean; onTerminal
                     </m.p>
 
                     <m.p className="hero-role" {...fade(0.16)}>
-                        Systems engineer · Rust, Linux, security &amp; infrastructure
+                        Systems engineer · distributed systems, cloud, networking &amp; DevOps
                     </m.p>
 
                     <m.p className="hero-tagline" {...fade(0.22)}>

@@ -4,7 +4,7 @@ import { getBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Ganesh Angadi | Systems Engineer Portfolio",
-  description: "Systems engineer building Fortis Ecosystem, a privacy-first phone + Linux laptop platform. Rust, Linux, security and infrastructure. 1st place MCP hackathon winner.",
+  description: "Systems engineer building Fortis Ecosystem, a privacy-first phone + Linux laptop platform. Distributed systems, cloud, networking, DevOps/SRE and backend. 1st place MCP hackathon winner.",
 };
 
 export default function Page() {

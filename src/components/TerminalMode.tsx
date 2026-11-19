@@ -18,7 +18,7 @@ const FILE_SYSTEM = {
 const FILE_CONTENTS: Record<string, string> = {
     "README.md": `# Ganesh Angadi - Systems Engineer
 
-Rust, Linux, security and infrastructure. Building Fortis Ecosystem.
+Systems, distributed systems, cloud, networking, DevOps/SRE and backend.\nBuilding Fortis Ecosystem.
 
 Available commands:
   ls              - list directory contents
@@ -403,7 +403,7 @@ Closing terminal and scrolling to stats section...
  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝
 `, "1"),
                     makeEntry("output", `
-Ganesh Angadi — Systems Engineer (Rust, Linux, security, infrastructure)
+Ganesh Angadi — Systems Engineer (distributed systems, cloud, networking, DevOps/SRE, backend)
 `),
                 ]);
                 break;

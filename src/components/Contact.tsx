@@ -54,7 +54,8 @@ export default function Contact() {
                     <Reveal delay={0.08} className="panel letter">
                         <p className="label">Status</p>
                         <p style={{ color: "var(--fg)", fontSize: 16 }}>
-                            I&apos;m open to opportunities. Email is the fastest way to reach me, and my resume has the full details.
+                            I&apos;m looking for roles in systems, distributed systems, cloud, networking, DevOps/SRE and backend.
+                            Email is the fastest way to reach me, and my resume has the full details.
                         </p>
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8 }}>
                             <a href="mailto:ganeshangadi13012006@gmail.com" className="btn primary">Email me</a>

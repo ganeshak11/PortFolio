@@ -37,9 +37,10 @@ const FAMILY = [
         name: "FortisOS",
         tag: "the dream",
         badge: "private · in design",
-        desc: "One OS layer, one user, many machines: every device I own treated as one logical computer. A Rust op-log metadata engine with hybrid logical clocks and an encrypted chunk store.",
+        desc: "Computing started with mainframes: one big machine, many users. Then one PC, one OS, and either many users on a machine or one user juggling many devices and many OSes. Then came the ecosystem wars between Apple and Samsung. FortisOS asks why fight: one user, many devices, one OS.",
         points: ["M0 skeleton, M1 metadata engine, M2 encrypted chunk store done", "Deterministic simulator: seeded network faults, clock skew, crashes", "Power cut after every write in crash tests, plus mutation testing"],
         href: undefined as string | undefined,
+        post: "/blog/fortis-pseudo-os",
         stack: ["Rust", "Distributed systems"],
     },
     {
@@ -49,6 +50,7 @@ const FAMILY = [
         desc: "Send files, folders, screenshots and the clipboard from the laptop to the phone in one command or one right-click, over Tailscale + Termux sshd.",
         points: ["One-time QR download link when the phone isn't reachable", "Dolphin right-click “Send to phone” + clipboard hotkey", "No cloud: laptop → phone directly"],
         href: "https://github.com/Fortis-Tools/fortis-share",
+        post: undefined as string | undefined,
         stack: ["Python", "rsync", "Tailscale"],
     },
     {
@@ -58,6 +60,7 @@ const FAMILY = [
         desc: "A miniature SRE observability CLI: DNS, SSL, HTTP/2 via ALPN, security headers, port exposure, SPF/DMARC and a sitemap spider, rolled into a health score.",
         points: ["Multi-domain comparison table", "--json output and exit codes for CI/CD", "Built on Node's native dns / tls / https"],
         href: "https://github.com/Fortis-Tools/healthcheck",
+        post: undefined as string | undefined,
         stack: ["TypeScript", "Node.js"],
     },
 ];
@@ -113,6 +116,35 @@ export default function FortisEcosystem() {
                         </div>
                     </div>
                 </Reveal>
+
+                {/* Why + hardest part */}
+                <div className="fx-story">
+                    <Reveal className="panel fx-why">
+                        <p className="label">Why it exists</p>
+                        <p>
+                            It started with laziness. I SSH&apos;d into my laptop from Termux just to shut it down from across the room,
+                            then added Tailscale so it worked from anywhere, then nightly snapshots with my phone as the off-site backup.
+                        </p>
+                        <p>
+                            One evening a &ldquo;Deploy NOW&rdquo; message reached me at a cricket ground, and I shipped a production release
+                            from my phone to a laptop five miles away. That night I looked at what I had built the way an attacker would:
+                            a remote shell with a pretty face. So I threw it away and rebuilt it, spec first.
+                        </p>
+                        <a href="/blog/fortis-ecosystem" className="link" style={{ alignSelf: "flex-start" }}>Read the full story →</a>
+                    </Reveal>
+                    <Reveal className="panel fx-why hard" delay={0.06}>
+                        <p className="label">The hardest part: sudo</p>
+                        <p>
+                            PAM was the biggest problem. Not because it&apos;s hard to code; AI can write a PAM module in minutes.
+                            The problem was the consequences: if I locked myself out of sudo by accident, everything was gone.
+                        </p>
+                        <p>
+                            So every failure path (phone off, network down, a signature that doesn&apos;t check out) falls back to the
+                            normal password prompt.
+                        </p>
+                        <p className="fx-pull">&ldquo;A clever login system that can lock you out of your own machine is worse than no clever login system at all.&rdquo;</p>
+                    </Reveal>
+                </div>
 
                 {/* Architecture */}
                 <Reveal className="panel fx-arch" delay={0.05}>
@@ -200,6 +232,9 @@ export default function FortisEcosystem() {
                                     <a href={f.href} target="_blank" rel="me noopener noreferrer" className="link" style={{ alignSelf: "flex-start" }}>View on GitHub ↗</a>
                                 ) : (
                                     <span className="mono" style={{ fontSize: 12, color: "var(--faint)" }}>repo is private while the design settles</span>
+                                )}
+                                {f.post && (
+                                    <a href={f.post} className="link" style={{ alignSelf: "flex-start" }}>Read: One User, Many Machines →</a>
                                 )}
                             </Reveal>
                         ))}

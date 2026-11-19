@@ -940,3 +940,10 @@ section[id] { scroll-margin-top: 84px; }
 .proj-group { margin-top: 48px; }
 .neofetch-img { width: 132px; aspect-ratio: 1; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--border); background: #000; flex-shrink: 0; }
 @media (max-width: 520px) { .neofetch-img { width: 96px; } }
+
+.fx-story { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+.fx-why { padding: clamp(20px, 3vw, 28px); display: flex; flex-direction: column; gap: 12px; }
+.fx-why p:not(.label):not(.fx-pull) { color: var(--fg-2); font-size: 15px; line-height: 1.75; }
+.fx-why.hard { border-color: var(--accent-line); }
+.fx-pull { font-family: var(--font-display); font-size: clamp(19px, 2vw, 22px); line-height: 1.35; color: var(--fg); border-left: 3px solid var(--accent); padding-left: 14px; margin-top: auto; }
+@media (max-width: 900px) { .fx-story { grid-template-columns: 1fr; } }
