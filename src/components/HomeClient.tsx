@@ -43,7 +43,7 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
         fetch(`${fortisUrl}/api/telemetry`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ visitorId, path: "/", referer: finalReferer }),
+          body: JSON.stringify({ visitorId, path: "/", referer: finalReferer, webdriver: navigator.webdriver === true }),
         }).catch(() => { });
       }
     }

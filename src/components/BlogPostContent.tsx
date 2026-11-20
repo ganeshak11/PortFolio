@@ -624,7 +624,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                         fetch(`${fortisUrl}/api/telemetry`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ visitorId, path: `/blog/${slug}`, referer: finalReferer }),
+                            body: JSON.stringify({ visitorId, path: `/blog/${slug}`, referer: finalReferer, webdriver: navigator.webdriver === true }),
                         }).catch(() => { });
                     }
                 } catch (err) {
