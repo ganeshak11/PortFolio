@@ -23,7 +23,7 @@ export default function Contact() {
                 <SectionHead index="06" cmd="contact" title="Get in touch" />
 
                 <div className="contact-grid">
-                    <Reveal>
+                    <Reveal className="contact-col">
                         <div className="panel contact-links" style={{ overflow: "hidden" }}>
                             <div className="panel-bar">
                                 <span className="win-dots" aria-hidden="true"><i /><i /><i /></span>
@@ -38,8 +38,7 @@ export default function Contact() {
                                     <ArrowUpRight size={18} className="arrow" />
                                 </a>
                             ))}
-                        </div>
-                        <div style={{ marginTop: 18, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                        <div className="contact-else">
                             <span className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>elsewhere →</span>
                             <div className="socials">
                                 {SOCIALS.map(({ icon: Icon, href, label }) => (
@@ -49,10 +48,18 @@ export default function Contact() {
                                 ))}
                             </div>
                         </div>
+                        </div>
                     </Reveal>
 
-                    <Reveal delay={0.08} className="panel letter">
-                        <p className="label">Status</p>
+                    <Reveal delay={0.08} className="panel letter" style={{ overflow: "hidden" }}>
+                        <div className="panel-bar">
+                            <span className="win-dots" aria-hidden="true"><i /><i /><i /></span>
+                            <span className="title">status</span>
+                            <span className="chip" style={{ letterSpacing: 0, textTransform: "none" }}>
+                                <span className="dot live" style={{ color: "var(--status-ok)" }} /> open to work
+                            </span>
+                        </div>
+                        <div className="letter-body">
                         <p style={{ color: "var(--fg)", fontSize: 16 }}>
                             I&apos;m looking for roles in systems, distributed systems, cloud, networking, DevOps/SRE and backend.
                             Email is the fastest way to reach me, and my resume has the full details.
@@ -61,8 +68,9 @@ export default function Contact() {
                             <a href="mailto:ganeshangadi13012006@gmail.com" className="btn primary">Email me</a>
                             <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="btn">Resume ↗</a>
                         </div>
-                        <p className="sig">Ganesh</p>
+                        <p className="sig" style={{ marginTop: "auto", paddingTop: 18 }}>Ganesh</p>
                         <p className="mono" style={{ fontSize: 12, color: "var(--muted)", margin: "8px 0 0" }}>Mysuru, India</p>
+                        </div>
                     </Reveal>
                 </div>
             </div>

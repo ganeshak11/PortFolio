@@ -26,7 +26,7 @@ export default function LatestBlogs({ posts }: { posts: BlogPost[] }) {
     return (
         <section id="latest-blogs" className="section">
             <div className="wrap">
-                <SectionHead index="05" cmd="writing" title="Writing" />
+                <SectionHead index="05" cmd="ls blog/" title="Writing" />
 
                 <Reveal className="post-list">
                     {latestPosts.map((post) => (

@@ -1,7 +1,9 @@
 "use client";
 
-import React, { createContext, use, useEffect, useState } from "react";
+import React, { createContext, use, useEffect } from "react";
 
+// Frost is dark only, like the desktop it comes from. The context stays so
+// existing callers keep working; toggle does nothing.
 type Theme = "dark" | "light";
 
 const ThemeContext = createContext<{
@@ -10,29 +12,13 @@ const ThemeContext = createContext<{
 }>({ theme: "dark", toggle: () => { } });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState<Theme>("dark");
-
     useEffect(() => {
-        const stored = localStorage.getItem("theme") as Theme | null;
-        const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        const initial = stored ?? preferred;
-        setTheme(initial);
-        document.documentElement.classList.toggle("dark", initial === "dark");
+        document.documentElement.classList.add("dark");
+        try { localStorage.removeItem("theme"); } catch { }
     }, []);
 
-    const toggle = () => {
-        setTheme((prev) => {
-            const next = prev === "dark" ? "light" : "dark";
-            localStorage.setItem("theme", next);
-            document.documentElement.classList.toggle("dark", next === "dark");
-            return next;
-        });
-    };
-
     return (
-        <ThemeContext.Provider value={{ theme, toggle }}>
+        <ThemeContext.Provider value={{ theme: "dark", toggle: () => { } }}>
             {children}
         </ThemeContext.Provider>
     );

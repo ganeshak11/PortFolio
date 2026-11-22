@@ -125,7 +125,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             <main>
                 <header className="page-head">
                     <div className="wrap">
-                        <span className="eyebrow"><span className="idx">~/blog</span><span className="rule" /><span>$ cat /var/log/thoughts</span></span>
+                        <span className="cap"><span className="dot" style={{ color: "var(--accent)" }} />~/blog · $ cat /var/log/thoughts</span>
                         <h1>Blog</h1>
                         <p>Lessons from production failures, system design decisions, and DevOps war stories.</p>
                         <div style={{ marginTop: 28, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>

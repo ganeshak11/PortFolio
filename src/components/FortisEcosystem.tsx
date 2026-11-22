@@ -80,7 +80,7 @@ export default function FortisEcosystem() {
             <div className="wrap">
                 <SectionHead
                     index="02"
-                    cmd="flagship"
+                    cmd="cat fortis/README.md"
                     title={<>Fortis <em>Ecosystem</em></>}
                     lede="My main project since July 2026. The docs are the specification: the code has to follow them, and a broken MUST rule blocks a release."
                 />
@@ -212,7 +212,7 @@ export default function FortisEcosystem() {
 
                 {/* Fortis family */}
                 <div style={{ marginTop: 56 }}>
-                    <p className="eyebrow" style={{ marginBottom: 16 }}><span className="idx">02.1</span><span className="rule" /><span>the Fortis family</span></p>
+                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />02.1 · the Fortis family</p>
                     <div className="cards-3">
                         {FAMILY.map((f, i) => (
                             <Reveal key={f.name} delay={i * 0.05} className={`panel hover fx-family${i === 0 ? " dream" : ""}`}>

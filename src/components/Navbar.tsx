@@ -4,9 +4,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X, FileText } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { NAV_LINKS } from "./navbar/navData";
-import { useTheme } from "@/components/ThemeProvider";
 
 const SECTION_IDS = ["hero", "about", "fortis", "achievements", "projects", "latest-blogs", "contact"];
 
@@ -15,7 +14,6 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
     const isHome = pathname === "/";
-    const { theme, toggle } = useTheme();
 
     const resolveHref = (href: string) => (href.startsWith("/") || isHome ? href : `/${href}`);
 
@@ -65,9 +63,6 @@ export default function Navbar() {
                         <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="icon-btn" aria-label="Open resume" title="Resume">
                             <FileText size={15} />
                         </a>
-                        <button className="icon-btn" onClick={toggle} aria-label="Toggle theme" title="Toggle theme">
-                            {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-                        </button>
                         <button className="icon-btn menu-btn" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>
                             {open ? <X size={16} /> : <Menu size={16} />}
                         </button>

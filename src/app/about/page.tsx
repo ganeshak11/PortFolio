@@ -128,7 +128,7 @@ export default function AboutPage() {
             <main>
                 <header className="page-head">
                     <div className="wrap">
-                        <span className="eyebrow"><span className="idx">~/about</span><span className="rule" /><span>about</span></span>
+                        <span className="cap"><span className="dot" style={{ color: "var(--accent)" }} />~/about · $ whoami</span>
                         <h1>Ganesh Angadi</h1>
                         <p className="mono" style={{ fontSize: 14, color: "var(--fg-2)" }}>Systems engineer · distributed systems, cloud, networking &amp; DevOps</p>
                     </div>

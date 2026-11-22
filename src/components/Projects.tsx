@@ -75,6 +75,7 @@ const PROJECTS: ProjectData[] = [
         num: "03",
         name: "DevCard",
         github: "https://github.com/ganeshak11/devcard-ganeshak11",
+        image: "/projects/devcard-preview.jpg",
         tagline: "npx ganeshak11 — my CLI business card",
         status: "Published on npm",
         statusColor: "var(--status-ok)",
@@ -308,14 +309,14 @@ export default function Projects() {
             <div className="wrap">
                 <SectionHead
                     index="04"
-                    cmd="projects"
+                    cmd="ls ~/dev"
                     title="Other projects"
                     lede="Open a card for highlights and known limitations."
                 />
                 <ProjectGrid items={main} openKey={openKey} setOpenKey={setOpenKey} />
 
                 <div className="proj-group">
-                    <p className="eyebrow" style={{ marginBottom: 16 }}><span className="idx">04.1</span><span className="rule" /><span>college &amp; earlier work</span></p>
+                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />04.1 · college &amp; earlier work</p>
                     <ProjectGrid items={earlier} openKey={openKey} setOpenKey={setOpenKey} />
                 </div>
             </div>

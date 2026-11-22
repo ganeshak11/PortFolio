@@ -5,9 +5,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
 import { useEffect, useRef, useState, useMemo } from "react";
-import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye, Sun, Moon } from "lucide-react";
+import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
-import { useTheme } from "@/components/ThemeProvider";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 
@@ -433,8 +432,6 @@ function BrowserDataReveal() {
 function BlogNavbar({ isStory }: { isStory?: boolean }) {
     const [visible, setVisible] = useState(true);
     const [lastY, setLastY] = useState(0);
-    const { theme, toggle } = useTheme();
-
     useEffect(() => {
         const handler = () => {
             const y = window.scrollY;
@@ -456,9 +453,6 @@ function BlogNavbar({ isStory }: { isStory?: boolean }) {
                     <Link href={isStory ? "/" : "/blog"} className="btn sm">
                         {isStory ? "← home" : "← all posts"}
                     </Link>
-                    <button className="icon-btn" onClick={toggle} aria-label="Toggle theme">
-                        {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-                    </button>
                 </div>
             </div>
         </header>
@@ -707,7 +701,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
 
             <BlogNavbar isStory={isStory} />
             <main style={{ minHeight: "100vh", paddingTop: 104, paddingBottom: 72, paddingLeft: "var(--gutter)", paddingRight: "var(--gutter)" }}>
-                <article style={{ maxWidth: 780, margin: "0 auto", position: "relative" }}>
+                <article className="post-glass" style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
 
                     {/* Header */}
                     <header style={{ marginBottom: 28, position: "relative", zIndex: 1 }}>

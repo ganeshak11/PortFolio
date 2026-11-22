@@ -24,12 +24,12 @@ export function SectionHead({
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-            <span className="eyebrow">
+            <div className="eyebrow">
                 <span className="idx">{index}</span>
-                <span className="rule" />
-                <span>{cmd}</span>
-            </span>
-            <h2 className="section-title" id={id}>{title}</h2>
+                <span className="cmd">{cmd}</span>
+                <h2 className="ttl" id={id}>{title}</h2>
+                <span className="fade" aria-hidden="true" />
+            </div>
             {lede && <p className="section-lede">{lede}</p>}
         </m.header>
     );

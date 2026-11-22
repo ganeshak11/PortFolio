@@ -25,7 +25,7 @@ export default function About() {
     return (
         <section id="about" className="section">
             <div className="wrap">
-                <SectionHead index="01" cmd="about" title="About me" />
+                <SectionHead index="01" cmd="whoami" title="About me" />
 
                 <div className="about-grid">
                     <Reveal className="panel">

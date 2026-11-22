@@ -24,7 +24,7 @@ const rufscript = localFont({
   display: "swap",
 });
 
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(!t){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}if(t==="dark")document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}})();`;
+const themeScript = `document.documentElement.classList.add("dark");`;
 
 export const metadata: Metadata = {
   title: "Ganesh Angadi | Systems Engineer | Distributed Systems • Cloud • DevOps • SRE",
@@ -180,7 +180,7 @@ export default function RootLayout({
   const jsonLd = [personSchema, websiteSchema, fortisSchema];
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrains.variable} ${rufscript.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${jetbrains.variable} ${rufscript.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
