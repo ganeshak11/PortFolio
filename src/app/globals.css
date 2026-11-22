@@ -34,12 +34,16 @@
   --accent-line: rgba(242, 29, 67, 0.55);
   --accent-glow: rgba(242, 29, 67, 0.22);
   /* second accent: electric violet. Crimson leads and fades through magenta into it. */
-  --spark: #A36BFF;   /* swap this and the rgba(163,107,255) values below to try another accent */
-  --spark-soft: rgba(163, 107, 255, 0.14);
-  --spark-line: rgba(163, 107, 255, 0.55);
-  --spark-glow: rgba(163, 107, 255, 0.18);
-  --grad: linear-gradient(120deg, #F21D43 0%, #E62A78 45%, #A36BFF 100%);
-  --grad-soft: linear-gradient(120deg, rgba(242, 29, 67, 0.18), rgba(163, 107, 255, 0.14));
+  /* Change the accent with these two: its RGB, and the colour the gradient passes through on the way from crimson. */
+  --spark-rgb: 163 107 255;
+  --grad-mid: #E62A78;
+  --spark: rgb(var(--spark-rgb));
+  --spark-soft: rgb(var(--spark-rgb) / 0.14);
+  --spark-line: rgb(var(--spark-rgb) / 0.55);
+  --spark-glow: rgb(var(--spark-rgb) / 0.18);
+  --spark-text: color-mix(in srgb, var(--spark) 55%, white);
+  --grad: linear-gradient(120deg, #F21D43 0%, var(--grad-mid) 45%, var(--spark) 100%);
+  --grad-soft: linear-gradient(120deg, rgba(242, 29, 67, 0.18), var(--spark-soft));
   --glass-border: rgba(255, 255, 255, 0.10);
   --edge: inset 0 1px 0 rgba(255, 255, 255, 0.09);
   --shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 24px 60px -24px rgba(0, 0, 0, 0.85);
@@ -364,7 +368,7 @@ section[id] { scroll-margin-top: 96px; }
 }
 
 .chip.spark {
-  color: #cdb4ff;
+  color: var(--spark-text);
   background: var(--spark-soft);
   border-color: var(--spark-line);
 }
@@ -711,7 +715,7 @@ section[id] { scroll-margin-top: 96px; }
   background:
     linear-gradient(180deg, transparent 50%, rgba(5, 5, 7, 0.85)),
     radial-gradient(80% 60% at 100% 0%, rgba(242, 29, 67, 0.25), transparent 70%),
-    radial-gradient(70% 50% at 0% 100%, rgba(163, 107, 255, 0.2), transparent 70%);
+    radial-gradient(70% 50% at 0% 100%, rgb(var(--spark-rgb) / 0.2), transparent 70%);
   pointer-events: none;
 }
 
