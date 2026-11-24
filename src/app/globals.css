@@ -1172,7 +1172,19 @@ section[id] { scroll-margin-top: 96px; }
 .fx-feature h3 { font-size: 16.5px; font-weight: 600; }
 .fx-feature p { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
-.fx-sec { margin-top: 16px; padding: clamp(18px, 3vw, 28px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; }
+.fx-sec-wrap { margin-top: 16px; padding: 0; }
+.fx-sec-details > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: clamp(16px, 2.6vw, 22px) clamp(18px, 3vw, 28px);
+  font-family: var(--font-mono); font-size: 13px; color: var(--fg-2);
+}
+.fx-sec-details > summary::-webkit-details-marker { display: none; }
+.fx-sec-details > summary:hover { color: var(--fg); }
+.fx-sec-toggle::before { content: "+ show"; color: var(--accent); white-space: nowrap; }
+.fx-sec-details[open] .fx-sec-toggle::before { content: "− hide"; }
+.fx-sec-details[open] > summary { border-bottom: 1px solid var(--border); }
+.fx-sec { padding: clamp(18px, 3vw, 28px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; }
 .fx-threats { list-style: none; display: flex; flex-direction: column; }
 .fx-threats li { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 14px; padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 13.5px; }
 .fx-threats b { font-weight: 600; color: var(--fg); }
@@ -1209,3 +1221,11 @@ section[id] { scroll-margin-top: 96px; }
 .fx-why.hard { border-color: var(--accent-line); }
 .fx-pull { font-family: var(--font-display); font-size: clamp(19px, 2vw, 22px); line-height: 1.35; color: var(--fg); border-left: 3px solid transparent; border-image: linear-gradient(180deg, var(--accent), var(--spark)) 1; padding-left: 14px; margin-top: auto; }
 @media (max-width: 900px) { .fx-story { grid-template-columns: 1fr; } }
+/* One highlight on each closed project card, so skimmers get the best fact without a click */
+.proj-hl { margin-top: 2px; font-size: 13.5px; line-height: 1.6; color: var(--muted); border-left: 2px solid var(--accent-line); padding-left: 10px; text-align: left; }
+.proj-hl b { color: var(--fg-2); font-weight: 600; }
+
+/* Phones: lighter glass blur, so scrolling over the wallpaper stays smooth on mid-range devices */
+@media (max-width: 760px) {
+  :root { --blur: blur(10px) saturate(140%); }
+}

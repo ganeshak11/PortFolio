@@ -16,6 +16,8 @@ type ProjectData = {
     stack: string[];
     intro: string;
     highlights: { title: string; desc: string }[];
+    /** Which highlight to show on the closed card (default: the first). */
+    cardHighlight?: number;
     limitations: string[];
     progress?: { label: string; pct: number }[];
     group?: "main" | "earlier";
@@ -34,6 +36,7 @@ const PROJECTS: ProjectData[] = [
         live: "https://my-suru-bus.vercel.app/live",
         badge: "largest by scale",
         tagline: "Real-Time Bus Tracking & Fleet Management",
+        cardHighlight: 3,
         status: "Live demo · simulated bus",
         statusColor: "var(--status-ok)",
         stack: ["Node.js", "Express", "Socket.io", "PostgreSQL", "Next.js", "React Native", "Expo", "GitHub Actions"],
@@ -159,6 +162,7 @@ const PROJECTS: ProjectData[] = [
         name: "CI/CD Sentinel",
         github: "https://github.com/ganeshak11/CI-CD_Sentinel",
         tagline: "Deployment Observability & Recovery Layer",
+        cardHighlight: 1,
         status: "College project · ~80%",
         statusColor: "var(--status-warn)",
         stack: ["Next.js", "Supabase", "Webhooks", "CI/CD", "Polling"],
@@ -348,6 +352,12 @@ function ProjectGrid({ items, openKey, setOpenKey }: { items: Project[]; openKey
                                     <h3 className="proj-name">{p.name}</h3>
                                     <p className="proj-tag">{p.tagline}</p>
                                     <p className="proj-intro">{p.intro}</p>
+                                    {(() => {
+                                        const h = p.highlights[p.cardHighlight ?? 0];
+                                        return h ? (
+                                            <p className="proj-hl"><b>{h.title}</b> {h.desc}</p>
+                                        ) : null;
+                                    })()}
                                 </div>
                                 <div className="proj-foot" style={{ width: "100%" }}>
                                     <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>
@@ -379,7 +389,7 @@ export default function Projects() {
                     index="04"
                     cmd="ls ~/dev"
                     title="Other projects"
-                    lede="Open a card for highlights and known limitations."
+                    lede="Open a card for every highlight and the known limitations."
                 />
                 <ProjectGrid items={main} openKey={openKey} setOpenKey={setOpenKey} />
 

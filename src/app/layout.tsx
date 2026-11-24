@@ -182,6 +182,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`dark ${inter.variable} ${jetbrains.variable} ${rufscript.variable}`}>
       <head>
+        {/* Without JS, framer-motion never fades sections in; show them as-is. */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"

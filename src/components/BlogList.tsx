@@ -148,7 +148,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 16, flexWrap: "wrap", marginBottom: 24 }}>
                                 <div style={{ maxWidth: 620 }}>
                                     <div className="row-wrap" style={{ marginBottom: 12 }}>
-                                        <span className="chip solid"><Swords size={12} /> new blog series</span>
+                                        <span className="chip solid"><Swords size={12} /> {seriesPosts.length} matchups</span>
                                     </div>
                                     <h2 id="duels-heading" className="section-title">DevOps <em>Duels</em></h2>
                                     <p className="section-lede" style={{ marginTop: 10 }}>

@@ -7,7 +7,7 @@ import { m, AnimatePresence } from "framer-motion";
 import { Menu, X, FileText } from "lucide-react";
 import { NAV_LINKS } from "./navbar/navData";
 
-const SECTION_IDS = ["hero", "about", "fortis", "achievements", "projects", "latest-blogs", "contact"];
+const SECTION_IDS = ["hero", "about", "achievements", "fortis", "projects", "latest-blogs", "contact"];
 
 export default function Navbar() {
     const [active, setActive] = useState<string>("");

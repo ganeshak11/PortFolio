@@ -114,9 +114,9 @@ export default function Home({ posts = [] }: { posts: BlogPost[] }) {
 
         <About />
 
-        <FortisEcosystem />
-
         <Achievements />
+
+        <FortisEcosystem />
 
         <Projects />
 

@@ -58,7 +58,7 @@ export default function Achievements() {
         <section id="achievements" className="section">
             <div className="wrap">
                 <SectionHead
-                    index="03"
+                    index="02"
                     cmd="experience"
                     title="Experience"
                 />

@@ -79,7 +79,7 @@ export default function FortisEcosystem() {
         <section id="fortis" className="section fortis">
             <div className="wrap">
                 <SectionHead
-                    index="02"
+                    index="03"
                     cmd="cat fortis/README.md"
                     title={<>Fortis <em>Ecosystem</em></>}
                     lede="My main project since July 2026. The docs are the specification: the code has to follow them, and a broken MUST rule blocks a release."
@@ -189,7 +189,13 @@ export default function FortisEcosystem() {
                 </div>
 
                 {/* Security */}
-                <Reveal className="panel fx-sec" delay={0.05}>
+                <Reveal className="panel fx-sec-wrap" delay={0.05}>
+                    <details className="fx-sec-details">
+                    <summary>
+                        <span>Security model: threat model and allowed cryptography</span>
+                        <span className="fx-sec-toggle" aria-hidden="true" />
+                    </summary>
+                    <div className="fx-sec">
                     <div>
                         <p className="label">Threat model: who it defends against</p>
                         <ul className="fx-threats">
@@ -208,11 +214,13 @@ export default function FortisEcosystem() {
                             Accepted risks (root compromise, a weak master password) are written down too, not hidden.
                         </p>
                     </div>
+                    </div>
+                    </details>
                 </Reveal>
 
                 {/* Fortis family */}
                 <div style={{ marginTop: 56 }}>
-                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />02.1 · the Fortis family</p>
+                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />03.1 · the Fortis family</p>
                     <div className="cards-3">
                         {FAMILY.map((f, i) => (
                             <Reveal key={f.name} delay={i * 0.05} className={`panel hover fx-family${i === 0 ? " dream" : ""}`}>
