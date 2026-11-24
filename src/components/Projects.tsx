@@ -48,7 +48,7 @@ const PROJECTS: ProjectData[] = [
             "Free-tier hosting: about 20 s to wake up after idling",
             "Route lines are straight stop to stop; no traffic prediction yet",
         ],
-        image: "/projects/mysurubus-live.jpg",
+        image: "/projects/mysurubus-live-roads.jpg",
     },
     {
         num: "02",
