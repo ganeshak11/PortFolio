@@ -68,7 +68,7 @@ export default function Achievements() {
                         <Reveal key={item.title} delay={i * 0.06} className="panel hover tl-item">
                             <div className="tl-when">
                                 <span className="tl-icon"><item.Icon size={18} strokeWidth={1.6} /></span>
-                                <span className={i === 0 || item.type === "award" ? "chip solid" : "chip accent"}>{item.badge}</span>
+                                <span className={i === 0 ? "chip solid" : "chip"}>{item.badge}</span>
                                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                                     {item.meta.startsWith("Verified") && <BadgeCheck size={13} style={{ color: "var(--status-ok)" }} />}
                                     {item.meta}

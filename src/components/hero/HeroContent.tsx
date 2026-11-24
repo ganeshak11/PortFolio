@@ -45,7 +45,7 @@ function ClockWidget() {
                 {t ? `${String(t.h).padStart(2, "0")}:${t.minute}` : "--:--"}
                 <small>:{t ? t.second : "--"}</small>
             </span>
-            <span className="sub" style={{ color: "var(--accent)", letterSpacing: "0.18em", textTransform: "uppercase" }}>
+            <span className="sub" style={{ letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 {t ? `${t.weekday} ${t.day} ${t.month}` : " "}
             </span>
             <div className="ruler" style={{ margin: "10px 0 2px" }} aria-hidden="true">
@@ -59,8 +59,8 @@ function ClockWidget() {
 function BuildingWidget() {
     return (
         <m.a href="#fortis" className="panel hover widget" style={{ textDecoration: "none", color: "inherit" }} {...fade(0.26)}>
-            <span className="cap"><span className="dot live" style={{ color: "var(--accent)" }} />Now building</span>
-            <span className="big hand" style={{ fontFamily: "var(--font-display)", fontSize: 28 }}>Fortis</span>
+            <span className="cap"><span className="dot live" style={{ color: "var(--spark)" }} />Now building</span>
+            <span className="big" style={{ fontFamily: "var(--font-sans)", fontWeight: 650, fontSize: 24, letterSpacing: "-0.02em" }}>Fortis</span>
             <span className="sub">Rust agent · Kotlin app · spec</span>
             <span className="sub" style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", paddingTop: 8 }}>
                 <span>since Jul 2026</span><span style={{ color: "var(--accent)" }}>see it ↓</span>
@@ -114,7 +114,7 @@ export function HeroContent({ onTerminalOpen }: { isMobile?: boolean; onTerminal
                     </div>
 
                     <div className="hero-meta" style={{ marginTop: "auto", paddingTop: 28 }}>
-                        <span className="chip solid">systems</span>
+                        <span className="chip">systems</span>
                         <span className="chip">distributed</span>
                         <span className="chip">cloud</span>
                         <span className="chip">networking</span>

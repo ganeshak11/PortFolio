@@ -34,7 +34,7 @@ export default function LatestBlogs({ posts }: { posts: BlogPost[] }) {
                             <time className="post-date" dateTime={post.date}>{fmt(post.date)}</time>
                             <div style={{ minWidth: 0 }}>
                                 <h3 className="post-title">{post.title}</h3>
-                                {post.series && <div className="row-wrap" style={{ marginTop: 8 }}><span className="chip accent">{post.series}</span></div>}
+                                {post.series && <div className="row-wrap" style={{ marginTop: 8 }}><span className="chip">{post.series}</span></div>}
                             </div>
                             <span className="post-meta">{post.readingTime} min read</span>
                         </Link>

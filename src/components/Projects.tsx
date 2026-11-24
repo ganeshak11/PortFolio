@@ -264,7 +264,7 @@ function Detail({ project }: { project: Project }) {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
                 <div style={{ minWidth: 0 }}>
                     <p className="label" style={{ marginBottom: 6 }}>{project.num} / {project.tagline}</p>
-                    <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(28px, 4vw, 40px)", lineHeight: 1.05 }}>{project.name}</h3>
+                    <h3 style={{ fontFamily: "var(--font-sans)", fontWeight: 650, letterSpacing: "-0.02em", fontSize: "clamp(24px, 3.2vw, 32px)", lineHeight: 1.15 }}>{project.name}</h3>
                 </div>
                 <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     {project.live && (
@@ -281,7 +281,7 @@ function Detail({ project }: { project: Project }) {
             {project.command && <CommandCopy command={project.command} />}
 
             <div className="row-wrap" style={{ marginTop: 16 }}>
-                {project.stack.map((t) => <span key={t} className="chip accent">{t}</span>)}
+                {project.stack.map((t) => <span key={t} className="chip">{t}</span>)}
             </div>
 
             {"progress" in project && project.progress && (
@@ -327,9 +327,10 @@ function ProjectGrid({ items, openKey, setOpenKey }: { items: Project[]; openKey
         <div className="proj-grid" style={{ gridAutoFlow: "row dense" }}>
             {items.map((p, i) => {
                 const open = openKey === p.num;
+                const wide = !p.image && items.some((q) => q.image);
                 return (
                     <Fragment key={p.num}>
-                        <Reveal delay={(i % 3) * 0.05} style={{ display: "flex" }}>
+                        <Reveal delay={(i % 3) * 0.05} className={`proj-cell${wide ? " wide" : ""}`} style={{ display: "flex" }}>
                             <button
                                 className={`panel hover proj${open ? " open" : ""}`}
                                 onClick={() => setOpenKey(open ? null : p.num)}
@@ -348,7 +349,7 @@ function ProjectGrid({ items, openKey, setOpenKey }: { items: Project[]; openKey
                                     </div>
                                 )}
                                 <div className="proj-body">
-                                    {p.badge && <span className="chip solid" style={{ alignSelf: "flex-start" }}>{p.badge}</span>}
+                                    {p.badge && <span className="chip" style={{ alignSelf: "flex-start" }}>{p.badge}</span>}
                                     <h3 className="proj-name">{p.name}</h3>
                                     <p className="proj-tag">{p.tagline}</p>
                                     <p className="proj-intro">{p.intro}</p>
@@ -394,7 +395,7 @@ export default function Projects() {
                 <ProjectGrid items={main} openKey={openKey} setOpenKey={setOpenKey} />
 
                 <div className="proj-group">
-                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />04.1 · college &amp; earlier work</p>
+                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--muted)" }} />04.1 · college &amp; earlier work</p>
                     <ProjectGrid items={earlier} openKey={openKey} setOpenKey={setOpenKey} />
                 </div>
             </div>

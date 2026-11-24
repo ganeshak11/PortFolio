@@ -54,7 +54,7 @@ export default function About() {
                         </div>
                     </Reveal>
 
-                    <Reveal className="panel about-copy" delay={0.08}>
+                    <Reveal className="about-copy open" delay={0.08}>
                         <p className="big">Hi, I&apos;m Ganesh Angadi.</p>
                         <p>
                             Most of my time goes into Fortis: a Rust agent and PAM module on the laptop, a Kotlin app on the phone,

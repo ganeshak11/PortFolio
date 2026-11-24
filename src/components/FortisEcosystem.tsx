@@ -207,7 +207,7 @@ export default function FortisEcosystem() {
                     <div>
                         <p className="label">Only these primitives are allowed</p>
                         <div className="row-wrap" style={{ gap: 8 }}>
-                            {CRYPTO.map((c) => <span key={c} className="chip accent">{c}</span>)}
+                            {CRYPTO.map((c) => <span key={c} className="chip">{c}</span>)}
                         </div>
                         <p className="fx-note">
                             Every rule in the spec is a MUST / MUST NOT / SHOULD, and a broken MUST blocks a release.
@@ -220,12 +220,12 @@ export default function FortisEcosystem() {
 
                 {/* Fortis family */}
                 <div style={{ marginTop: 56 }}>
-                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--accent)" }} />03.1 · the Fortis family</p>
+                    <p className="cap" style={{ margin: "0 4px 16px" }}><span className="dot" style={{ color: "var(--muted)" }} />03.1 · the Fortis family</p>
                     <div className="cards-3">
                         {FAMILY.map((f, i) => (
                             <Reveal key={f.name} delay={i * 0.05} className={`panel hover fx-family${i === 0 ? " dream" : ""}`}>
                                 <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-                                    <span className="mono" style={{ fontSize: 11.5, color: "var(--accent)" }}>{f.tag}</span>
+                                    <span className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>{f.tag}</span>
                                     <span className="chip">{f.badge}</span>
                                 </div>
                                 <h3>{f.name}</h3>
