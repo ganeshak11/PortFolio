@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import Image from "next/image";
 import { m, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowUpRight } from "lucide-react";
+import { Plus, Minus, ArrowUpRight, Copy, Check } from "lucide-react";
 import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
 type ProjectData = {
@@ -22,6 +22,8 @@ type ProjectData = {
     badge?: string;
     image?: string;
     live?: string;
+    /** A shell command to try the project, shown with a copy button. */
+    command?: string;
 };
 
 const PROJECTS: ProjectData[] = [
@@ -77,11 +79,12 @@ const PROJECTS: ProjectData[] = [
         name: "DevCard",
         github: "https://github.com/ganeshak11/devcard-ganeshak11",
         image: "/projects/devcard-preview.jpg",
-        tagline: "npx ganeshak11 — my CLI business card",
+        tagline: "npx -y ganeshak11 — my CLI business card",
+        command: "npx -y ganeshak11",
         status: "Published on npm",
         statusColor: "var(--status-ok)",
         stack: ["TypeScript", "Node.js", "Inquirer", "Boxen", "Chalk"],
-        intro: "A developer visiting card for the terminal. Run npx ganeshak11 and get my bio, skills and links in an animated boxen layout with an interactive command palette and a scannable QR code.",
+        intro: "A developer visiting card for the terminal. Run npx -y ganeshak11 and get my bio, skills and links in an animated boxen layout with an interactive command palette and a scannable QR code.",
         highlights: [
             { title: "Zero install", desc: "Published to npm, runs anywhere with npx" },
             { title: "Interactive palette", desc: "Arrow-key navigation through sections via Inquirer" },
@@ -182,6 +185,68 @@ const PROJECTS: ProjectData[] = [
 
 type Project = ProjectData;
 
+// "$ command" with a copy button. Tries the Clipboard API, then the older
+// execCommand copy (some browsers or embedded views refuse one or the other);
+// if both are refused, it selects the command and asks for Ctrl+C.
+function CommandCopy({ command }: { command: string }) {
+    const [state, setState] = useState<"idle" | "copied" | "manual">("idle");
+    const codeRef = useRef<HTMLElement>(null);
+    const legacyCopy = () => {
+        const ta = document.createElement("textarea");
+        ta.value = command;
+        ta.style.position = "fixed";
+        ta.style.left = "-999999px";
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch { ok = false; }
+        document.body.removeChild(ta);
+        return ok;
+    };
+    const copy = async () => {
+        let ok = false;
+        if (navigator.clipboard && window.isSecureContext) {
+            try { await navigator.clipboard.writeText(command); ok = true; } catch { ok = false; }
+        }
+        if (!ok) ok = legacyCopy();
+        if (!ok && codeRef.current) {
+            const range = document.createRange();
+            range.selectNodeContents(codeRef.current);
+            const sel = window.getSelection();
+            sel?.removeAllRanges();
+            sel?.addRange(range);
+        }
+        setState(ok ? "copied" : "manual");
+        setTimeout(() => setState("idle"), 2500);
+    };
+    const copied = state === "copied";
+    return (
+        <div
+            style={{
+                display: "flex", alignItems: "center", gap: 10, marginTop: 16,
+                padding: "10px 10px 10px 14px", borderRadius: 10,
+                border: "1px solid var(--accent-line)", background: "rgba(0,0,0,.25)",
+                fontFamily: "var(--font-mono)", fontSize: 14, maxWidth: "100%",
+            }}
+        >
+            <span style={{ color: "var(--accent)", userSelect: "none" }}>$</span>
+            <code ref={codeRef} style={{ flex: 1, minWidth: 0, overflowX: "auto", whiteSpace: "nowrap", userSelect: "all" }}>{command}</code>
+            <button
+                type="button"
+                onClick={copy}
+                className="btn sm"
+                aria-label={copied ? "Copied" : `Copy command: ${command}`}
+                style={{ flexShrink: 0 }}
+            >
+                {copied ? <Check size={13} /> : <Copy size={13} />} {copied ? "Copied" : state === "manual" ? "Press Ctrl+C" : "Copy"}
+            </button>
+            <span aria-live="polite" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
+                {copied ? "Command copied to clipboard" : state === "manual" ? "Command selected; press Control C to copy" : ""}
+            </span>
+        </div>
+    );
+}
+
 function Detail({ project }: { project: Project }) {
     return (
         <m.div
@@ -208,6 +273,8 @@ function Detail({ project }: { project: Project }) {
                     </a>
                 </div>
             </div>
+
+            {project.command && <CommandCopy command={project.command} />}
 
             <div className="row-wrap" style={{ marginTop: 16 }}>
                 {project.stack.map((t) => <span key={t} className="chip accent">{t}</span>)}
