@@ -39,7 +39,7 @@ function useIst() {
 function ClockWidget() {
     const t = useIst();
     return (
-        <m.div className="panel widget" {...fade(0.2)}>
+        <m.div className="panel widget widget-clock" {...fade(0.2)}>
             <span className="cap">Mysuru · IST</span>
             <span className="big" aria-live="off">
                 {t ? `${String(t.h).padStart(2, "0")}:${t.minute}` : "--:--"}
@@ -79,10 +79,15 @@ export function HeroContent({ onTerminalOpen }: { isMobile?: boolean; onTerminal
                         open to internships &amp; full-time · Mysuru
                     </span>
 
-                    <p className="hero-name" aria-hidden="true">
-                        Ganesh
-                        <span className="last">Angadi</span>
-                    </p>
+                    <div className="hero-name-row">
+                        <p className="hero-name" aria-hidden="true">
+                            Ganesh
+                            <span className="last">Angadi</span>
+                        </p>
+                        <span className="hero-avatar" aria-hidden="true">
+                            <Image src="/profile.png" alt="" fill sizes="96px" style={{ objectFit: "cover", objectPosition: "center 30%" }} />
+                        </span>
+                    </div>
 
                     <p className="hero-role">
                         Systems engineer · cloud · DevOps

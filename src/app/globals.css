@@ -24,7 +24,7 @@
   --fg: #F2F2F5;
   --fg-2: #D0D0D8;
   --muted: #9A9AA6;
-  --faint: #6E6E7A;
+  --faint: #8A8A96;
   --border: rgba(255, 255, 255, 0.10);
   --border-strong: rgba(255, 255, 255, 0.18);
   --hairline: rgba(255, 255, 255, 0.08);
@@ -749,6 +749,27 @@ section[id] { scroll-margin-top: 96px; }
 
 @media (max-width: 420px) {
   .hero-side { grid-template-columns: 1fr; }
+}
+
+/* Phones: a small photo next to the name instead of the big portrait, and no clock,
+   so the first screen shows who I am without a full scroll. */
+.hero-name-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.hero-avatar { display: none; }
+
+@media (max-width: 920px) {
+  .hero-avatar {
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(76px, 22vw, 104px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 0 2px var(--accent), 0 0 24px rgba(242, 29, 67, 0.35);
+  }
+  .hero-side .portrait,
+  .hero-side .widget-clock { display: none; }
+  .hero-side { grid-template-columns: 1fr; grid-template-rows: auto; }
 }
 
 /* ─── About / neofetch ─────────────────────────────────────────── */
