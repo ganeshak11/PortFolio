@@ -149,14 +149,12 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                                 <div style={{ maxWidth: 620 }}>
                                     <div className="row-wrap" style={{ marginBottom: 12 }}>
                                         <span className="chip solid"><Swords size={12} /> new blog series</span>
-                                        <span className="chip">matchmaking in progress…</span>
                                     </div>
                                     <h2 id="duels-heading" className="section-title">DevOps <em>Duels</em></h2>
                                     <p className="section-lede" style={{ marginTop: 10 }}>
                                         DevOps is full of choices. Some are simple, some are powerful, and some... are just overkill.
                                     </p>
                                 </div>
-                                <span className="mono" style={{ fontSize: 12, color: "var(--accent)" }}>New blogs release every Sunday and Thursday.</span>
                             </div>
 
                             <div className="duel-grid">

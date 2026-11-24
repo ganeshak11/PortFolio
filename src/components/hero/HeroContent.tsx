@@ -76,7 +76,7 @@ export function HeroContent({ onTerminalOpen }: { isMobile?: boolean; onTerminal
                 <m.div className="panel hero-main" {...fade(0.05)}>
                     <span className="cap">
                         <span className="dot live" style={{ color: "var(--status-ok)" }} />
-                        open to opportunities · Mysuru, India
+                        open to internships &amp; full-time · Mysuru
                     </span>
 
                     <p className="hero-name" aria-hidden="true">

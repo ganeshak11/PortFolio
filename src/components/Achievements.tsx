@@ -10,6 +10,7 @@ type Item = {
     title: string;
     org: string;
     desc: string;
+    points?: string[];
     tags: string[];
     meta: string;
     quote?: string;
@@ -24,7 +25,12 @@ const ITEMS: Item[] = [
         badge: "FOUNDING SDE",
         title: "Founding Software Engineer (Intern) — Vaniger",
         org: "Kridtech Corp. | 27 July 2026 – 27 October 2026",
-        desc: "Founding SDE & DevOps Intern for Vaniger (production conversational sales & telephony platform). Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with dual-channel Deepgram Nova-2 streaming & real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.",
+        desc: "Founding SDE and DevOps intern on Vaniger, a production sales-calling platform.",
+        points: [
+            "Built the calling and billing core: browser WebRTC calls through a Telnyx SIP bridge, presence-based inbound routing and an atomic PostgreSQL billing ledger.",
+            "Built a live AI call-coaching pipeline: Deepgram dual-channel streaming feeds real-time suggestions with sub-100ms latency, using Groq's prompt caching.",
+            "Owned deployments for 2+ months: GitHub Actions pipelines to a GCP VM (Nginx, PM2, zero-downtime restarts) and Vercel, plus the architecture and handover docs.",
+        ],
         tags: ["WebRTC", "Telnyx", "Deepgram", "Node.js", "PostgreSQL", "CI/CD", "Next.js"],
         meta: "Verified · KT-INT-005",
         quote: "If circumstances permitted, I would gladly retain Ganesh as a full-time member of our engineering team.",
@@ -39,21 +45,11 @@ const ITEMS: Item[] = [
         type: "award",
         Icon: Trophy,
         badge: "1ST PLACE",
-        title: "MCP-Based Systems Engineering Hackathon",
+        title: "MCP Server Hackathon",
         org: "Open Innovation · April 2026",
         desc: "Built an MCP wrapper around an ISL translator — enabling AI assistant integration. Focused on the integration layer, not reinventing the tool.",
         tags: ["MCP", "Python", "AI Integration", "Protocol Design"],
         meta: "24h · MCP track",
-    },
-    {
-        type: "experience",
-        Icon: Briefcase,
-        badge: "INTERNSHIP",
-        title: "AI & Machine Learning Intern",
-        org: "Artsy Technologies Pvt Ltd · May 2026",
-        desc: "Selected for an AI/ML internship. Working on real projects alongside experienced professionals. Offer ID: OL-2026-VP9K07.",
-        tags: ["AI/ML", "Python", "Artsy Technologies"],
-        meta: "Verified · May 2026 - present",
     },
 ];
 
@@ -83,6 +79,11 @@ export default function Achievements() {
                                 <h3 className="tl-title">{item.title}</h3>
                                 <p className="tl-org">{item.org}</p>
                                 <p className="tl-desc">{item.desc}</p>
+                                {item.points && (
+                                    <ul className="tl-desc" style={{ margin: "10px 0 0", paddingLeft: 18, display: "grid", gap: 6, listStyle: "disc" }}>
+                                        {item.points.map((pt) => <li key={pt}>{pt}</li>)}
+                                    </ul>
+                                )}
 
                                 {item.quote && (
                                     <blockquote className="quote">

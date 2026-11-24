@@ -117,7 +117,7 @@ const PROJECTS: ProjectData[] = [
         group: "earlier",
         num: "05",
         name: "Portfolio Infrastructure",
-        github: "https://github.com/ganeshak11/PortFolio/tree/dev",
+        github: "https://github.com/ganeshak11/PortFolio/tree/main",
         tagline: "Zero-to-Production DevOps Pipeline",
         status: "Deployed",
         statusColor: "var(--status-ok)",

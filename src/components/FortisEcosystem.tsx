@@ -127,7 +127,7 @@ export default function FortisEcosystem() {
                         </p>
                         <p>
                             One evening a &ldquo;Deploy NOW&rdquo; message reached me at a cricket ground, and I shipped a production release
-                            from my phone to a laptop five miles away. That night I looked at what I had built the way an attacker would:
+                            from my phone to a laptop eight kilometres away. That night I looked at what I had built the way an attacker would:
                             a remote shell with a pretty face. So I threw it away and rebuilt it, spec first.
                         </p>
                         <a href="/blog/fortis-ecosystem" className="link" style={{ alignSelf: "flex-start" }}>Read the full story →</a>

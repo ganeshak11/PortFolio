@@ -7,14 +7,13 @@ const DOMAIN = "https://ganeshangadi.online";
 export const metadata: Metadata = {
     title: "About Ganesh Angadi | Systems Engineer Portfolio",
     description:
-        "Welcome to the official systems-first DevOps portfolio of Ganesh Angadi, detailing platform engineering projects, systems thinking, and custom architectures.",
+        "Ganesh Angadi is a systems engineer from Mysuru, India, building Fortis Ecosystem: a privacy-first vault, fingerprint sudo and laptop remote for an Android phone and Linux laptops. Systems, distributed systems, cloud, networking and DevOps.",
     keywords: [
         "Ganesh Angadi",
-        "DevOps Portfolio",
-        "DevOps Engineer Portfolio",
+        "Systems Engineer Portfolio",
+        "Distributed Systems",
         "DevOps Engineer",
         "Backend Engineer",
-        "Platform Engineering",
         "Fortis Ecosystem",
         "Systems Engineer",
         "About Ganesh Angadi"
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "About Ganesh Angadi | Systems Engineer",
         description:
-            "Systems-first DevOps portfolio of Ganesh Angadi. Builder of Fortis Ecosystem, hackathon winner, platform engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation.",
+            "Systems engineer from Mysuru, India. Building Fortis Ecosystem, a privacy-first phone + Linux laptop platform over Tailscale. Founding SDE intern at Kridtech, 1st place at the MCP Server Hackathon.",
         type: "profile",
         url: `${DOMAIN}/about`,
         siteName: "Ganesh Angadi Portfolio",
@@ -41,7 +40,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "About Ganesh Angadi | Systems Engineer",
         description:
-            "Systems-first DevOps portfolio. Building Fortis Ecosystem — privacy-first phone + Linux laptop platform over Tailscale. AWS • Kubernetes • Terraform | 1st Place MCP Hackathon Winner",
+            "Systems engineer building Fortis Ecosystem, a privacy-first phone + Linux laptop platform over Tailscale. Distributed Systems • Cloud • DevOps | 1st place, MCP Server Hackathon",
         images: [`${DOMAIN}/og-profile.jpg`],
         creator: "@ganeshak11",
     },
@@ -60,7 +59,7 @@ export default function AboutPage() {
         image: `${DOMAIN}/profile.png`,
         jobTitle: "Systems Engineer",
         description:
-            "DevOps and Backend Engineer focused on AWS, Kubernetes, Terraform, and CI/CD automation. Builder of Fortis Ecosystem, an open-source privacy-first platform joining an Android phone and Linux laptops over Tailscale. 1st place MCP hackathon winner.",
+            "Systems engineer working across distributed systems, cloud, networking and DevOps. Builder of Fortis Ecosystem, a privacy-first platform joining an Android phone and Linux laptops over Tailscale. 1st place at the MCP Server Hackathon 2026.",
         knowsAbout: [
             "Docker",
             "Kubernetes",
@@ -154,7 +153,7 @@ export default function AboutPage() {
                                 </p>
                                 <p>
                                     Most recently I was the founding software engineer intern at Kridtech, working on Vaniger&apos;s calling
-                                    platform and its CI/CD. I won 1st place at an MCP systems engineering hackathon in April 2026.
+                                    platform and its CI/CD. I won 1st place at the MCP Server Hackathon (Open Innovation) in April 2026.
                                 </p>
                             </section>
 
@@ -209,7 +208,11 @@ export default function AboutPage() {
                                             <span className="chip accent">Jul – Oct 2026</span>
                                         </div>
                                         <p className="mono" style={{ fontSize: 12.5, color: "var(--accent)", margin: "6px 0 8px" }}>Kridtech Corp. | 27 July 2026 – 27 October 2026</p>
-                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: 0 }}>Architected browser-native WebRTC calling via Telnyx SIP bridge, Frontier live AI coaching with Deepgram Nova-2 streaming &amp; real-time objection handling, dynamic inbound routing with presence sync, atomic PostgreSQL billing ledger, and automated CI/CD pipelines deploying to Linux VM (PM2/Nginx) and Vercel.</p>
+                                        <ul style={{ fontSize: 14.5, color: "var(--muted)", margin: 0, paddingLeft: 18, display: "grid", gap: 6, listStyle: "disc" }}>
+                                            <li>Built the calling and billing core: browser WebRTC calls through a Telnyx SIP bridge, presence-based inbound routing and an atomic PostgreSQL billing ledger.</li>
+                                            <li>Built a live AI call-coaching pipeline: Deepgram dual-channel streaming feeds real-time suggestions with sub-100ms latency, using Groq&apos;s prompt caching.</li>
+                                            <li>Owned deployments for 2+ months: GitHub Actions pipelines to a GCP VM (Nginx, PM2, zero-downtime restarts) and Vercel, plus the architecture and handover docs.</li>
+                                        </ul>
                                         <div className="row-wrap" style={{ marginTop: 12, gap: 8 }}>
                                             {kridtechDocs.map((d) => (
                                                 <a key={d.href} href={d.href} target="_blank" rel="noopener noreferrer" className="btn sm">{d.label} ↗</a>
@@ -218,10 +221,10 @@ export default function AboutPage() {
                                     </div>
                                     <div className="panel" style={{ padding: 20 }}>
                                         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>
-                                            <strong style={{ fontSize: 16 }}>1st Place — Model Context Protocol (MCP) Server Hackathon</strong>
+                                            <strong style={{ fontSize: 16 }}>1st Place — MCP Server Hackathon</strong>
                                             <span className="chip accent">Apr 2026</span>
                                         </div>
-                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Developed custom integrations and advanced protocol servers</p>
+                                        <p style={{ fontSize: 14.5, color: "var(--muted)", margin: "8px 0 0" }}>Open Innovation · 24h, MCP track. Instead of rebuilding an Indian Sign Language translator, we wrapped an existing one in an MCP server so AI assistants could use it. The judges cared about the integration, and that&apos;s what we shipped.</p>
                                     </div>
                                     <div className="panel" style={{ padding: 20 }}>
                                         <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "baseline" }}>

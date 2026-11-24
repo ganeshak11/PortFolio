@@ -1,6 +1,6 @@
 "use client";
 
-import { FaInstagram, FaDiscord, FaWhatsapp } from "react-icons/fa";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHead, Reveal } from "@/components/ui/SectionHead";
 
@@ -13,7 +13,6 @@ const LINKS = [
 const SOCIALS = [
     { icon: FaWhatsapp, href: "https://wa.me/919986094984", label: "WhatsApp" },
     { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22", label: "Instagram" },
-    { icon: FaDiscord, href: "https://discord.com/ganeshak11", label: "Discord" },
 ];
 
 export default function Contact() {

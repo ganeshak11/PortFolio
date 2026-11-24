@@ -1,6 +1,6 @@
 "use client";
 
-import { FaLinkedin, FaGithub, FaInstagram, FaDiscord } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHead, Reveal } from "@/components/ui/SectionHead";
@@ -9,7 +9,6 @@ const SOCIALS = [
     { icon: FaLinkedin, href: "https://linkedin.com/in/ganeshangadi1301", label: "LinkedIn" },
     { icon: FaGithub, href: "https://github.com/ganeshak11", label: "GitHub" },
     { icon: FaInstagram, href: "https://instagram.com/ganesh_a_k_22", label: "Instagram" },
-    { icon: FaDiscord, href: "https://discord.com", label: "Discord" },
 ];
 
 const INFO: [string, string][] = [

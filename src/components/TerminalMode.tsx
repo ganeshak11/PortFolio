@@ -464,8 +464,7 @@ Location: Mysuru, Karnataka, India
 
 [EXPERIENCE & ACHIEVEMENTS]
 ▸ Founding Software Engineer (Intern) @ Kridtech Corp. — Vaniger (Verified · KT-INT-005)
-▸ AI & Machine Learning Intern @ Artsy Technologies
-▸ 1st Place - MCP-Based Systems Engineering Hackathon
+▸ 1st Place - MCP Server Hackathon (Open Innovation)
 
 [TOP PROJECTS]
 ▸ Fortis Ecosystem - privacy-first phone + Linux laptop platform (flagship)
