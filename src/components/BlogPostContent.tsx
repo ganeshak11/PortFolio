@@ -4,6 +4,7 @@ import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import BlogComments from "@/components/BlogComments";
+import Navbar from "@/components/Navbar";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { Copy, Check, ArrowUp, Share2, ArrowLeft, Eye } from "lucide-react";
 import { getOrCreateVisitorId } from "@/lib/visitorId";
@@ -264,12 +265,17 @@ function CodeBlock({ children, className }: { children: React.ReactNode; classNa
             </div>
             <code style={{
                 display: "block",
-                fontFamily: "var(--font-mono)",
+                // The site's JetBrains Mono is the Latin subset only, so box-drawing characters fall back to a
+                // wider font and diagrams drift. ```text blocks use a system monospace that has them at one width.
+                fontFamily: className?.includes("language-text")
+                    ? 'ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace'
+                    : "var(--font-mono)",
                 fontSize: 13.5,
                 padding: "16px 20px",
                 overflowX: "auto",
                 color: "var(--fg)",
-                lineHeight: 1.6
+                // ```text blocks hold box-drawing diagrams; at 1.6 their vertical lines break into dashes
+                lineHeight: className?.includes("language-text") ? 1.25 : 1.6
             }}>
                 {children}
             </code>
@@ -699,7 +705,8 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                 }} />
             </div>
 
-            <BlogNavbar isStory={isStory} />
+            {/* Blog posts get the site's Dynamic Island (with reading progress); private stories keep their simple bar */}
+            {isStory ? <BlogNavbar isStory /> : <Navbar reading />}
             <main style={{ minHeight: "100vh", paddingTop: 104, paddingBottom: 72, paddingLeft: "var(--gutter)", paddingRight: "var(--gutter)" }}>
                 <article className="post-glass" style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
 

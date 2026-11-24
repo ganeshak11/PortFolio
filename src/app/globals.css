@@ -1205,3 +1205,98 @@ section[id] { scroll-margin-top: 96px; }
 /* A project card without a preview spans the row, so the grid isn't ragged */
 .proj-cell.wide { grid-column: 1 / -1; }
 .proj-cell.wide .proj-body { max-width: 860px; }
+
+/* ─── Dynamic Island navbar (Frost's island, top centre) ───────────
+   data-mode: full (desktop: logo + links + resume), compact (section + progress ring),
+   open (phones: the pill grows into a menu). The blog post page keeps its own .topbar. */
+.island-wrap {
+  position: fixed;
+  top: 14px; left: 0; right: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+  pointer-events: none;
+}
+
+.island {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 46px;
+  max-width: 100%;
+  padding: 5px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 14px 40px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.i-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
+
+.i-brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--fg); flex-shrink: 0; border-radius: 999px; }
+.i-mark {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 19px; line-height: 1;
+}
+.i-name { font-family: var(--font-display); font-size: 20px; line-height: 1; padding-right: 6px; }
+
+.i-toggle {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 0 8px 0 6px; height: 34px;
+  background: none; border: 0; color: var(--fg-2); cursor: pointer;
+  font-family: var(--font-mono); font-size: 12.5px; white-space: nowrap; min-width: 0;
+  border-radius: 999px;
+}
+.i-label { overflow: hidden; text-overflow: ellipsis; }
+.i-live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); flex-shrink: 0; animation: island-pulse 2.4s ease-in-out infinite; }
+@keyframes island-pulse { 50% { opacity: 0.35; } }
+
+.i-ring { flex-shrink: 0; transform: rotate(-90deg); }
+.i-ring circle { fill: none; stroke-width: 2.5; }
+.i-ring-bg { stroke: rgba(255, 255, 255, 0.14); }
+.i-ring-fg { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.15s linear; }
+
+.i-close {
+  width: 34px; height: 34px; margin-left: auto; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.08); border: 0; color: var(--fg); cursor: pointer;
+}
+
+.i-links { display: flex; align-items: center; gap: 2px; }
+.i-links a {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 12.5px;
+  color: var(--muted); text-decoration: none; white-space: nowrap;
+  padding: 8px 12px; border-radius: 999px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.i-links a:hover { color: var(--fg); background: rgba(255, 255, 255, 0.08); }
+.i-links a.active { color: #fff; background: var(--accent); }
+.i-num { display: none; }
+.i-links .i-resume { color: var(--fg); border: 1px solid rgba(255, 255, 255, 0.14); margin-left: 4px; }
+.i-links .i-resume:hover { border-color: var(--accent-line); }
+
+/* what each mode shows (compact is the default, so a phone's first paint is already right) */
+.island .i-name, .island .i-links, .island .i-close { display: none; }
+@media (min-width: 900px) {
+  .island[data-mode="full"] .i-name { display: inline; }
+  .island[data-mode="full"] .i-links { display: flex; }
+  .island[data-mode="full"] .i-toggle { display: none; }
+  .island[data-mode="full"] { padding-right: 6px; }
+}
+
+.island[data-mode="open"] { flex-direction: column; align-items: stretch; width: min(380px, calc(100vw - 24px)); padding: 8px; }
+.island[data-mode="open"] .i-name { display: inline; }
+.island[data-mode="open"] .i-toggle { display: none; }
+.island[data-mode="open"] .i-close { display: grid; }
+.island[data-mode="open"] .i-links { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 4px 2px; }
+.island[data-mode="open"] .i-links a { justify-content: space-between; font-family: var(--font-sans); font-size: 15px; color: var(--fg); padding: 13px 12px; border-radius: 14px; }
+.island[data-mode="open"] .i-links a.active { background: var(--accent-soft); color: #fff; }
+.island[data-mode="open"] .i-num { display: inline; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.island[data-mode="open"] .i-links .i-resume { justify-content: flex-start; margin: 8px 0 0; border-color: rgba(255, 255, 255, 0.14); }
+
+@media (prefers-reduced-motion: reduce) { .i-live { animation: none; } }

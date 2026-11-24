@@ -95,25 +95,25 @@ Was it the right fix? No idea. Did it work? Yes. Moving on.
 
 Two of the three judges were impressed. The third one could smell vibe code from three tables away, and he started asking questions.
 
-> **Judge:** Which database did you use?
+> **Judge:** Which database did you use?\
 > **Me:** Firebase.
 >
-> **Judge:** Why Firebase?
+> **Judge:** Why Firebase?\
 > **Me:** It was easy to use and set up.
 >
-> **Judge:** MySQL is also easy to use and set up, right?
+> **Judge:** MySQL is also easy to use and set up, right?\
 > **Me:** Yes sir, but I thought Firebase was better.
 >
-> **Judge:** Why?
+> **Judge:** Why?\
 > **Me:** :)
 >
-> **Judge:** Okay. Open the README.md.
+> **Judge:** Okay. Open the README.md.\
 > **Me:** Done.
 >
-> **Judge:** It says "Deploy on Vercel". Tell me how to deploy on Vercel.
+> **Judge:** It says "Deploy on Vercel". Tell me how to deploy on Vercel.\
 > **Me:** Ahhh..... Ahhh..... I.. I don't know sir.
 >
-> **Judge:** Okay. Great work.
+> **Judge:** Okay. Great work.\
 > **Me:** *smiles in shame*
 
 That `:)` was the most honest answer I gave all day.
@@ -129,11 +129,22 @@ Two hackathons. One comeback. One working prototype. I was now convinced I could
 **MY(suru) Bus**: a transport management system for Mysore city.
 
 ```text
-┌──────────────────┐      ┌──────────────────┐      ┌──────────────────┐
-│    Driver App    │      │  Passenger App   │      │ Admin Dashboard  │
-│ Streams live bus │ ───► │ Shows live bus + │ ◄─── │ Manages buses &  │
-│    location      │      │       ETA        │      │      routes      │
-└──────────────────┘      └──────────────────┘      └──────────────────┘
++-----------------+          +-----------------+
+|   Driver App    |          | Admin Dashboard |
+| streams the bus |          | manages buses   |
+| location (GPS)  |          | and routes      |
++--------+--------+          +--------+--------+
+         |                            |
+         v                            v
+      +-----------------------------------+
+      |   Backend: REST API + Socket.io   |
+      +-----------------+-----------------+
+                        |
+                        v
+             +---------------------+
+             |    Passenger App    |
+             | live bus + its ETA  |
+             +---------------------+
 ```
 
 I started without knowing a single framework. I spent **3 months** pair-programming with **Amazon Q**, a brand-new AI assistant at the time. By the end of it, Amazon Q probably knew more about the project than my teammates did.
