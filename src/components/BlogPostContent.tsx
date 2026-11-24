@@ -554,7 +554,9 @@ const stripFirstH1 = (markdown: string) => {
 };
 
 export default function BlogPostContent({ post, slug, isStory }: { post: Post; slug: string; isStory?: boolean }) {
-    const [scrollProgress, setScrollProgress] = useState(0);
+    // The top progress bar is updated straight on the DOM: keeping it in state re-rendered (and re-parsed)
+    // the whole post on every scroll event, which made scrolling stutter.
+    const progressBarRef = useRef<HTMLDivElement>(null);
     const [views, setViews] = useState<number | null>(null);
     const [survivalMessage, setSurvivalMessage] = useState<{ title: string, body: string } | null>(null);
     const [selectedReaction, setSelectedReaction] = useState<string | null>(null);
@@ -634,18 +636,23 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
             recordView();
         }
 
+        let frame = 0;
         const handleScroll = () => {
-            const totalScroll = document.documentElement.scrollTop;
-            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scroll = totalScroll / (windowHeight || 1);
-            setScrollProgress(scroll);
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                const totalScroll = document.documentElement.scrollTop;
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scroll = Math.min(1, totalScroll / (windowHeight || 1));
+                if (progressBarRef.current) progressBarRef.current.style.transform = `scaleX(${scroll})`;
 
-            const scrollPct = Math.round(scroll * 100);
-            if (scrollPct > maxScroll.current) {
-                maxScroll.current = scrollPct;
-            }
+                const scrollPct = Math.round(scroll * 100);
+                if (scrollPct > maxScroll.current) {
+                    maxScroll.current = scrollPct;
+                }
+            });
         };
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
         const sendTelemetryUpdate = () => {
             const durationMs = Date.now() - sessionStart.current;
@@ -680,6 +687,7 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
+            if (frame) cancelAnimationFrame(frame);
             window.removeEventListener("beforeunload", sendTelemetryUpdate);
             document.removeEventListener("visibilitychange", handleVisibilityChange);
             sendTelemetryUpdate(); // Trigger when navigating away via React Router
@@ -697,11 +705,13 @@ export default function BlogPostContent({ post, slug, isStory }: { post: Post; s
                 zIndex: 100,
                 pointerEvents: "none"
             }}>
-                <div style={{
+                <div ref={progressBarRef} style={{
                     height: "100%",
-                    width: `${scrollProgress * 100}%`,
+                    width: "100%",
+                    transform: "scaleX(0)",
+                    transformOrigin: "left",
                     background: "var(--accent)",
-                    transition: "width 0.1s ease-out"
+                    willChange: "transform"
                 }} />
             </div>
 

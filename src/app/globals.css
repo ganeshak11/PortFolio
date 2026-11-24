@@ -1252,6 +1252,7 @@ section[id] { scroll-margin-top: 96px; }
   border-radius: 999px;
 }
 .i-label { overflow: hidden; text-overflow: ellipsis; }
+.i-pct { display: inline-block; min-width: 4ch; font-variant-numeric: tabular-nums; }  /* fixed width: the pill doesn't jiggle as the % changes */
 .i-live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); flex-shrink: 0; animation: island-pulse 2.4s ease-in-out infinite; }
 @keyframes island-pulse { 50% { opacity: 0.35; } }
 

@@ -24,6 +24,7 @@ const SECTIONS: { id: string; label: string }[] = [
 ];
 
 const SPRING = { type: "spring" as const, stiffness: 420, damping: 34, mass: 0.8 };
+const R = 8, C = 2 * Math.PI * R;   // the progress ring
 
 function istTime() {
     return new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
@@ -36,7 +37,6 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
 
     const [active, setActive] = useState("");          // section id on the home page, or "/blog"
     const [atTop, setAtTop] = useState(true);
-    const [progress, setProgress] = useState(0);
     const [hover, setHover] = useState(false);
     const [focused, setFocused] = useState(false);
     const [open, setOpen] = useState(false);          // phones: menu open
@@ -44,6 +44,10 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
     const [time, setTime] = useState<string | null>(null);
     const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const islandRef = useRef<HTMLElement>(null);
+    // Scroll progress goes straight to the ring and the "Reading · N%" text, not through state,
+    // so scrolling never re-renders the island (or makes it re-measure its layout).
+    const ringRef = useRef<SVGCircleElement>(null);
+    const pctRef = useRef<HTMLSpanElement>(null);
 
     const resolveHref = (href: string) => (href.startsWith("/") || isHome ? href : `/${href}`);
     const isActive = (href: string) => (href.startsWith("/") ? active === href : active === href.slice(1));
@@ -59,11 +63,15 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
 
     // Scroll: top of page, progress, current section
     useEffect(() => {
-        const onScroll = () => {
+        let frame = 0;
+        const update = () => {
+            frame = 0;
             const y = window.scrollY;
             const max = document.documentElement.scrollHeight - window.innerHeight;
-            setAtTop(y < 80);
-            setProgress(max > 0 ? Math.min(1, y / max) : 0);
+            const p = max > 0 ? Math.min(1, y / max) : 0;
+            if (ringRef.current) ringRef.current.style.strokeDashoffset = String(C * (1 - p));
+            if (pctRef.current) pctRef.current.textContent = `${Math.round(p * 100)}%`;
+            setAtTop(y < 80);              // state only changes when crossing the line, so no re-render otherwise
             if (isHome) {
                 let current = "";
                 for (const { id } of SECTIONS) {
@@ -73,11 +81,16 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
                 setActive(current);
             }
         };
+        const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
         if (!isHome) setActive(pathname.startsWith("/blog") ? "/blog" : "");
-        onScroll();
+        update();
         window.addEventListener("scroll", onScroll, { passive: true });
         window.addEventListener("resize", onScroll);
-        return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", onScroll);
+            if (frame) cancelAnimationFrame(frame);
+        };
     }, [isHome, pathname]);
 
     // Mysuru time for the idle island
@@ -102,16 +115,17 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
     const pageLabel = pathname.startsWith("/blog") ? "Blog" : pathname.startsWith("/about") ? "About" : "";
     const sectionLabel = SECTIONS.find((s) => s.id === active)?.label;
     const label = reading
-        ? `Reading · ${Math.round(progress * 100)}%`
+        ? "Reading"
         : isHome ? (sectionLabel && active !== "hero" ? sectionLabel : null) : pageLabel || null;
-
-    const R = 8, C = 2 * Math.PI * R;
+    // Framer only re-measures the island when its shape can change: the mode or the label text.
+    const shapeKey = `${mode}|${label ?? time}`;
 
     return (
         <header className="island-wrap">
             <m.nav
                 ref={islandRef}
                 layout
+                layoutDependency={shapeKey}
                 transition={SPRING}
                 style={{ borderRadius: mode === "open" ? 26 : 999 }}
                 className="island"
@@ -122,7 +136,7 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
                 onFocus={() => setFocused(true)}
                 onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setFocused(false); }}
             >
-                <m.div layout="position" transition={SPRING} className="i-head">
+                <m.div layout="position" layoutDependency={shapeKey} transition={SPRING} className="i-head">
                     <Link href="/" className="i-brand" aria-label="Ganesh Angadi — home" onClick={() => setOpen(false)}>
                         <span className="i-mark" aria-hidden="true">g</span>
                         <span className="i-name">ganesh</span>
@@ -138,10 +152,13 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
                         aria-label={`Open navigation${label ? `, currently at ${label}` : ""}`}
                     >
                         <span className="i-live" aria-hidden="true" />
-                        <span className="i-label">{label ?? (time ? `Mysuru · ${time}` : "Menu")}</span>
+                        <span className="i-label">
+                            {label ?? (time ? `Mysuru · ${time}` : "Menu")}
+                            {reading && <> · <span ref={pctRef} className="i-pct">0%</span></>}
+                        </span>
                         <svg className="i-ring" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
                             <circle cx="10" cy="10" r={R} className="i-ring-bg" />
-                            <circle cx="10" cy="10" r={R} className="i-ring-fg" strokeDasharray={C} strokeDashoffset={C * (1 - progress)} />
+                            <circle ref={ringRef} cx="10" cy="10" r={R} className="i-ring-fg" strokeDasharray={C} strokeDashoffset={C} />
                         </svg>
                     </button>
 
@@ -150,7 +167,7 @@ export default function Navbar({ reading = false }: { reading?: boolean }) {
                     </button>
                 </m.div>
 
-                <m.div layout="position" transition={SPRING} className="i-links" id="island-links">
+                <m.div layout="position" layoutDependency={shapeKey} transition={SPRING} className="i-links" id="island-links">
                     {NAV_LINKS.map((l, i) => (
                         <a
                             key={l.href}
